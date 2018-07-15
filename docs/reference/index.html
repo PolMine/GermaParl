@@ -18,13 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Function reference" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">GermaParl</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">GermaParl</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -58,7 +71,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/GermaParl.html">Get Started</a>
+  <a href="../articles/GermaParl.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -73,16 +86,26 @@
     <li>
       <a href="../articles/MakingOfGermaParl.html">GermaParl - From XML to CWB</a>
     </li>
+    <li>
+      <a href="../articles/Topicmodelling.html">Adding topicmodels to GermaParl</a>
+    </li>
+    <li>
+      <a href="../articles/UsingCAPAnnotation.html">Using the GermaParl Annotation</a>
+    </li>
+    <li>
+      <a href="../articles/UsingTopicAnnotation.html">Using the topic annotation</a>
+    </li>
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -90,40 +113,120 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;1.1.0</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="GermaParl.html">GermaParl</a></code> </p>
-          </td>
-          <td><p>GermaParl Corpus Class.</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="GermaParl.html">GermaParl</a></code> </p>
+        </td>
+        <td><p>GermaParl Corpus Class.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="annotation_features.html">annotation_features()</a></code> </p>
+        </td>
+        <td><p>Get Features of Annotations</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="annotations_inspect.html">annotations_inspect()</a></code> </p>
+        </td>
+        <td><p>Inspect Annotations Present in a Partition</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="germaparl_add_p_attribute_stem.html">germaparl_add_p_attribute_stem()</a></code> </p>
+        </td>
+        <td><p>Add Positional Attribute with Word Stems to GermaParl</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="germaparl_add_s_attribute_speech.html">germaparl_add_s_attribute_speech()</a></code> </p>
+        </td>
+        <td><p>Add Annotation of Speeches to GermaParl Corpus</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="germaparl_build_dtm.html">germaparl_build_dtm()</a></code> </p>
+        </td>
+        <td><p>Generate Document-Term-Matrix</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="germaparl_download_lda.html">germaparl_download_lda()</a></code> </p>
+        </td>
+        <td><p>Download Topicmodels for GermaParl.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="germaparl_encode_cap_annotations.html">germaparl_encode_cap_annotations()</a></code> </p>
+        </td>
+        <td><p>Write CAP Annotations to GermaParl</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="germaparl_encode_lda_topics.html">germaparl_encode_lda_topics()</a></code> </p>
+        </td>
+        <td><p>Write s-attribute with top topicmodels to corpus</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="germaparl_get_speeches_for_topic.html">germaparl_get_speeches_for_topic()</a></code> </p>
+        </td>
+        <td><p>Get Bundle with Speeches for Topic.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="germaparl_load_topicmodel.html">germaparl_load_topicmodel()</a></code> </p>
+        </td>
+        <td><p>Load Topicmodel</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="germaparl_search_speeches.html">germaparl_search_speeches()</a></code> </p>
+        </td>
+        <td><p>Query GermaParl</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="installation.html">germaparl_download_corpus()</a></code> </p>
+        </td>
+        <td><p>Download GermaParl from Web Directory.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="lda_tuning.html">lda_tuning</a></code> </p>
+        </td>
+        <td><p>LDA Tuning Resulty</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="use_germaparl.html">use_germaparl()</a></code> </p>
+        </td>
+        <td><p>Use the GermaParl Corpus.</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -140,11 +243,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

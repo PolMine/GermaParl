@@ -1,8 +1,10 @@
 library(hexSticker)
 library(RColorBrewer)
 
-imgurl <- "http://www.constructalia.com/repository/transfer/it/resources/ContenidoProyect/05358730FOTO_AMPLIADA.jpg"
+# imgurl <- "http://www.constructalia.com/repository/transfer/it/resources/ContenidoProyect/05358730FOTO_AMPLIADA.jpg"
+
 imgurl <- "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUtUA4SwDMvXw8Y6zsa4EgH93VdpAkMrdpv67BmbeHPjgsqIvv"
+
 sticker(
   imgurl,
   package="GermaParl",
@@ -11,7 +13,7 @@ sticker(
   h_fill = "white",
   h_color = "#004C93",
   p_color = "#004C93",
-  filename="~/Lab/tmp/hexsticker.png",
+  filename="~/Lab/github/GermaParl/inst/hexsticker.png",
   url = "https://polmine.github.io/GermaParl",
   u_size = 1.35,
   u_color = "#004C93",

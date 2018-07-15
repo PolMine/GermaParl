@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GermaParl Corpus Class. — GermaParl • GermaParl</title>
+<title>Query GermaParl — germaparl_search_speeches • GermaParl</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="GermaParl Corpus Class. — GermaParl" />
+<meta property="og:title" content="Query GermaParl — germaparl_search_speeches" />
 
-<meta property="og:description" content="The class inherits from the Corpus class defined in the 
-package 'polmineR'. So far, it only adds a method 'summary'." />
+<meta property="og:description" content="Query GermaParl" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,51 +119,47 @@ package 'polmineR'. So far, it only adds a method 'summary'." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>GermaParl Corpus Class.</h1>
+    <h1>Query GermaParl</h1>
     
-    <div class="hidden name"><code>GermaParl.Rd</code></div>
+    <div class="hidden name"><code>germaparl_search_speeches.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>The class inherits from the <code>Corpus</code> class defined in the 
-package 'polmineR'. So far, it only adds a method 'summary'.</p>
+    <p>Query GermaParl</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>GermaParl</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>R6ClassGenerator</code> of length 24.</p>
+    <pre class="usage"><span class='fu'>germaparl_search_speeches</span>(<span class='no'>cnt</span>, <span class='kw'>min_size</span> <span class='kw'>=</span> <span class='fl'>250</span>)</pre>
     
-    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
-
-    
-    <dl class='dl-horizontal'>
-  <dt><code>summary(sAttribute)</code></dt><dd><p>Get number of tokens in subcorpora
-  that are prepared on the basis of the s-attribute provided.</p></dd>
-</dl>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>cnt</th>
+      <td><p>XXX</p></td>
+    </tr>
+    <tr>
+      <th>min_size</th>
+      <td><p>XXX</p></td>
+    </tr>
+    </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-  <span class='fu'><a href='installation.html'>germaparl_download_corpus</a></span>()
-  <span class='fu'><a href='germaparl_download_lda.html'>germaparl_download_lda</a></span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>250L</span>)
-  <span class='fu'><a href='germaparl_add_s_attribute_speech.html'>germaparl_add_s_attribute_speech</a></span>()
-  <span class='fu'><a href='germaparl_encode_lda_topics.html'>germaparl_encode_lda_topics</a></span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>250L</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5L</span>)
-  <span class='fu'><a href='germaparl_encode_cap_annotations.html'>germaparl_encode_cap_annotations</a></span>()
-  <span class='fu'><a href='germaparl_build_dtm.html'>germaparl_build_dtm</a></span>()
+<span class='no'>P</span> <span class='kw'>&lt;-</span> <span class='fu'>partition</span>(<span class='st'>"GERMAPARL"</span>, <span class='kw'>cap</span> <span class='kw'>=</span> <span class='st'>"^.*\\|8-01\\|.*$"</span>, <span class='kw'>regex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>count</span>(<span class='no'>P</span>, <span class='kw'>pAttribute</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"word"</span>, <span class='st'>"pos"</span>))
+<span class='no'>CNT</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>C</span>, <span class='st'>"count"</span>)
+<span class='no'>matches</span> <span class='kw'>&lt;-</span> <span class='fu'>query</span>(<span class='kw'>cnt</span> <span class='kw'>=</span> <span class='no'>CNT</span>, <span class='kw'>min_size</span> <span class='kw'>=</span> <span class='fl'>250</span>)
+<span class='no'>PB</span> <span class='kw'>&lt;-</span> <span class='fu'>partitionBundle</span>(<span class='st'>"GERMAPARL"</span>, <span class='kw'>sAttribute</span> <span class='kw'>=</span> <span class='st'>"speech"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'>names</span>(<span class='no'>matches</span>)[<span class='fl'>1</span>:<span class='fl'>20</span>])
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#methods">Methods</a></li>
-      
+      <li><a href="#arguments">Arguments</a></li>
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 

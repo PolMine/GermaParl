@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>All news • GermaParl</title>
+<title>Changelog • GermaParl</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,13 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Changelog" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">GermaParl</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">GermaParl</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.2.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -58,7 +71,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/GermaParl.html">Get Started</a>
+  <a href="../articles/GermaParl.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -73,16 +86,26 @@
     <li>
       <a href="../articles/MakingOfGermaParl.html">GermaParl - From XML to CWB</a>
     </li>
+    <li>
+      <a href="../articles/Topicmodelling.html">Adding topicmodels to GermaParl</a>
+    </li>
+    <li>
+      <a href="../articles/UsingCAPAnnotation.html">Using the GermaParl Annotation</a>
+    </li>
+    <li>
+      <a href="../articles/UsingTopicAnnotation.html">Using the topic annotation</a>
+    </li>
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -90,16 +113,22 @@
       
       </header>
 
-      <div class="row">
-
-  <div class="col-md-9">
+<div class="row">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Change log <small>All releases</small></h1>
+      <h1>Changelog <small></small></h1>
+      
     </div>
 
-    <div class="contents">
+    <div id="germaparl-1-1-0-9001" class="section level1">
+<h1 class="page-header">
+<a href="#germaparl-1-1-0-9001" class="anchor"></a>GermaParl 1.1.0.9001</h1>
+<ul>
+<li>installation script setpaths.R in ./tools used for adapting paths</li>
+</ul>
+</div>
     <div id="germaparl-1-1-0" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#germaparl-1-1-0" class="anchor"></a>GermaParl 1.1.0</h1>
 <ul>
 <li>Stanford CoreNLP (updated ctk package as interface) used for tokenization and annotation</li>
@@ -110,7 +139,7 @@
 </ul>
 </div>
     <div id="germaparl-1-0-5" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#germaparl-1-0-5" class="anchor"></a>GermaParl 1.0.5</h1>
 <ul>
 <li>extended README added</li>
@@ -119,14 +148,14 @@
 </ul>
 </div>
     <div id="germaparl-1-0-4" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#germaparl-1-0-4" class="anchor"></a>GermaParl 1.0.4</h1>
 <ul>
 <li>template.json added to make use of new template mechanism (as offered by polmineR 0.7.4)</li>
 </ul>
 </div>
     <div id="germaparl-1-0-3" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#germaparl-1-0-3" class="anchor"></a>GermaParl 1.0.3</h1>
 <ul>
 <li>package/corpus renamed to GermaParl</li>
@@ -134,14 +163,14 @@
 </ul>
 </div>
     <div id="germaparl-1-0-2" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#germaparl-1-0-2" class="anchor"></a>GermaParl 1.0.2</h1>
 <ul>
 <li>adding a (German) vignette to the package</li>
 </ul>
 </div>
     <div id="germaparl-0-9-0" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#germaparl-0-9-0" class="anchor"></a>GermaParl 0.9.0</h1>
 <ul>
 <li><p>Vervollständigung des Korpus: Das Korpus enthält nun auch die letzten beiden Plenarprotokolle nach der Sommerpause. Die Aufbereitung der Protokolle der 17. Wahlperiode ist damit abgeschlossen.</p></li>
@@ -152,26 +181,26 @@
 </ul>
 </div>
     <div id="germaparl-0-8-0" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#germaparl-0-8-0" class="anchor"></a>GermaParl 0.8.0</h1>
 <ul>
 <li>Das Korpus kombiniert fur den Zeitraum von Ende 2008 bis Anfang 2009 das txt-basierte Korpus mit dem pdf-basiertem Korpus, so dass ein luckenfreies Korpus fur den Zeitraum von 1996 bis 2013 zur Verfüugung steht.</li>
 </ul>
 </div>
     <div id="version-0-7-0" class="section level1">
-<h1 class="hasAnchor">
+<h1 class="page-header">
 <a href="#version-0-7-0" class="anchor"></a>Version 0.7.0</h1>
 <ul>
 <li>Neustrukturierung des Datenformats: Gegenuber früheren Versionen des Korpus (vom 01./02. August 2012) unterscheidet sich die Version des Korpus durch die Zerlegung des Ausgangsformats in solche Text fur den CWB/CQPweb-Import, die Passagen ununterbrochener Rede bzw. Zwischenrufe sind. Diese Zerlegung erfolgt seit der Version vom 6. April 2013 mit dem Ziel einer Optimierung der Daten fur die Nutzung von CQPweb.</li>
 </ul>
 </div>
-    </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#germaparl-1-1-0-9001">1.1.0.9001</a></li>
         <li><a href="#germaparl-1-1-0">1.1.0</a></li>
         <li><a href="#germaparl-1-0-5">1.0.5</a></li>
         <li><a href="#germaparl-1-0-4">1.0.4</a></li>
@@ -192,11 +221,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

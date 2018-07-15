@@ -1,5 +1,6 @@
-# GermaParl 1.1.0.9001
+# GermaParl 1.2.0
 
+- Package includes sample data, but not full corpus upon installation, use `germaparl_download_corpus()` for downloading full corpus.
 - installation script setpaths.R in ./tools used for adapting paths
 
 # GermaParl 1.1.0
