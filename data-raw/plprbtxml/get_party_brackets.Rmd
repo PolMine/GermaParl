@@ -1,0 +1,242 @@
+---
+title: "YOUR PROJECT"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{TITLE}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+## Objective
+
+Of course, there are lists of the names of all parties have entered the German Bundestag. But it may be somewhat tedious to find out the name of the parliamentary group. What is more, older documents that had to be OCRed may contain errors. While it would be futile to eradicate all potential OCR error, we need to do away with as many errors that would obstruct speaker detection. So we use a data-driven approach to find the parliamentary groups mentioned in the protocols.
+
+## Initialisation
+
+### Load required libraries
+
+```{r}
+library(pbapply)
+library(magrittr)
+library(plyr)
+```
+
+### Global Parameters
+
+```{r}
+repo_dir_xml <- "~/Lab/gitlab/plprbtxml"
+xml_files <- list.files(path = repo_dir_xml, pattern = "^.*\\.xml$", full.names = TRUE)
+```
+
+```{r}
+party_mismatch_file <- "~/Lab/gitlab/GermaParl/data-raw/plprbtxml/party_mismatch.txt"
+```
+
+```{r}
+regex_speaker  <- ".*?\\s\\(.*?\\)\\s*:"
+regex_bracket <- "^.*\\((.*?)\\)\\s*:.*$"
+```
+
+
+```{r}
+df_regex_match_list <- pbapply::pblapply(
+  xml_files,
+  function(file){
+    doc <- readLines(con = file)
+    matching_lines <- grep(regex_speaker, doc)
+    data.frame(
+      file = if (length(matching_lines) > 0) basename(file) else character(),
+      line_no = matching_lines,
+      line = doc[matching_lines],
+      stringsAsFactors = FALSE
+    )
+  },
+  cl = 3L
+)
+df_match <- do.call(rbind, df_regex_match_list)
+
+df_match[["match_bracket"]] <- gsub(regex_bracket, "\\1", df_match[["line"]], perl = TRUE) %>%
+  gsub("^\\s*(.*?)\\s*$", "\\1", .)
+```
+
+The data.frame we have now includes filenames, line of the match, the match, and the content of the bracket. The number of rows is more than 400 000, so we need a heuristic to reduce the number of matches.
+
+
+## Excluding Obvious Mismatches
+
+```{r}
+bracket <- unique(df_match[["match_bracket"]])
+```
+
+
+```{r}
+drop_regex <- c(
+  "Drucksache", "Druchsache", "Ducksache", "Druckache", "Druckrache",
+  "Drucksage", "Druchsache",
+  "Fragestunde",
+  "\\d+\\.\\s+Sitzung", "S\\.\\s+\\d",
+  "Beifall", "§\\s+\\d+", "beide", "alle", "Bulletin",
+  "Titel\\s\\d+",
+  "\\d+/\\d+",
+  "gesetz",
+  "\\d\\.\\s+Teil",
+  "Platz",
+  "\\d{4}",
+  "[AB]\\s+\\d+",
+  "(Mrd\\.|Mio\\.|Millionen)\\s+DM",
+  "Anlage\\s+\\d+",
+  "Seite\\s+\\d+",
+  "strafe",
+  "Artikel\\s+\\d+",
+  "vergl\\.\\s+Seite",
+  "reichend",
+  "zeigend",
+  "gerichtet",
+  "Ergänzung", "Beschluss", "Ausschuss",
+  "^zur\\s+", "^zum\\s+", "^zu\\s+", "zugleich",
+  "Ziffer\\s+\\d+", "^Zahlen", "Umdruck",
+  "Aus-schuß", "Ausschuss", "Ausschuß",
+  "Interview", "Anlagen", "Angaben", "Aussetzung",
+  "betr\\.", "betreffend", "bis\\s+\\d\\.",
+  "Bundesminister", "BVerfGE",
+  "Ergänzung", "Nr\\.\\s+\\d+", "Tagesordnungspunkt", "Umdruck"
+  )
+
+to_drop_grepped <- lapply(drop_regex, function(x) grep(x, bracket)) %>% unlist() %>% unique()
+bracket <- bracket [-to_drop_grepped]
+```
+
+```{r}
+to_drop_length <- c(which(nchar(bracket) >= 23), which(nchar(bracket) == 1))
+bracket <- bracket [-to_drop_length]
+```
+
+```{r}
+bracket <- gsub("^\\s*(.*?)\\s*$", "\\1", bracket) %>% unique()
+bracket <- bracket[order(bracket)]
+```
+
+
+### Manual inspection
+
+```{r}
+df_brackets <- data.frame(
+  drop = rep("", times = length(bracket)),
+  bracket = bracket,
+  stringsAsFactors = FALSE
+)
+if (FALSE){
+  df_brackets_ed <- edit(df_brackets)
+  party_mismatch <- df_brackets_ed[["bracket"]][which(df_brackets_ed[["drop"]] == "x")]
+  writeLines(text = party_mismatch, con = party_mismatch_file)
+} else {
+  df_brackets_ed <- df_brackets
+  df_brackets_ed[["drop"]] <- df_brackets_ed[["bracket"]] %in% readLines(party_mismatch_file)
+}
+df_brackets_min <- subset(df_brackets_ed, drop != TRUE)
+```
+
+The values of the column 'bracket' is what needs to be matched, either by optimizing/adapting regular expressions, or by some preprocessing.
+
+
+### Optimizing Regular Expressions for Parliamentary Groups
+
+Vgl. [Wikipedia-Seite zu Fraktionen im Bundestag](https://de.wikipedia.org/wiki/Fraktion_(Bundestag))
+
+```{r}
+source("~/Lab/gitlab/GermaParl/data-raw/plprbtxml/parliamentary_groups_regex.R")
+```
+
+```{r}
+df_brackets_regex_match <- ddply(
+  .data = df_brackets_min, .variables = "bracket",
+  .fun = function(df){
+    match <- sapply(sprintf("^\\s*%s\\s*$", pg_regex), function(r) grepl(r, df[["bracket"]]))
+    data.frame(
+      regex_match_logical = any(match),
+      regex = paste(unname(pg_regex[match]), collapse = "|")
+    )
+  }
+)
+View(df_brackets_regex_match)
+```
+
+
+### Getting the Share Matched
+
+```{r}
+df_match_min <- subset(
+  df_match,
+  df_match[["match_bracket"]] %in% df_brackets_regex_match[["bracket"]][df_brackets_regex_match[["regex_match_logical"]]]
+  )
+
+df_match_min_target <- subset(
+  df_match,
+  df_match[["match_bracket"]] %in% df_brackets_regex_match[["bracket"]]
+  )
+success_rate <- nrow(df_match_min) / nrow(df_match_min_target)
+```
+
+
+### Developing Substitutions for Preprocessing 
+
+```{r}
+df_brackets_min2[["regex_match_logical"]] <- sapply(
+  df_brackets_min2[["bracket"]],
+  function(x) if (any(sapply(pg_regex, function(r) grepl(r, x)))) TRUE else FALSE
+)
+```
+
+
+
+
+```{r}
+df_brackets_min[["approx"]] <- ifelse(df_brackets_min[["exact_match"]], df_brackets_min[["bracket"]], NA)
+
+df_brackets_min[["approx"]] <- sapply(
+  1L:nrow(df_brackets_min),
+  function(i){
+    if (is.na(df_brackets_min[i,"approx"])){
+      y <- agrep(gsub("\\s+", "", df_brackets_min[i,"bracket"]), pgs, value = TRUE)
+    } else {
+      y <- df_brackets_min[i,"approx"]
+    }
+    y
+  }
+)
+
+df_brackets_min[["approx"]] <- ifelse(
+  sapply(df_brackets_min[, "approx"], length) != 1L,
+  NA,
+  df_brackets_min[["approx"]]
+)
+df_brackets_min[["approx"]] <- unlist(df_brackets_min[["approx"]])
+```
+
+
+### Getting the Share of Matches
+
+
+```{r}
+df_brackets_gsub <- subset(df_brackets_min, df_brackets_min[["exact_match"]] == FALSE)
+df_brackets_gsub <- subset(df_brackets_gsub, is.na(df_brackets_gsub[["approx"]]) == FALSE)
+
+df_match_min <- subset(df_match, df_match[["match_bracket"]] %in% df_brackets_gsub[["bracket"]])
+
+y <- ddply(
+  .data = df_match_min, .variables = "match_bracket",
+  .fun = function(df){
+    files <- df[["file"]]
+    data.frame(
+      no_files = length(files),
+      files = paste(files, collapse = "|")
+    )
+  }
+)
+```
+
+

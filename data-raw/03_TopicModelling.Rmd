@@ -1,0 +1,86 @@
+---
+title: "Adding topicmodels to GermaParl"
+author: "Andreas Blaette (andreas.blaette@uni-due.de)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{GermaParl}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Enhancing the GermaParl 
+
+```{r load_libraries, eval = TRUE}
+library(polmineR)
+library(topicmodels)
+library(parallel)
+```
+
+## Topicmodel - Optimierung
+
+```{r create_dtm, eval = TRUE}
+dtm <- as.DocumentTermMatrix(
+  "GERMAPARL", pAttribute = "word",
+  sAttribute = "speech", interjection = FALSE
+  )
+```
+
+```{r trim_dtm, eval = TRUE}
+# minimum document length 100 words
+docs_to_drop_length <- names(which(slam::row_sums(dtm) < 100)) # less than 100
+if (length(docs_to_drop_length) > 0)
+  dtm <- dtm[-which(rownames(dtm) %in% docs_to_drop_length),]
+
+# remove noisy words
+terms_to_drop <- noise(colnames(dtm), specialChars = NULL)
+terms_to_drop[["stopwords"]] <- c(
+  terms_to_drop[["stopwords"]],
+  paste(
+    toupper(substr(terms_to_drop[["stopwords"]], 1, 1)),
+    substr(terms_to_drop[["stopwords"]], 2, nchar(terms_to_drop[["stopwords"]])),
+    sep = ""
+  )
+)
+
+# add uncommon words to list of words to remove
+uncommon_words <- names(which(slam::col_sums(dtm) <= 3))
+to_drop <- unique(c(unname(unlist(terms_to_drop)), uncommon_words))
+
+
+dtm <- dtm[,-which(colnames(dtm) %in% to_drop)]
+
+# remove documents that are empty now
+empty_docs <- which(slam::row_sums(dtm) == 0)
+if (length(empty_docs) > 0) dtm <- dtm[-empty_docs,]
+```
+
+Save the matrix, so that it is available for optimization.
+
+```{r save_dtm, eval = TRUE}
+saveRDS(dtm, file = "~/Lab/gitlab/GermaParl/data-raw/dtm/dtm.RData")
+```
+
+
+```{r topicmodelling, eval = TRUE}
+ks <- seq.int(from = 175, to = 275, by = 50)
+dummy <- mclapply(
+  ks,
+  function(k){
+    capture.output(
+      {
+        lda <- LDA(
+          dtm, k = k, method = "Gibbs",
+          control = list(burnin = 1000, iter = 1000, keep = 50, verbose = TRUE)
+        )
+      }, file = sprintf("/hd/projectDirs/GermaParl/logs/lda_log_%d.txt", k)
+    )
+    saveRDS(
+      object = lda,
+      file = sprintf("/hd/projectDirs/GermaParl/lda/lda_%d.RData", k)
+    )
+    return(NULL)
+  },
+  mc.cores = parallel::detectCores() - 2L
+)
+```

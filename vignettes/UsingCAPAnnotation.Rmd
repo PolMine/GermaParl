@@ -1,0 +1,138 @@
+---
+title: "Using the GermaParl Annotation"
+author: "Andreas Blätte (andreas.blaette@uni-due.de)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{use_cap_annotation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Loading packages
+
+```{r load_polmineR.anno, eval = FALSE}
+library(polmineR)
+library(magrittr)
+use("GermaParl")
+```
+
+
+## Inspect Annotations
+
+First, we create a partition with a speech that has been annotated.
+
+```{r, eval = FALSE}
+P <- partition(
+  "GERMAPARL",
+  lp = 13, session = 104, speaker = "Amke Dietert-Scheuer",
+  xml = "nested"
+  )
+if (interactive()) read(P)
+```
+
+Second, let us get the unique annotations that are present.
+
+```{r, eval = FALSE}
+annos <- strsplit(sAttributes(P, "cap"), split = "\\|") %>%
+  unlist() %>% unique()
+annos <- annos[-which(annos %in% "")]
+annos
+```
+
+Third, skip through the annotations.
+
+```{r, eval = FALSE}
+for (anno in annos){
+  message("annotation: ", anno)
+  P2 <- partition(
+    P, cap = sprintf("^.*%s.*$", anno), xml = "nested", regex = TRUE
+    )
+  cpos <- apply(P2@cpos, 1, function(x) x[1]:x[2]) %>% unlist() %>% unique()
+  P %>% html() %>% highlight(list(yellow = cpos)) %>% show()
+  if (readline(prompt = "print 'q' to exit, any other key to continue") == "q") break
+}
+```
+
+
+# Use Annotations for a simply search engine
+
+```{r load_packages2, eval = FALSE}
+library(polmineR)
+use("GermaParl")
+
+library(qlcMatrix)
+library(Matrix)
+
+library(magrittr)
+```
+
+```{r create_partition, eval = FALSE}
+cap_id <- "8-01" # Nuclear Energy
+cap_regex <- sprintf("^.*\\|%s\\|.*$", cap_id)
+P <- partition(
+  "GERMAPARL", cap = cap_regex, regex = TRUE,
+  pAttribute = "word"
+  )
+```
+
+
+```{r create_ctm, eval = FALSE}
+# dtm <- as.DocumentTermMatrix("GERMAPARL", pAttribute = "word", sAttribute = "speech") # 90-100 secs
+# saveRDS(dtm, file = "~/Lab/tmp/dtm.RData")
+dtm <- readRDS(file = "~/Lab/tmp/dtm.RData") # ~ 3 secs
+```
+
+We now fold in the counts for the annotation subcorpus into the document-term-matrix.
+
+```{r fold_in_search_vector, eval = FALSE}
+dtm$i <- c(dtm$i, rep(x = nrow(dtm) + 1, times = nrow(P))) %>% as.integer()
+dtm$v <- c(dtm$v, P[["word"]]) %>% as.integer()
+dtm$j <- c(dtm$j, P[["word_id"]]) %>% as.integer()
+dtm$nrow <- as.integer(dtm$nrow + 1L)
+dtm$dimnames[[1]] <- c(dtm$dimnames[[1]], "search_vector")
+```
+
+Remove short speeches, apply tf-idf weight, and generate input format the cosSparse function requires.
+
+```{r some_cleaning, eval = FALSE}
+dtm2 <- dtm[which(row_sums(dtm) >= 250),]
+dtm3 <- weigh(dtm2, method = "tfidf")
+M <- t(as.sparseMatrix(dtm3))
+```
+
+Now we compare the search vector (Y) with all the documents.
+
+```{r get_cosine_similarities, eval = FALSE}
+simMatrix <- cosSparse(
+  X = M[, 1:(ncol(M) - 1)], 
+  Y = Matrix(as.matrix(M[,ncol(M)]))
+  )
+```
+
+Rank documents by similarity score ...
+
+```{r similarity_vector, eval = FALSE}
+simVector <- setNames(simMatrix[,1], rownames(simMatrix))
+simVectorOrdered <- simVector[order(simVector, decreasing = TRUE)]
+```
+
+Get the terms with the highest tf-idf values to highlight them.
+
+```{r query_vector, eval = FALSE}
+query <- setNames(as.vector(dtm3["search_vector",]), colnames(dtm3))
+query <- query[order(query, decreasing = TRUE)]
+```
+
+Skip through the speeches that match the search vector (generated from the annotations) best. 
+
+```{r skip_query_results, eval = FALSE}
+for (x in names(simVectorOrdered)[1:25]){
+  print(x)
+  partition("GERMAPARL", speech = x) %>%
+    read() %>% 
+    highlight(list(yellow = names(head(query, 250)))) %>%
+    show()
+  if (readline("'q' to quit, any other key to proceed") == "q") break
+}
+```

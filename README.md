@@ -1,0 +1,55 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+Introducing the GermaParl R data package
+========================================
+
+### About
+
+The data package includes the GermaParl corpus of plenary protocols (German Bundestag). The data has been indexed, i.e. it has been imported into the Corpus Workbench (CWB). Using the CWB keeps the data size modest, ensures performance, exposes the CQP syntax, and generates opportunites to combine quantitative and qualitative approaches to analysing text.
+
+The GermaParl package is designed to be used with [polmineR](https://cran.r-project.org/package=polmineR) as a toolset for various standard qualitative and quantitative tasks in text analysis (count, dispersion, ngrams, cooccurrences, viewing concordances as well as going back to the original full-text). Using polmineR, you can easily generate data structures (such as term-document matrices) that are required as input for advanced statistical procedures.
+
+### Installation
+
+The GermaParl package is hosted at a private CRAN-style package repository on the Web-Server of the PolMine Project. The polmineR-package offers a convenient installation mechanism.
+
+``` r
+library(polmineR)
+install.corpus("GermaParl") # bulky data, that may take a while
+```
+
+### Using GermaParl
+
+To check whether the installation has been successful, run the following commands. For further instructions, see the documentation of the polmineR package.
+
+``` r
+use("GermaParl") # to activate the corpus in the data package
+corpus() # to see whether the GERMAPARL corpus is listed
+size("GERMAPARL") # to learn about the size of the corpus
+```
+
+### License
+
+The data comes with a CLARIN PUB+BY+NC+SA license. That means:
+
+**PUB** - The language resource can be distributed publicly.
+
+**BY** - Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+
+**NC** - NonCommercial — You may not use the material for commercial purposes.
+
+**SA** - ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+
+The [CLARIN licenses](https://www.clarin.eu/content/license-categories) are modelled on the Creative Commons licenses. See the [CC Attribution-NonCommercial-ShareAlike 3.0 Unported License](https://creativecommons.org/licenses/by-nc-sa/3.0/) for further explanations.
+
+### Quotation
+
+If you work with GermaParl package, please include the following reference in your bibliography to attribute the language resource:
+
+*Blaette, Andreas* (2017): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.1.1). <http://polmine.sowi.uni-due.de/packages/src/contrib/GermaParl_1.1.1.tar.gz>.
+
+### Feedback
+
+We hope that GermaParl in combination with polmineR will inspire your research and make it more productive. We would be glad to learn what you do with the data, and make your blog entries or publications visible here.
+
+And please do not forget to bring issues that you come across to our attention. Improving data quality is an important concern of the PolMine Project, this is why the data is versioned. The resource will benefit from its community of users and your feedback!

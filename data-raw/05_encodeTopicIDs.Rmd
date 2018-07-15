@@ -1,0 +1,105 @@
+---
+title: "Add topics of speeches to GermaParl"
+author: "Andreas Blaette (andreas.blaette@uni-due.de)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Add topics of speeches to GermaParl}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Objective
+
+After optimization, write back result of optimal model to corpus.
+
+
+# Initialization
+
+## Load required libraries
+
+```{r load_libraries, eval = TRUE}
+library(polmineR)
+library(topicmodels)
+library(data.table)
+```
+
+
+## Activate GermaParl corpus
+
+```{r activate_GermaParl, eval = TRUE}
+use("GermaParl")
+```
+
+
+## Load (optimized) LDA model
+
+```{r load_model, eval = TRUE}
+k <- 250 # the optimal number of topics
+model <- readRDS(sprintf("~/Lab/tmp/LDA/lda_%d.RData", k)) # object.size is ~ 1 GB
+```
+
+
+# Prepare data to encode
+
+## Get table with corpus positions
+
+```{r cpos_table, eval = TRUE}
+cposDT <- decode("GERMAPARL", sAttribute = "speech") # ~ 30 seconds
+setkeyv(cposDT, "speech")
+```
+
+
+## Get table with topics
+
+```{r topic_table, eval = TRUE}
+topicMatrix <- topics(model, k = 5)
+topicDT <- data.table(
+  speech = colnames(topicMatrix),
+  topics = apply(topicMatrix, 2, function(x) sprintf("|%s|", paste(x, collapse = "|"))),
+  key = "speech"
+  )
+```
+
+
+## Merge tables
+
+```{r merge_tables, eval = TRUE}
+cposDT2 <- topicDT[cposDT]
+setorderv(cposDT2, cols = "cpos_left", order = 1L)
+cposDT2[["speech"]] <- NULL
+cposDT2[["id"]] <- NULL
+cposDT2[, topics := ifelse(is.na(topics), "||", topics)]
+setcolorder(cposDT2, c("cpos_left", "cpos_right", "topics"))
+```
+
+
+# Some tests
+
+```{r}
+coverage <- sum(cposDT2[["cpos_right"]] - cposDT2[["cpos_left"]]) + nrow(cposDT2)
+if (coverage != size("GERMAPARL")) stop()
+P <- partition("GERMAPARL", speech = ".*", regex = TRUE)
+if (sum(cposDT2[["cpos_left"]] - P@cpos[,1]) != 0) stop()
+if (sum(cposDT2[["cpos_right"]] - P@cpos[,2]) != 0) stop()
+if (length(sAttributes("GERMAPARL", "speech", unique = F)) != nrow(cposDT2)) stop()
+```
+
+# Encode data
+
+```{r encode, eval = TRUE}
+encode(cposDT2, corpus = "GERMAPARL", sAttribute = "topics")
+```
+
+# check
+
+```{r check, eval = FALSE}
+library(magrittr)
+T <- terms(model, 100)
+P <- partition("GERMAPARL", topics = "^\\|133\\|.*$", regex = TRUE)
+PB <- as.speeches(P)
+for (i in 1:length(PB)) {
+  read(PB[[i]]) %>% highlight(list(yellow = T[,133])) %>% print()
+  if (readline() == "q") stop()
+}
+```

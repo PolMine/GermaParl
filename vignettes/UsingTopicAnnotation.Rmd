@@ -1,0 +1,65 @@
+---
+title: "Using the topic annotation"
+author: "Andreas Blaette (andreas.blaette@uni-due.de)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Add topics of speeches to GermaParl}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Load libraries
+
+```{r, eval = FALSE}
+library(polmineR)
+use("GermaParl")
+
+library(topicmodels)
+library(magrittr)
+```
+
+
+
+## Restore LDA model
+
+```{r load_model, eval = FALSE}
+k <- 250 # the optimal number of topics
+model <- readRDS(sprintf("~/Lab/tmp/LDA/lda_%d.RData", k)) # object.size is ~ 1 GB
+ts <- terms(model, 100)
+```
+
+```{r, eval = FALSE}
+if (interactive()){
+  for (i in 1:250){
+    print(ts[,i])
+    if (readline("q to quit or any other key to continue") == "q") break
+  }
+}
+```
+
+
+## Skip through topic 133 (citizenship / naturalization)
+
+```{r check, eval = FALSE}
+topic <- "133"
+topicRegex <- sprintf("^\\|%s\\|.*$", topic)
+P <- partition("GERMAPARL", topics = topicRegex, regex = TRUE)
+PB <- as.speeches(P)
+for (i in 1:length(PB)) {
+  read(PB[[i]]) %>% highlight(list(yellow = ts[,133])) %>% print()
+  if (readline() == "q") stop()
+}
+```
+
+## Skip through documents with topic cooccurrence
+
+```{r check2, eval = FALSE}
+topicRegex <- "^(\\|213\\|9\\||\\|9\\|213\\|).*$"
+P <- partition("GERMAPARL", topics = topicRegex, regex = TRUE)
+PB <- as.speeches(P)
+for (i in 1:length(PB)) {
+  read(PB[[i]]) %>% highlight(list(yellow = ts[,213], lightgreen = ts[,9])) %>% print()
+  if (readline() == "q") stop()
+}
+```

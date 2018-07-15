@@ -1,0 +1,107 @@
+---
+title: "Nicht gehaltene Reden im Korpus identifizieren"
+output: html_notebook
+---
+
+Problemstellung: der Korpus "GermaParl" enthält Reden, die nicht im Plenum gehalten wurden. Wie können diese identifiziert werden?
+
+
+```{r message=FALSE, warning=FALSE}
+# Korpus und Pakete laden
+require(dplyr)
+require(polmineR)
+use("GermaParl")
+
+# Vorbereitung
+# sAttribute für den Korpus in data.table schreiben
+sattrib_gp <- sAttributes("GERMAPARL", c("agenda_item", "speaker", "role", "date"))
+
+# Resultat ist eine sehr große Tabelle. sAttributes werden für jeden Absatz gesetzt, für die erste Analyse interessiert aber nur ein Absatz pro Rede. Also kann das identische Folgeelement entfernt werden.
+
+sattrib_gp_tf <- (sattrib_gp[-nrow(sattrib_gp)]!=sattrib_gp[-1])
+speaker_gp_row_unique <- sattrib_gp[with(sattrib_gp, c(sattrib_gp_tf[,1]|sattrib_gp_tf[,2], TRUE)),]
+
+
+# ----------------------- item + date, max_values -------------------
+# Wie viele Rednerinnen sprechen hintereinander, ohne Einschub durch Präsidenten? Die Funktion ave zählt für jeden aufeinanderfolgenden role == "mp" hoch, bis ein role != "mp" erscheint.
+# https://stackoverflow.com/questions/48551492/count-consecutive-true-values-within-each-block-separately?noredirect=1&lq=1
+speaker_gp_row_unique$is_mp <- speaker_gp_row_unique$role == "mp"
+speaker_gp_row_unique$rep_role <- ave(speaker_gp_row_unique$is_mp, cumsum(!speaker_gp_row_unique$is_mp), FUN = cumsum)
+
+# anzahl aller rednerinnen pro agenda_item hinzugefügt
+speaker_gp_row_unique <- speaker_gp_row_unique %>% add_count(agenda_item, date)
+
+# maximalwerte für jedes agenda_item mit rep_role > 3 filtern. Für die Analyse interessieren jeweils nur die lokalen maxima von rep_role, also der jeweils letzte Wert, bevor eine Reihe repeating roles wieder unterbrochen wird.
+max_rep_role <- speaker_gp_row_unique %>% filter(rep_role > 3) %>% group_by(agenda_item, date) %>% filter(rep_role == max(rep_role)) 
+
+# für später: agenda_item als numeric
+max_rep_role$agenda_item <- as.numeric(max_rep_role$agenda_item)
+
+```
+
+In der Tabelle sind nun alle konsekutiven Rednerinnen mit role = mp gezählt. Als erste Plausibilitätsprüfung: Wie sind diese Daten verteilt?
+
+
+
+```{r message=FALSE, warning=FALSE}
+# Verteilung von max_rep_role über agenda_item, Häufigkeit und date
+
+# wie ist die zahl der maximalen konsekutiven reden über agenda_items verteilt? Wenn Reden eher im späteren verlauf der Sitzung zu protokoll gegeben werden, ist agenda_item < 9 womöglich ein anderes Phänomen.
+barplot(table(sort(as.numeric(max_rep_role$agenda_item))), main = "conseq_speech per agenda_item")
+
+# Verteilung der maximalen konsekutiven reden (> 3).
+barplot(table(sort(as.numeric(max_rep_role$rep_role))), main = "frequency of conseq_speech")
+
+# verteilung über Date. Das ist überraschend. hier werden alle agenda_items mit hoher zahl konsekutiver mps pro tag aufsummiert. Ich hätte erwartet, dass vielleicht drei oder vier agenda_items pro tag zu protokoll gegeben werden. Die auffälligen Zahlen betreffen nur einen begrenzten Zeitraum zwischen Mai 2008 und Juni 2013, also vor allem lp 16. Das könnte am stenographischen Dienst liegen
+barplot(table(sort(as.Date(max_rep_role$date))), main = "conseq_speech per date")
+
+
+```
+
+Hier passen ein paar Dinge nicht mit den Annahmen zusammen. Vor allem die niedrigen agenda_items sind seltsam, da zu vermuten ist, dass Reden eher gegen Ende des Tages zu Protokoll gegeben werden (Priorisierung der agenda_items in der Tagesordnung); bei date ist zu vermuten, dass Reden eher am Ende der Legislaturperiode aus Zeitknappheit nicht mehr gehalten werden.
+
+
+Die reine Anzahl aufeinaderfolgenden Reden ohne Unterbrechung durch das Präsidium ist daher kein ausreichendes Kriterium, weil es Dialoge zwischen Rednern und Zwischenfragern gibt, die als false positives noch in der Tabelle enthalten sind. Diese Dialoge sind aber Teil von Tagesordnungspunkten, in denen mehrere Rednerinnen angekündigt werden und damit nicht in der Zahl der repeating mps auftauchen. Der Quotient aus der Zahl der aufeinanderfolgenden mps und der Anzahl aller Rednerinnen pro agenda_item zeigt, ob (fast) alle Rednerinnen eines agenda_items aufeinander folgen, oder Teil eines komplexeren agenda_items sind. Ein Quotient nahe 1 spricht für Protokoll, nahe 0 für eine andere Erklärung. 
+
+```{r}
+# quotient aus aufeinanderfolgenden mps und allen reden pro agenda_item
+max_rep_role$anteil_rep <- max_rep_role$rep_role/max_rep_role$n
+
+# histogramm des quotienten
+hist(max_rep_role$anteil_rep, breaks = 100)
+```
+
+Knapp 60% der identifizierten Reden hat einen Quotienten > 0.8. In dieser Gruppe ist zu vermuten, dass es vor allem Reden sind, die zu Protokoll gegeben wurden. Weil die Selektion dazu führt, dass Reden aus dem Korpus entfernt werden könnten, ist precision zunächst wichtiger als recall. Das spricht für einen restriktiveren Quotienten 0.8
+
+
+```{r}
+# Tabelle bereinigen auf alle mit anteil_rep größer 0.8
+max_rep_role_quot <- max_rep_role %>% filter(anteil_rep > 0.8)
+
+# und die grafiken von oben nochmal zum vergleich
+barplot(table(sort(as.numeric(max_rep_role_quot$agenda_item))), main = "conseq_speech per agenda_item")
+
+barplot(table(sort(as.numeric(max_rep_role_quot$rep_role))), main = "frequency of conseq_speech")
+
+barplot(table(sort(as.Date(max_rep_role_quot$date))), main = "conseq_speech per date")
+
+```
+
+
+Die Auswahl von 835 unique agenda_items ist immer noch relativ hoch, sieht aber wesentlich plausibler aus, was die Verteilung über agenda_items betrifft. Die 90er Jahre sind komplett verschwunden. Die meisten Debatten sind zwischen 5 und 7 Beiträgen lang, was plausibel erscheint. Die 4er Kombinationen, die vorher noch drin waren, sind durch die Selektion per Quotient vollständig eliminiert worden.
+
+Ein weiterer Test auf Plausibilität: in der Logik der selektion wird das auszuwählende agenda_item n durch presidency in agenda_item n-1 angekündigt. Dann folgen ausschließlich reden von mps, die zu protokoll gegeben wurden, eher das nächste agenda_item von role(presidency) angekündigt wird. Der hohe Quotient ist ein erster Hinweis darauf, dass die Reden angekündigt wurden. Ein weiterer Hinweis wäre, wenn die Differenz aus n(speaker) und n(speaker(mp)) = 1 ist. 
+
+Daher:
+```{r}
+max_rep_role_quot$diff <- max_rep_role_quot$n - max_rep_role_quot$rep_role
+```
+
+Für agenda_item = 0 bei date = "2002-01-30" trifft das nicht zu, hier ist diff = 0. Da liegt ein Kodierungsfehler vor. Für die restlichen 834 trifft es zu. Eine stichprobenartige Überprüfung bestätigt bisher die Annahme, dass jetzt nur noch Reden enthalten sind, die zu Protokoll gegeben wurden. 
+
+Die Verbindung von date und agenda_item in der tabelle max_rep_role_quot gibt jetzt eindeutige IDs für Reden, die wahrscheinlich nicht gehalten wurden. Für diese sollten für die Bereinigung alle role != "presidency" gelöscht werden.
+
+# To Do
+- erneute Überprüfung der Ergebnisse, um false positives auszuschließen
+- Test mit einem Quotienten < 0.8, um false negatives zu minimieren
+

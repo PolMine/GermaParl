@@ -1,0 +1,326 @@
+---
+title: "GermaParl (v1.1.0)"
+subtitle: "Corpus Documentation"
+author: "Andreas Blaette (andreas.blaette@uni-due.de)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+fontsize: 12pt
+vignette: >
+  %\VignetteIndexEntry{GermaParl}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+### A Corpus of Plenary Protocols
+
+Parliamentary debates convey the arguments, interpretations and contestations that shape political decision-making. They are recorded and transcribed by parliamentary administrations with diligence, and published as plenary protocols. These documents are available for long periods of time -- for several decades and more -- and they cover the full breadth of topics that is processed by a political system: Plenary protocols are a valuable resource for research on policy and politics, and for citizens. They are a crucial building block of the public digital archive of democracy.
+
+The digital availability of plenary protocols is excellent and limited at the same time. Documents can be downloaded without technical or legal restrictions as txt, html or pdf documents. But this data format does not match the requirements for digital-era data processing. To exploit the analytical potential of the data, original documents need to be converted into a semi-structured data format (typically XML). The GermaParl corpus as it has been prepared in the [PolMine Project](www.polmine.de) implements this notion and is based on an XMLification of txt and pdf documents. The aim is to make a contribution to the broader development of preparing corpora of plenary protocols -- the naming of GermaParl is inspired by the EuroParl and DutchParl corpus, see Marx & Schuth 2010. GermaParl is intended to serve as an example how to make corpora available in a sustainable way, meeting the technological standards and requirements of the digital era.
+
+GermaParl is made available in two ways:
+
+- The base format of the corpus is a XMLification of the raw data (i.e. the original protocols) that is modelled on the standards of the [Text Encoding Initiative (TEI)](http://www.tei-c.org/index.xml). Releases of the TEI format of GermaParl  are available via the [GermaParlTEI repository at GitHub](https://github.com/PolMine/GermaParlTEI).  It results from an automized, fully reproducible pipeline, i.e. raw protocols (pdf and txt file format) have been turned into an XML/TEI-based standard.
+
+- A linguistically annotated, indexed and consolidated version of the corpus is included in the GermaParl R data package documented with this vignette. XML/TEI files serve the point of departure, but the version emanates from (a) performing some standard Natural Language Processing (NLP) tasks (such as tokenization, lemmatization, part-of-speech annotation); (b) importing the linguistically annotated  data into the [Corpus Workbench (CWB)](http://cwb.sourceforge.net/) and (c) consolidating the data in a set of postprocessing tasks to remove known errors. The steps of the annotation/indexing/consolidation workflow are documented, ensuring full reproducibility, with the vignette "GermaParl - From XML to CWB" included in this R data package.
+
+The corpus includes all plenary protocols that were published by the German Bundestag between 1996 and 2016. Plain text documents issued by the German Bundestag were considered the best raw data format for corpus preparation and were used whenever they are available. For a period between 2008 and 2010, txt files are not available throughout. To fill the gap, pdf documents were processed. The following sections explain corpus preparation and the data made available with this package in some more detail.
+
+
+### Corpus Preparation
+
+The preparation of the TEI version of GermaParl implements the following workflow:
+
+- __Preprocessing__: Prepare consolidated UTF-8 plain text documents (ensuring uniformity of encodings, conversion of pdf to txt if necessary);
+
+- __XMLification__: Turn the plain text documents into TEI format: Extraction of metadata, annotation of speakers etc.;
+
+- __Consolidation__: Consolidating speaker names and enriching documents.
+
+The preprocessing step is not as trivial as it might seem. Older plain text files are offered by the German Bundestag in all kinds of encodings that are have come out of use. The pdf documents have a two-column layout that is difficult to handle. Experience to handle these issues is captured by the respective functionality that is included in the R package [ctk](https://www.github.com/PolMine/ctk). For handlung the two-column layout of pdf documents, the R package [trickypdf](https://github.com/PolMine/trickypdf) has been developed.
+
+The essential instrument for the XMLification is a set of regular expressions to extract relevant metadata (such as legislative period, session number or date), to find the beginning and the end of a debate, the call upon the speakers, and the beginning and end of agenda items. The matches are used to generate the structural annotation of parliamentary speech in the XML document.
+
+Due to the remaining haphazard variations that occur in plenary protocols, the quest is not for a universal battery of regular expressions that would always work without manual checks. Even though it introduces an element of manual work, our solution is to work with lists of mismatches (matches of regular expressions to omit), in combination with a brute-force preprocessing (hard-coded substitutions) that correct obvious errors that are already included in the original version of plenary protocol.
+
+The result of the base XMLification still includes considerable noise. Inconsistencies that occur with names are a particularly serious issue. To obtain consolidated metadata, information that has been extracted is checked (including approximate string matching) against an external data source. We opted for lists of members of parliamentarians, cabinet members and further speakers that are available on Wikipedia (see the [page for the 17th Bundestag](https://de.wikipedia.org/wiki/Liste_der_Mitglieder_des_Deutschen_Bundestages_(17._Wahlperiode)), for instance).
+
+Easy digital access is not the only justification for this choice. Wikipedia pages for the parliamentary sessions are being taken care of by a team of dedicated volunteers. Furthermore, Wikipedia pages meet  permanent public scrutiny, ensuring quality checks on the data quality in a manner traditional printed material does not necessarily ensure.
+
+The code for corpus preparation is wrapped in a R package, and upon preparing a corpus, the version number of the package used is included in the TEI metadata, so that the corpus preparation is fully transparent and reproducible.
+
+
+### Annotation
+
+#### Linguistic Annotation
+
+The XML/TEI version of GermaParl is taken through a pipeline of standard Natural Language Processing (NLP) tasks. Starting with version 1.1.0, Stanford CoreNLP is used for tokenization and part-of-speech (POS) annotation. To add lemmas to the corpus, the  [TreeTagger](http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/) is used. A full (technical) documentation of the linguistic annotation of the corpus is included in the vignette "GermaParl - From XML to CWB" and not reproduced here.
+
+Note that the TreeTagger outpus #unknown# if it cannot successfully lemmatize a wordform. See the tables in the annex to learn about the unknown ratio in the corpus. 
+
+Moving to Stanford CoreNLP as the base annotation tool will be the basis for adding further annotation layers to the corpus (such as an annotation of sentences, or named entities) in the future. 
+
+
+#### Structural Annotation (Metadata)
+
+In the XML/TEI data format, all passages of uninterrupted speech are tagged with metadata, or so-called structural attributes (s-attributes). For instance, parliamentary speeches are often interrupted by interjections - the information whether an utterance is an interjection or an actual speech, is maintained in the corpus. The legislative period, session, date, name of a speaker and his/her parliamentary group are included, among others. The structural annotation is the basis for all kinds of diachronic or synchronic comparisons users may want to perform.
+
+The following table provides short explanations of the s-attributes that are present in the GermaParl corpus.
+
+```{r s-attributes, echo = FALSE, message = FALSE}
+sAttrsList <- list(
+  c("lp", "legislative period", "13 to 18"),
+  c("session", "session/protocol number", "1 to 253"),
+  c("src", "source material for data preparation", "txt or pdf"),
+  c("url", "URL", "URL of the original document"),
+  c("agenda_item", "agenda item", "number of the agenda item"),
+  c("agenda_item_type", "type of agenda item", "debate/question_time/government_declaration/..."),
+  c("date", "date of the session", "YYYY-MM-TT (e.g. '2013-06-28')"),
+  c("year", "year of the session", "1996 to 2016"),
+  c("interjection", "whether contribution is interjection", "TRUE/FALSE"),
+  c("role", "role of the speaker", "presidency/mp/government/..."),
+  c("speaker", "Name", "speaker name"),
+  c("parliamentary_group", "Parliamentary group", "partliamentary group the speaker is affiliated with"),
+  c("party", "Party", "party of the speaker")
+)
+tab <- do.call(rbind, sAttrsList)
+colnames(tab) <- c("s-attribute", "description", "values")
+knitr::kable(tab, format = "markdown")
+```
+
+
+### Using the GermaParl corpus
+
+#### Getting started - installing GermaParl
+
+The GermaParl data package that includes the CWB indexed version of the corpus is hosted at a private CRAN-style package repository on the Web-Server of the PolMine Project. The polmineR-package offers a convenient installation mechanism.
+
+```{r installing_GermaParl, eval = FALSE}
+library(polmineR)
+install.corpus("GermaParl") # roughly 1 GB, the download may take a while
+```
+
+To check whether the installation has been successful, run the following commands. For further instructions, see the documentation of the polmineR package.
+
+```{r check_installation, eval = FALSE}
+library(polmineR)
+use("GermaParl") # to activate the corpus in the data package
+corpus() # to see whether the GERMAPARL corpus is listed
+size("GERMAPARL") # to learn about the size of the corpus
+```
+
+We did not mention this yet: GermaParl is not a small corpus!
+
+#### A very brief tutorial
+
+The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as [CQPweb](http://cwb.sourceforge.net/cqpweb.php)). However, most technical decisions during corpus preparation had in mind to optimise using the GermaParl corpus in combination with the polmineR package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands.
+
+First, you may want to learn about the p-attributes (positional attributes), and s-attributes (structural attributes) that are available.
+
+```{r sAttributes, eval = FALSE}
+sAttributes("GERMAPARL")
+pAttributes("GERMAPARL")
+```
+
+To learn about the values of s-attributes, specify the param sAttribute:
+
+```{r sAttributes_year, eval = FALSE}
+sAttributes("GERMAPARL", "year")
+sAttributes("GERMAPARL", "parliamentary_group")
+sAttributes("GERMAPARL", "party")
+```
+
+To inspect keywords-in-context (KWIC), use the kwic-method:
+
+```{r kwic, eval = FALSE}
+K <- kwic("GERMAPARL", query = "Textanalyse")
+if (interactive()) K
+```
+
+The count-method is used for counting. You can supply one or multiple queries:
+
+```{r count, eval = FALSE}
+count("GERMAPARL", query = "Minderheitsregierung")
+count("GERMAPARL", query = c("Asyl", "Flucht", "Abschiebung"))
+```
+
+To get the dispersion of a query, use the dispersion-method.
+
+```{r dispersion, eval = FALSE}
+D <- dispersion("GERMAPARL", query = "Flüchtlinge", sAttribute = "year")
+```
+
+Visualise the result as a barplot...
+
+```{r dispersion_barplot, eval = FALSE}
+barplot(D[["count"]], names.arg = D[["year"]], las = 2)
+```
+
+The cooccurrences-method will get you the cooccurrences of a query.
+
+```{r cooc, eval = FALSE}
+C <- cooccurrences("GERMAPARL", query = "Terroranschläge")
+C@stat[1:5]
+dotplot(C)
+```
+
+These are some if the core functions, applied to the whole corpus. The whole point of the structural annotation of the corpus (s-attributes) is to facilitate the creation of subcorpora / partitions. So every method that has been introduced can be applied to a partition.
+
+```{r count_partition, eval = FALSE}
+lp16 <- partition("GERMAPARL", lp = 16)
+count(lp16, query = c("Asyl", "Flucht", "Abschiebung"))
+dispersion(lp16, query = "Flüchtlinge", sAttribute = "year")
+```
+
+Finally, note that the methods of polmineR can also be used with the pipe functionality offered by the magrittr package.
+
+```{r pipe, eval = FALSE}
+library(magrittr)
+cooccurrences(lp16, query = "Terrorismus") %>% 
+  subset(!word %in% c(tm::stopwords("de"), ",", ".")) %>%
+  subset(count_window >= 5) %>%
+  dotplot()
+```
+
+This is just a short glimpse into the analytical opportunities of using GermaParl in combination with polmineR. One of the most important aspects that cannot be explained here is the possibility to use the syntax of the Corpus Query Processor (CQP) that comes with the CWB backend. The as.TermDocumentMatrix method will prepare data structures efficiently needed for more advanced analytical techniques such as topicmodelling.Consult the vignette of the polmineR package to learn more!
+
+
+#### Come caveats
+
+A set of general remarks may help to avoid pitfalls when working with GermaParl:
+
+* Plenary protocols meticulously report interjections. To maintain the integrity of the original documents, interjections are annotated in the corpus. By using the s-attribute 'interjection' that assumes the values 'TRUE' or 'FALSE', you can limit your analysis to speech or interjections.
+
+* Plenary protocols report membership in a parliamentary group only. Information on party membership is derived from external data sources and written back to the corpus. More specifically, the s-attribute 'parliamentary_group' refers to the parliamentary group, 'party' refers to the party a speaker is a member of. To distinguish between CDU and CSU speakers, using the s-attribute 'party' is necessary. 
+
+* The GermaParl corpus is a corpus of the debates and speeches that were actually given in the German Bundestag. Speeches that were only included in the printed protocol (i.e. included in the annex to a protocol) are not yet covered by corpus preparation. 
+
+
+### Perspectives
+
+GermaParl is not the only corpus of plenary protocols. Apart from PolMine, several further projects have worked on preparing respective corpora. There is an ensuing dialogue among these projects, and GermaParl strives to contribute to this broader development, trying to serve as a example how reproducibility and quality control can be maintained during all steps of corpus preparation, and how corpora can be disseminated in a manner that lowers the barriers of entry for new users.
+
+The resource is under active development. Apart from improving data quality and preparing updates, one important concern is to add further annotation layers: 
+
+* Moving to Stanford CoreNLP as the core tool for the NLP pipe (a step that has been taken with version 1.1.0) provides the basis for adding sentence annotation, and a basic annotation of named entities in the future. 
+
+* There are many scenarios for using the corpus that require an ability to create classification-based subcorpora. Writing the results of an optimized topicmodel to the corpus as structural attributes is being prepared, and will relieve users from the cumbersome task of running multiple topicmodels. Given the size of the corpus, every run to train a topicmodel takes considerably time, and multiple models need to be trained to learn about the optimal number of topics.
+
+* Perspectively, classification based on a supervised learning approach will be superior to unsupervised learning. In a CLARIN-funded project, training data has been prepared to obtain the basis for a classification of debates according to a (somewhat expanded) classification scheme of the Comparative Agendas Project (CAP). An annotation of the hand-coded text passages will be included in the corpus.
+
+Hopefully, GermaParl will make qualitative and quantitative research with German parliamentary debates more productive. A final note on user feedback: Improving data quality is an important concern of the PolMine Project. This is why the data is versioned. The resource will benefit from its community of users - feedback that helps to improve data quality is more than welcome!
+
+### License
+
+While the raw data, the plenary protocols published by the German Bundestag, are in the public domain, the GermaParl corpus comes with a CLARIN PUB+BY+NC+SA license. That means:
+
+__PUB__ - The language resource can be distributed publicly. 
+
+__BY__ - Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+
+__NC__ - NonCommercial — You may not use the material for commercial purposes.
+
+__SA__ - ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+
+The [CLARIN licenses](https://www.clarin.eu/content/license-categories) are modelled on the Creative Commons licenses. See the [CC Attribution-NonCommercial-ShareAlike 3.0 Unported License](https://creativecommons.org/licenses/by-nc-sa/3.0/) for further explanations.
+
+
+### Quotation
+
+If you work with GermaParl package, please include the following reference in your bibliography to attribute the language resource:
+
+_Blaette, Andreas_ (2017): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.0.4). http://polmine.sowi.uni-due.de/packages/src/contrib/GermaParl_1.1.1.tar.gz. 
+
+
+### Annex
+
+#### Corpus data (by electoral period)
+
+```{r stat_by_lp, eval = FALSE, echo = FALSE, message = FALSE}
+library(polmineR)
+use("GermaParl")
+library(knitr)
+library(data.table)
+
+dts <- lapply(
+  13:17,
+  function(lp){
+    P <- partition("GERMAPARL", lp = lp)
+    dates <- as.Date(sAttributes(P, "date"))
+    dt <- polmineR::count(P, pAttribute = "lemma")
+    unknown <- round(sum(dt[grepl("#unknown#", dt[["lemma"]])][["count"]]) / size(P), digits = 3)
+
+    data.table(
+      lp = lp,
+      protocols = length(unique(sAttributes(P, "session"))),
+      first = min(dates, na.rm = TRUE),
+      last = min(dates, na.rm = TRUE),
+      size = size(P),
+      unknown = unknown
+      )
+  }
+)
+dt <- rbindlist(dts)
+knitr::kable(dt, format = "markdown")
+```
+
+
+#### Corpus data (by year)
+
+
+```{r stat_by_year, eval = FALSE, echo = FALSE, message = FALSE}
+years <- as.integer(sAttributes("GERMAPARL", "year"))
+dts <- lapply(
+  min(years):max(years),
+  function(year){
+    P <- partition("GERMAPARL", year = as.character(year), verbose = FALSE)
+    P.txt <- partition(P, src = "txt")
+    P.pdf <- partition(P, src = "pdf")
+    dt <- polmineR::count(P, pAttribute = "lemma")
+    unknowns <- round(sum(dt[grepl("#unknown#", dt[["lemma"]])][["count"]]) / size(P), digits = 3)
+    data.table(
+      year = year,
+      protocols = length(unique(sAttributes(P, "session"))),
+      txt = length(sAttributes(P.txt, "session")),
+      pdf = length(sAttributes(P.pdf, "session")),
+      size = size(P),
+      unknown = unknowns
+      )
+  }
+)
+dt1 <- rbindlist(dts)
+dt2 <- rbind(dt1, t(data.table(colSums(dt1))), use.names = FALSE, fill = FALSE)
+dt2[["year"]] <- as.character(dt2[["year"]])
+dt2[nrow(dt2), 1] <- "TOTAL"
+knitr::kable(dt2, format = "markdown")
+```
+
+
+#### Data sources
+
+Starting from the 17th legislative period, txt versions of plenary protocols were retrieved from the [homepage of the German Bundestag](http://www.bundestag.de/dokumente/protokolle/plenarprotokolle/plenarprotokolle/index.html). 
+The following table reports the URLs that have been used to download txt versions of older plenary protocols.
+
+```{r urls, echo = FALSE, message = FALSE}
+
+urls <- list(
+  c("1996", "http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1996/index.htm"),
+  c("1997", "http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1997/index.htm"),
+  c("1998", "http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1998/index.htm"),
+  c("1999", "http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1999/index.htm"),
+  c("2000", "http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2000/index.htm"),
+  c("2001", "http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2001/index.htm"),
+  c("2002", "http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2002/index.html"),
+  c("2003", "http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2003/index.html"),
+  c("2004", "http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2004/index.html"),
+  c("2005", "http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2005/index.html"),
+  c("2006", "http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2006/index.html"),
+  c("2007", "http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2007/index.html"),
+  c("2008", "http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2008/index.html"),
+  c("2009", "http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2009/index.html")
+)
+tab <- do.call(rbind, urls)
+colnames(tab) <- c("year", "URL")
+knitr::kable(tab, format = "markdown")
+```
+
+

@@ -1,0 +1,56 @@
+---
+title: "Adding topicmodels to GermaParl"
+author: "Andreas Blaette (andreas.blaette@uni-due.de)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{GermaParl}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Initialization
+
+```{r initialization, eval = FALSE}
+library(ldatuning)
+```
+
+
+## Topic Model Optimization
+
+```{r topicmodel_optim, eval = FALSE}
+dtm <- readRDS(file = "~/Lab/gitlab/GermaParl/data-raw/dtm/dtm.RData")
+```
+
+```{r load_data, eval = FALSE}
+ldaFiles <- Sys.glob("~/Lab/tmp/LDA/lda_*.RData")
+noTopics <- as.integer(gsub("^lda_(\\d+)\\.RData$", "\\1", basename(ldaFiles)))
+LDAs <- pbapply::pblapply(ldaFiles, readRDS)
+
+# needs to be identical with the params used for LDAs
+control <- list(burnin = 1000, iter = 1000, keep = 50, verbose = TRUE)
+```
+
+```{r optimize, eval = FALSE}
+result <- data.frame(topics = noTopics)
+result[["Griffiths2004"]] <- ldatuning:::Griffiths2004(LDAs, control)
+result[["CaoJuan2009"]] <- ldatuning:::CaoJuan2009(LDAs)
+result[["Arun2010"]] <- ldatuning:::Arun2010(LDAs, dtm) # fails
+result[["Deveaud2014"]] <- ldatuning:::Deveaud2014(LDAs)
+
+saveRDS(result, file = "~/Lab/gitlab/GermaParl/data-raw/lda_topic_optimization.RData")
+```
+
+Visualisation
+-------------
+
+```{r topics_vis, eval = FALSE}
+ldatuning::FindTopicsNumber_plot(lda_tuning)
+```
+
+
+Perplexity 
+==========
+
+
+https://stackoverflow.com/questions/21355156/topic-models-cross-validation-with-loglikelihood-or-perplexity

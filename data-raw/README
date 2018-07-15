@@ -1,0 +1,17 @@
+#!/bin/sh
+
+Rscript -e 'rmarkdown::render("MakingOfGermaParl.Rmd", "html_document")'
+Rscript -e 'rmarkdown::render("GermaParl.Rmd", "html_document")'
+
+cp ~/Lab/gitlab/GermaParl/data-raw/MakingOfGermaParl.Rmd ~/Lab/gitlab/GermaParl/vignettes/
+sed -i -e "s/eval\s*=\s*TRUE/eval=FALSE/g" ~/Lab/gitlab/GermaParl/vignettes/MakingOfGermaParl.Rmd
+
+cp -r /home/blaette/Data/cwb/indexed_corpora/germaparl/* ~/Lab/gitlab/GermaParl/inst/extdata/cwb/indexed_corpora/germaparl
+cp /home/blaette/Data/cwb/registry/germaparl ~/Lab/gitlab/GermaParl/inst/extdata/cwb/registry
+
+
+cd ~/Lab/gitlab/GermaParl
+Rscript -e 'devtools::document("~/Lab/gitlab/GermaParl")'
+Rscript -e 'pkgdown::build_site()'
+
+R CMD build GermaParl

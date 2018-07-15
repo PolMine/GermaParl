@@ -1,0 +1,119 @@
+---
+title: "Metadaten GermaParl"
+output: html_notebook
+---
+
+Korpus anhand von Metadaten untersuchen.
+
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+
+# spielereien mit sAttributes:
+require(polmineR)
+use("GermaParl")
+
+# Partition für einen Tag als Test, der nicht gehaltene Reden enthält
+sattrib_part <- partition("GERMAPARL", date = "2012-02-09")
+
+# sAttribute in Tabelle schreiben
+sattrib_test <- sAttributes(sattrib_part, c("agenda_item", "speaker", "role", "parliamentary_group"))
+
+# da kommt jetzt eine richtig lange liste bei raus. sAttributes werden für jeden Absatz gesetzt, für die erste Analyse interessiert aber nur ein Absatz pro Rede.
+# folgeelement https://stackoverflow.com/questions/27022057/removing-only-adjacent-duplicates-in-data-frame-in-r
+
+#df[with(df, c(x[-1]!= x[-nrow(df)], TRUE)),]
+sattrib_tf <- (sattrib_test[-nrow(sattrib_test)]!=sattrib_test[-1])
+speaker_row_unique <- sattrib_test[with(sattrib_test, c(sattrib_tf[,1]|sattrib_tf[,2], TRUE)),]
+```
+
+Diese Tabelle aus Agenda_item, (date), speaker, role liefert Informationen zu Mustern. Die wichtigen Muster liegen in der Abfolge von role, evtl. in kombination mit speaker.
+
+Die einfachste: wenn mehr als x mps nacheinander sprechen, ohne dass die Präsidentin die Rednerinnen ans Pult bittet, wurde die Debatte nicht gehalten, sondern zu Protokoll gegeben. Gibt es ein x, dass zuverlässig zu Protokoll gegebene Debatten anzeigt? Vermutlich x > 3. Hinweis über barplot:
+
+```{r}
+# http://www.cookbook-r.com/Manipulating_data/Finding_sequences_of_identical_values/
+# auflistung der konsekutiven vorkommen von role
+role_conseq <- rle(speaker_row_unique$role)
+# ist toll, aber meistens 1. Das hat keinen informationswert. Also:
+role_conseq_counts <- table(role_conseq$lengths[role_conseq$lengths > 1])
+barplot(role_conseq_counts, main = "Number of consequtive speakers with identical role", xlab = "Number of speakers")
+
+# da sind die Infos, aber noch nicht die zuordnung zu den einzelnen Reden.
+
+
+# Alternative: Wie viele mps sprechen hintereinander, ohne Einschub durch Präsidenten?
+# https://stackoverflow.com/questions/48551492/count-consecutive-true-values-within-each-block-separately?noredirect=1&lq=1
+# speaker_row_unique$is_mp <- speaker_row_unique$role == "mp"
+# speaker_row_unique$rep_role <- ave(speaker_row_unique$is_mp, cumsum(!speaker_row_unique$is_mp), FUN = cumsum)
+# entweder rep_role > 1; oder für jedes Agenda_item den Maximalwert
+
+```
+
+
+```{r}
+# Die wichtigen Infos stehen alle in der ursprünglichen Tabelle, da bin ich mit der Strukturextraktion aber noch nicht weiter gekommen
+speaker_row_unique
+```
+
+Anhand der Daten ist zu vermuten, dass agenda_item 14,15,16 nur zu Protokoll gegeben wurden. Das ist hier auch so. 
+
+
+
+# Fragen, die mit diesen Daten beantwortet werden könnten
+
+Interessant wird es, wenn über den ganzen Korpus Strukturen in den einzelnen agenda_items gefunden werden könnte.
+
+- Wer muss ermahnt werden, um seine Reden zu beenden?
+speaker[1] - presidency - speaker[1] (evtl wiederholend). Kann aber auch ablehnung von Zwischenfrage sein. hier würde size helfen, wenn speaker_size nach dem präsidentiellen Einschub relativ groß ist.
+
+- Normale Struktur einer Gesetzesdebatte?
+role(presidency) - role(mp) - role(presidency) - role(mp) - ...
+jede Rednerinn wird vom präsidenten aufgerufen. 
+
+Anomalien: 
+
+- Zwischenfragen. role(p) - role(mp1) - role(p) - role(mp2) - role(mp1) ...
+
+- Abgelehnte Zwischenfrage: mp1 - p - mp1
+
+- Ermahnung wegen Zeitüberschreitung: mp1 - p - mp1
+
+Welche Muster gibt es für andere TOP-Typen?
+
+- Nur zu protokoll gegebene Reden: p - mp1 - mp2 - mp3 - mp4 - (...) - mpn - p
+
+- Regierungsbefragung: role(government)
+
+- Aktuelle Stunde, Große Anfrage, Sondersitzungen (Gedenkstunden) etc.
+
+```{r}
+# für den ganzen Korpus sieht das alles (etwas erwartbar) leider nicht mehr ganz so schön aus, weil die Gruppen nicht mehr so klar abgegrenzt sind und die Zahlen sehr groß werden.
+
+# sAttribute in Tabelle schreiben
+sattrib_gp <- sAttributes("GERMAPARL", c("agenda_item", "speaker", "role", "parliamentary_group"))
+
+# da kommt jetzt eine richtig lange liste bei raus. sAttributes werden für jeden Absatz gesetzt, für die erste Analyse interessiert aber nur ein Absatz pro Rede.
+# folgeelement https://stackoverflow.com/questions/27022057/removing-only-adjacent-duplicates-in-data-frame-in-r
+
+#df[with(df, c(x[-1]!= x[-nrow(df)], TRUE)),]
+sattrib_gp_tf <- (sattrib_gp[-nrow(sattrib_gp)]!=sattrib_gp[-1])
+speaker_gp_row_unique <- sattrib_gp[with(sattrib_gp, c(sattrib_gp_tf[,1]|sattrib_gp_tf[,2], TRUE)),]
+
+# auflistung der konsekutiven vorkommen von role
+gp_role_conseq <- rle(speaker_gp_row_unique$role)
+# ist toll, aber meistens 1. Das hat keinen informationswert. Also:
+gp_role_conseq_counts <- table(gp_role_conseq$lengths[gp_role_conseq$lengths > 1])
+barplot(gp_role_conseq_counts, main = "Number of consequtive speakers with identical role", xlab = "Number of speakers")
+```
+
+
+# Darüber hinaus
+
+
+Mit etwas mehr Daten wird die Tabelle noch interessanter
+
+- size pro Absatz/Rede: für die Unterscheidung in ganze Rede/Zwischenfrage bzw. Debattenlänge. Welche Themen werden besonders lange debattiert?
+
+- Ausschussmitgliedschaft der Rednerin. Wenn (fast) alle Redner einer Debatte aus dem gleichen Ausschuss kommen, wird das Debattenthema vermutlich etwas mit dem Politikfeld des Ausschusses zu tun haben. Eventuell als Gegenprüfung zur inhaltlichen Klassifikation.
+
+

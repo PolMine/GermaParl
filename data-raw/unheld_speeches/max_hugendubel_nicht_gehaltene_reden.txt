@@ -1,0 +1,19 @@
+Lieber Andi,
+
+als Nachtrag zu der Datei am Mittwoch hier eine ausgearbeitete Version, um nicht gehaltene Reden auch wirklich zu identifizieren. Die Version von Mittwoch hatte eher die allgemeinere Idee, hier jetzt die Variante, die 834 agenda_items mit nicht gehaltenen Reden identifiziert. Das ist angesichts von ca. 290k agenda_items insgesamt im Korpus eher vernachlässigbar, aber dennoch... 
+Viele Grüße & ein schönes Wochenende,
+Max
+
+On 16.05.2018 12:32, Maximilian Hugendubel wrote:
+
+-------------
+
+Lieber Andi,
+
+anbei ein kurzer Aufschlag in R, der noch etwas unübersichtlich ist, aber eine erste Idee aufzeigt. 
+Das Problem waren Reden, die nur zu Protokoll gegeben wurden. Zum Glück sind Plenardebatten wunderbar ritualisiert. In der Logik der Plenardebatten wird jeder Redner vom Präsidium aufgefordert, die Rede zu halten. Fehlt diese Aufforderung bei mehreren Rednern in Folge, sind die Reden vermutlich nie gehalten worden. Diese Daten sind in den sAttributes ja drin. Im Prinzip ist es nur ein einfaches data.table. 
+Eventuell kann das Problem der nicht gehaltenen Reden damit bereinigt werden. Wenn allerdings die Nummerierung der agenda_items wirklich robust ist, ließen sich mit der Tabelle schöne Spielereien machen, weil für alle Reden im Korpus Strukturen erkennbar werden. Beispiele sind die Abfolge der roles, Reihenfolge der Fraktionen in Reden etc. Leider ist meine R-Virtuosität noch etwas begrenzt, ich wäre aber interessiert, was man da noch alles draus machen könnte. 
+Insofern ist das eine erste Idee, die aber noch viel Raum für Umsetzung lässt.
+@christoph, obwohl wir uns noch nicht kennen gelernt haben: Andi meinte vorhin, ich solle dich in cc setzen
+Viele Grüße,
+Max

@@ -1,0 +1,278 @@
+---
+title: "GermaParl - From XML to CWB"
+author: "Andreas Blätte (andreas.blaette@uni-due.de)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The Making of GermaParl - From XML to CWB}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+```{r starting_time, eval = TRUE}
+Sys.time()
+```
+
+# Initialization
+
+## Setting parameters and global variables
+
+```{r load_ctk, eval = TRUE}
+Sys.setenv("TREETAGGER_PATH" = "/opt/treetagger")
+Sys.setenv("CORENLP_PATH" = "/opt/stanford-corenlp/stanford-corenlp-full-2017-06-09")
+
+library(ctk)
+packageVersion("ctk")
+```
+
+```{r set_options}
+options(java.parameters = "-Xmx4g") # needs to be set before a JVM is initialized.
+options("polmineR.cwb-regedit" = TRUE)
+noCores <- parallel::detectCores() - 2L
+# noCores <- 1L
+
+pipeDir <- "/hd/pipeDirs/GermaParl"
+sourceDir <- "~/Lab/github/GermaParlTEI"
+```
+
+
+# Getting started
+
+```{r init_pipe, eval = TRUE}
+P <- PipeCoreNLP$new(dir = pipeDir, threads = noCores)
+```
+
+```{r prepare_pipe, eval = TRUE}
+P$preparePipeDir(subdirs = c("xml", "tsv", "tok", "ndjson"), delete = TRUE)
+P$getFiles(sourceDir = sourceDir, pattern = "xml", targetDir = "xml", recursive = TRUE)
+```
+
+# Generate Basetable
+
+```{r basetable, eval = TRUE}
+metadata <- c(
+  lp = "//legislativePeriod",
+  session = "//titleStmt/sessionNo",
+  date = "//publicationStmt/date",
+  url = "//sourceDesc/url",
+  src = "//sourceDesc/filetype"
+)
+basetable <- P$xmlToDT(metadata = metadata, sourceDir = "xml", targetDir = "tsv")
+```
+
+Some adjustments and some cleaning.
+
+```{r cleaning, eval = TRUE}
+basetable <- data.table::fread(
+  file.path(P$dir, "tsv", "basetable.tsv"),
+  showProgress = interactive()
+  )
+
+# When reading in basetable.tsv, "191. Sitzung" in the 'session'-column
+# may cause a warning from data.table::fread - remove ". Sitzung" immediately
+basetable[, session := gsub("^.*?(\\d+)\\..*?$", "\\1", basetable[["session"]])] 
+
+# remove text in speaker tag
+basetable <- basetable[is.na(speaker)][, speaker := NULL] 
+
+# remove columns that are not used later on
+for (x in c("div_desc", "body", "TEI", "p")) basetable[[x]] <- NULL 
+
+# turn NAs or blank slots in interjection to speech / interjection
+basetable[["stage_type"]] <- ifelse(basetable[["stage_type"]] == "", NA, basetable[["stage_type"]] == "")
+basetable[["stage_type"]] <- ifelse(is.na(basetable[["stage_type"]]), "speech", "interjection" )
+
+# write consolidated basetable to disk
+data.table::fwrite(basetable, file.path(P$dir, "tsv", "basetable.tsv"), showProgress = interactive())
+```
+
+
+Take appart the basetable, and save results to tsv subdir.
+
+```{r dissect, eval = TRUE}
+P$makeMetadataTable(sourceDir = "tsv", targetDir = "tsv")
+P$makePlaintextTable(sourceDir = "tsv", targetDir = "tsv")
+```
+
+
+# Annotation using Stanford CoreNLP
+
+Here we do the actual annotation, the most time consuming part of the exercies. Parallelisation is possible, but will require seperate JVMs to be created by forked processes. It will fail, if a JVM has been initialized by R before that - take care.
+
+```{r corenlp, eval = TRUE}
+P$corenlp(sourceDir = "tsv", targetDir = "ndjson")
+```
+
+
+# turn NDJSON to csv
+
+We have 'ndjson' output at this stage. This needs to be turned into a vertical / tabular format. No parallelization here so far, as the procedure is still reasonably fast (~ 1,5 h).
+
+```{r ndjson2csv, eval = TRUE}
+P$ndjsonToDf(sourceDir = "ndjson", targetDir = "tsv")
+```
+
+
+# treetagging
+
+```{r treetagger, eval = TRUE}
+P$addTreetaggerLemmatization(sourceDir = "tsv", targetDir = "tsv")
+```
+
+
+# Import corpus into CWB
+
+```{r cwb_import, eval = TRUE}
+Enc <- Encoder$new(corpus = "germaparl", encoding = "latin1")
+```
+
+```{r consolidate_tokenstream, eval = TRUE}
+Enc$tokenstream <- data.table::fread(
+  file.path(P$dir, "tsv", "tokenstream.tsv"), sep = "\t",
+  showProgress = interactive()
+  )
+
+# CoreNLP annotation turns round/square/curly brackets into acronyms - redo that here.
+wordSubs <- list(
+  c("-LRB-", "("),
+  c("-RRB-", ")"),
+  c("-LSB-", "["),
+  c("-RSB-", "]"),
+  c("-RCB-", "}")
+)
+for (i in 1:length(wordSubs)){
+  if (interactive()) message("... replacement: ", i)
+  Enc$tokenstream[, word := gsub(wordSubs[[i]][1], wordSubs[[i]][2], Enc$tokenstream[["word"]])]
+}
+
+# gsub is remarkably slow ...
+Enc$tokenstream[, lemma := gsub("^<unknown>$", "#unknown#", Enc$tokenstream[["lemma"]])]
+```
+
+```{r consolidate_metadata, eval = TRUE}
+Enc$metadata <- data.table::fread(
+  file.path(P$dir, "tsv", "metadata.tsv"),
+  showProgress = interactive()
+  )
+data.table::setnames(
+  Enc$metadata,
+  old = c("sp_party", "sp_name", "sp_role", "sp_parliamentary_group", "stage_type", "div_n", "div_what"),
+  new = c("party", "speaker", "role", "parliamentary_group", "interjection", "agenda_item", "agenda_item_type")
+  )
+
+Enc$metadata[, interjection  := ifelse(Enc$metadata[["interjection"]] == "interjection", "TRUE", "FALSE")]
+
+aiSubs <- list(
+  c("^NA$", ""), 
+  c("^debate\\|recent_issues\\|debate$", "debate|recent_issues"),
+  c("^1$", ""),
+  c("^debate\\|debate$", "debate")
+)
+for (i in 1:length(aiSubs)){
+  if (interactive()) message("... replacement: ", i)
+  Enc$metadata[, agenda_item_type := gsub(aiSubs[[i]][1],
+                                          aiSubs[[i]][2],
+                                          Enc$metadata[["agenda_item_type"]])]
+}
+
+
+partySubs = list(
+  c("^CDU.*$", "CDU"),
+  c("Grüne", "GRUENE"),
+  c("BÜNDNIS 90/ DIE GRÜNEN", "GRUENE"),
+  c("BÜNDNIS 90/DIE GRÜNEN", "GRUENE"),
+  c("Bündnis 90/Die Grünen", "GRUENE"),
+  c("Bündnis 90/Die GRUENEn", "GRUENE"),
+  c("GRÜNE", "GRUENE"),
+  c("Die Linke", "LINKE"),
+  c("DIE LINKE", "LINKE"),
+  c("parteilos\\(auf Vorschlag der SPD\\)", "parteilos")
+)
+for (i in 1:length(partySubs)){
+  if (interactive()) message("... replacement: ", i)
+  Enc$metadata[, party := gsub(partySubs[[i]][1], partySubs[[i]][2], Enc$metadata[["party"]])]
+}
+
+pgSubs = list(
+  c("^F\\.D\\.P\\.$$", "FDP"),
+  c("Grüne", "GRUENE"),
+  c("BÜNDNIS 90/DIE GRÜNEN", "GRUENE"),
+  c("DIE LINKE", "LINKE")
+)
+
+for (i in 1:length(pgSubs)){
+  if (interactive()) message("... replacement: ", i)
+  Enc$metadata[, parliamentary_group := gsub(pgSubs[[i]][1], pgSubs[[i]][2],
+                                             Enc$metadata[["parliamentary_group"]])]
+}
+
+Enc$metadata[, year := gsub("^(\\d{4})-\\d{2}-\\d+$", "\\1", Enc$metadata[["date"]])]
+```
+
+
+```{r encode, eval = TRUE}
+Enc$encode(
+  pAttributes = c("word", "pos", "lemma"),
+  sAttributes = c(
+    "party", "parliamentary_group", "speaker", "lp", "session",
+    "date", "role", "interjection", "agenda_item", "agenda_item_type",
+    "src", "url", "year"
+    )
+  )
+```
+
+```{r load_polmineR, eval = TRUE}
+library(polmineR)
+```
+
+
+```{r add_template, eval = TRUE}
+file.copy(
+  from = "~/Lab/gitlab/GermaParl/data-raw/template.json",
+  to = file.path(RegistryFile$new("GERMAPARL")$getHome(), "template.json"),
+  overwrite = TRUE
+  )
+```
+
+
+```{r set_properties, eval = TRUE}
+RF <- RegistryFile$new("GERMAPARL")
+RF$setProperty(property = "type", value = "plpr")
+RF$setProperty(property = "language", value = "de")
+RF$write()
+```
+
+
+```{r add_info, eval = TRUE}
+newInfoFile <- file.path(RegistryFile$new("GERMAPARL")$getHome(), "info.md")
+file.copy(
+  from = "~/Lab/gitlab/GermaParl/data-raw/info.md",
+  to = newInfoFile, overwrite = TRUE
+  )
+
+RF <- RegistryFile$new("GERMAPARL")
+RF$setInfo(new = newInfoFile)
+RF$write()
+```
+
+
+# Final check
+
+```{r check_use, eval = TRUE}
+library(polmineR)
+use() # to make the new corpus available
+```
+
+```{r check_sAttributes, eval = TRUE}
+toCheck <- c("party", "parliamentary_group", "lp", "role", "interjection", "agenda_item_type")
+for (x in toCheck){
+  print(x)
+  print(sAttributes("GERMAPARL", x))
+}
+```
+
+```{r time, eval = TRUE}
+Sys.time()
+```
