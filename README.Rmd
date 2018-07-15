@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# The GermaParl R Data package <img src="inst/sticker/hexsticker.png" align="right" />
+# The GermaParl R Data package <img src="https://github.com/PolMine/GermaParl/blob/master/inst/sticker/hexsticker.png" align="right" />
 
 ### About
 
