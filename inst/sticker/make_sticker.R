@@ -8,19 +8,24 @@ imgurl <- "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUtUA4SwDMvXw8Y
 sticker(
   imgurl,
   package="GermaParl",
-  p_size = 6,
-  s_x = 1, s_y = 0.80, s_width = .63,
+  p_size = 7,
+  s_x = 1, s_y = 0.80, s_width = .64,
   h_fill = "white",
   h_color = "#004C93",
   p_color = "#004C93",
   filename="~/Lab/github/GermaParl/inst/sticker/hexsticker.png",
-  url = "https://polmine.github.io/GermaParl",
-  u_size = 1.35,
-  u_color = "#004C93",
-  spotlight = FALSE,
-  l_x = 0.8,
-  l_y = 0.7,
-  l_alpha = 0.8,
-  l_width = 10,
-  l_height = 4
+  # url = "https://polmine.github.io/GermaParl",
+  # u_size = 1.35,
+  # u_color = "#004C93",
+  # spotlight = FALSE,
+  # l_x = 0.8,
+  # l_y = 0.7,
+  # l_alpha = 0.8,
+  # l_width = 10,
+  # l_height = 4
 )
+
+library(magick)
+polmineR_sticker <- image_read('~/Lab/github/GermaParl/inst/sticker/hexsticker.png')
+polmineR_sticker_min <- image_scale(polmineR_sticker, "130x150")
+image_write(polmineR_sticker_min, path = "~/Lab/github/GermaParl/inst/sticker/hexsticker.png", format = "png")
