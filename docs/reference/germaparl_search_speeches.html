@@ -106,7 +106,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/polmine/GermaParl">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -120,7 +125,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Query GermaParl</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/polmine/GermaParl/blob/master/R/query.R'><code>R/query.R</code></a></small>
     <div class="hidden name"><code>germaparl_search_speeches.Rd</code></div>
     </div>
 
@@ -130,13 +135,17 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>germaparl_search_speeches</span>(<span class='no'>cnt</span>, <span class='kw'>min_size</span> <span class='kw'>=</span> <span class='fl'>250</span>)</pre>
+    <pre class="usage"><span class='fu'>germaparl_search_speeches</span>(<span class='no'>cnt</span>, <span class='no'>p_attribute</span>, <span class='kw'>min_size</span> <span class='kw'>=</span> <span class='fl'>250</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>cnt</th>
+      <td><p>XXX</p></td>
+    </tr>
+    <tr>
+      <th>p_attribute</th>
       <td><p>XXX</p></td>
     </tr>
     <tr>
@@ -149,7 +158,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='no'>P</span> <span class='kw'>&lt;-</span> <span class='fu'>partition</span>(<span class='st'>"GERMAPARL"</span>, <span class='kw'>cap</span> <span class='kw'>=</span> <span class='st'>"^.*\\|8-01\\|.*$"</span>, <span class='kw'>regex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>count</span>(<span class='no'>P</span>, <span class='kw'>pAttribute</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"word"</span>, <span class='st'>"pos"</span>))
+<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>count</span>(<span class='no'>P</span>, <span class='kw'>p_attribute</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"word"</span>, <span class='st'>"pos"</span>))
 <span class='no'>CNT</span> <span class='kw'>&lt;-</span> <span class='fu'>as</span>(<span class='no'>C</span>, <span class='st'>"count"</span>)
 <span class='no'>matches</span> <span class='kw'>&lt;-</span> <span class='fu'>query</span>(<span class='kw'>cnt</span> <span class='kw'>=</span> <span class='no'>CNT</span>, <span class='kw'>min_size</span> <span class='kw'>=</span> <span class='fl'>250</span>)
 <span class='no'>PB</span> <span class='kw'>&lt;-</span> <span class='fu'>partitionBundle</span>(<span class='st'>"GERMAPARL"</span>, <span class='kw'>sAttribute</span> <span class='kw'>=</span> <span class='st'>"speech"</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'>names</span>(<span class='no'>matches</span>)[<span class='fl'>1</span>:<span class='fl'>20</span>])

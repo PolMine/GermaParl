@@ -5,7 +5,7 @@
 \title{Write CAP Annotations to GermaParl}
 \usage{
 
-  germaparl_encode_cap_annotations(dir = "/Users/blaette/Lab/gitlab/plprbttxt_annotations/2016_09_21")
+  germaparl_encode_cap_annotations(dir = "/Lab/gitlab/plprbttxt_annotations/2016_09_21")
 }
 \arguments{
 \item{dir}{directory with CAP annotations}

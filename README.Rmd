@@ -4,6 +4,7 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![DOI](https://zenodo.org/badge/141028057.svg)](https://zenodo.org/badge/latestdoi/141028057)
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
@@ -13,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# The GermaParl R Data package <img src="https://raw.githubusercontent.com/PolMine/GermaParl/master/inst/sticker/hexsticker.png" align="right" />
+# The GermaParl R Data Package <img src="https://raw.githubusercontent.com/PolMine/GermaParl/master/inst/sticker/hexsticker.png" align="right" />
 
 ### About
 
@@ -72,14 +73,14 @@ __NC__ - NonCommercial — You may not use the material for commercial purposes.
 
 __SA__ - ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 
-See the [CC Attribution-NonCommercial-ShareAlike 3.0 Unported License](https://creativecommons.org/licenses/by-nc-sa/4.0/) for further explanations.
+See the [CC Attribution-NonCommercial-ShareAlike 4.0 Unported License](https://creativecommons.org/licenses/by-nc-sa/4.0/) for further explanations.
 
 
-### Quotation
+### Quoting GermaParl
 
 If you work with GermaParl package, please include the following reference in your bibliography to attribute the language resource:
 
-_Blaette, Andreas_ (2017): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.0.4). http://polmine.sowi.uni-due.de/packages/src/contrib/GermaParl_1.1.1.tar.gz. 
+_Blaette, Andreas_ (`r format(Sys.time(), "%Y")`): GermaParl. R Data Package for the GermaParl Corpus of Plenary Protocols of the German Bundestag (v`r packageVersion("GermaParl")`). Available from: https://doi.org/10.5281/zenodo.1312551.
 
 
 ### Feedback

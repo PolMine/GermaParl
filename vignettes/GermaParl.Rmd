@@ -1,5 +1,5 @@
 ---
-title: "GermaParl (v1.1.0)"
+title: "GermaParl (v1.2.0)"
 subtitle: "Corpus Documentation"
 author: "Andreas Blaette (andreas.blaette@uni-due.de)"
 date: "`r Sys.Date()`"
@@ -96,7 +96,16 @@ The GermaParl data package that includes the CWB indexed version of the corpus i
 
 ```{r installing_GermaParl, eval = FALSE}
 library(polmineR)
-install.corpus("GermaParl") # roughly 1 GB, the download may take a while
+if ("drat" %in% rownames(available.packages()) == FALSE) install.packages("drat")
+drat::addRepo("polmine") # lowercase necessary in this case
+install.packages("GermaParl")
+```
+
+After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from an external webspace (amazon AWS, for the time being):
+
+```{r load_germaparl, eval = FALSE}
+library(GermaParl)
+germaparl_download_corpus()
 ```
 
 To check whether the installation has been successful, run the following commands. For further instructions, see the documentation of the polmineR package.
@@ -108,7 +117,6 @@ corpus() # to see whether the GERMAPARL corpus is listed
 size("GERMAPARL") # to learn about the size of the corpus
 ```
 
-We did not mention this yet: GermaParl is not a small corpus!
 
 #### A very brief tutorial
 
@@ -117,16 +125,16 @@ The CWB indexed version if GermaParl can be used with the CWB itself, or with an
 First, you may want to learn about the p-attributes (positional attributes), and s-attributes (structural attributes) that are available.
 
 ```{r sAttributes, eval = FALSE}
-sAttributes("GERMAPARL")
-pAttributes("GERMAPARL")
+s_attributes("GERMAPARL")
+p_attributes("GERMAPARL")
 ```
 
 To learn about the values of s-attributes, specify the param sAttribute:
 
 ```{r sAttributes_year, eval = FALSE}
-sAttributes("GERMAPARL", "year")
-sAttributes("GERMAPARL", "parliamentary_group")
-sAttributes("GERMAPARL", "party")
+s_attributes("GERMAPARL", "year")
+s_attributes("GERMAPARL", "parliamentary_group")
+s_attributes("GERMAPARL", "party")
 ```
 
 To inspect keywords-in-context (KWIC), use the kwic-method:
@@ -146,7 +154,7 @@ count("GERMAPARL", query = c("Asyl", "Flucht", "Abschiebung"))
 To get the dispersion of a query, use the dispersion-method.
 
 ```{r dispersion, eval = FALSE}
-D <- dispersion("GERMAPARL", query = "Flüchtlinge", sAttribute = "year")
+D <- dispersion("GERMAPARL", query = "Flüchtlinge", s_attribute = "year")
 ```
 
 Visualise the result as a barplot...
@@ -184,7 +192,7 @@ cooccurrences(lp16, query = "Terrorismus") %>%
 This is just a short glimpse into the analytical opportunities of using GermaParl in combination with polmineR. One of the most important aspects that cannot be explained here is the possibility to use the syntax of the Corpus Query Processor (CQP) that comes with the CWB backend. The as.TermDocumentMatrix method will prepare data structures efficiently needed for more advanced analytical techniques such as topicmodelling.Consult the vignette of the polmineR package to learn more!
 
 
-#### Come caveats
+#### Some caveats
 
 A set of general remarks may help to avoid pitfalls when working with GermaParl:
 
@@ -209,11 +217,10 @@ The resource is under active development. Apart from improving data quality and 
 
 Hopefully, GermaParl will make qualitative and quantitative research with German parliamentary debates more productive. A final note on user feedback: Improving data quality is an important concern of the PolMine Project. This is why the data is versioned. The resource will benefit from its community of users - feedback that helps to improve data quality is more than welcome!
 
+
 ### License
 
-While the raw data, the plenary protocols published by the German Bundestag, are in the public domain, the GermaParl corpus comes with a CLARIN PUB+BY+NC+SA license. That means:
-
-__PUB__ - The language resource can be distributed publicly. 
+While the raw data, the plenary protocols published by the German Bundestag, are in the public domain, the GermaParl corpus comes with a CC BY+NC+SA license. That means:
 
 __BY__ - Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
 
@@ -221,14 +228,14 @@ __NC__ - NonCommercial — You may not use the material for commercial purposes.
 
 __SA__ - ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 
-The [CLARIN licenses](https://www.clarin.eu/content/license-categories) are modelled on the Creative Commons licenses. See the [CC Attribution-NonCommercial-ShareAlike 3.0 Unported License](https://creativecommons.org/licenses/by-nc-sa/3.0/) for further explanations.
+See the [CC Attribution-NonCommercial-ShareAlike 4.0 Unported License](https://creativecommons.org/licenses/by-nc-sa/4.0/) for further explanations.
 
 
 ### Quotation
 
 If you work with GermaParl package, please include the following reference in your bibliography to attribute the language resource:
 
-_Blaette, Andreas_ (2017): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.0.4). http://polmine.sowi.uni-due.de/packages/src/contrib/GermaParl_1.1.1.tar.gz. 
+_Blaette, Andreas_ (2018): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.0.4). https://github.com/polmine/GermaParl.
 
 
 ### Annex
@@ -245,13 +252,13 @@ dts <- lapply(
   13:17,
   function(lp){
     P <- partition("GERMAPARL", lp = lp)
-    dates <- as.Date(sAttributes(P, "date"))
-    dt <- polmineR::count(P, pAttribute = "lemma")
+    dates <- as.Date(s_attributes(P, "date"))
+    dt <- polmineR::count(P, p_attribute = "lemma")
     unknown <- round(sum(dt[grepl("#unknown#", dt[["lemma"]])][["count"]]) / size(P), digits = 3)
 
     data.table(
       lp = lp,
-      protocols = length(unique(sAttributes(P, "session"))),
+      protocols = length(unique(s_attributes(P, "session"))),
       first = min(dates, na.rm = TRUE),
       last = min(dates, na.rm = TRUE),
       size = size(P),
@@ -268,20 +275,20 @@ knitr::kable(dt, format = "markdown")
 
 
 ```{r stat_by_year, eval = FALSE, echo = FALSE, message = FALSE}
-years <- as.integer(sAttributes("GERMAPARL", "year"))
+years <- as.integer(s_attributes("GERMAPARL", "year"))
 dts <- lapply(
   min(years):max(years),
   function(year){
     P <- partition("GERMAPARL", year = as.character(year), verbose = FALSE)
     P.txt <- partition(P, src = "txt")
     P.pdf <- partition(P, src = "pdf")
-    dt <- polmineR::count(P, pAttribute = "lemma")
+    dt <- polmineR::count(P, p_attribute = "lemma")
     unknowns <- round(sum(dt[grepl("#unknown#", dt[["lemma"]])][["count"]]) / size(P), digits = 3)
     data.table(
       year = year,
-      protocols = length(unique(sAttributes(P, "session"))),
-      txt = length(sAttributes(P.txt, "session")),
-      pdf = length(sAttributes(P.pdf, "session")),
+      protocols = length(unique(s_attributes(P, "session"))),
+      txt = length(s_attributes(P.txt, "session")),
+      pdf = length(s_attributes(P.pdf, "session")),
       size = size(P),
       unknown = unknowns
       )

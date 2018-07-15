@@ -66,11 +66,17 @@ annotation_features <- function(x, pAttribute = c("word", "pos"), annotation){
 #' 
 #' @param dir directory with CAP annotations
 #' @importFrom polmineR sAttributes
-#' @import polmineR.anno
 #' @importFrom pbapply pblapply
 #' @importFrom data.table := rbindlist
 #' @export germaparl_encode_cap_annotations
-germaparl_encode_cap_annotations <- function(dir = "/Users/blaette/Lab/gitlab/plprbttxt_annotations/2016_09_21"){
+germaparl_encode_cap_annotations <- function(dir = "/Lab/gitlab/plprbttxt_annotations/2016_09_21"){
+  
+  if (!requireNamespace(package = "polmineR.anno", quietly = TRUE)){
+    stop(
+      "Package 'polmineR.anno' needs to be installed, but is not available.",
+      "It can be installed from the drat repository of the PolMine Project."
+      )
+  }
   
   germaparl_regdir <- use_germaparl()
   
@@ -79,6 +85,9 @@ germaparl_encode_cap_annotations <- function(dir = "/Users/blaette/Lab/gitlab/pl
   
   # Extract metadata information from filename and match it to corpus metadata
   speakerNames <- sAttributes("GERMAPARL", "speaker")
+  
+  .SD <- NULL # just for the sake of R CMD check
+  
   dtList <- pbapply::pblapply(
     conll_files,
     function(filename){
@@ -160,7 +169,7 @@ germaparl_encode_cap_annotations <- function(dir = "/Users/blaette/Lab/gitlab/pl
         verbose = FALSE
       )
       if (is.null(P)) return( NULL )
-      C <- CoNLL$new(filename = file.path(dir, conll_files[i]), partition = P)
+      C <- polmineR.anno::CoNLL$new(filename = file.path(dir, conll_files[i]), partition = P)
       C$getCorpusPositions()
       C
     }

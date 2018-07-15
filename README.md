@@ -1,7 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# The GermaParl R Data package <img src="https://raw.githubusercontent.com/PolMine/GermaParl/master/inst/sticker/hexsticker.png" align="right" />
+[![DOI](https://zenodo.org/badge/141028057.svg)](https://zenodo.org/badge/latestdoi/141028057)
+
+# The GermaParl R Data Package <img src="https://raw.githubusercontent.com/PolMine/GermaParl/master/inst/sticker/hexsticker.png" align="right" />
 
 ### About
 
@@ -99,14 +101,14 @@ See the [CC Attribution-NonCommercial-ShareAlike 3.0 Unported
 License](https://creativecommons.org/licenses/by-nc-sa/4.0/) for further
 explanations.
 
-### Quotation
+### Quoting GermaParl
 
 If you work with GermaParl package, please include the following
 reference in your bibliography to attribute the language resource:
 
-*Blaette, Andreas* (2017): GermaParl. Corpus of Plenary Protocols of the
-German Bundestag. R Data Package (v1.0.4).
-<http://polmine.sowi.uni-due.de/packages/src/contrib/GermaParl_1.1.1.tar.gz>.
+*Blaette, Andreas* (2018): GermaParl. R Data Package for the GermaParl
+Corpus of Plenary Protocols of the German Bundestag (v1.2.0). Available
+from: <https://doi.org/10.5281/zenodo.1312551>.
 
 ### Feedback
 

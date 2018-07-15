@@ -4,10 +4,12 @@
 \alias{germaparl_search_speeches}
 \title{Query GermaParl}
 \usage{
-germaparl_search_speeches(cnt, min_size = 250)
+germaparl_search_speeches(cnt, p_attribute, min_size = 250)
 }
 \arguments{
 \item{cnt}{XXX}
+
+\item{p_attribute}{XXX}
 
 \item{min_size}{XXX}
 }
@@ -17,7 +19,7 @@ Query GermaParl
 \examples{
 \dontrun{
 P <- partition("GERMAPARL", cap = "^.*\\\\|8-01\\\\|.*$", regex = TRUE)
-C <- count(P, pAttribute = c("word", "pos"))
+C <- count(P, p_attribute = c("word", "pos"))
 CNT <- as(C, "count")
 matches <- query(cnt = CNT, min_size = 250)
 PB <- partitionBundle("GERMAPARL", sAttribute = "speech", values = names(matches)[1:20])

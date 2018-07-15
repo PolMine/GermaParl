@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GermaParl (v1.1.0) • GermaParl</title>
+<title>GermaParl (v1.2.0) • GermaParl</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="GermaParl (v1.1.0)">
+<script src="../pkgdown.js"></script><meta property="og:title" content="GermaParl (v1.2.0)">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -72,7 +72,14 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/polmine/GermaParl">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -84,13 +91,13 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>GermaParl (v1.1.0)</h1>
+      <h1>GermaParl (v1.2.0)</h1>
             <h3 class="subtitle">Corpus Documentation</h3>
                         <h4 class="author">Andreas Blaette (<a href="mailto:andreas.blaette@uni-due.de">andreas.blaette@uni-due.de</a>)</h4>
             
             <h4 class="date">2018-07-15</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/polmine/GermaParl/blob/master/vignettes/GermaParl.Rmd"><code>vignettes/GermaParl.Rmd</code></a></small>
       <div class="hidden name"><code>GermaParl.Rmd</code></div>
 
     </div>
@@ -229,54 +236,58 @@
 <a href="#getting-started---installing-germaparl" class="anchor"></a>Getting started - installing GermaParl</h4>
 <p>The GermaParl data package that includes the CWB indexed version of the corpus is hosted at a private CRAN-style package repository on the Web-Server of the PolMine Project. The polmineR-package offers a convenient installation mechanism.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(polmineR)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">install.corpus</span>(<span class="st">"GermaParl"</span>) <span class="co"># roughly 1 GB, the download may take a while</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="cf">if</span> (<span class="st">"drat"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">rownames</span>(<span class="kw">available.packages</span>()) <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>) <span class="kw">install.packages</span>(<span class="st">"drat"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">drat<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/drat/topics/addRepo">addRepo</a></span>(<span class="st">"polmine"</span>) <span class="co"># lowercase necessary in this case</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">install.packages</span>(<span class="st">"GermaParl"</span>)</a></code></pre></div>
+<p>After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from an external webspace (amazon AWS, for the time being):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(GermaParl)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/installation.html">germaparl_download_corpus</a></span>()</a></code></pre></div>
 <p>To check whether the installation has been successful, run the following commands. For further instructions, see the documentation of the polmineR package.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(polmineR)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/use">use</a></span>(<span class="st">"GermaParl"</span>) <span class="co"># to activate the corpus in the data package</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/corpus-method">corpus</a></span>() <span class="co"># to see whether the GERMAPARL corpus is listed</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/size-method">size</a></span>(<span class="st">"GERMAPARL"</span>) <span class="co"># to learn about the size of the corpus</span></a></code></pre></div>
-<p>We did not mention this yet: GermaParl is not a small corpus!</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(polmineR)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/use">use</a></span>(<span class="st">"GermaParl"</span>) <span class="co"># to activate the corpus in the data package</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/corpus-method">corpus</a></span>() <span class="co"># to see whether the GERMAPARL corpus is listed</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/size-method">size</a></span>(<span class="st">"GERMAPARL"</span>) <span class="co"># to learn about the size of the corpus</span></a></code></pre></div>
 </div>
 <div id="a-very-brief-tutorial" class="section level4">
 <h4 class="hasAnchor">
 <a href="#a-very-brief-tutorial" class="anchor"></a>A very brief tutorial</h4>
 <p>The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as <a href="http://cwb.sourceforge.net/cqpweb.php">CQPweb</a>). However, most technical decisions during corpus preparation had in mind to optimise using the GermaParl corpus in combination with the polmineR package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands.</p>
 <p>First, you may want to learn about the p-attributes (positional attributes), and s-attributes (structural attributes) that are available.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/renamed">sAttributes</a></span>(<span class="st">"GERMAPARL"</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/renamed">pAttributes</a></span>(<span class="st">"GERMAPARL"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/s_attributes-method">s_attributes</a></span>(<span class="st">"GERMAPARL"</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/p_attributes">p_attributes</a></span>(<span class="st">"GERMAPARL"</span>)</a></code></pre></div>
 <p>To learn about the values of s-attributes, specify the param sAttribute:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/renamed">sAttributes</a></span>(<span class="st">"GERMAPARL"</span>, <span class="st">"year"</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/renamed">sAttributes</a></span>(<span class="st">"GERMAPARL"</span>, <span class="st">"parliamentary_group"</span>)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/renamed">sAttributes</a></span>(<span class="st">"GERMAPARL"</span>, <span class="st">"party"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/s_attributes-method">s_attributes</a></span>(<span class="st">"GERMAPARL"</span>, <span class="st">"year"</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/s_attributes-method">s_attributes</a></span>(<span class="st">"GERMAPARL"</span>, <span class="st">"parliamentary_group"</span>)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/s_attributes-method">s_attributes</a></span>(<span class="st">"GERMAPARL"</span>, <span class="st">"party"</span>)</a></code></pre></div>
 <p>To inspect keywords-in-context (KWIC), use the kwic-method:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">K &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/kwic">kwic</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="st">"Textanalyse"</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="cf">if</span> (<span class="kw">interactive</span>()) K</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">K &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/kwic">kwic</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="st">"Textanalyse"</span>)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="cf">if</span> (<span class="kw">interactive</span>()) K</a></code></pre></div>
 <p>The count-method is used for counting. You can supply one or multiple queries:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/count-method">count</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="st">"Minderheitsregierung"</span>)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/count-method">count</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="kw">c</span>(<span class="st">"Asyl"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/count-method">count</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="st">"Minderheitsregierung"</span>)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/count-method">count</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="kw">c</span>(<span class="st">"Asyl"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))</a></code></pre></div>
 <p>To get the dispersion of a query, use the dispersion-method.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">D &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dispersion-method">dispersion</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="st">"Flüchtlinge", sAttribute = "</span>year<span class="st">")</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">D &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dispersion-method">dispersion</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="st">"Flüchtlinge", s_attribute = "</span>year<span class="st">")</span></a></code></pre></div>
 <p>Visualise the result as a barplot…</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">barplot</span>(D[[<span class="st">"count"</span>]], <span class="dt">names.arg =</span> D[[<span class="st">"year"</span>]], <span class="dt">las =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">barplot</span>(D[[<span class="st">"count"</span>]], <span class="dt">names.arg =</span> D[[<span class="st">"year"</span>]], <span class="dt">las =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p>The cooccurrences-method will get you the cooccurrences of a query.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">C &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/cooccurrences">cooccurrences</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="st">"Terroranschläge"</span>)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">C<span class="op">@</span>stat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dotplot-method">dotplot</a></span>(C)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">C &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/cooccurrences">cooccurrences</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="st">"Terroranschläge"</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">C<span class="op">@</span>stat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dotplot-method">dotplot</a></span>(C)</a></code></pre></div>
 <p>These are some if the core functions, applied to the whole corpus. The whole point of the structural annotation of the corpus (s-attributes) is to facilitate the creation of subcorpora / partitions. So every method that has been introduced can be applied to a partition.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">lp16 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/partition">partition</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">lp =</span> <span class="dv">16</span>)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/count-method">count</a></span>(lp16, <span class="dt">query =</span> <span class="kw">c</span>(<span class="st">"Asyl"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dispersion-method">dispersion</a></span>(lp16, <span class="dt">query =</span> <span class="st">"Flüchtlinge", sAttribute = "</span>year<span class="st">")</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">lp16 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/partition">partition</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">lp =</span> <span class="dv">16</span>)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/count-method">count</a></span>(lp16, <span class="dt">query =</span> <span class="kw">c</span>(<span class="st">"Asyl"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dispersion-method">dispersion</a></span>(lp16, <span class="dt">query =</span> <span class="st">"Flüchtlinge", sAttribute = "</span>year<span class="st">")</span></a></code></pre></div>
 <p>Finally, note that the methods of polmineR can also be used with the pipe functionality offered by the magrittr package.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">library</span>(magrittr)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/cooccurrences">cooccurrences</a></span>(lp16, <span class="dt">query =</span> <span class="st">"Terrorismus"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">subset</span>(<span class="op">!</span>word <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(tm<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tm/topics/stopwords">stopwords</a></span>(<span class="st">"de"</span>), <span class="st">","</span>, <span class="st">"."</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">subset</span>(count_window <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dotplot-method">dotplot</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(magrittr)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/cooccurrences">cooccurrences</a></span>(lp16, <span class="dt">query =</span> <span class="st">"Terrorismus"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">subset</span>(<span class="op">!</span>word <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(tm<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tm/topics/stopwords">stopwords</a></span>(<span class="st">"de"</span>), <span class="st">","</span>, <span class="st">"."</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">subset</span>(count_window <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dotplot-method">dotplot</a></span>()</a></code></pre></div>
 <p>This is just a short glimpse into the analytical opportunities of using GermaParl in combination with polmineR. One of the most important aspects that cannot be explained here is the possibility to use the syntax of the Corpus Query Processor (CQP) that comes with the CWB backend. The as.TermDocumentMatrix method will prepare data structures efficiently needed for more advanced analytical techniques such as topicmodelling.Consult the vignette of the polmineR package to learn more!</p>
 </div>
-<div id="come-caveats" class="section level4">
+<div id="some-caveats" class="section level4">
 <h4 class="hasAnchor">
-<a href="#come-caveats" class="anchor"></a>Come caveats</h4>
+<a href="#some-caveats" class="anchor"></a>Some caveats</h4>
 <p>A set of general remarks may help to avoid pitfalls when working with GermaParl:</p>
 <ul>
 <li><p>Plenary protocols meticulously report interjections. To maintain the integrity of the original documents, interjections are annotated in the corpus. By using the s-attribute ‘interjection’ that assumes the values ‘TRUE’ or ‘FALSE’, you can limit your analysis to speech or interjections.</p></li>
@@ -300,18 +311,17 @@
 <div id="license" class="section level3">
 <h3 class="hasAnchor">
 <a href="#license" class="anchor"></a>License</h3>
-<p>While the raw data, the plenary protocols published by the German Bundestag, are in the public domain, the GermaParl corpus comes with a CLARIN PUB+BY+NC+SA license. That means:</p>
-<p><strong>PUB</strong> - The language resource can be distributed publicly.</p>
+<p>While the raw data, the plenary protocols published by the German Bundestag, are in the public domain, the GermaParl corpus comes with a CC BY+NC+SA license. That means:</p>
 <p><strong>BY</strong> - Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.</p>
 <p><strong>NC</strong> - NonCommercial — You may not use the material for commercial purposes.</p>
 <p><strong>SA</strong> - ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.</p>
-<p>The <a href="https://www.clarin.eu/content/license-categories">CLARIN licenses</a> are modelled on the Creative Commons licenses. See the <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">CC Attribution-NonCommercial-ShareAlike 3.0 Unported License</a> for further explanations.</p>
+<p>See the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC Attribution-NonCommercial-ShareAlike 4.0 Unported License</a> for further explanations.</p>
 </div>
 <div id="quotation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#quotation" class="anchor"></a>Quotation</h3>
 <p>If you work with GermaParl package, please include the following reference in your bibliography to attribute the language resource:</p>
-<p><em>Blaette, Andreas</em> (2017): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.0.4). <a href="http://polmine.sowi.uni-due.de/packages/src/contrib/GermaParl_1.1.1.tar.gz" class="uri">http://polmine.sowi.uni-due.de/packages/src/contrib/GermaParl_1.1.1.tar.gz</a>.</p>
+<p><em>Blaette, Andreas</em> (2018): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.0.4). <a href="https://github.com/polmine/GermaParl" class="uri">https://github.com/polmine/GermaParl</a>.</p>
 </div>
 <div id="annex" class="section level3">
 <h3 class="hasAnchor">

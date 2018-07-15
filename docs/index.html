@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GermaParl • GermaParl</title>
+<title>GermaParl Data Package • GermaParl</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="GermaParl">
+<script src="pkgdown.js"></script><meta property="og:title" content="GermaParl Data Package">
 <meta property="og:description" content="Data package with the GermaParl Corpus of Parliamentary Debates (German Bundestag) preprared in the PolMine Project.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -72,7 +72,14 @@
   <a href="news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/polmine/GermaParl">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -88,9 +95,10 @@
     
     
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <div id="the-germaparl-r-data-package" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#the-germaparl-r-data-package" class="anchor"></a>The GermaParl R Data package <img src="https://raw.githubusercontent.com/PolMine/GermaParl/master/inst/sticker/hexsticker.png" align="right">
+<a href="#the-germaparl-r-data-package" class="anchor"></a>The GermaParl R Data Package <img src="https://raw.githubusercontent.com/PolMine/GermaParl/master/inst/sticker/hexsticker.png" align="right">
 </h1></div>
 <div id="about" class="section level3">
 <h3 class="hasAnchor">
@@ -133,13 +141,13 @@
 <p><strong>BY</strong> - Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.</p>
 <p><strong>NC</strong> - NonCommercial — You may not use the material for commercial purposes.</p>
 <p><strong>SA</strong> - ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.</p>
-<p>See the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC Attribution-NonCommercial-ShareAlike 3.0 Unported License</a> for further explanations.</p>
+<p>See the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC Attribution-NonCommercial-ShareAlike 4.0 Unported License</a> for further explanations.</p>
 </div>
-<div id="quotation" class="section level3">
+<div id="quoting-germaparl" class="section level3">
 <h3 class="hasAnchor">
-<a href="#quotation" class="anchor"></a>Quotation</h3>
+<a href="#quoting-germaparl" class="anchor"></a>Quoting GermaParl</h3>
 <p>If you work with GermaParl package, please include the following reference in your bibliography to attribute the language resource:</p>
-<p><em>Blaette, Andreas</em> (2017): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.0.4). <a href="http://polmine.sowi.uni-due.de/packages/src/contrib/GermaParl_1.1.1.tar.gz" class="uri">http://polmine.sowi.uni-due.de/packages/src/contrib/GermaParl_1.1.1.tar.gz</a>.</p>
+<p><em>Blaette, Andreas</em> (2018): GermaParl. R Data Package for the GermaParl Corpus of Plenary Protocols of the German Bundestag (v1.2.0). Available from: <a href="https://doi.org/10.5281/zenodo.1312551" class="uri">https://doi.org/10.5281/zenodo.1312551</a>.</p>
 </div>
 <div id="feedback" class="section level3">
 <h3 class="hasAnchor">
@@ -154,7 +162,9 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Report a bug at <br><a href="NA">NA</a>
+<li>Browse source code at <br><a href="https://github.com/polmine/GermaParl">https://​github.com/​polmine/​GermaParl</a>
+</li>
+<li>Report a bug at <br><a href="https://github.com/polmine/GermaParl/issues">https://​github.com/​polmine/​GermaParl/​issues</a>
 </li>
 </ul>
 </div>
@@ -171,7 +181,13 @@
 </ul>
 </div>
 
-      </div>
+      <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://zenodo.org/badge/latestdoi/141028057"><img src="https://zenodo.org/badge/141028057.svg" alt="DOI"></a></li>
+</ul>
+</div>
+</div>
 
 </div>
 

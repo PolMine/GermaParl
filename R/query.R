@@ -2,8 +2,8 @@
 #' 
 #'
 #' @param cnt XXX
+#' @param p_attribute XXX
 #' @param min_size XXX
-#' @importFrom qlcMatrix cosSparse
 #' @import Matrix
 #' @importFrom stats setNames
 #' @importFrom slam row_sums
@@ -11,15 +11,15 @@
 #' @examples 
 #' \dontrun{
 #' P <- partition("GERMAPARL", cap = "^.*\\|8-01\\|.*$", regex = TRUE)
-#' C <- count(P, pAttribute = c("word", "pos"))
+#' C <- count(P, p_attribute = c("word", "pos"))
 #' CNT <- as(C, "count")
 #' matches <- query(cnt = CNT, min_size = 250)
 #' PB <- partitionBundle("GERMAPARL", sAttribute = "speech", values = names(matches)[1:20])
 #' }
 #' @export germaparl_search_speeches
-germaparl_search_speeches <- function(cnt, min_size = 250){
+germaparl_search_speeches <- function(cnt, p_attribute, min_size = 250){
   if (requireNamespace("qlcMatrix", quietly = TRUE)){
-    dtm_file <- system.file(package = "GermaParl", "extdata", "dtm", sprintf("dtm_%s.rds", pAttribute))
+    dtm_file <- system.file(package = "GermaParl", "extdata", "dtm", sprintf("dtm_%s.rds", p_attribute))
     dtm <- readRDS(file = "~/Lab/tmp/dtm.rds") # ~ 3 secs
     
     
