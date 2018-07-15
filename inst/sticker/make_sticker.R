@@ -13,7 +13,7 @@ sticker(
   h_fill = "white",
   h_color = "#004C93",
   p_color = "#004C93",
-  filename="~/Lab/github/GermaParl/inst/hexsticker.png",
+  filename="~/Lab/github/GermaParl/inst/sticker/hexsticker.png",
   url = "https://polmine.github.io/GermaParl",
   u_size = 1.35,
   u_color = "#004C93",
