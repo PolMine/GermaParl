@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# The GermaParl R Data package <img src="inst/sticker/hexsticker.png" align="right" />
+# The GermaParl R Data package <img src="https://raw.githubusercontent.com/PolMine/GermaParl/master/inst/sticker/hexsticker.png" align="right" />
 
 ### About
 
