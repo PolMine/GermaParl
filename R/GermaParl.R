@@ -24,6 +24,7 @@
 #' @export GermaParl
 #' @rdname GermaParl
 #' @name GermaParl
+#' @aliases germaparl_by_lp germaparl_by_year
 GermaParl <- R6Class(
   
   classname = "GermaParl",
@@ -54,7 +55,8 @@ GermaParl <- R6Class(
 )
 
 
-#' LDA Tuning Resulty
+#' LDA Tuning Results
+#' 
 #' @name lda_tuning
 #' @rdname lda_tuning
 #' @aliases lda_tuning

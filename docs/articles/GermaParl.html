@@ -95,7 +95,7 @@
             <h3 class="subtitle">Corpus Documentation</h3>
                         <h4 class="author">Andreas Blaette (<a href="mailto:andreas.blaette@uni-due.de">andreas.blaette@uni-due.de</a>)</h4>
             
-            <h4 class="date">2018-07-15</h4>
+            <h4 class="date">2018-07-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/polmine/GermaParl/blob/master/vignettes/GermaParl.Rmd"><code>vignettes/GermaParl.Rmd</code></a></small>
       <div class="hidden name"><code>GermaParl.Rmd</code></div>
@@ -238,51 +238,233 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(polmineR)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="cf">if</span> (<span class="st">"drat"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">rownames</span>(<span class="kw">available.packages</span>()) <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>) <span class="kw">install.packages</span>(<span class="st">"drat"</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">drat<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/drat/topics/addRepo">addRepo</a></span>(<span class="st">"polmine"</span>) <span class="co"># lowercase necessary in this case</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">install.packages</span>(<span class="st">"GermaParl"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="cf">if</span> (<span class="st">"GermaParl"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">rownames</span>(<span class="kw">available.packages</span>()) <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>){</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="kw">install.packages</span>(<span class="st">"GermaParl"</span>)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">}</a></code></pre></div>
 <p>After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from an external webspace (amazon AWS, for the time being):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(GermaParl)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="../reference/installation.html">germaparl_download_corpus</a></span>()</a></code></pre></div>
 <p>To check whether the installation has been successful, run the following commands. For further instructions, see the documentation of the polmineR package.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(polmineR)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/use">use</a></span>(<span class="st">"GermaParl"</span>) <span class="co"># to activate the corpus in the data package</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/corpus-method">corpus</a></span>() <span class="co"># to see whether the GERMAPARL corpus is listed</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/size-method">size</a></span>(<span class="st">"GERMAPARL"</span>) <span class="co"># to learn about the size of the corpus</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(polmineR)</a></code></pre></div>
+<pre><code>## polmineR v0.7.9</code></pre>
+<pre><code>## session registry:  /private/var/folders/r6/1k6mxnbj5077980k11xvr0q40000gn/T/RtmpJ25HHq/polmineR_registry</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/use">use</a></span>(<span class="st">"GermaParl"</span>) <span class="co"># to activate the corpus in the data package</span></a></code></pre></div>
+<pre><code>## ... activating corpus: germaparlmini</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/corpus-method">corpus</a></span>() <span class="co"># to see whether the GERMAPARL corpus is listed</span></a></code></pre></div>
+<pre><code>##          corpus   size template
+## 1 GERMAPARLMINI 222201     TRUE
+## 2       REUTERS   4050     TRUE</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="cf">if</span> (<span class="st">"GERMAPARL"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/corpus-method">corpus</a></span>()[[<span class="st">"corpus"</span>]]) <span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/size-method">size</a></span>(<span class="st">"GERMAPARL"</span>) <span class="co"># to learn about the size of the corpus</span></a></code></pre></div>
 </div>
 <div id="a-very-brief-tutorial" class="section level4">
 <h4 class="hasAnchor">
 <a href="#a-very-brief-tutorial" class="anchor"></a>A very brief tutorial</h4>
-<p>The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as <a href="http://cwb.sourceforge.net/cqpweb.php">CQPweb</a>). However, most technical decisions during corpus preparation had in mind to optimise using the GermaParl corpus in combination with the polmineR package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands.</p>
+<p>The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as <a href="http://cwb.sourceforge.net/cqpweb.php">CQPweb</a>). However, most technical decisions during corpus preparation had in mind to optimise using the GermaParl corpus in combination with the polmineR package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands. Note that in the following examples, we will use GERMAPARLMINI to illustrate functions, as the full GERMAPARL corpus will only be available after the full installation of the corpus.</p>
 <p>First, you may want to learn about the p-attributes (positional attributes), and s-attributes (structural attributes) that are available.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/s_attributes-method">s_attributes</a></span>(<span class="st">"GERMAPARL"</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/p_attributes">p_attributes</a></span>(<span class="st">"GERMAPARL"</span>)</a></code></pre></div>
-<p>To learn about the values of s-attributes, specify the param sAttribute:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/s_attributes-method">s_attributes</a></span>(<span class="st">"GERMAPARL"</span>, <span class="st">"year"</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/s_attributes-method">s_attributes</a></span>(<span class="st">"GERMAPARL"</span>, <span class="st">"parliamentary_group"</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/s_attributes-method">s_attributes</a></span>(<span class="st">"GERMAPARL"</span>, <span class="st">"party"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/s_attributes-method">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>)</a></code></pre></div>
+<pre><code>## [1] "interjection" "date"         "party"        "speaker"</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/p_attributes">p_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>)</a></code></pre></div>
+<pre><code>## [1] "word" "pos"</code></pre>
+<p>To learn about the values of s-attributes, specify the param s_attribute:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/s_attributes-method">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="st">"date"</span>)</a></code></pre></div>
+<pre><code>## [1] "2009-10-27" "2009-10-28" "2009-11-10" "2009-11-11" "2009-11-12"</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/s_attributes-method">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="st">"party"</span>)</a></code></pre></div>
+<pre><code>## [1] "NA"              "CDU_CSU"         "SPD"             "FDP"            
+## [5] "DIE_LINKE"       "B90_DIE_GRUENEN"</code></pre>
 <p>To inspect keywords-in-context (KWIC), use the kwic-method:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">K &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/kwic">kwic</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="st">"Textanalyse"</span>)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="cf">if</span> (<span class="kw">interactive</span>()) K</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">K &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/kwic">kwic</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Integration"</span>)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="cf">if</span> (<span class="kw">interactive</span>()){</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">  K</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">  knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw">as.data.frame</span>(K), <span class="dt">format =</span> <span class="st">"markdown"</span>)</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">}</a></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="3%">
+<col width="47%">
+<col width="9%">
+<col width="39%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">meta</th>
+<th align="left">left</th>
+<th align="left">node</th>
+<th align="left">right</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">. Es ist eine Frage der</td>
+<td align="left">Integration</td>
+<td align="left">der Menschen , die in unserem</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">das hilft weiter . Bildung ,</td>
+<td align="left">Integration</td>
+<td align="left">, solide Haushalte , generationengerechte soziale</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">Familien , die Bildung , die</td>
+<td align="left">Integration</td>
+<td align="left">, die Arbeitsmarktpolitik und die sozialen</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">sage mit Nachdruck : Auch die</td>
+<td align="left">Integration</td>
+<td align="left">der Zuwanderer und ihrer Kinder führt</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">und wie wir im Bereich der</td>
+<td align="left">Integration</td>
+<td align="left">nachholen , was wir jahrzehntelang möglicherweise</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">zugleich ein Thema , das die</td>
+<td align="left">Integration</td>
+<td align="left">betrifft . Junge Menschen , die</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">dass Deutschland und Frankreich die europäische</td>
+<td align="left">Integration</td>
+<td align="left">in der Substanz - also die</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">. Auf ihm hat die europäische</td>
+<td align="left">Integration</td>
+<td align="left">aufgebaut , und durch ihn ist</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">" wird erwähnt , wie wichtig</td>
+<td align="left">Integration</td>
+<td align="left">, sozialer Zusammenhalt und Ressourcenschutz sind</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">Zusammenhalts in Wohnquartieren einschließlich der besseren</td>
+<td align="left">Integration</td>
+<td align="left">von Menschen mit Migrationshintergrund und für</td>
+</tr>
+<tr class="odd">
+<td align="left">11</td>
+<td align="left">weltweiter Migrationsbewegungen und zunehmender Vielfalt ist</td>
+<td align="left">Integration</td>
+<td align="left">eine Schlüsselaufgabe für uns alle .</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">für uns alle . Bei der</td>
+<td align="left">Integration</td>
+<td align="left">von Zuwanderern haben wir bereits viel</td>
+</tr>
+<tr class="odd">
+<td align="left">13</td>
+<td align="left">wäre aber zu kurz gegriffen ,</td>
+<td align="left">Integration</td>
+<td align="left">nur im Zusammenhang mit Zuwanderern zum</td>
+</tr>
+<tr class="even">
+<td align="left">14</td>
+<td align="left">Thema der Innenpolitik zu machen .</td>
+<td align="left">Integration</td>
+<td align="left">in einem umfassenden Sinne bedeutet ,</td>
+</tr>
+<tr class="odd">
+<td align="left">15</td>
+<td align="left">es wirklich nicht getan ; denn</td>
+<td align="left">Integration</td>
+<td align="left">umfasst viele Bereiche , von der</td>
+</tr>
+<tr class="even">
+<td align="left">16</td>
+<td align="left">ideologiefrei und vorurteilsfrei ist . Die</td>
+<td align="left">Integration</td>
+<td align="left">von Menschen mit Migrationshintergrund ist für</td>
+</tr>
+<tr class="odd">
+<td align="left">17</td>
+<td align="left">für Bildung und Ausbildung , für</td>
+<td align="left">Integration</td>
+<td align="left">in den Beruf , für Partizipation</td>
+</tr>
+<tr class="even">
+<td align="left">18</td>
+<td align="left">die Rede . Wir brauchen verantwortungsbewusste</td>
+<td align="left">Integration</td>
+<td align="left">. Das bedeutet , jeder ,</td>
+</tr>
+<tr class="odd">
+<td align="left">19</td>
+<td align="left">, der für das Gelingen der</td>
+<td align="left">Integration</td>
+<td align="left">verantwortlich ist , muss sich auch</td>
+</tr>
+<tr class="even">
+<td align="left">20</td>
+<td align="left">abhängig . Wir werden die europäische</td>
+<td align="left">Integration</td>
+<td align="left">nicht als Bedrohung verstehen , sondern</td>
+</tr>
+<tr class="odd">
+<td align="left">21</td>
+<td align="left">. Das ist ein Schritt zur</td>
+<td align="left">Integration</td>
+<td align="left">; darin liegt für Kinder und</td>
+</tr>
+<tr class="even">
+<td align="left">22</td>
+<td align="left">Berufsabschlüssen voranbringen und unsere Maßnahmen zur</td>
+<td align="left">Integration</td>
+<td align="left">von Jugendlichen durch Bildung und Ausbildung</td>
+</tr>
+<tr class="odd">
+<td align="left">23</td>
+<td align="left">? Wie schaffen wir bes- sere</td>
+<td align="left">Integration</td>
+<td align="left">in und durch Bildung ? Wie</td>
+</tr>
+</tbody>
+</table>
 <p>The count-method is used for counting. You can supply one or multiple queries:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/count-method">count</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="st">"Minderheitsregierung"</span>)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/count-method">count</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="kw">c</span>(<span class="st">"Asyl"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/count-method">count</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Integration"</span>)</a></code></pre></div>
+<pre><code>##          query count         freq
+## 1: Integration    23 0.0001035099</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/count-method">count</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="kw">c</span>(<span class="st">"Integration"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))</a></code></pre></div>
+<pre><code>##          query count         freq
+## 1: Integration    23 1.035099e-04
+## 2:      Flucht     2 9.000860e-06
+## 3: Abschiebung     1 4.500430e-06</code></pre>
 <p>To get the dispersion of a query, use the dispersion-method.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">D &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dispersion-method">dispersion</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="st">"Flüchtlinge", s_attribute = "</span>year<span class="st">")</span></a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">D &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dispersion-method">dispersion</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Integration"</span>, <span class="dt">s_attribute =</span> <span class="st">"date"</span>)</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2">D</a></code></pre></div>
+<pre><code>##          date count
+## 1: 2009-10-27     1
+## 2: 2009-11-10     7
+## 3: 2009-11-11    15</code></pre>
 <p>Visualise the result as a barplot…</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">barplot</span>(D[[<span class="st">"count"</span>]], <span class="dt">names.arg =</span> D[[<span class="st">"year"</span>]], <span class="dt">las =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">barplot</span>(D[[<span class="st">"count"</span>]], <span class="dt">names.arg =</span> D[[<span class="st">"date"</span>]], <span class="dt">las =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p><img src="GermaParl_files/figure-html/dispersion_barplot-1.png" width="700"></p>
 <p>The cooccurrences-method will get you the cooccurrences of a query.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">C &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/cooccurrences">cooccurrences</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">query =</span> <span class="st">"Terroranschläge"</span>)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">C<span class="op">@</span>stat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dotplot-method">dotplot</a></span>(C)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">C &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/cooccurrences">cooccurrences</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Wir"</span>)</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">C<span class="op">@</span>stat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dotplot-method">dotplot</a></span>(C)</a></code></pre></div>
 <p>These are some if the core functions, applied to the whole corpus. The whole point of the structural annotation of the corpus (s-attributes) is to facilitate the creation of subcorpora / partitions. So every method that has been introduced can be applied to a partition.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">lp16 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/partition">partition</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">lp =</span> <span class="dv">16</span>)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/count-method">count</a></span>(lp16, <span class="dt">query =</span> <span class="kw">c</span>(<span class="st">"Asyl"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dispersion-method">dispersion</a></span>(lp16, <span class="dt">query =</span> <span class="st">"Flüchtlinge", sAttribute = "</span>year<span class="st">")</span></a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">lp16 &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/partition">partition</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">lp =</span> <span class="dv">16</span>)</a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/count-method">count</a></span>(lp16, <span class="dt">query =</span> <span class="kw">c</span>(<span class="st">"Asyl"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dispersion-method">dispersion</a></span>(lp16, <span class="dt">query =</span> <span class="st">"Flüchtlinge", sAttribute = "</span>year<span class="st">")</span></a></code></pre></div>
 <p>Finally, note that the methods of polmineR can also be used with the pipe functionality offered by the magrittr package.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(magrittr)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/cooccurrences">cooccurrences</a></span>(lp16, <span class="dt">query =</span> <span class="st">"Terrorismus"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">subset</span>(<span class="op">!</span>word <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(tm<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tm/topics/stopwords">stopwords</a></span>(<span class="st">"de"</span>), <span class="st">","</span>, <span class="st">"."</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">subset</span>(count_window <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dotplot-method">dotplot</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">library</span>(magrittr)</a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/cooccurrences">cooccurrences</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Europa"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">  </span><span class="kw">subset</span>(<span class="op">!</span>word <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(tm<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/tm/topics/stopwords">stopwords</a></span>(<span class="st">"de"</span>), <span class="st">","</span>, <span class="st">"."</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="st">  </span><span class="kw">subset</span>(count_window <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/polmineR/topics/dotplot-method">dotplot</a></span>()</a></code></pre></div>
 <p>This is just a short glimpse into the analytical opportunities of using GermaParl in combination with polmineR. One of the most important aspects that cannot be explained here is the possibility to use the syntax of the Corpus Query Processor (CQP) that comes with the CWB backend. The as.TermDocumentMatrix method will prepare data structures efficiently needed for more advanced analytical techniques such as topicmodelling.Consult the vignette of the polmineR package to learn more!</p>
 </div>
 <div id="some-caveats" class="section level4">
@@ -321,7 +503,7 @@
 <h3 class="hasAnchor">
 <a href="#quotation" class="anchor"></a>Quotation</h3>
 <p>If you work with GermaParl package, please include the following reference in your bibliography to attribute the language resource:</p>
-<p><em>Blaette, Andreas</em> (2018): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.0.4). <a href="https://github.com/polmine/GermaParl" class="uri">https://github.com/polmine/GermaParl</a>.</p>
+<p><em>Blaette, Andreas</em> (2018): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.2.0). Available from: <a href="https://doi.org/10.5281/zenodo.1312551" class="uri">https://doi.org/10.5281/zenodo.1312551</a>.</p>
 </div>
 <div id="annex" class="section level3">
 <h3 class="hasAnchor">
@@ -329,10 +511,250 @@
 <div id="corpus-data-by-electoral-period" class="section level4">
 <h4 class="hasAnchor">
 <a href="#corpus-data-by-electoral-period" class="anchor"></a>Corpus data (by electoral period)</h4>
+<table class="table">
+<thead><tr class="header">
+<th align="right">lp</th>
+<th align="right">protocols</th>
+<th align="left">first</th>
+<th align="left">last</th>
+<th align="right">size</th>
+<th align="right">unknown</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">13</td>
+<td align="right">163</td>
+<td align="left">1996-02-08</td>
+<td align="left">1996-02-08</td>
+<td align="right">11676618</td>
+<td align="right">0.050</td>
+</tr>
+<tr class="even">
+<td align="right">14</td>
+<td align="right">253</td>
+<td align="left">1998-10-26</td>
+<td align="left">1998-10-26</td>
+<td align="right">19349263</td>
+<td align="right">0.062</td>
+</tr>
+<tr class="odd">
+<td align="right">15</td>
+<td align="right">182</td>
+<td align="left">2002-10-17</td>
+<td align="left">2002-10-17</td>
+<td align="right">12785509</td>
+<td align="right">0.056</td>
+</tr>
+<tr class="even">
+<td align="right">16</td>
+<td align="right">233</td>
+<td align="left">2005-10-18</td>
+<td align="left">2005-10-18</td>
+<td align="right">18412812</td>
+<td align="right">0.052</td>
+</tr>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">252</td>
+<td align="left">2009-10-27</td>
+<td align="left">2009-10-27</td>
+<td align="right">23418060</td>
+<td align="right">0.056</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="corpus-data-by-year" class="section level4">
 <h4 class="hasAnchor">
 <a href="#corpus-data-by-year" class="anchor"></a>Corpus data (by year)</h4>
+<table class="table">
+<thead><tr class="header">
+<th align="left">year</th>
+<th align="right">protocols</th>
+<th align="right">txt</th>
+<th align="right">pdf</th>
+<th align="right">size</th>
+<th align="right">unknown</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">1996</td>
+<td align="right">64</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">4480664</td>
+<td align="right">0.049</td>
+</tr>
+<tr class="even">
+<td align="left">1997</td>
+<td align="right">62</td>
+<td align="right">62</td>
+<td align="right">0</td>
+<td align="right">4422019</td>
+<td align="right">0.050</td>
+</tr>
+<tr class="odd">
+<td align="left">1998</td>
+<td align="right">51</td>
+<td align="right">49</td>
+<td align="right">2</td>
+<td align="right">3523861</td>
+<td align="right">0.051</td>
+</tr>
+<tr class="even">
+<td align="left">1999</td>
+<td align="right">65</td>
+<td align="right">65</td>
+<td align="right">0</td>
+<td align="right">5117808</td>
+<td align="right">0.052</td>
+</tr>
+<tr class="odd">
+<td align="left">2000</td>
+<td align="right">62</td>
+<td align="right">62</td>
+<td align="right">0</td>
+<td align="right">5035682</td>
+<td align="right">0.061</td>
+</tr>
+<tr class="even">
+<td align="left">2001</td>
+<td align="right">69</td>
+<td align="right">69</td>
+<td align="right">0</td>
+<td align="right">5145527</td>
+<td align="right">0.071</td>
+</tr>
+<tr class="odd">
+<td align="left">2002</td>
+<td align="right">60</td>
+<td align="right">60</td>
+<td align="right">0</td>
+<td align="right">4426916</td>
+<td align="right">0.064</td>
+</tr>
+<tr class="even">
+<td align="left">2003</td>
+<td align="right">66</td>
+<td align="right">65</td>
+<td align="right">1</td>
+<td align="right">4587196</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="odd">
+<td align="left">2004</td>
+<td align="right">65</td>
+<td align="right">65</td>
+<td align="right">0</td>
+<td align="right">4808168</td>
+<td align="right">0.057</td>
+</tr>
+<tr class="even">
+<td align="left">2005</td>
+<td align="right">43</td>
+<td align="right">39</td>
+<td align="right">4</td>
+<td align="right">2755203</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="odd">
+<td align="left">2006</td>
+<td align="right">65</td>
+<td align="right">64</td>
+<td align="right">1</td>
+<td align="right">4942175</td>
+<td align="right">0.052</td>
+</tr>
+<tr class="even">
+<td align="left">2007</td>
+<td align="right">60</td>
+<td align="right">59</td>
+<td align="right">1</td>
+<td align="right">4518292</td>
+<td align="right">0.052</td>
+</tr>
+<tr class="odd">
+<td align="left">2008</td>
+<td align="right">63</td>
+<td align="right">29</td>
+<td align="right">34</td>
+<td align="right">5071670</td>
+<td align="right">0.052</td>
+</tr>
+<tr class="even">
+<td align="left">2009</td>
+<td align="right">49</td>
+<td align="right">0</td>
+<td align="right">49</td>
+<td align="right">4213853</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="odd">
+<td align="left">2010</td>
+<td align="right">69</td>
+<td align="right">50</td>
+<td align="right">19</td>
+<td align="right">5984549</td>
+<td align="right">0.057</td>
+</tr>
+<tr class="even">
+<td align="left">2011</td>
+<td align="right">68</td>
+<td align="right">68</td>
+<td align="right">0</td>
+<td align="right">6244475</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="odd">
+<td align="left">2012</td>
+<td align="right">64</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">6172471</td>
+<td align="right">0.056</td>
+</tr>
+<tr class="even">
+<td align="left">2013</td>
+<td align="right">44</td>
+<td align="right">44</td>
+<td align="right">0</td>
+<td align="right">4427191</td>
+<td align="right">0.054</td>
+</tr>
+<tr class="odd">
+<td align="left">2014</td>
+<td align="right">71</td>
+<td align="right">71</td>
+<td align="right">0</td>
+<td align="right">5404010</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="even">
+<td align="left">2015</td>
+<td align="right">69</td>
+<td align="right">69</td>
+<td align="right">0</td>
+<td align="right">5187762</td>
+<td align="right">0.057</td>
+</tr>
+<tr class="odd">
+<td align="left">2016</td>
+<td align="right">62</td>
+<td align="right">62</td>
+<td align="right">0</td>
+<td align="right">4544216</td>
+<td align="right">0.056</td>
+</tr>
+<tr class="even">
+<td align="left">TOTAL</td>
+<td align="right">1291</td>
+<td align="right">1180</td>
+<td align="right">111</td>
+<td align="right">101013708</td>
+<td align="right">1.166</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="data-sources" class="section level4">
 <h4 class="hasAnchor">

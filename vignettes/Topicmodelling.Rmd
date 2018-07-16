@@ -4,7 +4,7 @@ author: "Andreas Blaette (andreas.blaette@uni-due.de)"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{GermaParl}
+  %\VignetteIndexEntry{GermaParl - Topicmodels}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -11,6 +11,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, echo = FALSE, message = FALSE}
+Sys.setenv("CORPUS_REGISTRY" = "")
+```
+
 ### A Corpus of Plenary Protocols
 
 Parliamentary debates convey the arguments, interpretations and contestations that shape political decision-making. They are recorded and transcribed by parliamentary administrations with diligence, and published as plenary protocols. These documents are available for long periods of time -- for several decades and more -- and they cover the full breadth of topics that is processed by a political system: Plenary protocols are a valuable resource for research on policy and politics, and for citizens. They are a crucial building block of the public digital archive of democracy.
@@ -98,7 +102,10 @@ The GermaParl data package that includes the CWB indexed version of the corpus i
 library(polmineR)
 if ("drat" %in% rownames(available.packages()) == FALSE) install.packages("drat")
 drat::addRepo("polmine") # lowercase necessary in this case
-install.packages("GermaParl")
+if ("GermaParl" %in% rownames(available.packages()) == FALSE){
+  install.packages("GermaParl")
+}
+
 ```
 
 After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from an external webspace (amazon AWS, for the time being):
@@ -110,63 +117,67 @@ germaparl_download_corpus()
 
 To check whether the installation has been successful, run the following commands. For further instructions, see the documentation of the polmineR package.
 
-```{r check_installation, eval = FALSE}
+```{r check_installation, eval = TRUE}
 library(polmineR)
 use("GermaParl") # to activate the corpus in the data package
 corpus() # to see whether the GERMAPARL corpus is listed
-size("GERMAPARL") # to learn about the size of the corpus
+if ("GERMAPARL" %in% corpus()[["corpus"]]) size("GERMAPARL") # to learn about the size of the corpus
 ```
 
 
 #### A very brief tutorial
 
-The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as [CQPweb](http://cwb.sourceforge.net/cqpweb.php)). However, most technical decisions during corpus preparation had in mind to optimise using the GermaParl corpus in combination with the polmineR package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands.
+The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as [CQPweb](http://cwb.sourceforge.net/cqpweb.php)). However, most technical decisions during corpus preparation had in mind to optimise using the GermaParl corpus in combination with the polmineR package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands. Note that in the following examples, we will use GERMAPARLMINI to illustrate functions, as the full GERMAPARL corpus will only be available after the full installation of the corpus.
 
 First, you may want to learn about the p-attributes (positional attributes), and s-attributes (structural attributes) that are available.
 
-```{r sAttributes, eval = FALSE}
-s_attributes("GERMAPARL")
-p_attributes("GERMAPARL")
+```{r sAttributes, eval = TRUE}
+s_attributes("GERMAPARLMINI")
+p_attributes("GERMAPARLMINI")
 ```
 
-To learn about the values of s-attributes, specify the param sAttribute:
+To learn about the values of s-attributes, specify the param s_attribute:
 
-```{r sAttributes_year, eval = FALSE}
-s_attributes("GERMAPARL", "year")
-s_attributes("GERMAPARL", "parliamentary_group")
-s_attributes("GERMAPARL", "party")
+```{r sAttributes_year, eval = TRUE}
+s_attributes("GERMAPARLMINI", "date")
+s_attributes("GERMAPARLMINI", "party")
 ```
 
 To inspect keywords-in-context (KWIC), use the kwic-method:
 
-```{r kwic, eval = FALSE}
-K <- kwic("GERMAPARL", query = "Textanalyse")
-if (interactive()) K
+```{r kwic, eval = TRUE}
+K <- kwic("GERMAPARLMINI", query = "Integration")
+if (interactive()){
+  K
+} else {
+  knitr::kable(as.data.frame(K), format = "markdown")
+}
 ```
 
 The count-method is used for counting. You can supply one or multiple queries:
 
-```{r count, eval = FALSE}
-count("GERMAPARL", query = "Minderheitsregierung")
-count("GERMAPARL", query = c("Asyl", "Flucht", "Abschiebung"))
+```{r count, eval = TRUE}
+count("GERMAPARLMINI", query = "Integration")
+count("GERMAPARLMINI", query = c("Integration", "Flucht", "Abschiebung"))
 ```
 
 To get the dispersion of a query, use the dispersion-method.
 
-```{r dispersion, eval = FALSE}
-D <- dispersion("GERMAPARL", query = "Flüchtlinge", s_attribute = "year")
+```{r dispersion, eval = TRUE}
+D <- dispersion("GERMAPARLMINI", query = "Integration", s_attribute = "date")
+D
 ```
 
 Visualise the result as a barplot...
 
-```{r dispersion_barplot, eval = FALSE}
-barplot(D[["count"]], names.arg = D[["year"]], las = 2)
+```{r dispersion_barplot, eval = TRUE}
+barplot(D[["count"]], names.arg = D[["date"]], las = 2)
 ```
 
 The cooccurrences-method will get you the cooccurrences of a query.
 
 ```{r cooc, eval = FALSE}
-C <- cooccurrences("GERMAPARL", query = "Terroranschläge")
+C <- cooccurrences("GERMAPARLMINI", query = "Wir")
 C@stat[1:5]
 dotplot(C)
 ```
@@ -183,7 +194,7 @@ Finally, note that the methods of polmineR can also be used with the pipe functi
 
 ```{r pipe, eval = FALSE}
 library(magrittr)
-cooccurrences(lp16, query = "Terrorismus") %>% 
+cooccurrences("GERMAPARLMINI", query = "Europa") %>% 
   subset(!word %in% c(tm::stopwords("de"), ",", ".")) %>%
   subset(count_window >= 5) %>%
   dotplot()
@@ -235,70 +246,23 @@ See the [CC Attribution-NonCommercial-ShareAlike 4.0 Unported License](https://c
 
 If you work with GermaParl package, please include the following reference in your bibliography to attribute the language resource:
 
-_Blaette, Andreas_ (2018): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.0.4). https://github.com/polmine/GermaParl.
+_Blaette, Andreas_ (2018): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.2.0). Available from: https://doi.org/10.5281/zenodo.1312551.
 
 
 ### Annex
 
 #### Corpus data (by electoral period)
 
-```{r stat_by_lp, eval = FALSE, echo = FALSE, message = FALSE}
-library(polmineR)
-use("GermaParl")
-library(knitr)
-library(data.table)
-
-dts <- lapply(
-  13:17,
-  function(lp){
-    P <- partition("GERMAPARL", lp = lp)
-    dates <- as.Date(s_attributes(P, "date"))
-    dt <- polmineR::count(P, p_attribute = "lemma")
-    unknown <- round(sum(dt[grepl("#unknown#", dt[["lemma"]])][["count"]]) / size(P), digits = 3)
-
-    data.table(
-      lp = lp,
-      protocols = length(unique(s_attributes(P, "session"))),
-      first = min(dates, na.rm = TRUE),
-      last = min(dates, na.rm = TRUE),
-      size = size(P),
-      unknown = unknown
-      )
-  }
-)
-dt <- rbindlist(dts)
-knitr::kable(dt, format = "markdown")
+```{r stat_by_lp, eval = TRUE, echo = FALSE, message = FALSE}
+knitr::kable(GermaParl::germaparl_by_lp, format = "markdown")
 ```
 
 
 #### Corpus data (by year)
 
 
-```{r stat_by_year, eval = FALSE, echo = FALSE, message = FALSE}
-years <- as.integer(s_attributes("GERMAPARL", "year"))
-dts <- lapply(
-  min(years):max(years),
-  function(year){
-    P <- partition("GERMAPARL", year = as.character(year), verbose = FALSE)
-    P.txt <- partition(P, src = "txt")
-    P.pdf <- partition(P, src = "pdf")
-    dt <- polmineR::count(P, p_attribute = "lemma")
-    unknowns <- round(sum(dt[grepl("#unknown#", dt[["lemma"]])][["count"]]) / size(P), digits = 3)
-    data.table(
-      year = year,
-      protocols = length(unique(s_attributes(P, "session"))),
-      txt = length(s_attributes(P.txt, "session")),
-      pdf = length(s_attributes(P.pdf, "session")),
-      size = size(P),
-      unknown = unknowns
-      )
-  }
-)
-dt1 <- rbindlist(dts)
-dt2 <- rbind(dt1, t(data.table(colSums(dt1))), use.names = FALSE, fill = FALSE)
-dt2[["year"]] <- as.character(dt2[["year"]])
-dt2[nrow(dt2), 1] <- "TOTAL"
-knitr::kable(dt2, format = "markdown")
+```{r stat_by_year, eval = TRUE, echo = FALSE, message = FALSE}
+knitr::kable(GermaParl::germaparl_by_year, format = "markdown")
 ```
 
 

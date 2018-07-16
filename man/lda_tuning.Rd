@@ -3,12 +3,12 @@
 \docType{data}
 \name{lda_tuning}
 \alias{lda_tuning}
-\title{LDA Tuning Resulty}
+\title{LDA Tuning Results}
 \format{An object of class \code{data.frame} with 10 rows and 5 columns.}
 \usage{
 lda_tuning
 }
 \description{
-LDA Tuning Resulty
+LDA Tuning Results
 }
 \keyword{datasets}

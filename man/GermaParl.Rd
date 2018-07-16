@@ -3,6 +3,8 @@
 \docType{data}
 \name{GermaParl}
 \alias{GermaParl}
+\alias{germaparl_by_lp}
+\alias{germaparl_by_year}
 \title{GermaParl Corpus Class.}
 \format{An object of class \code{R6ClassGenerator} of length 24.}
 \usage{

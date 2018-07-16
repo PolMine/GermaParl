@@ -4,7 +4,7 @@ author: "Andreas Blätte (andreas.blaette@uni-due.de)"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{use_cap_annotation}
+  %\VignetteIndexEntry{GermaParl CAP Annotation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
