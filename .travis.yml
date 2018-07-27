@@ -7,7 +7,7 @@ matrix:
       dist: trusty
     - os: osx
       osx_image: xcode9.1
-      brew_packages: pkg-config glib pcre
+      brew_packages: pkg-config glib pcre gsl
 
 addons:
   apt:
@@ -15,6 +15,7 @@ addons:
     - libxml2-dev
     - libpcre3-dev
     - libglib2.0-dev
+    - libgsl0ldbl
 
 
 before_install:
