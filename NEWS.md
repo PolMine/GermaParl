@@ -1,3 +1,7 @@
+# GermaParl 1.2.1
+
+- configure.win script is removed so that installation works on Windows without Rtools installation
+
 # GermaParl 1.2.0
 
 - Package includes sample data, but not full corpus upon installation, use `germaparl_download_corpus()` for downloading full corpus.

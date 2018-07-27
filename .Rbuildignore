@@ -1,2 +1,5 @@
 ^_pkgdown\.yml$
 ^docs$
+^data-raw$
+^README.Rmd$
+^\.travis\.yml$

@@ -1,0 +1,39 @@
+language: r
+cache: packages
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+    - os: osx
+      osx_image: xcode9.1
+      brew_packages: pkg-config glib pcre
+
+addons:
+  apt:
+    packages:
+    - libxml2-dev
+    - libpcre3-dev
+    - libglib2.0-dev
+
+
+before_install:
+  - Rscript -e 'install.packages("rmarkdown")'
+  - Rscript -e 'install.packages("RcppCWB")'
+
+r_packages:
+  - devtools
+  - plyr
+  - tm
+  - tidytext
+  - covr
+
+warnings_are_errors: false
+
+notifications:
+  email:
+  on_success: change
+  on_failure: change
+
+after_success:
+  - Rscript -e 'library(covr); codecov(token = "36cf23e7-4231-4329-b680-f052fece17dc")'
