@@ -16,6 +16,7 @@ addons:
     - libpcre3-dev
     - libglib2.0-dev
     - libgsl0ldbl
+    - libgsl0-dev
 
 
 before_install:
