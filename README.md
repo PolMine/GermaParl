@@ -2,6 +2,8 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![DOI](https://zenodo.org/badge/141028057.svg)](https://zenodo.org/badge/latestdoi/141028057)
+[![Travis-CI Build
+Status](https://travis-ci.org/PolMine/GermaParl.svg?branch=master)](https://travis-ci.org/PolMine/GermaParl)
 
 # The GermaParl R Data Package <img src="https://raw.githubusercontent.com/PolMine/GermaParl/master/inst/sticker/hexsticker.png" align="right" />
 
@@ -97,7 +99,7 @@ purposes.
 material, you must distribute your contributions under the same license
 as the original.
 
-See the [CC Attribution-NonCommercial-ShareAlike 3.0 Unported
+See the [CC Attribution-NonCommercial-ShareAlike 4.0 Unported
 License](https://creativecommons.org/licenses/by-nc-sa/4.0/) for further
 explanations.
 
@@ -107,7 +109,7 @@ If you work with GermaParl package, please include the following
 reference in your bibliography to attribute the language resource:
 
 *Blaette, Andreas* (2018): GermaParl. R Data Package for the GermaParl
-Corpus of Plenary Protocols of the German Bundestag (v1.2.0). Available
+Corpus of Plenary Protocols of the German Bundestag (v1.2.1). Available
 from: <https://doi.org/10.5281/zenodo.1312551>.
 
 ### Feedback

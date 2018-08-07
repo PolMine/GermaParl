@@ -5,6 +5,7 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![DOI](https://zenodo.org/badge/141028057.svg)](https://zenodo.org/badge/latestdoi/141028057)
+[![Travis-CI Build Status](https://travis-ci.org/PolMine/GermaParl.svg?branch=master)](https://travis-ci.org/PolMine/GermaParl)
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
