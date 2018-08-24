@@ -1,3 +1,15 @@
+# GermaParl 1.2.1.9001
+
+- Documentation for function to work with topicmodels have been integrated into one 
+  documentation object.
+- Bug removed from `germaparl_download_lda` examples.
+- `germaparl_load_lda` will now return NULL object (instead of throwing an error) if
+  lda model is not present.
+- `germaparl_encode_lda_topics` will now issue a warning (instead of crashing) if the
+  s-attribute 'speeches' has not yet been generated.
+- The function `use_germaparl()` has been replaced by `germaparl_regdir`, it will return
+  the registry directory with the R data package.
+
 # GermaParl 1.2.1
 
 - configure.win script is removed so that installation works on Windows without Rtools installation

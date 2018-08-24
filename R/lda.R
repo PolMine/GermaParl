@@ -1,12 +1,49 @@
-#' Write s-attribute with top topicmodels to corpus
+#' Use topicmodels prepared for GermaParl.
 #' 
-#' Add a new s-attributes 'topics' to GermaParl corpus with topicmodel 
-#' for \code{k} topics. The \code{n} topics for speeches will be written to 
-#' the corpus.
+#' A set of LDA topicmodels is deposited at a Amazon S3 webspace, for a number of topics between
+#' 100 and 500. 
 #' 
-#' @param k number of topics of the topicmodel to load
-#' @param n number of topics to write to corpus
-#' @importFrom polmineR decode partition
+#' @details The function \code{germaparl_download_lda} to download the
+#'   *.rds-file. It will be stored in the \code{extdata/topicmodels/}
+#'   subdirectory of the installed GermaParl package.
+#' @param k The number of topics of the topicmodel.
+#' @param webdir The web location.
+#' @param rds_file filename of the RData file
+#' @export germaparl_download_lda
+#' @aliases topics
+#' @examples
+#' topicmodel_dir <- system.file(package = "GermaParl", "extdata", "topicmodels")
+#' lda_files <- Sys.glob(paths = sprintf("%s/germaparl_lda_speeches_*.rds", topicmodel_dir))
+#' if (length(lda_files) > 0  && requireNamespace("topicmodels")){
+#'   lda <- readRDS(lda_files[1])
+#'   lda_terms <- terms(lda, 50)
+#' }
+#' @rdname germaparl_topics
+germaparl_download_lda <- function(k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L, 300L, 350L, 400L, 450L, 500L), rds_file = sprintf("germaparl_lda_speeches_%d.rds", k), webdir = "https://s3.eu-central-1.amazonaws.com/polmine/corpora/cwb/germaparl"){
+  tarball <- file.path(webdir, rds_file)
+  if (!url.exists(tarball)){
+    warning(sprintf("file '%s' is not available"), rds_file)
+    return(FALSE)
+  } else {
+    message("... downloading: ", tarball)
+    download.file(
+      url = tarball,
+      destfile = file.path(system.file(package = "GermaParl", "extdata", "topicmodels"), rds_file)
+    )
+    return(invisible(TRUE))
+  } 
+}
+
+
+
+#' @details \code{germaparl_encode_lda_topics} will add a new s-attributes
+#'   'topics' to GermaParl corpus with topicmodel for \code{k} topics. The
+#'   \code{n} topics for speeches will be written to the corpus. A requirement
+#'   for the function to work is that the s-attribute 'speech' has been
+#'   generated beforehand using \code{germaparl_add_s_attribute_speech}.
+#' 
+#' @param n Number of topics to write to corpus
+#' @importFrom polmineR decode partition s_attributes
 #' @importFrom data.table setkeyv
 #' @importFrom topicmodels topics
 #' @importFrom cwbtools s_attribute_encode
@@ -16,10 +53,10 @@
 #' \dontrun{
 #' germaparl_encode_lda_topics(k = 250, n = 3)
 #' }
+#' @rdname germaparl_topics
 germaparl_encode_lda_topics <- function(k = 200, n = 5){
   
-  germaparl_regdir <- use_germaparl()
-  germaparl_data_dir <- registry_file_parse(corpus = "GERMAPARL")[["home"]]
+  germaparl_data_dir <- registry_file_parse(corpus = "GERMAPARL", registry_dir = germaparl_regdir())[["home"]]
   corpus_charset <- registry_file_parse(corpus = "GERMAPARL")[["properties"]][["charset"]]
   
   model <- germaparl_load_topicmodel(k = k)
@@ -33,7 +70,11 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5){
   )
   
   message("... decoding s-attribute speech")
-  cpos_dt <- decode("GERMAPARL", sAttribute = "speech")
+  if (!"speech" %in% s_attributes("GERMAPARL")){
+    stop("The s-attributes 'speech' is not yet present.",
+         "Use the function germaparl_add_s_attribute_speech to generate it.")
+  }
+  cpos_dt <- decode("GERMAPARL", s_attribute = "speech")
   setkeyv(cpos_dt, "speech")
   
   
@@ -61,31 +102,36 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5){
     s_attribute = "topics",
     corpus = "GERMAPARL",
     region_matrix = as.matrix(cpos_dt2[, c("cpos_left", "cpos_right")]),
-    registry_dir = germaparl_regdir,
+    registry_dir = germaparl_regdir(),
     encoding = corpus_charset,
     method = "R",
     verbose = TRUE
   )
 }
 
-#' Load Topicmodel
-#' 
-#' @param k number of topics
+#' @details \code{germaparl_load_topicmodel} will load a topicmodel into memory.
+#'   The function will return a \code{LDA_Gibbs} topicmodel, if the topicmodel
+#'   for \code{k} is present; \code{NULL} if the topicmodel has not yet been
+#'   downloaded.
 #' @param verbose logical
 #' @export germaparl_load_topicmodel
+#' @rdname germaparl_topics
 germaparl_load_topicmodel <- function(k, verbose = TRUE){
   if (verbose) message(sprintf("... loading topicmodel for k = %d", k))
   topicmodel_dir <- system.file(package = "GermaParl", "extdata", "topicmodels")
   lda_files <- Sys.glob(paths = sprintf("%s/germaparl_lda_speeches_*.rds", topicmodel_dir))
   ks <- as.integer(gsub("germaparl_lda_speeches_(\\d+)\\.rds", "\\1", basename(lda_files)))
-  if (!k %in% ks) stop("no topicmodel available for k provided")
+  if (!k %in% ks){
+    warning("no topicmodel available for k provided")
+    return(NULL)
+  }
   names(lda_files) <- ks
   readRDS(lda_files[[as.character(k)]])
 }
 
 
-#' Get Bundle with Speeches for Topic.
-#' 
+#' @details @code{germaparl_get_speeches_for_topic} will get a bundle with
+#'   Speeches for Topic.
 #' @importFrom polmineR as.speeches
 #' @export germaparl_get_speeches_for_topic
 #' @examples
@@ -105,7 +151,7 @@ germaparl_load_topicmodel <- function(k, verbose = TRUE){
 #'   if (readline() == "q") stop()
 #' }
 #' }
-#' @param n topic number
+#' @rdname germaparl_topics
 germaparl_get_speeches_for_topic <- function(n){
   P <- partition("GERMAPARL", topics = sprintf("\\|%d\\|", n), regex = TRUE)
   as.speeches(P, s_attribute_date = "date", s_attribute_name = "speaker")

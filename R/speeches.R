@@ -21,7 +21,6 @@
 #' @importFrom utils download.file
 #' @export germaparl_add_s_attribute_speech
 germaparl_add_s_attribute_speech <- function(mc = 1L, progress = TRUE){
-  germaparl_regdir <- use_germaparl()
   speeches <- as.speeches(
     "GERMAPARL", gap = 500, mc = mc, progress = progress,
     s_attribute_date = "date", s_attribute_name = "speaker"
@@ -47,7 +46,7 @@ germaparl_add_s_attribute_speech <- function(mc = 1L, progress = TRUE){
     s_attribute = "speech",
     corpus = "GERMAPARL",
     region_matrix = as.matrix(dt[, c("cpos_left", "cpos_right")]),
-    registry_dir = germaparl_regdir,
+    registry_dir = germaparl_regdir(),
     encoding = corpus_charset,
     method = "CWB",
     verbose = TRUE

@@ -77,9 +77,7 @@ germaparl_encode_cap_annotations <- function(dir = "/Lab/gitlab/plprbttxt_annota
       "It can be installed from the drat repository of the PolMine Project."
       )
   }
-  
-  germaparl_regdir <- use_germaparl()
-  
+
   conll_files <- list.files(dir)
   Encoding(conll_files) <- "UTF-8"
   
@@ -215,7 +213,7 @@ germaparl_encode_cap_annotations <- function(dir = "/Lab/gitlab/plprbttxt_annota
   regionsToken2[, "cpos_right" := regionsToken2[["cpos_left"]] ]
   setcolorder(regionsToken2, neworder = c("cpos_left", "cpos_right", "cap"))
 
-  germaparl_regdata <- registry_file_parse(corpus = "GERMAPARL", registry_dir = Sys.getenv("CORPUS_REGISTRY"))
+  germaparl_regdata <- registry_file_parse(corpus = "GERMAPARL", registry_dir = germaparl_regdir())
   germaparl_charset <- germaparl_regdata[["properties"]][["charset"]]
   germaparl_home <- germaparl_regdata[["home"]]
   
@@ -226,7 +224,7 @@ germaparl_encode_cap_annotations <- function(dir = "/Lab/gitlab/plprbttxt_annota
     corpus = "GERMAPARL",
     region_matrix = as.matrix(regionsToken2[, c("cpos_left", "cpos_right")]),
     method = "CWB",
-    registry_dir = Sys.getenv("CORPUS_REGISTRY"),
+    registry_dir = germaparl_regdir(),
     encoding = germaparl_charset
   )
   invisible( NULL )

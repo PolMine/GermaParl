@@ -1,8 +1,8 @@
 Package: GermaParl
 Type: Package
 Title: GermaParl Data Package
-Version: 1.2.1
-Date: 2018-07-24
+Version: 1.2.1.9001
+Date: 2018-08-13
 Authors@R: c(person("Andreas Blaette", "Developer", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de"))
 Imports:
   polmineR,
