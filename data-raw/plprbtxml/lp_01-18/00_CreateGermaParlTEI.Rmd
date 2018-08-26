@@ -28,50 +28,9 @@ packageVersion("frappp")
 ## Getting input files
 
 ```{r, eval = TRUE}
-repoDirXML <- "~/Lab/gitlab/plprbtxml"
+xml_repo_dir <- "~/Lab/gitlab/plprbtxml"
 ```
 
-```{r, eval = FALSE}
-urls <- c(
-  "18" = "http://www.bundestag.de/blob/490392/3757dd46378090220e3769f2b8c1517a/pp18-data.zip",
-  "17" = "http://www.bundestag.de/blob/490378/866ff042fe66d9ee46a9c955b2993dca/pp17-data.zip",
-  "16" = "http://www.bundestag.de/blob/490386/680a2cc89eb71317b256bb44509ca17e/pp16-data.zip",
-  "15" = "http://www.bundestag.de/blob/490394/6e9a38a40bb79abdd7fe6d74f56708ec/pp15-data.zip",
-  "14" = "http://www.bundestag.de/blob/490380/1d83b7e383f9f09d88bd9e89aba07fb0/pp14-data.zip",
-  "13" = "http://www.bundestag.de/blob/490388/84914a1feff6f2f4988ce352a5500845/pp13-data.zip",
-  "12" = "http://www.bundestag.de/blob/490376/8775517464dccd8660eb96446d18dd26/pp12-data.zip",
-  "11" = "http://www.bundestag.de/blob/490384/ad57841a599aba6faa794174e53a8797/pp11-data.zip",
-  "10" = "http://www.bundestag.de/blob/490374/07ce06f666b624d37b47d2fe6e205ab4/pp10-data.zip",
-  "9" = "http://www.bundestag.de/blob/490382/effcc03f3b3e157f9d8050b4a9d9d089/pp09-data.zip",
-  "8" = "http://www.bundestag.de/blob/490390/dfcac024ce8e548774e16f03c36293e2/pp08-data.zip",
-  "7" = "http://www.bundestag.de/blob/488222/b10bae395e887aac9ac08afbd1da62fc/pp07-data.zip",
-  "6" = "http://www.bundestag.de/blob/488220/b2b4d0d49600ef852d15e4052fabce1e/pp06-data.zip",
-  "5" = "http://www.bundestag.de/blob/488218/bfba1a02d1090efc873f9a60f318a162/pp05-data.zip",
-  "4" = "http://www.bundestag.de/blob/488216/3b20f8dd5efad2cafa3fb0b6df24cbb9/pp04-data.zip",
-  "3" = "http://www.bundestag.de/blob/487970/1c737594587745b399e84bc30f049d69/pp03-data.zip",
-  "2" = "http://www.bundestag.de/blob/487968/5792895a5cf4ab51ed94c77157297031/pp02-data.zip",
-  "1" = "http://www.bundestag.de/blob/487966/4078f01fb3198dc3cee8945d6db3b231/pp01-data.zip"
-)
-
-# for (url in urls){
-#   targetFile <- file.path(repoDirXML, basename(url))
-#   print(targetFile)
-#   download.file(url = url, destfile = targetFile)
-#   cat(
-#     sprintf("%s\n", paste(url, Sys.time(), sep = "\t")),
-#     file = file.path(repoDir, "README"),
-#     append = TRUE
-#     )
-# }
-
-# for (url in urls){
-#   message("... unzipping ", basename(url))
-#   zipfile <- file.path(repoDir, basename(url))
-#   unzip(zipfile = zipfile, exdir = repoDir)
-# }
-#
-# for (url in urls) file.remove(file.path(repoDir, basename(url)))
-```
 
 
 ## Define parser
@@ -156,6 +115,20 @@ GermaParlParser <- R6Class(
 We need to construct the regex for parliamentarians in advance ... 
 
 ```{r}
+auxfiles_dir <- "~/Lab/github/GermaParl/data-raw/auxfiles"
+
+agenda_item_regex <- eval(parse(file.path(auxfiles_dir, "agenda_item_regex.R")))
+genda_item_regex_supplement <- eval(parse(file.path(auxfiles_dir, "agenda_item_regex_supplement.R")))
+agenda_item_mismatch <- eval(parse(file.path(auxfiles_dir, "agenda_item_mismatch.R")))
+agenda_item_types <- eval(parse(file.path(auxfiles_dir, "agenda_item_types.R")))
+
+preprocessing_functions <- eval(parse(file.path(auxfiles_dir, "preprocessing_functions.R")))
+speaker_alias <- eval(parse(file.path(auxfiles_dir, "speaker_alias.R")))
+speaker_mismatch <- eval(parse(file.path(auxfiles_dir, "speaker_mismatch.R")))
+```
+
+
+```{r}
 source("~/Lab/gitlab/GermaParl/data-raw/plprbtxml/parliamentary_groups_regex.R")
 pg_regex_2 <- paste(sprintf("\\s*%s\\s*", unname(pg_regex)), collapse = "|")
 mp_regex <- sprintf("^\\s*(?!\\()(?!(Vizepräsident|Präsident))(?!.*?Parl\\.\\s+Staatssekretär)(.+?)\\s*\\((%s)\\)(|\\s*\\(von\\s.*?mit Beifall be\\s?grüßt\\))\\s*:\\s*(.*?)$", pg_regex_2)
@@ -163,7 +136,7 @@ mp_regex <- sprintf("^\\s*(?!\\()(?!(Vizepräsident|Präsident))(?!.*?Parl\\.\\s
 
 
 ```{r}
-GPP <- GermaParlParser$new(download_report_file = file.path(repoDirXML, "README"))
+GPP <- GermaParlParser$new(download_report_file = file.path(xml_repo_dir, "download_report.csv"))
 
 GPP$speaker_regex <- list(
   
@@ -246,10 +219,10 @@ GPP$speaker_regex <- list(
 )
 
 
-GPP$speaker_mismatch <- character()
+GPP$speaker_mismatch <- speaker_mismatch
 
-GPP$agenda_item_regex <- c(any = "^XXXXX$")
-GPP$agenda_item_types <- c(any = "debate")
+GPP$agenda_item_regex <- agenda_item_regex
+GPP$agenda_item_types <- agenda_item_types
 
 GPP$stage_regex <- c(interjection = "^\\s*\\(.*?\\)\\s*$")
 GPP$stage_match_n_lines <- 2L
@@ -260,10 +233,10 @@ GPP$stage_match_n_lines <- 2L
 
 
 ```{r processing_multiple_docs, message = FALSE}
-xmldir <- "/Users/blaette/Lab/gitlab/plprbtxml"
 teidir <- "/Users/blaette/Lab/tmp/NewGermaParlTEI"
-files <- Sys.glob(paths = sprintf("%s/*.xml", xmldir))
-files <- file.path(xmldir, "01001.xml")
+files <- Sys.glob(paths = sprintf("%s/18/*.xml", xml_repo_dir))
+files <- sample(x = files, size = 5)
+# files <- file.path(xmldir, "01001.xml")
 # files <- head(files, n = 200L)
 
 y <- pblapply(
@@ -282,8 +255,7 @@ y <- pblapply(
       con = file.path(teidir, basename(xmlfile))
     )
     GPP$chunk_data
-  },
-  cl = 3L
+  }
   )
 df <- data.frame(do.call(rbind, y))
 ```

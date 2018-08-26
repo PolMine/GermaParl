@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="date" content="2018-08-25" />
+
+<title>Bundestag, 18th Electoral Period: From TEI to CWB</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Bundestag, 18th Electoral Period: From TEI to CWB</h1>
+<h4 class="date"><em>2018-08-25</em></h4>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">starting_time &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</a></code></pre></div>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This is a template for encoding projects for corpora of plenary protocols (TEI input format). The project is configured in the following section, the following procedure is generic.</p>
+<p>The Rmarkdown document can be executed by using <code>Rscript</code> from a terminal. The corpus will be prepared when preparing the output html document, which is a reproducible documentation of the annotation and indexing procedure.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ex">Rscript</span> -e <span class="st">'rmarkdown::render(input = &quot;bt19_tei_to_cwb.Rmd&quot;, output_file = &quot;bt19_tei_to_cwb.html&quot;)'</span></a></code></pre></div>
+</div>
+<div id="configure-the-encoding-project" class="section level2">
+<h2>Configure the encoding project</h2>
+<div id="the-corpus-to-process" class="section level3">
+<h3>The corpus to process</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">corpus &lt;-<span class="st"> &quot;BT19&quot;</span></a></code></pre></div>
+</div>
+<div id="files-to-be-processed" class="section level3">
+<h3>Files to be processed</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">teidir &lt;-<span class="st"> &quot;~/Lab/tmp/btxml&quot;</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">dir.exists</span>(teidir)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">teifiles &lt;-<span class="st"> </span><span class="kw">Sys.glob</span>(<span class="kw">file.path</span>(teidir, <span class="st">&quot;*.xml&quot;</span>))</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">length</span>(teifiles)</a></code></pre></div>
+<pre><code>## [1] 46</code></pre>
+<p>For trial runs, set a number of sample documents that will be drawn from all TEI files. To process all documents, comment out the line.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># teisample &lt;- 3</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="cf">if</span> (<span class="kw">exists</span>(<span class="st">&quot;teisample&quot;</span>)) teifiles &lt;-<span class="st"> </span><span class="kw">sample</span>(teifiles, <span class="dt">size =</span> teisample)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">length</span>(teifiles)</a></code></pre></div>
+<pre><code>## [1] 46</code></pre>
+</div>
+<div id="multicore" class="section level3">
+<h3>Multicore</h3>
+<p>Number of cores to use for running annotators.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">no_cores &lt;-<span class="st"> </span>1L</a></code></pre></div>
+</div>
+<div id="stanford-corenlp-configuration" class="section level3">
+<h3>Stanford CoreNLP configuration</h3>
+<p>Define properties file used to configure Stanford CoreNLP.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">language &lt;-<span class="st"> &quot;de&quot;</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">properties_file &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="dt">package =</span> <span class="st">&quot;bignlp&quot;</span>,</a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">            <span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;properties_files&quot;</span>,</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4">            <span class="st">&quot;corenlp-german-fast.properties&quot;</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">            )</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6">properties_file</a></code></pre></div>
+<pre><code>## [1] &quot;/Library/Frameworks/R.framework/Versions/3.5/Resources/library/bignlp/extdata/properties_files/corenlp-german-fast.properties&quot;</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="cf">if</span> (bignlp<span class="op">::</span><span class="kw">corenlp_get_jar_dir</span>() <span class="op">==</span><span class="st"> &quot;&quot;</span>) bignlp<span class="op">::</span><span class="kw">corenlp_install</span>(<span class="dt">lang =</span> language)</a></code></pre></div>
+</div>
+<div id="cwb-input-required" class="section level3">
+<h3>CWB input required</h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">p_attrs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;word&quot;</span>, <span class="st">&quot;pos&quot;</span>)</a></code></pre></div>
+<p>We get the registry directory and remove the registry file for the newly encoded corpus, if it already exists.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">registry &lt;-<span class="st"> </span><span class="kw">Sys.getenv</span>(<span class="st">&quot;CORPUS_REGISTRY&quot;</span>)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="cf">if</span> (<span class="op">!</span><span class="kw">file.exists</span>(registry)) <span class="kw">stop</span>(<span class="st">&quot;environment variable CORPUS_REGISTRY needs to be defined&quot;</span>)</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">registry_file &lt;-<span class="st"> </span><span class="kw">file.path</span>(registry, <span class="kw">tolower</span>(corpus))</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="cf">if</span> (<span class="kw">file.exists</span>(registry_file)) <span class="kw">file.remove</span>(stateparl_registry_file)</a></code></pre></div>
+<p>We create a project-specific data directory within the data directory and make sure it is empty.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">data_dir &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">dirname</span>(registry), <span class="st">&quot;indexed_corpora&quot;</span>)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="cf">if</span> (<span class="op">!</span><span class="kw">file.exists</span>(data_dir)) <span class="kw">dir.create</span>(data_dir)</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">bt_data_dir &lt;-<span class="st"> </span><span class="kw">file.path</span>(data_dir, <span class="kw">tolower</span>(corpus))</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="cf">if</span> (<span class="op">!</span><span class="kw">file.exists</span>(bt_data_dir)) <span class="kw">dir.create</span>(bt_data_dir)</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="kw">file.remove</span>(<span class="kw">list.files</span>(bt_data_dir, <span class="dt">full.names =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<pre><code>## logical(0)</code></pre>
+</div>
+</div>
+<div id="preparatory-steps" class="section level2">
+<h2>Preparatory steps</h2>
+<div id="load-required-packages" class="section level3">
+<h3>Load required packages</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">library</span>(data.table)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="kw">library</span>(magrittr)</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw">library</span>(cwbtools)</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="kw">library</span>(bignlp)</a></code></pre></div>
+<pre><code>## CoreNLP jar directory: /Library/Frameworks/R.framework/Versions/3.5/Resources/library/cleanNLP/extdata/stanford-corenlp-full-2016-10-31</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">options</span>(<span class="dt">java.parameters =</span> <span class="st">&quot;-Xmx4g&quot;</span>) <span class="co"># needs to be set before a JVM is initialized.</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="kw">options</span>(<span class="dt">bignlp.properties_file =</span> properties_file)</a></code></pre></div>
+</div>
+<div id="meet-installation-requirements" class="section level3">
+<h3>Meet installation requirements</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span><span class="kw">cwb_is_installed</span>()) <span class="kw">cwb_install</span>()</a></code></pre></div>
+</div>
+<div id="the-directory-and-files-for-the-nlp-pipe" class="section level3">
+<h3>The directory and files for the NLP pipe</h3>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">tmpdir &lt;-<span class="st"> </span><span class="kw">tempdir</span>()</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="cf">if</span> (.Platform<span class="op">$</span>OS.type <span class="op">==</span><span class="st"> &quot;windows&quot;</span>) tmpdir &lt;-<span class="st"> </span><span class="kw">normalizePath</span>(tmpdir, <span class="dt">winslash =</span> <span class="st">&quot;/&quot;</span>)</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4">nlp_dir &lt;-<span class="st"> </span><span class="kw">file.path</span>(tmpdir, <span class="st">&quot;nlp_dir&quot;</span>)</a>
+<a class="sourceLine" id="cb22-5" data-line-number="5"><span class="cf">if</span> (<span class="op">!</span><span class="kw">file.exists</span>(nlp_dir)) <span class="kw">dir.create</span>(nlp_dir)</a>
+<a class="sourceLine" id="cb22-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb22-7" data-line-number="7">chunkdata_file &lt;-<span class="st"> </span><span class="kw">file.path</span>(nlp_dir, <span class="kw">paste</span>(<span class="kw">tolower</span>(corpus), <span class="st">&quot;tsv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;.&quot;</span>))</a>
+<a class="sourceLine" id="cb22-8" data-line-number="8">ndjson_file &lt;-<span class="st"> </span><span class="kw">file.path</span>(nlp_dir, <span class="kw">paste</span>(<span class="kw">tolower</span>(corpus), <span class="st">&quot;ndjson&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;.&quot;</span>))</a>
+<a class="sourceLine" id="cb22-9" data-line-number="9">tsv_file_tagged &lt;-<span class="st"> </span><span class="kw">file.path</span>(nlp_dir, <span class="kw">paste</span>(<span class="kw">tolower</span>(corpus), <span class="st">&quot;tagged.tsv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="cf">if</span> (<span class="kw">file.exists</span>(chunkdata_file)) <span class="kw">file.remove</span>(chunkdata_file)</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="cf">if</span> (<span class="kw">file.exists</span>(ndjson_file)) <span class="kw">file.remove</span>(ndjson_file)</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="cf">if</span> (<span class="kw">file.exists</span>(tsv_file_tagged)) <span class="kw">file.remove</span>(tsv_file_tagged)</a></code></pre></div>
+</div>
+</div>
+<div id="from-xml-to-cwb" class="section level2">
+<h2>From XML to CWB</h2>
+<div id="initialize-corpusdata-class" class="section level3">
+<h3>Initialize CorpusData class</h3>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">CD &lt;-<span class="st"> </span>CorpusData<span class="op">$</span><span class="kw">new</span>()</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb24-3" data-line-number="3">metadata &lt;-<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb24-4" data-line-number="4">  <span class="dt">lp =</span> <span class="st">&quot;//legislativePeriod&quot;</span>, <span class="dt">session =</span> <span class="st">&quot;//titleStmt/sessionNo&quot;</span>,</a>
+<a class="sourceLine" id="cb24-5" data-line-number="5">  <span class="dt">date =</span> <span class="st">&quot;//publicationStmt/date&quot;</span>, <span class="dt">url =</span> <span class="st">&quot;//sourceDesc/url&quot;</span>,</a>
+<a class="sourceLine" id="cb24-6" data-line-number="6">  <span class="dt">src =</span> <span class="st">&quot;//sourceDesc/filetype&quot;</span></a>
+<a class="sourceLine" id="cb24-7" data-line-number="7">)</a></code></pre></div>
+</div>
+<div id="read-in-data" class="section level3">
+<h3>Read in data</h3>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">CD<span class="op">$</span><span class="kw">import_xml</span>(<span class="dt">filenames =</span> teifiles, <span class="dt">meta =</span> metadata, <span class="dt">progress =</span> <span class="kw">interactive</span>())</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">CD</a></code></pre></div>
+<pre><code>## chunktable: 2 columns / 64964 rows
+## tokenstream: NULL
+## metadata: 16 columns / 64964 rows</code></pre>
+</div>
+<div id="rework-metadata-table" class="section level3">
+<h3>Rework metadata table</h3>
+<p>The TEI files include an element “speaker” that is redundant and can (and should be) dropped.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">to_keep &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">is.na</span>(CD<span class="op">$</span>metadata[[<span class="st">&quot;speaker&quot;</span>]]))</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">CD<span class="op">$</span>chunktable &lt;-<span class="st"> </span>CD<span class="op">$</span>chunktable[to_keep]</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">CD<span class="op">$</span>metadata &lt;-<span class="st"> </span>CD<span class="op">$</span>metadata[to_keep][, speaker <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="ot">NULL</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">setnames</span>(CD<span class="op">$</span>metadata, <span class="dt">old =</span> <span class="kw">c</span>(<span class="st">&quot;sp_who&quot;</span>, <span class="st">&quot;sp_party&quot;</span>, <span class="st">&quot;sp_role&quot;</span>), <span class="dt">new =</span> <span class="kw">c</span>(<span class="st">&quot;who&quot;</span>, <span class="st">&quot;party&quot;</span>, <span class="st">&quot;role&quot;</span>))</a></code></pre></div>
+</div>
+<div id="linguistic-annotation" class="section level3">
+<h3>Linguistic annotation</h3>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">fwrite</span>(<span class="dt">x =</span> CD<span class="op">$</span>chunktable, <span class="dt">file =</span> chunkdata_file, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">chunkfiles &lt;-<span class="st">  </span><span class="kw">chunk_table_split</span>(chunkdata_file, <span class="dt">output =</span> <span class="ot">NULL</span>, <span class="dt">n =</span> no_cores, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## ... with n = 1, no splitting required: returning input filename</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">ndjsonfiles &lt;-<span class="st">  </span><span class="kw">corenlp_annotate</span>(chunkfiles, <span class="dt">threads =</span> no_cores, <span class="dt">byline =</span> <span class="ot">TRUE</span>, <span class="dt">progress =</span> <span class="kw">interactive</span>())</a></code></pre></div>
+<pre><code>## Status of the Java Virtual Machine: 0</code></pre>
+<pre><code>## Java version: 1.8.0_144-b01</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">tsvfiles &lt;-<span class="st"> </span><span class="kw">corenlp_parse_ndjson</span>(</a>
+<a class="sourceLine" id="cb35-2" data-line-number="2">  ndjsonfiles, <span class="dt">cols_to_keep =</span> <span class="kw">c</span>(<span class="st">&quot;id&quot;</span>, p_attrs), <span class="dt">output =</span> tsv_file_tagged,</a>
+<a class="sourceLine" id="cb35-3" data-line-number="3">  <span class="dt">threads =</span> no_cores, <span class="dt">progress =</span> <span class="kw">interactive</span>()</a>
+<a class="sourceLine" id="cb35-4" data-line-number="4">  )</a></code></pre></div>
+<pre><code>## ... processing ndjson file: /var/folders/r6/1k6mxnbj5077980k11xvr0q40000gn/T//RtmpoKB0N9/bt19.json</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">dt_list &lt;-<span class="st"> </span><span class="kw">lapply</span>(tsvfiles, fread)</a>
+<a class="sourceLine" id="cb37-2" data-line-number="2">CD<span class="op">$</span>tokenstream &lt;-<span class="st"> </span><span class="kw">rbindlist</span>(dt_list)</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">CD<span class="op">$</span>tokenstream[, <span class="st">&quot;id&quot;</span> <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">as.character</span>(CD<span class="op">$</span>tokenstream[[<span class="st">&quot;id&quot;</span>]])]</a>
+<a class="sourceLine" id="cb38-2" data-line-number="2">CD<span class="op">$</span>metadata[, <span class="st">&quot;id&quot;</span> <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">as.character</span>(CD<span class="op">$</span>metadata[[<span class="st">&quot;id&quot;</span>]])]</a>
+<a class="sourceLine" id="cb38-3" data-line-number="3">CD<span class="op">$</span><span class="kw">add_corpus_positions</span>()</a></code></pre></div>
+<pre><code>## ... adding corpus positions to table 'metadata'</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">setorderv</span>(CD<span class="op">$</span>metadata, <span class="dt">cols =</span> <span class="st">&quot;cpos_left&quot;</span>, <span class="dt">order =</span> 1L)</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">s_attrs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;id&quot;</span>, <span class="st">&quot;who&quot;</span>, <span class="st">&quot;party&quot;</span>, <span class="st">&quot;role&quot;</span>, <span class="st">&quot;lp&quot;</span>, <span class="st">&quot;session&quot;</span>, <span class="st">&quot;date&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">CD<span class="op">$</span><span class="kw">encode</span>(</a>
+<a class="sourceLine" id="cb42-2" data-line-number="2">  <span class="dt">registry_dir =</span> registry, <span class="dt">data_dir =</span> bt_data_dir,</a>
+<a class="sourceLine" id="cb42-3" data-line-number="3">  <span class="dt">corpus =</span> <span class="kw">toupper</span>(corpus), <span class="dt">encoding =</span> <span class="st">&quot;utf8&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;CWB&quot;</span>,</a>
+<a class="sourceLine" id="cb42-4" data-line-number="4">  <span class="dt">p_attributes =</span> <span class="st">&quot;word&quot;</span>, <span class="dt">s_attributes =</span> s_attrs,</a>
+<a class="sourceLine" id="cb42-5" data-line-number="5">  <span class="dt">compress =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb42-6" data-line-number="6">)</a></code></pre></div>
+<pre><code>## Creating new corpus 'BT19'</code></pre>
+<pre><code>## ... encoding p-attribute 'word'</code></pre>
+<pre><code>## ... running cwb-encode</code></pre>
+<pre><code>## ... reading existing registry file</code></pre>
+<pre><code>## ... writing registry file</code></pre>
+<pre><code>## ... calling cwb-makeall</code></pre>
+<pre><code>## ... file successfully removed: word.corpus.rdx</code></pre>
+<pre><code>## ... file successfully removed: word.corpus.rev</code></pre>
+<pre><code>## ... encoding s-attribute 'id'</code></pre>
+<pre><code>## ... encoding s-attribute 'who'</code></pre>
+<pre><code>## ... encoding s-attribute 'party'</code></pre>
+<pre><code>## ... encoding s-attribute 'role'</code></pre>
+<pre><code>## ... encoding s-attribute 'lp'</code></pre>
+<pre><code>## ... encoding s-attribute 'session'</code></pre>
+<pre><code>## ... encoding s-attribute 'date'</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">Sys.time</span>() <span class="op">-</span><span class="st"> </span>starting_time</a></code></pre></div>
+<pre><code>## Time difference of 21.49743 mins</code></pre>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

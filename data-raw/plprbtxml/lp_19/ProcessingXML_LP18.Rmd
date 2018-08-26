@@ -1,0 +1,156 @@
+---
+title: "TEIifizierung der 18. Wahlperiode"
+author: "Andreas Blaette"
+date: "24 8 2018"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r}
+library(R6)
+library(xml2)
+```
+
+```{r}
+library(frappp)
+packageVersion("frappp")
+```
+
+```{r}
+outdir <- "/Users/blaette/Lab/tmp/btxml"
+files <- Sys.glob("~/Lab/gitlab/plprbtxml/19/*.xml")
+```
+
+
+
+```{r}
+BT18Parser <- R6Class(
+  
+  classname = "BT18Parser",
+  inherit = PlenaryProtocolParser,
+  
+  public = list(
+    
+    btxml = NULL, # the parsed XML as publised by the Bundestag,
+    
+    read_file = function(
+		  filename, id = gsub("^(\\d+)-.*?", "\\1", basename(filename)),
+		  metadata = c(
+		    birthday = as.character(Sys.Date()),
+		    package = "frappp",
+		    version = as.character(packageVersion("frappp"))
+		    )
+		  ){
+		  
+		  if (!is.null(self$chunks)) self$chunks <- NULL
+		  if (!is.null(self$xml)) self$xml <- NULL
+		  if (!is.null(self$html)) self$html <- NULL
+		  self$id <- id
+		  self$metadata <- metadata
+		  
+		  self$btxml <- xml2::read_xml(filename)  
+
+		  invisible(self)
+		},
+		
+		get_metadata = function(){
+		  if (is.null(self$btxml)) stop("no Bundestag XML in field btxml")
+		  root <- xml2::xml_find_first(self$btxml, xpath = "/dbtplenarprotokoll")
+		  root_attrs <- xml_attrs(root)
+		  metadata <- list(
+		    date = as.character(as.Date(root_attrs[["sitzung-datum"]], format = "%d.%m.%Y")),
+		    sessionNo = root_attrs[["sitzung-nr"]],
+		    legislativePeriod = root_attrs[["wahlperiode"]]
+		  )
+		  self$add_metadata(metadata)
+		  
+		  invisible(self)
+		},
+		
+		get_chunk_data = function(){
+		  speaker_nodes <- xml2::xml_find_all(
+		    self$btxml,
+		    xpath = "/dbtplenarprotokoll/sitzungsverlauf/tagesordnungspunkt/rede"
+		    )
+		  speaker_data <- lapply(
+		    speaker_nodes,
+		    function(n){
+		      redner_node <- xml2::xml_find_first(n, xpath = './p[@klasse = "redner"]/redner')
+		      first_name <- xml_text(xml_find_first(redner_node, xpath = "./name/vorname"))
+		      last_name <- xml_text(xml_find_first(redner_node, xpath = "./name/nachname"))
+		      name <- paste(first_name, last_name, sep = " ")
+		      rolle <- xml_find_first(redner_node, xpath = "./name/rolle")
+		      if (length(rolle) > 0){
+		        position <- xml_text(xml_find_first(rolle, xpath = "./rolle_kurz"))
+		        role <- if (grepl("präs", position)) "pres" else "gov"
+		        pg <- "NA"
+		      } else {
+		        role <- "mp"
+		        position <- "mp"
+		        pg <- xml_text(xml_find_first(redner_node, xpath = "./name/fraktion"))
+		      }
+		      data.frame(who = name, name = name, role = role, parliamentary_group = pg, party = pg, stringsAsFactors = FALSE)
+		    }
+		  )
+		  self$chunk_data <- do.call(rbind, speaker_data)
+		  chunks <- lapply(
+		    speaker_nodes,
+		    function(n){
+		      p_list <- lapply(
+		        xml2::xml_find_all(n, xpath = "./p"),
+		        function(p){
+		          if (xml_attr(p, attr = "klasse") == "redner"){
+		            return( xml_text(xml_find_first(p, xpath = "./text()")) )
+		          } else {
+		            return( xml_text(p) )
+		          }
+		        }
+		      )
+		      unlist(p_list)
+		    }
+		  )
+		  empty_chunks <- which(sapply(lapply(chunks, is.na), any) == TRUE)
+		  if (length(empty_chunks) > 0){
+		    for (i in rev(empty_chunks)){
+		      self$chunk_data <- self$chunk_data[-i,]
+		      chunks[[i]] <- NULL
+		    }
+		    
+		  }
+		  self$chunks <- chunks
+		  invisible(self)
+		},
+		
+		xmlify = function(){
+		  self$get_metadata() # returns a list with sessionNo, lp, date
+		  self$make_header()
+		  self$get_chunk_data()
+		  self$make_body()
+		  invisible(self)
+		}
+  )
+  
+)
+```
+
+
+```{r}
+BT <- BT18Parser$new()
+
+for (file in files){
+  message("reading file: ", file)
+  BT$read_file(file)
+  BT$xmlify()
+  outfile <- file.path(
+    outdir,
+    sprintf("BT_19_%03d.xml", as.integer(BT$metadata[["sessionNo"]]))
+  )
+  BT$save_xml(outfile)
+  message("writing file: ", outfile)
+
+}
+
+
+```
