@@ -1,0 +1,243 @@
+---
+title: "Generate TEI from plain text protocols"
+author: "Andreas Blaette"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Generate TEI from plain text protocols}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+## Getting started
+
+```{r load_frap}
+required_package_version <- "0.4.1.9005"
+if (packageVersion("frappp") < as.package_version(required_package_version))
+  stop("version requirement not met")
+library(frappp)
+packageVersion("frappp")
+```
+
+```{r load_frap}
+library(R6)
+library(xml2)
+library(magrittr)
+library(pbapply)
+library(ctk)
+```
+
+
+## Getting input files
+
+```{r, eval = TRUE}
+txt_repo_dir_utf8 <- "~/Lab/gitlab/plprbttxt_txt_utf8"
+txt_repo_dir_raw <- "~/Lab/gitlab/plprbttxt_txt_raw"
+download_report_file <- file.path(txt_repo_dir_raw, "downloadReport.csv")
+lp <- "18"
+
+# tei_outdir <- "~/Lab/gitlab/plprbttxt_tei"
+tei_outdir <- "~/Lab/tmp/plprbttxt_tei"
+
+files <- Sys.glob(paths = sprintf("%s/BT_*.txt", txt_repo_dir_utf8))
+# files <- sample(x = files, size = 50)
+```
+
+
+## Define parser
+
+```{r}
+GermaParlParserTXT <- R6Class(
+  
+  "GermaParlParserTXT",
+  inherit = PlenaryProtocolParser,
+  
+  public = list(
+    
+    xmldoc = NULL, # class 'xml_document' from packabe 'xml2'
+    download_report = NULL, # a data.frame
+    
+    initialize = function(download_report_file){
+      
+      self$download_report <- read.table(file = download_report_file, stringsAsFactors = FALSE)
+      self$xpath <- teiXpath
+      
+      invisible(self)
+    },
+    
+    read_file = function(filename){
+      self$id <- gsub("(BT_\\d+_\\d+)\\.txt", "\\1", basename(filename))
+      self$txt <- readLines(filename)
+      invisible(self)
+    },
+    
+    get_metadata = function(){
+      
+      self$metadata = list(
+        title = "Plenarprotokoll",
+        publisher = "Deutscher Bundestag",
+        package = "frappp",
+        version = as.character(packageVersion("frappp")),
+        filetype = "txt",
+        birthday = Sys.Date()
+      )
+      
+      self$metadata <- c(
+        self$metadata,
+        list(
+          sessionNo = gsub("^BT_\\d+_(\\d+).*$", "\\1", self$id),
+          legislativePeriod = gsub("^BT_(\\d+)_.*$", "\\1", self$id),
+          date = ctk::normalizeGermanDate(
+            gsub(
+              "^.*?,\\s+.*?(\\s+den|,\\s+den|,)\\s+(.*)$", "\\2",
+              grep("^.*\\s+\\d{4}$", self$txt[1L:20L], value = TRUE)[1]
+            )
+          )
+        )
+      )
+
+      download_report_subset <- subset(
+        self$download_report,
+        self$download_report[,1] == paste(self$id, "txt", sep = ".")
+      )
+      self$metadata[["url"]] <- download_report_subset[,2]
+      self$metadata[["retrievalDate"]] <- download_report_subset[,3]
+      
+      invisible(self)
+    }
+  )
+)
+```
+
+
+
+
+
+## Configure the parser
+
+We need to construct the regex for parliamentarians in advance ... 
+
+```{r}
+auxfiles_dir <- "~/Lab/github/GermaParl/data-raw/auxfiles"
+```
+
+```{r}
+agenda_item_regex <- eval(parse(file.path(auxfiles_dir, "agenda_item_regex.R")))
+agenda_item_regex_supplement <- eval(parse(file.path(auxfiles_dir, "agenda_item_regex_supplement.R")))
+```
+
+
+```{r}
+mp_regex <- eval(parse(file.path(auxfiles_dir, "parliamentary_groups_regex.R"))) %>%
+  unname() %>%
+  sprintf("\\s*%s\\s*", .) %>%
+  paste(collapse = "|") %>%
+  sprintf("^\\s*(?!\\()(?!(Vizepräsident|Präsident))(?!.*?Parl\\.\\s+Staatssekretär)(.+?)\\s*\\((%s)\\)(|\\s*\\(von\\s.*?mit Beifall be\\s?grüßt\\))\\s*:\\s*(.*?)$", .)
+```
+
+
+```{r}
+GPP <- GermaParlParserTXT$new(download_report_file = download_report_file)
+```
+
+
+```{r}
+GPP$preprocessing_functions <- eval(parse(file.path(auxfiles_dir, "preprocessing_functions.R")))
+
+GPP$speaker_regex <- eval(parse(file.path(auxfiles_dir, "speaker_regex.R")))
+GPP$speaker_mismatch <- eval(parse(file.path(auxfiles_dir, "speaker_mismatch.R")))
+GPP$speaker_maximum_nchar_name <- 50L
+
+GPP$agenda_item_regex <- eval(parse(file.path(auxfiles_dir, "agenda_item_regex.R")))
+GPP$agenda_item_types <- eval(parse(file.path(auxfiles_dir, "agenda_item_types.R")))
+GPP$agenda_item_mismatch <- eval(parse(file.path(auxfiles_dir, "agenda_item_mismatch.R")))
+
+GPP$stage_regex <- c(interjection = "^\\s*\\(.*?\\)\\s*$")
+GPP$stage_match_n_lines <- 2L
+```
+
+
+
+
+
+```{r processing_multiple_docs, message = FALSE}
+y <- lapply(
+  files,
+  function(file){
+    print(file)
+    GPP$read_file(filename = file)
+    GPP$agenda_item_regex <- c(
+      agenda_item_regex,
+      agenda_item_regex_supplement[[GPP$id]]
+    )
+    GPP$get_metadata()
+    GPP$make_header()
+    GPP$split_by_speakers()
+    GPP$detect_stage_regex_matches()
+    GPP$reconstruct_paragraphs(exclude = "pres")
+    GPP$make_body()
+    writeLines(
+      text = as.character(GPP$xml),
+      con = file.path(tei_outdir, paste(GPP$id, "xml", sep = "."))
+    )
+    invisible( NULL )
+  }
+)
+```
+
+
+
+## Enriching the protocols
+
+The following steps may have to be repeated until the data are clean:
+
+- match a key generated from the speaker attributes against the database
+- add the information to the TEI documents
+- inspect whether there is still information missing
+- pimp the alias file, repair wikipedia data etc
+
+
+```{r initialize_enhancer, eval = TRUE}
+datafiles <- c(
+  government = system.file("csv", "de_gov.csv", package = "actors"),
+  mp = system.file("csv", "bt_mp.csv", package = "actors"),
+  presidency = system.file("csv", "bt_pres.csv", package = "actors"),
+  federal_council = system.file("csv", "bt_federal_council.csv", package = "actors"),
+  parliamentary_commissioner = system.file("csv", "bt_parliamentary_commissioner.csv", package = "actors"),
+  supplement = system.file("csv", "de_supplement.csv", package = "actors")
+)
+```
+
+```{r eval = TRUE}
+sourceDir <- tei_outdir
+targetDir <- "~/Lab/tmp/plprbttxt_tei2"
+
+E <- Enhancer$new(sourceDir = sourceDir, targetDir = targetDir, datafiles = datafiles)
+E$aliases <- eval(parse(file.path(auxfiles_dir, "speaker_alias.R")))
+E$getSpeakerAttributes()
+E$consolidateAndEnrichSpeakerattributes()
+pblapply(list.files(sourceDir), E$enhanceFile)
+```
+
+
+## Consolidation
+
+```{r enhance, eval = TRUE}
+E2 <- Enhancer$new(sourceDir = targetDir)
+E2$getSpeakerAttributes(element = "sp", attrs = c("who", "role", "name", "parliamentary_group", "party"))
+dfs <- E2$analyseMissingInformation()
+```
+
+
+## Create html for error checking
+
+```{r html, eval = FALSE}
+teiToHtml(
+  BT, sourceDir = "tei_enriched", targetDir = "html",
+  progress = TRUE, mc = FALSE
+  )
+```
+
+

@@ -1,0 +1,197 @@
+---
+title: "YOUR PROJECT"
+author: "YOUR NAME"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{TITLE}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+## Getting started
+
+```{r load_frap}
+required_package_version <- "0.4.1.9005"
+if (packageVersion("frappp") < as.package_version(required_package_version))
+  stop("version requirement not met")
+```
+
+```{r load_frap}
+library(frappp)
+packageVersion("frappp")
+```
+
+
+## Getting input files
+
+```{r, eval = TRUE}
+xml_repo_dir <- "~/Lab/gitlab/plprbtxml_xml"
+```
+
+
+
+## Define parser
+
+```{r}
+library(R6)
+library(xml2)
+library(magrittr)
+library(pbapply)
+```
+
+```{r}
+GermaParlParser <- R6Class(
+  
+  "GermaParlParser",
+  inherit = PlenaryProtocolParser,
+  
+  public = list(
+    
+    xmldoc = NULL, # class 'xml_document' from packabe 'xml2'
+    download_report = NULL, # a data.frame
+    
+    initialize = function(download_report_file){
+      
+      self$download_report <- read.table(file = download_report_file, stringsAsFactors = FALSE)
+      rownames(self$download_report) <- gsub(
+        "^.*?/pp(\\d+)-data.zip$", "\\1", self$download_report[,1]
+        ) %>% as.integer() %>% as.character()
+      self$download_report <- self$download_report[as.integer(rownames(self$download_report)),]
+      colnames(self$download_report) <- c("url", "date", "time")
+      
+      self$xpath <- teiXpath
+
+      invisible(self)
+    },
+    
+    read_file = function(filename){
+      self$id <- sprintf("BT_%s_%s", substr(basename(filename), 1, 2), substr(basename(filename), 3, 5))
+      self$xmldoc <- xml2::read_xml(x = filename)
+      self$txt <- xml2::xml_find_first(x = self$xmldoc, xpath = "/DOKUMENT/TEXT") %>%
+        xml_text() %>%
+        strsplit(x = ., split = "\\n") %>% 
+        unlist()
+      invisible(self)
+    },
+    
+    get_metadata = function(download_report){
+      lp <- xml2::xml_find_first(x = self$xmldoc, xpath = "/DOKUMENT/WAHLPERIODE") %>%
+        xml_text() %>%
+        as.integer()
+      no <- xml2::xml_find_first(x = self$xmldoc, xpath = "/DOKUMENT/NR") %>%
+        xml_text() %>%
+        gsub("^\\d+/(\\d+)$", "\\1", .) %>%
+        as.integer()
+      date <- xml2::xml_find_first(x = self$xmldoc, xpath = "/DOKUMENT/DATUM") %>%
+        xml_text()
+        as.Date(date, format = "%d.%m.%Y")
+      list(
+        legislativePeriod = lp,
+        sessionNo = no,
+        date = date,
+        url = self$download_report[as.character(lp), "url"],
+        retrievalDate = as.Date(self$download_report[as.character(lp), "date"]),
+        package = "frappp",
+        version = packageVersion("frappp"),
+        birthday = Sys.Date()
+        )
+    },
+
+    xmlify = function(){
+    }
+  )
+)
+```
+
+
+
+
+
+## Configure the parser
+
+We need to construct the regex for parliamentarians in advance ... 
+
+```{r}
+auxfiles_dir <- "~/Lab/github/GermaParl/data-raw/auxfiles"
+```
+
+```{r}
+agenda_item_regex <- eval(parse(file.path(auxfiles_dir, "agenda_item_regex.R")))
+agenda_item_regex_supplement <- eval(parse(file.path(auxfiles_dir, "agenda_item_regex_supplement.R")))
+```
+
+
+```{r}
+mp_regex <- eval(parse(file.path(auxfiles_dir, "parliamentary_groups_regex.R"))) %>%
+  unname() %>%
+  sprintf("\\s*%s\\s*", .) %>%
+  paste(collapse = "|") %>%
+  sprintf("^\\s*(?!\\()(?!(Vizepräsident|Präsident))(?!.*?Parl\\.\\s+Staatssekretär)(.+?)\\s*\\((%s)\\)(|\\s*\\(von\\s.*?mit Beifall be\\s?grüßt\\))\\s*:\\s*(.*?)$", .)
+```
+
+
+```{r}
+GPP <- GermaParlParser$new(download_report_file = file.path(xml_repo_dir, "download_report.csv"))
+```
+
+
+```{r}
+GPP$preprocessing_functions <- eval(parse(file.path(auxfiles_dir, "preprocessing_functions.R"))) # txt files as id!!!
+
+GPP$speaker_regex <- eval(parse(file.path(auxfiles_dir, "speaker_regex.R")))
+GPP$speaker_mismatch <- eval(parse(file.path(auxfiles_dir, "speaker_mismatch.R")))
+
+GPP$agenda_item_regex <- eval(parse(file.path(auxfiles_dir, "agenda_item_regex.R")))
+GPP$agenda_item_types <- eval(parse(file.path(auxfiles_dir, "agenda_item_types.R")))
+GPP$agenda_item_mismatch <- eval(parse(file.path(auxfiles_dir, "agenda_item_mismatch.R"))) # txt files as id!!!
+
+GPP$stage_regex <- c(interjection = "^\\s*\\(.*?\\)\\s*$")
+GPP$stage_match_n_lines <- 2L
+```
+
+
+
+
+
+```{r processing_multiple_docs, message = FALSE}
+lp <- "18"
+
+tei_repo_dir <- "~/Lab/gitlab/plprbtxml_tei"
+tei_repo_dir_lp <- file.path(tei_repo_dir, lp)
+
+files <- Sys.glob(paths = sprintf("%s/%s/*.xml", xml_repo_dir, lp))
+files <- sample(x = files, size = 5)
+
+y <- pblapply(
+  files,
+  function(xmlfile){
+    GPP$read_file(filename = xmlfile)
+    GPP$agenda_item_regex <- c(agenda_item_regex, agenda_item_regex_supplement[[GPP$id]])
+    GPP$metadata <- GPP$get_metadata()
+    GPP$make_header()
+    GPP$split_by_speakers()
+    GPP$detect_stage_regex_matches()
+    GPP$reconstruct_paragraphs(exclude = "pres")
+    GPP$make_body()
+    writeLines(
+      text = as.character(GPP$xml),
+      con = file.path(tei_repo_dir_lp, paste(GPP$id, "xml", sep = "."))
+    )
+    GPP$chunk_data
+  }
+  )
+df <- data.frame(do.call(rbind, y))
+```
+
+Reduktion dieser Tabelle (718653 Zeilen / 7 Spalten) auf 'unique' Sprecher.
+
+```{r}
+df_min <- plyr::ddply(
+  .data = df, .variables = c("who", "parliamentary_group", "role"),
+  .fun = function(x) x[1,], .progress = "text"
+  )
+```
+

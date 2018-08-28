@@ -1,0 +1,32 @@
+<dbtplenarprotokoll sitzung-datum="dd.mm.YYYY" sitzung-nr="XX" wahlperiode="19">
+  <vorspann>
+    <kopfdaten>
+    </kopfdaten>
+    <inhaltsverzeichnis>
+    </inhaltsverzeichnis>
+  </vorspann>
+  <sitzungsverlauf>
+    <sitzungsbeginn>
+      <p klasse="N"></p>
+    </sitzungsbeginn>
+    <tagesordnungspunkt top-id="Tagesordnungspunkt 12">
+    <kommentar>(Beifall SPD)</kommentar>
+    <rede id="...">
+      <p klasse="redner">
+        <redner id="">
+          <name>
+            <vorname>...</vorname>
+            <nachname>...</nachname>
+            # entweder_rolle oder <fraktion>
+            <rolle>
+              <rolle_lang> </rolle_lang>
+              <rolle_kurz> </rolle_kurz>
+            </rolle>
+          </name>
+          <name>BUNDESTAGSPRÄSIDENT</name>
+      </p>
+    </tagesordnungspunkt>
+    
+  </sitzungsverlauf>
+  
+</dbtplenarprotokoll>

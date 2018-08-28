@@ -1,6 +1,6 @@
 # BÜNDNIS[\\s\xa0]90\\/DIE\\sGRÜNEN
 
-pg_regex <- c(
+c(
   "KPD" = "KPD",
   "SPD" = "SPD",
   "BP" = "BP",

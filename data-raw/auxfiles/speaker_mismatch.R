@@ -64,5 +64,6 @@ c(
   # "LINKE) – Dr. Max Stadler",
   "Frage! - Dr. Uwe Küster",
   "Dr. Antje Vollmer Berichterstattung",
-  "Hans-Ulrich Klose Berichterstattung"
+  "Hans-Ulrich Klose Berichterstattung",
+  "Herr Hüppe"
 )
