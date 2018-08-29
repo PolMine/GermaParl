@@ -42,7 +42,7 @@ lp <- "18"
 tei_outdir <- "~/Lab/tmp/plprbttxt_tei"
 
 files <- Sys.glob(paths = sprintf("%s/BT_*.txt", txt_repo_dir_utf8))
-# files <- sample(x = files, size = 50)
+files <- sample(x = files, size = 10)
 ```
 
 
@@ -106,7 +106,82 @@ GermaParlParserTXT <- R6Class(
       self$metadata[["retrievalDate"]] <- download_report_subset[,3]
       
       invisible(self)
+    },
+    
+    preprocessing = function(){
+		  txt <- self$txt
+		  Encoding(txt) <- "UTF-8"
+		  
+		  # remove empty lines
+		  emptyLines <- grep("^\\s*$", txt)
+		  if (length(emptyLines) > 0) txt <- txt[-emptyLines]
+		  
+		  txt <- gsub("[\025]", "\u00A7", txt)
+		  txt <- gsub("\u00A0", " ", txt) # removes NO-BREAK SPACE, e.g. in B\u00DCNDNIS 90/DIE GR\u00DCNEN
+		  txt <- gsub("\a", "\n", txt)
+		  txt <- gsub("^\\s*(.*)\\s*$", "\\1", txt) # remove leading and trailing whitespace
+		  txtOne <- paste(txt, collapse = "BREAK")
+		  txtOne <- gsub("CDU/BREAKCSU", "CDU/CSU", txtOne)
+		  txtOne <- gsub("B\u00DCNDNIS\\s+90/BREAKD[iI][eE]\\s+GR\u00DCNEN", "B\u00DCNDNIS 90/DIE GR\u00DCNEN", txtOne)
+		  txtOne <- gsub("B\u00DCNDNIS\\s+90/DIE\\s+GR\u00DC-BREAKNEN", "B\u00DCNDNIS 90/DIE GR\u00DCNEN", txtOne)
+		  txt <- strsplit(txtOne, "BREAK")[[1]]
+		  txt <- gsub("Nr\\.(\\d)", "Nr. \\1", txt)
+		  txt <- gsub("Abs\\.(\\d)", "Abs. \\1", txt)
+		  txt <- gsub("([a-z])\\.\\d+", "\\1.", txt)
+		  txt <- gsub("\\s+", " ", txt)
+		  
+		  if (self$id %in% names(self$preprocessing_functions)){
+		    txt <- self$preprocessing_functions[[self$id]](txt)
+		  }
+		  self$txt <- txt
+		},
+		
+		get_end_of_debate = function(){
+		  
+		  end_of_debate <- grep("^\\s*\\(\\s*Schlu(ss|.)( der Sitzung|).*?Uhr", self$txt, perl = TRUE)[1]
+		  if (length(end_of_debate) == 0 || is.na(end_of_debate)) {
+		    end_of_debate <- grep("Die\\sSitzung\\sist\\sgeschlossen", self$txt, perl = TRUE) + 1L
+		  }
+		  if (length(end_of_debate) == 0 || is.na(end_of_debate)) {
+		    end_of_debate <- length(self$txt)
+		    message("end of debate not found in ", self$id)
+		  }
+		  self$txt <- self$txt[1L:(end_of_debate[1] - 1L)]
+		  invisible(self)
+		},
+		
+		remove_constituency_from_name = function(){
+		  self$chunk_data[["who"]] <- gsub("\\s+\\(.*?\\)\\s*$", "", self$chunk_data[["who"]])
+		  invisible(self)
+		},
+
+    reconstruct_paragraphs = function(exclude = "pres", regex = "[\\.\\):!?]\\s*$"){
+      chunks_rework <- lapply(
+        1L:length(self$chunks),
+        function(chunk_no){
+          chunk <- self$chunks[[chunk_no]]
+          if (names(self$chunks)[chunk_no] %in% exclude){
+            return( chunk )
+          } else {
+            to_concatenate <- !grepl(regex, chunk)
+            if (any(to_concatenate)){
+              for (i in rev(which(to_concatenate == TRUE))){
+                # do not concatenate open-ended line and the next paragraph,
+                # if the latter is an interjection
+                if (grepl("^\\s*\\(.*\\)\\s*$", chunk[i + 1L]) == FALSE){
+                  chunk[i] <- paste(chunk[i], chunk[i + 1L], sep = " ")
+                  chunk <- chunk[-(i + 1L)]              
+                }
+              }
+            }
+            return(chunk)
+          }
+        })
+      names(chunks_rework) <- names(self$chunks)
+      self$chunks <- chunks_rework
+      invisible(self)
     }
+
   )
 )
 ```
@@ -153,9 +228,11 @@ GPP$speaker_maximum_nchar_name <- 50L
 GPP$agenda_item_regex <- eval(parse(file.path(auxfiles_dir, "agenda_item_regex.R")))
 GPP$agenda_item_types <- eval(parse(file.path(auxfiles_dir, "agenda_item_types.R")))
 GPP$agenda_item_mismatch <- eval(parse(file.path(auxfiles_dir, "agenda_item_mismatch.R")))
+GPP$agenda_item_maximum_nchar_desc <- 80L
 
 GPP$stage_regex <- c(interjection = "^\\s*\\(.*?\\)\\s*$")
-GPP$stage_match_n_lines <- 2L
+GPP$stage_match_n_lines <- 3L
+GPP$stage_mismatch_regex <- "Beratung\\s+\\d+\\.\\s+Sitzung"
 ```
 
 
@@ -172,10 +249,13 @@ y <- lapply(
       agenda_item_regex,
       agenda_item_regex_supplement[[GPP$id]]
     )
+    GPP$preprocessing()
+    GPP$get_end_of_debate()
     GPP$get_metadata()
     GPP$make_header()
     GPP$split_by_speakers()
     GPP$detect_stage_regex_matches()
+    GPP$remove_constituency_from_name()
     GPP$reconstruct_paragraphs(exclude = "pres")
     GPP$make_body()
     writeLines(
