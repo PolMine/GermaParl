@@ -9,6 +9,7 @@
   s-attribute 'speeches' has not yet been generated.
 - The function `use_germaparl()` has been replaced by `germaparl_regdir`, it will return
   the registry directory with the R data package.
+- The tarball is downloaded from the webserver of the PolMine Project.
 
 # GermaParl 1.2.1
 

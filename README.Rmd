@@ -1,5 +1,7 @@
 ---
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -32,13 +34,31 @@ The GermaParl package is designed to be used with [polmineR](https://cran.r-proj
 
 ### Installation
 
-The GermaParl package can be installed from the 'drat' repository of the GitHub presence of the PolMine Project:
+#### Fast Track Installation
+
+The GermaParl package can be installed from the 'drat' repository at GitHub presence of the PolMine Project:
 
 ```{r installation, eval = FALSE}
-if ("drat" %in% rownames(available.packages()) == FALSE) install.packages("drat")
+if (!"drat" %in% rownames(available.packages())) install.packages("drat")
 drat::addRepo("polmine") # lowercase necessary in this case
 install.packages("GermaParl")
 ```
+
+
+#### Installing the development version
+
+The development version of the GermaParl package may include consolidated or new functionality, and improved documentation. To install the development version of GermaParl package (from GitHub), you need to install the cwbtools-package first, a package which is not yet available at CRAN.
+
+```{r dependencies}
+if (!"devtools" %in% rownames(available.packages())) install.packages("devtools")
+devtools::install_github("PolMine/cwbtools", ref = "dev")
+devtools::install_github("PolMine/GermaParl", ref = "dev")
+```
+
+Please note that on Windows systems, it may be necessary to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/) to be able to use the full functionality of the devtools package.
+
+
+#### Download and install the full corpus
 
 After the initial installation, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from an external webspace (amazon AWS, for the time being):
 

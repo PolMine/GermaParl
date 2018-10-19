@@ -42,7 +42,7 @@ lp <- "18"
 tei_outdir <- "~/Lab/tmp/plprbttxt_tei"
 
 files <- Sys.glob(paths = sprintf("%s/BT_*.txt", txt_repo_dir_utf8))
-files <- sample(x = files, size = 10)
+# files <- sample(x = files, size = 10)
 ```
 
 
@@ -230,6 +230,7 @@ GPP$agenda_item_types <- eval(parse(file.path(auxfiles_dir, "agenda_item_types.R
 GPP$agenda_item_mismatch <- eval(parse(file.path(auxfiles_dir, "agenda_item_mismatch.R")))
 GPP$agenda_item_maximum_nchar_desc <- 80L
 
+GPP$stage_regex <- c(interjection = "^\\s*\\([^()]*?\\)\\s*$")
 GPP$stage_regex <- c(interjection = "^\\s*\\(.*?\\)\\s*$")
 GPP$stage_match_n_lines <- 3L
 GPP$stage_mismatch_regex <- "Beratung\\s+\\d+\\.\\s+Sitzung"

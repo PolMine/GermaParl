@@ -10,7 +10,7 @@
 #' @rdname installation
 #' @importFrom cwbtools corpus_install
 #' @importFrom RCurl url.exists
-germaparl_download_corpus <- function(tarball = "germaparl.tar.gz", dir = "https://s3.eu-central-1.amazonaws.com/polmine/corpora/cwb/germaparl"){
+germaparl_download_corpus <- function(tarball = "germaparl.tar.gz", dir = "http://polmine.sowi.uni-due.de/corpora/cwb/germaparl"){
   tarball <- file.path(dir, tarball)
   message("... downloading tarball: ", tarball)
   corpus_install(pkg = "GermaParl", tarball = tarball)
