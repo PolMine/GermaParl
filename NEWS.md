@@ -10,6 +10,8 @@
 - The function `use_germaparl()` has been replaced by `germaparl_regdir`, it will return
   the registry directory with the R data package.
 - The tarball is downloaded from the webserver of the PolMine Project.
+- Upon loading the package, the registry file included in the package is copied to the 
+  temporary registry by default, making the corpus available. 
 
 # GermaParl 1.2.1
 

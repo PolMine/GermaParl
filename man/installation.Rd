@@ -5,7 +5,7 @@
 \title{Download GermaParl from Web Directory.}
 \usage{
 germaparl_download_corpus(tarball = "germaparl.tar.gz",
-  dir = "https://s3.eu-central-1.amazonaws.com/polmine/corpora/cwb/germaparl")
+  dir = "http://polmine.sowi.uni-due.de/corpora/cwb/germaparl")
 }
 \arguments{
 \item{tarball}{Name of the tarball.}

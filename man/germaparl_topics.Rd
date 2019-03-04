@@ -8,8 +8,8 @@
 \alias{germaparl_get_speeches_for_topic}
 \title{Use topicmodels prepared for GermaParl.}
 \usage{
-germaparl_download_lda(k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L, 300L,
-  350L, 400L, 450L, 500L),
+germaparl_download_lda(k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L,
+  300L, 350L, 400L, 450L, 500L),
   rds_file = sprintf("germaparl_lda_speeches_\%d.rds", k),
   webdir = "https://s3.eu-central-1.amazonaws.com/polmine/corpora/cwb/germaparl")
 

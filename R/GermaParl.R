@@ -5,7 +5,7 @@
 #' 
 #' @importFrom R6 R6Class
 #' @importFrom data.table data.table setcolorder rbindlist
-#' @importFrom polmineR enrich Corpus features html highlight getTokenStream as.nativeEnc getEncoding weigh as.sparseMatrix read 
+#' @importFrom polmineR enrich Corpus features html highlight getTokenStream as.nativeEnc getEncoding weigh as.sparseMatrix read use
 #' 
 #' @section Methods:
 #' \describe{

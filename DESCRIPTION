@@ -1,8 +1,8 @@
 Package: GermaParl
 Type: Package
 Title: GermaParl Data Package
-Version: 1.2.1.9001
-Date: 2018-08-13
+Version: 1.2.1.9002
+Date: 2019-03-04
 Authors@R: c(person("Andreas Blaette", "Developer", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de"))
 Imports:
   polmineR,
@@ -39,4 +39,5 @@ Collate:
   'stem.R'
   'lda.R'
   'use.R'
-RoxygenNote: 6.0.1
+  'zzz.R'
+RoxygenNote: 6.1.1
