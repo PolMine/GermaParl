@@ -1,3 +1,4 @@
+#' @importFrom polmineR registry_move
 .onAttach <- function (libname, pkgname){
   
   pkg_registry_dir <- file.path(normalizePath(libname, winslash = "/"), pkgname, "extdata", "cwb", "registry", fsep = "/")
@@ -7,7 +8,7 @@
   if (!dir.exists(polmineR_registry_dir)) dir.create(polmineR_registry_dir)
 
   for (corpus in list.files(pkg_registry_dir)){
-    polmineR:::registry_move(
+    registry_move(
       corpus = corpus,
       registry = pkg_registry_dir,
       registry_new = polmineR_registry_dir,
