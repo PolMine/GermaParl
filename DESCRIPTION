@@ -2,7 +2,7 @@ Package: GermaParl
 Type: Package
 Title: GermaParl Data Package
 Version: 1.2.1.9002
-Date: 2019-03-04
+Date: 2020-04-01
 Authors@R: c(person("Andreas Blaette", "Developer", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de"))
 Imports:
   polmineR,
@@ -14,7 +14,8 @@ Imports:
   Matrix,
   topicmodels,
   methods,
-  slam
+  slam,
+  jsonlite
 Suggests:
   knitr,
   qlcMatrix,
@@ -40,4 +41,4 @@ Collate:
   'lda.R'
   'use.R'
   'zzz.R'
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2

@@ -4,14 +4,15 @@
 \alias{germaparl_download_corpus}
 \title{Download GermaParl from Web Directory.}
 \usage{
-germaparl_download_corpus(tarball = "germaparl.tar.gz",
-  dir = "http://polmine.sowi.uni-due.de/corpora/cwb/germaparl")
+germaparl_download_corpus(
+  doi = "https://doi.org/10.5281/zenodo.3735141",
+  quiet = FALSE
+)
 }
 \arguments{
-\item{tarball}{Name of the tarball.}
+\item{doi}{The DOI (Digital Object Identifier) of the GermaParl tarball at zenodo.}
 
-\item{dir}{directory where the tarball resides, either the URL of a webspace,
-or a local directory}
+\item{quiet}{Whether to output messages.}
 }
 \description{
 \code{germaparl_download_corpus} will get a tarball with the indexed corpus

@@ -18,7 +18,7 @@ Inspect Annotations Present in a Partition
 \dontrun{
 P <- partition(
   "GERMAPARL",
-  lp = 17, session = 175, speaker = "Fritz Rudolf K\\u00F6rper",
+  lp = 17, session = 175, speaker = "Fritz Rudolf K\u00F6rper",
   xml = "nested"
 )
 annotations_inspect(P, annotation = "16")
