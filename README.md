@@ -3,7 +3,10 @@
 
 [![DOI](https://zenodo.org/badge/141028057.svg)](https://zenodo.org/badge/latestdoi/141028057)
 [![Travis-CI Build
-Status](https://travis-ci.org/PolMine/GermaParl.svg?branch=master)](https://travis-ci.org/PolMine/GermaParl)
+Status](https://travis-ci.org/PolMine/GermaParl.svg?branch=zenodo)](https://travis-ci.org/PolMine/GermaParl)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/PolMine/GermaParl?branch=zenodo&svg=true)](https://ci.appveyor.com/project/PolMine/zenodo)
+[![codecov](https://codecov.io/gh/PolMine/GermaParl/branch/zenodo/graph/badge.svg)](https://codecov.io/gh/PolMine/GermaParl/branch/zenodo)
 
 # The GermaParl R Data Package <img src="https://raw.githubusercontent.com/PolMine/GermaParl/master/inst/sticker/hexsticker.png" align="right" />
 
@@ -38,15 +41,38 @@ required as input for advanced statistical procedures.
 
 ### Installation
 
-The GermaParl package can be installed from the ‘drat’ repository of the
+#### Fast Track Installation
+
+The GermaParl package can be installed from the ‘drat’ repository at
 GitHub presence of the PolMine
 Project:
 
 ``` r
-if ("drat" %in% rownames(available.packages()) == FALSE) install.packages("drat")
+if (!"drat" %in% rownames(available.packages())) install.packages("drat")
 drat::addRepo("polmine") # lowercase necessary in this case
 install.packages("GermaParl")
 ```
+
+#### Installing the development version
+
+The development version of the GermaParl package may include
+consolidated or new functionality, and improved documentation. To
+install the development version of GermaParl package (from GitHub), you
+need to install the cwbtools-package first, a package which is not yet
+available at
+CRAN.
+
+``` r
+if (!"devtools" %in% rownames(available.packages())) install.packages("devtools")
+devtools::install_github("PolMine/cwbtools", ref = "dev")
+devtools::install_github("PolMine/GermaParl", ref = "dev")
+```
+
+Please note that on Windows systems, it may be necessary to install
+[Rtools](https://cran.r-project.org/bin/windows/Rtools/) to be able to
+use the full functionality of the devtools package.
+
+#### Download and install the full corpus
 
 After the initial installation, the package only includes a small subset
 of the GermaParl corpus. The subset serves as sample data and for
@@ -108,9 +134,9 @@ explanations.
 If you work with GermaParl package, please include the following
 reference in your bibliography to attribute the language resource:
 
-*Blaette, Andreas* (2018): GermaParl. R Data Package for the GermaParl
-Corpus of Plenary Protocols of the German Bundestag (v1.2.1). Available
-from: <https://doi.org/10.5281/zenodo.1312551>.
+*Blaette, Andreas* (2020): GermaParl. R Data Package for the GermaParl
+Corpus of Plenary Protocols of the German Bundestag (v1.2.1.9003).
+Available from: <https://doi.org/10.5281/zenodo.1312551>.
 
 ### Feedback
 
