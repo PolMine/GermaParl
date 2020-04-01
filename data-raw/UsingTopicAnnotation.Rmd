@@ -14,9 +14,7 @@ vignette: >
 ```{r, eval = FALSE}
 library(polmineR)
 use("GermaParl")
-
 library(topicmodels)
-library(magrittr)
 ```
 
 
@@ -51,6 +49,7 @@ for (i in 1:length(PB)) {
   if (readline() == "q") stop()
 }
 ```
+
 
 ## Skip through documents with topic cooccurrence
 
