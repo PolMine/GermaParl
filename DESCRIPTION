@@ -1,44 +1,35 @@
 Package: GermaParl
 Type: Package
 Title: GermaParl Data Package
-Version: 1.2.1.9002
+Version: 1.2.1.9003
 Date: 2020-04-01
 Authors@R: c(person("Andreas Blaette", "Developer", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de"))
+Depends:
+    R (>= 3.5.0)
 Imports:
   polmineR,
-  cwbtools (>= 0.0.9),
-  R6,
+  cwbtools (>= 0.1.2),
   data.table,
   RCurl,
-  pbapply,
-  Matrix,
   topicmodels,
   methods,
-  slam,
   jsonlite
 Suggests:
   knitr,
-  qlcMatrix,
-  SnowballC,
-  rmarkdown,
-  polmineR.anno (>= 0.3.3)
+  rmarkdown
 LazyData: yes
-Description: Data package with the GermaParl Corpus of Parliamentary Debates (German Bundestag) preprared in the PolMine Project.
+Description: Data package with the GermaParl Corpus of Parliamentary Debates (German Bundestag) 
+  preprared in the PolMine Project. The package includes a small subset of the corpus as a demo
+  and for testing purposes. The package includes functionality to load the full corpus from the
+  zenodo repository and some auxiliary functions to enhance the corpus.
 URL: https://github.com/polmine/GermaParl
 BugReports: https://github.com/polmine/GermaParl/issues
-Additional_repositories: https://polmine.github.io/drat/
-License: CC BY-NC-SA 4.0
+License: CC BY-SA 4.0
 VignetteBuilder: knitr
 Encoding: UTF-8
 Collate:
-  'annotations.R'
   'download.R'
-  'dtm.R'
   'GermaParl.R'
-  'query.R'
   'speeches.R'
-  'stem.R'
   'lda.R'
-  'use.R'
-  'zzz.R'
 RoxygenNote: 7.0.2

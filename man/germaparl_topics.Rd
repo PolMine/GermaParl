@@ -32,8 +32,8 @@ germaparl_get_speeches_for_topic(n)
 \item{verbose}{logical}
 }
 \description{
-A set of LDA topicmodels is deposited at a Amazon S3 webspace, for a number of topics between
-100 and 500.
+A set of LDA topicmodels is deposited at a Amazon S3 webspace, for a number
+of topics between 100 and 500.
 }
 \details{
 The function \code{germaparl_download_lda} to download the

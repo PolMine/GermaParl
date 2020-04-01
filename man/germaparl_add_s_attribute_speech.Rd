@@ -7,12 +7,14 @@
 germaparl_add_s_attribute_speech(mc = 1L, progress = TRUE)
 }
 \arguments{
-\item{mc}{An integer value, the number of cores to use, passed into the \code{as.speeches} function}
+\item{mc}{An \code{integer} value, the number of cores to use, passed into the
+\code{as.speeches} function}
 
-\item{progress}{Logical, whether to indicate progress by showing a progress bar.}
+\item{progress}{A \code{logical} value, whether to show a progress bar.}
 }
 \value{
-A \code{NULL} value is returned invisibly.
+A \code{data.table} with the regions of speeches and speech ids is
+  returned invisibly.
 }
 \description{
 The basic text unit in the GermaParl corpus are units of uninterrupted
@@ -27,4 +29,18 @@ corpus.
 The \code{as.speeches}-function may consume several minutes. For writing the
 structural attribute, the \code{s_attribute_encode} from the \code{cwbtools}
 package is used.
+}
+\examples{
+\dontrun{
+germaparl_download_corpus()
+use("GermaParl")
+germaparl_add_s_attribute_speech()
+
+library(polmineR)
+use("GermaParl")
+s_attributes("GERMAPARL")
+s_attributes("GERMAPARL", "speech")
+size("GERMAPARL", s_attribute = "speech")
+dtm <- as.DocumentTermMatrix("GERMAPARL", p_attribute = "word", s_attribute = "speech")
+} 
 }

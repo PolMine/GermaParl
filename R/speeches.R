@@ -12,45 +12,50 @@
 #' structural attribute, the \code{s_attribute_encode} from the \code{cwbtools}
 #' package is used.
 #' 
-#' @param mc An integer value, the number of cores to use, passed into the \code{as.speeches} function
-#' @param progress Logical, whether to indicate progress by showing a progress bar.
-#' @return A \code{NULL} value is returned invisibly.
-#' @importFrom data.table data.table rbindlist setnames setorderv
+#' @param mc An \code{integer} value, the number of cores to use, passed into the
+#'   \code{as.speeches} function
+#' @param progress A \code{logical} value, whether to show a progress bar.
+#' @return A \code{data.table} with the regions of speeches and speech ids is
+#'   returned invisibly.
+#' @importFrom data.table data.table setnames setorderv :=
 #' @importFrom cwbtools s_attribute_encode registry_file_parse
 #' @importFrom polmineR as.speeches use
 #' @importFrom utils download.file
+#' @importFrom methods slot
 #' @export germaparl_add_s_attribute_speech
+#' @examples 
+#' \dontrun{
+#' germaparl_download_corpus()
+#' use("GermaParl")
+#' germaparl_add_s_attribute_speech()
+#' 
+#' library(polmineR)
+#' use("GermaParl")
+#' s_attributes("GERMAPARL")
+#' s_attributes("GERMAPARL", "speech")
+#' size("GERMAPARL", s_attribute = "speech")
+#' dtm <- as.DocumentTermMatrix("GERMAPARL", p_attribute = "word", s_attribute = "speech")
+#' } 
 germaparl_add_s_attribute_speech <- function(mc = 1L, progress = TRUE){
   speeches <- as.speeches(
     "GERMAPARL", gap = 500, mc = mc, progress = progress,
     s_attribute_date = "date", s_attribute_name = "speaker"
   )
-  regions_list <- lapply(
-    speeches@objects,
-    function(x){
-      dt <- data.table(x@cpos)
-      dt[["speech"]] <- x@name
-      dt
-    }
-  )
-  dt <- data.table::rbindlist(regions_list)
+  dt <- data.table(do.call(rbind, lapply(speeches@objects, slot, "cpos")))
   setnames(dt, old = c("V1", "V2"), new = c("cpos_left", "cpos_right"))
-  dt[, "cpos_left" := as.integer(dt[["cpos_left"]]) ]
-  dt[, "cpos_right" := as.integer(dt[["cpos_right"]]) ]
+  dt[, "speech" := do.call(c, Map(rep, names(speeches), sapply(speeches@objects, function(x) nrow(x@cpos))))]
   setorderv(dt, cols = "cpos_left", order = 1L)
-  corpus_charset <- registry_file_parse(corpus = "GERMAPARL")[["properties"]][["charset"]]
-  germaparl_data_dir <- registry_file_parse(corpus = "GERMAPARL")[["home"]]
   s_attribute_encode(
     values = dt[["speech"]], # is still UTF-8, recoding done by s_attribute_encode
-    data_dir = germaparl_data_dir,
+    data_dir = registry_file_parse(corpus = "GERMAPARL")[["home"]],
     s_attribute = "speech",
     corpus = "GERMAPARL",
     region_matrix = as.matrix(dt[, c("cpos_left", "cpos_right")]),
-    registry_dir = germaparl_regdir(),
-    encoding = corpus_charset,
-    method = "CWB",
-    verbose = TRUE
-    )
-  
+    registry_dir = system.file(package = "GermaParl", "extdata", "cwb", "registry"),
+    encoding = registry_file_parse(corpus = "GERMAPARL")[["properties"]][["charset"]],
+    method = "R",
+    verbose = TRUE,
+    delete = FALSE
+  )
   invisible(dt)
 }

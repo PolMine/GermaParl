@@ -1,7 +1,7 @@
 #' Use topicmodels prepared for GermaParl.
 #' 
-#' A set of LDA topicmodels is deposited at a Amazon S3 webspace, for a number of topics between
-#' 100 and 500. 
+#' A set of LDA topicmodels is deposited at a Amazon S3 webspace, for a number
+#' of topics between 100 and 500.
 #' 
 #' @details The function \code{germaparl_download_lda} to download the
 #'   *.rds-file. It will be stored in the \code{extdata/topicmodels/}
@@ -44,7 +44,7 @@ germaparl_download_lda <- function(k = c(100L, 150L, 175L, 200L, 225L, 250L, 275
 #' 
 #' @param n Number of topics to write to corpus
 #' @importFrom polmineR decode partition s_attributes
-#' @importFrom data.table setkeyv
+#' @importFrom data.table setkeyv := setcolorder
 #' @importFrom topicmodels topics
 #' @importFrom cwbtools s_attribute_encode
 #' @export germaparl_encode_lda_topics
@@ -56,7 +56,10 @@ germaparl_download_lda <- function(k = c(100L, 150L, 175L, 200L, 225L, 250L, 275
 #' @rdname germaparl_topics
 germaparl_encode_lda_topics <- function(k = 200, n = 5){
   
-  germaparl_data_dir <- registry_file_parse(corpus = "GERMAPARL", registry_dir = germaparl_regdir())[["home"]]
+  germaparl_data_dir <- registry_file_parse(
+    corpus = "GERMAPARL",
+    registry_dir = system.file(package = "GermaParl", "extdata", "cwb", "registry")
+    )[["home"]]
   corpus_charset <- registry_file_parse(corpus = "GERMAPARL")[["properties"]][["charset"]]
   
   model <- germaparl_load_topicmodel(k = k)
@@ -93,7 +96,7 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5){
   P <- partition("GERMAPARL", speech = ".*", regex = TRUE)
   if (sum(cpos_dt2[["cpos_left"]] - P@cpos[,1]) != 0) stop()
   if (sum(cpos_dt2[["cpos_right"]] - P@cpos[,2]) != 0) stop()
-  if (length(sAttributes("GERMAPARL", "speech", unique = FALSE)) != nrow(cpos_dt2)) stop()
+  if (length(s_attributes("GERMAPARL", "speech", unique = FALSE)) != nrow(cpos_dt2)) stop()
   
   message("... encoding s-attribute 'topics'")
   s_attribute_encode(
@@ -102,7 +105,7 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5){
     s_attribute = "topics",
     corpus = "GERMAPARL",
     region_matrix = as.matrix(cpos_dt2[, c("cpos_left", "cpos_right")]),
-    registry_dir = germaparl_regdir(),
+    registry_dir = system.file(package = "GermaParl", "extdata", "cwb", "registry"),
     encoding = corpus_charset,
     method = "R",
     verbose = TRUE

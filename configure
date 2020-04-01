@@ -1,3 +1,0 @@
-#!/bin/bash
-
-${R_HOME}/bin/Rscript ./tools/setpaths.R --args "$R_PACKAGE_DIR"

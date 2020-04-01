@@ -1,58 +1,21 @@
-#' GermaParl Corpus Class.
+#' GermaParl R package.
 #' 
-#' The class inherits from the \code{Corpus} class defined in the 
-#' package 'polmineR'. So far, it only adds a method 'summary'.
-#' 
-#' @importFrom R6 R6Class
-#' @importFrom data.table data.table setcolorder rbindlist
-#' @importFrom polmineR enrich Corpus features html highlight getTokenStream as.nativeEnc getEncoding weigh as.sparseMatrix read use
-#' 
-#' @section Methods:
-#' \describe{
-#'   \item{\code{summary(sAttribute)}}{Get number of tokens in subcorpora
-#'   that are prepared on the basis of the s-attribute provided.}
-#' }
-#' @examples
+#' @author Andreas Blaette (andreas.blaette@@uni-due.de)
+#' @keywords package
+#' @docType package
+#' @aliases GermaParl GermaParl-package
+#' @rdname GermaParl-package
+#' @name GermaParl-package
+#' @examples 
 #' \dontrun{
-#'   germaparl_download_corpus()
-#'   germaparl_download_lda(k = 250L)
-#'   germaparl_add_s_attribute_speech()
-#'   germaparl_encode_lda_topics(k = 250L, n = 5L)
-#'   germaparl_encode_cap_annotations()
-#'   germaparl_build_dtm()
+#' library(polmineR)
+#' use("GermaParl")
+#' corpus() # will include GERMAPARLMINI, sample corpus included in pkg
+#' germaparl_download_corpus() # takes time!
+#' use("GermaParl")
+#' corpus() # will include GERMAPARL, full corpus
 #' }
-#' @export GermaParl
-#' @rdname GermaParl
-#' @name GermaParl
-#' @aliases germaparl_by_lp germaparl_by_year
-GermaParl <- R6Class(
-  
-  classname = "GermaParl",
-  inherit = polmineR::Corpus,
-  
-  public = list(
-    
-    initialize = function(corpus = "GERMAPARL", pAttribute = NULL){
-      super$initialize(corpus = corpus, pAttribute = pAttribute)
-    },
-    
-    summary = function(sAttribute){
-      values <- sAttributes("GERMAPARL", sAttribute)
-      dts <- lapply(
-        values,
-        function(value){
-          P <- partition("GERMAPARL", def = as.list(setNames(value, sAttribute)), verbose = FALSE)
-          dt <- data.table(size = size(P))
-          dt[[sAttribute]] <- value
-          setcolorder(dt, neworder = c(sAttribute, "size"))
-          dt
-        }
-      )
-      dts
-      rbindlist(dts)
-    }
-  )
-)
+NULL
 
 
 #' LDA Tuning Results
@@ -62,3 +25,66 @@ GermaParl <- R6Class(
 #' @aliases lda_tuning
 "lda_tuning"
 
+
+#' Table with information on GermaParl by year
+#' 
+#' @name germaparl_by_year
+#' @rdname germaparl_by_year
+#' @examples 
+#' \dontrun{
+#' dts <- lapply(
+#'  13:17,
+#'  function(lp){
+#'   print(lp)
+#'   P <- partition("GERMAPARL", lp = lp)
+#'   dates <- as.Date(s_attributes(P, "date"))
+#'   dt <- count(P, p_attribute = "lemma")
+#'   unknown <- round(sum(dt[grepl("#unknown#", dt[["lemma"]])][["count"]]) / size(P), digits = 3)
+#'   
+#'   data.table(
+#'     lp = lp,
+#'     protocols = length(unique(s_attributes(P, "session"))),
+#'     first = min(dates, na.rm = TRUE),
+#'     last = min(dates, na.rm = TRUE),
+#'     size = size(P),
+#'     unknown = unknown
+#'   )
+#' }
+#' )
+#' germaparl_by_lp <- rbindlist(dts)
+#' }
+"germaparl_by_year"
+
+
+#' Table with information on GermaParl by legislative period
+#' 
+#' @name germaparl_by_lp
+#' @rdname germaparl_by_lp
+#' @examples 
+#' \dontrun{
+#' years <- as.integer(s_attributes("GERMAPARL", "year"))
+#' dts <- lapply(
+#'   min(years):max(years),
+#'   function(year){
+#'     P <- partition("GERMAPARL", year = as.character(year), verbose = FALSE)
+#'     P.txt <- partition(P, src = "txt")
+#'     P.pdf <- partition(P, src = "pdf")
+#'     dt <- polmineR::count(P, p_attribute = "lemma")
+#'     unknowns <- round(sum(dt[grepl("#unknown#", dt[["lemma"]])][["count"]]) / size(P), digits = 3)
+#'     data.table(
+#'       year = year,
+#'       protocols = length(unique(s_attributes(P, "session"))),
+#'       txt = length(s_attributes(P.txt, "session")),
+#'       pdf = length(s_attributes(P.pdf, "session")),
+#'       size = size(P),
+#'       unknown = unknowns
+#'     )
+#'   }
+#' )
+#' dt1 <- rbindlist(dts)
+#' dt2 <- rbind(dt1, t(data.table(colSums(dt1))), use.names = FALSE, fill = FALSE)
+#' dt2[["year"]] <- as.character(dt2[["year"]])
+#' dt2[nrow(dt2), 1] <- "TOTAL"
+#' germaparl_by_year <- dt2
+#' }
+"germaparl_by_lp"

@@ -1,3 +1,27 @@
+# GermaParl v1.2.1.9002
+
+- The GermaParl corpus is downloaded now from a storage location at zenodo. The 
+  `germapar_download_corpus()` function has been reworked accordingly. It now
+  takes the argument `doi`.
+- The `GermaParl` R6 class has been dropped from the package. The main method of
+  the function (`$summary()`) is superfluous as the `size()`-method of the polmineR
+  package produces the same output (`data.table` with report of sizes of subcorpora
+  on according to an `s_attribute`).
+- The function `germaparl_add_p_attribute_stem()` has been removed from the package.
+  The functionality (adding a new p-attribute with word stems) makes senes, but the
+  implementation should be generic and included in the cwbtools package.
+- The file 'zzz.R' has been removed from the package. It moved the registry files 
+  from the GermaParl package to a central registry. This is not necessary any more
+  as polmineR works with a temporary registry directory.
+- The file 'configure' in the main directory of the package has been removed, as the 
+  polmineR approach to work with a temporary registry does not require the paths 
+  in the registry files to be set. The file 'tools/setpaths.R' has been removed
+  for the same reason.
+- The `germaparl_regdir()` function has been removed. Not necessary any more.
+- The `germaparl_search_speeches()` function has been removed from the package. The
+  functionality is nice, but there should either be a generic implementation in the
+  polmineR package, or it might be offered as a recipe.
+
 # GermaParl 1.2.1.9001
 
 - Documentation for function to work with topicmodels have been integrated into one 
