@@ -12,9 +12,6 @@ matrix:
 addons:
   apt:
     packages:
-    - libxml2-dev
-    - libpcre3-dev
-    - libglib2.0-dev
     - libgsl0ldbl
     - libgsl0-dev
 
@@ -24,10 +21,6 @@ before_install:
   - Rscript -e 'install.packages("RcppCWB")'
 
 r_packages:
-  - devtools
-  - plyr
-  - tm
-  - tidytext
   - covr
 
 warnings_are_errors: false
@@ -38,4 +31,4 @@ notifications:
   on_failure: change
 
 after_success:
-  - Rscript -e 'library(covr); codecov(token = "36cf23e7-4231-4329-b680-f052fece17dc")'
+  - Rscript -e 'library(covr); codecov(token = "7609915b-83b4-4d4d-ae8c-c41cdb8bed18")'

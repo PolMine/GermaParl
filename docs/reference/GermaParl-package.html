@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • GermaParl</title>
+<title>GermaParl R Data Package. — GermaParl-package • GermaParl</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,14 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="GermaParl R Data Package. — GermaParl-package" />
+<meta property="og:description" content="The package offers a convenient dissemination mechanism for the 
+GermaParl corpus that has been linguistically annotated and indexed (data format
+of the Corpus Workbench / CWB). After installation, only a small sample corpus
+will be included in the package. Use the germaparl_download_corpus function
+to download the full corpus. The package offers further functionality to amend 
+the corpus." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -54,7 +61,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -107,78 +114,71 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>GermaParl R Data Package.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/polmine/GermaParl/blob/master/R/GermaParl.R'><code>R/GermaParl.R</code></a></small>
+    <div class="hidden name"><code>GermaParl-package.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>The package offers a convenient dissemination mechanism for the 
+GermaParl corpus that has been linguistically annotated and indexed (data format
+of the Corpus Workbench / CWB). After installation, only a small sample corpus
+will be included in the package. Use the <code>germaparl_download_corpus</code> function
+to download the full corpus. The package offers further functionality to amend 
+the corpus.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>germaparl_is_installed</span>()
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="GermaParl-package.html">germaparl_is_installed()</a></code> <code><a href="GermaParl-package.html">germaparl_get_doi()</a></code> <code><a href="GermaParl-package.html">germaparl_get_version()</a></code> </p>
-        </td>
-        <td><p>GermaParl R Data Package.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="download.html">germaparl_download_corpus()</a></code> </p>
-        </td>
-        <td><p>Download full GermaParl corpus.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="germaparl_add_s_attribute_speech.html">germaparl_add_s_attribute_speech()</a></code> </p>
-        </td>
-        <td><p>Add Annotation of Speeches to GermaParl Corpus</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="germaparl_by_lp.html">germaparl_by_lp</a></code> </p>
-        </td>
-        <td><p>Table with information on GermaParl by legislative period</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="germaparl_by_year.html">germaparl_by_year</a></code> </p>
-        </td>
-        <td><p>Table with information on GermaParl by year</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="germaparl_topics.html">germaparl_download_lda()</a></code> <code><a href="germaparl_topics.html">germaparl_encode_lda_topics()</a></code> <code><a href="germaparl_topics.html">germaparl_load_topicmodel()</a></code> <code><a href="germaparl_topics.html">germaparl_get_speeches_for_topic()</a></code> </p>
-        </td>
-        <td><p>Use topicmodels prepared for GermaParl.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="lda_tuning.html">lda_tuning</a></code> </p>
-        </td>
-        <td><p>LDA Tuning Results</p></td>
-      </tr>
-    </tbody>
-    </table>
+<span class='fu'>germaparl_get_doi</span>()
+
+<span class='fu'>germaparl_get_version</span>()</pre>
+
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Note that the R package and the corpus are two different kinds of research
+data: The package offers a mechanism to ship, easily install and augment the data.
+The indexed corpus is the actual data. Package and corpus have different version
+numbers and should be quoted in combination in publications. We recommend to follow 
+the instructions you see when calling <code><a href='https://rdrr.io/r/utils/citation.html'>citation(package = "GermaParl")</a></code>.</p>
+<p><code>germaparl_is_installed</code> is an auxiliary function that returns <code>TRUE</code>
+  if the corpus has been installed, and <code>FALSE</code> if not.</p>
+<p><code>germaparl_get_doi</code> is an auxiliary function that extracts the DOI
+  (Document Object Identifier) from the registry file of the GERMAPARL corpus. If
+  the corpus has not yet been installed, <code>NULL</code> is returned and a warning 
+  will be issued.</p>
+<p><code>germaparl_get_version</code> is an auxiliary function that extracts the 
+  version of the GERMAPARL corpus from the registry file. If the corpus has not
+  yet been installed, <code>NULL</code> is returned, and a warning message is issued.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Blaette, Andreas (2018): "Using Data Packages to Ship Annotated
+  Corpora of Parliamentary Protocols: The GermaParl R Package". ISBN
+  979-10-95546-02-3.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>polmineR</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/use.html'>use</a></span>(<span class='st'>"GermaParl"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/corpus-class.html'>corpus</a></span>() <span class='co'># will include GERMAPARLMINI, sample corpus included in pkg</span>
+<span class='fu'><a href='download.html'>germaparl_download_corpus</a></span>() <span class='co'># takes time!</span>
+<span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/use.html'>use</a></span>(<span class='st'>"GermaParl"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/corpus-class.html'>corpus</a></span>() <span class='co'># will include GERMAPARL, full corpus</span>
+}</div></pre>
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#references">References</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
+    <h2>Author</h2>
+    <p>Andreas Blaette (andreas.blaette@uni-due.de)</p>
   </div>
 </div>
 

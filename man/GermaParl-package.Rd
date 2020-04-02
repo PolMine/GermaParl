@@ -4,9 +4,43 @@
 \name{GermaParl-package}
 \alias{GermaParl-package}
 \alias{GermaParl}
-\title{GermaParl R package.}
+\alias{germaparl_is_installed}
+\alias{germaparl_get_doi}
+\alias{germaparl_get_version}
+\title{GermaParl R Data Package.}
+\usage{
+germaparl_is_installed()
+
+germaparl_get_doi()
+
+germaparl_get_version()
+}
 \description{
-GermaParl R package.
+The package offers a convenient dissemination mechanism for the 
+GermaParl corpus that has been linguistically annotated and indexed (data format
+of the Corpus Workbench / CWB). After installation, only a small sample corpus
+will be included in the package. Use the \code{germaparl_download_corpus} function
+to download the full corpus. The package offers further functionality to amend 
+the corpus.
+}
+\details{
+Note that the R package and the corpus are two different kinds of research
+data: The package offers a mechanism to ship, easily install and augment the data.
+The indexed corpus is the actual data. Package and corpus have different version
+numbers and should be quoted in combination in publications. We recommend to follow 
+the instructions you see when calling \code{citation(package = "GermaParl")}.
+
+\code{germaparl_is_installed} is an auxiliary function that returns \code{TRUE}
+  if the corpus has been installed, and \code{FALSE} if not.
+
+\code{germaparl_get_doi} is an auxiliary function that extracts the DOI
+  (Document Object Identifier) from the registry file of the GERMAPARL corpus. If
+  the corpus has not yet been installed, \code{NULL} is returned and a warning 
+  will be issued.
+
+\code{germaparl_get_version} is an auxiliary function that extracts the 
+  version of the GERMAPARL corpus from the registry file. If the corpus has not
+  yet been installed, \code{NULL} is returned, and a warning message is issued.
 }
 \examples{
 \dontrun{
@@ -17,6 +51,11 @@ germaparl_download_corpus() # takes time!
 use("GermaParl")
 corpus() # will include GERMAPARL, full corpus
 }
+}
+\references{
+Blaette, Andreas (2018): "Using Data Packages to Ship Annotated
+  Corpora of Parliamentary Protocols: The GermaParl R Package". ISBN
+  979-10-95546-02-3.
 }
 \author{
 Andreas Blaette (andreas.blaette@uni-due.de)

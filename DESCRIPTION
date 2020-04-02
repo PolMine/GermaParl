@@ -3,7 +3,7 @@ Type: Package
 Title: GermaParl Data Package
 Version: 1.2.1.9003
 Date: 2020-04-01
-Authors@R: c(person("Andreas Blaette", "Developer", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de"))
+Authors@R: c(person(given = "Andreas", family = "Blaette", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de"))
 Depends:
     R (>= 3.5.0)
 Imports:
@@ -16,7 +16,8 @@ Imports:
   jsonlite
 Suggests:
   knitr,
-  rmarkdown
+  rmarkdown,
+  testthat
 LazyData: yes
 Description: Data package with the GermaParl Corpus of Parliamentary Debates (German Bundestag) 
   preprared in the PolMine Project. The package includes a small subset of the corpus as a demo

@@ -1,10 +1,6 @@
-pandoc: 2.1.3
-pkgdown: 1.1.0.9000
-pkgdown_sha: f317e4942d4cbadb377caed2ae0484b08d0f8d03
+pandoc: '2.6'
+pkgdown: 1.4.1
+pkgdown_sha: ~
 articles:
   GermaParl: GermaParl.html
-  MakingOfGermaParl: MakingOfGermaParl.html
-  Topicmodelling: Topicmodelling.html
-  UsingCAPAnnotation: UsingCAPAnnotation.html
-  UsingTopicAnnotation: UsingTopicAnnotation.html
 

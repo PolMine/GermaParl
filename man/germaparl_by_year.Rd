@@ -9,7 +9,8 @@
 germaparl_by_year
 }
 \description{
-Table with information on GermaParl by year
+Dataset with information on the corpus on a year-by-year basis. The code used
+to generate the data is reported in the examples section.
 }
 \examples{
 \dontrun{

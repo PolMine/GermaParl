@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Articles • GermaParl</title>
+<title>Download full GermaParl corpus. — germaparl_download_corpus • GermaParl</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,16 @@
 
 
 
-<meta property="og:title" content="Articles" />
+<meta property="og:title" content="Download full GermaParl corpus. — germaparl_download_corpus" />
+<meta property="og:description" content="The GermaParl R package includes only a small subset of the GermaParl corpus
+(GERMAPARLMINI). The full corpus is deposited with
+zenodo, a repository for research data. The
+germaparl_download_corpus function downloads a tarball with the
+indexed corpus from the zenodo repository and installs the corpus within the
+GermaParl package. When calling the function, a stable and fast internet
+connection will be useful as the size of the data amounts to ~1 GB which
+needs to be downloaded." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -54,7 +63,7 @@
   </head>
 
   <body>
-    <div class="container template-article-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -109,17 +118,70 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Articles</h1>
+    <h1>Download full GermaParl corpus.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/polmine/GermaParl/blob/master/R/download.R'><code>R/download.R</code></a></small>
+    <div class="hidden name"><code>download.Rd</code></div>
     </div>
 
-    <div class="section ">
-      <h3>All vignettes</h3>
-      <p class="section-desc"></p>
-
-      <ul>
-        <li><a href="GermaParl.html">GermaParl (v1.2.0)</a></li>
-      </ul>
+    <div class="ref-description">
+    <p>The GermaParl R package includes only a small subset of the GermaParl corpus
+(GERMAPARLMINI). The full corpus is deposited with
+<a href='https://zenodo.org/'>zenodo</a>, a repository for research data. The
+<code>germaparl_download_corpus</code> function downloads a tarball with the
+indexed corpus from the zenodo repository and installs the corpus within the
+GermaParl package. When calling the function, a stable and fast internet
+connection will be useful as the size of the data amounts to ~1 GB which
+needs to be downloaded.</p>
     </div>
+
+    <pre class="usage"><span class='fu'>germaparl_download_corpus</span>(
+  <span class='kw'>doi</span> <span class='kw'>=</span> <span class='st'>"https://doi.org/10.5281/zenodo.3735141"</span>,
+  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>doi</th>
+      <td><p>The DOI (Digital Object Identifier) of the GermaParl tarball at
+zenodo, presented as a hyperlink. Defaults to the latest version of 
+GermaParl.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>Whether to suppress progress messages, defaults to <code>FALSE</code>.</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A logical value, <code>TRUE</code> if the corpus has been installed
+  successfully.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>After downloading and installing the tarball with the CWB indexed
+  corpus, the registry file for the GERMAPARL corpus will be amended by
+  the DOI and the corpus version, to make this information for the citation
+  information that is provided when calling the function <code>citation</code>.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>germaparl_download_corpus</span>()
+<span class='fu'>use</span>(<span class='st'>"GermaParl"</span>)
+<span class='fu'>corpus</span>() <span class='co'># should include GERMAPARLMINI and GERMAPARL</span>
+<span class='fu'>count</span>(<span class='st'>"GERMAPARL"</span>, <span class='st'>"Daten"</span>) <span class='co'># an arbitrary test</span>
+}</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
+      <li><a href="#examples">Examples</a></li>
+    </ul>
+
   </div>
 </div>
 

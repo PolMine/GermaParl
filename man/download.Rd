@@ -10,7 +10,9 @@ germaparl_download_corpus(
 )
 }
 \arguments{
-\item{doi}{The DOI (Digital Object Identifier) of the GermaParl tarball at zenodo.}
+\item{doi}{The DOI (Digital Object Identifier) of the GermaParl tarball at
+zenodo, presented as a hyperlink. Defaults to the latest version of 
+GermaParl.}
 
 \item{quiet}{Whether to suppress progress messages, defaults to \code{FALSE}.}
 }
@@ -27,6 +29,12 @@ indexed corpus from the zenodo repository and installs the corpus within the
 GermaParl package. When calling the function, a stable and fast internet
 connection will be useful as the size of the data amounts to ~1 GB which
 needs to be downloaded.
+}
+\details{
+After downloading and installing the tarball with the CWB indexed
+  corpus, the registry file for the GERMAPARL corpus will be amended by
+  the DOI and the corpus version, to make this information for the citation
+  information that is provided when calling the function \code{citation}.
 }
 \examples{
 \dontrun{

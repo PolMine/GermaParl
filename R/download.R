@@ -9,13 +9,20 @@
 #' connection will be useful as the size of the data amounts to ~1 GB which
 #' needs to be downloaded.
 #' 
-#' @param doi The DOI (Digital Object Identifier) of the GermaParl tarball at zenodo.
+#' @details After downloading and installing the tarball with the CWB indexed
+#'   corpus, the registry file for the GERMAPARL corpus will be amended by
+#'   the DOI and the corpus version, to make this information for the citation
+#'   information that is provided when calling the function \code{citation}.
+#' 
+#' @param doi The DOI (Digital Object Identifier) of the GermaParl tarball at
+#'   zenodo, presented as a hyperlink. Defaults to the latest version of 
+#'   GermaParl.
 #' @param quiet Whether to suppress progress messages, defaults to \code{FALSE}.
 #' @export germaparl_download_corpus
 #' @return A logical value, \code{TRUE} if the corpus has been installed
 #'   successfully.
 #' @rdname download
-#' @importFrom cwbtools corpus_install
+#' @importFrom cwbtools corpus_install registry_file_parse registry_file_write
 #' @importFrom RCurl url.exists getURL
 #' @importFrom jsonlite fromJSON
 #' @examples
@@ -33,8 +40,21 @@ germaparl_download_corpus <- function(doi = "https://doi.org/10.5281/zenodo.3735
   }
   record_id <- gsub("^.*?10\\.5281/zenodo\\.(\\d+)$", "\\1", doi)
   zenodo_api_url <- sprintf("https://zenodo.org/api/records/%d", as.integer(record_id))
-  tarball <- fromJSON(getURL(zenodo_api_url))[["files"]][["links"]][["self"]]
+  zenodo_api_info <- fromJSON(getURL(zenodo_api_url))
+  tarball <- zenodo_api_info[["files"]][["links"]][["self"]]
   if (isFALSE(quiet)) message("... downloading tarball: ", tarball)
   corpus_install(pkg = "GermaParl", tarball = tarball, verbose = !quiet)
+  regdata <- registry_file_parse(
+    corpus = "GERMAPARL",
+    registry_dir = system.file(package = "GermaParl", "extdata", "cwb", "registry")
+  )
+  regdata[["properties"]][["doi"]] <- doi
+  regdata[["properties"]][["version"]] <- zenodo_api_info[["metadata"]][["version"]]
+  regdata[["home"]] <- system.file(package = "GermaParl", "extdata", "cwb", "indexed_corpora", "germaparl")
+  registry_file_write(
+    data = regdata,
+    corpus = "GERMAPARL", 
+    registry_dir = system.file(package = "GermaParl", "extdata", "cwb", "registry")
+  )
   return(TRUE)
 }

@@ -1,5 +1,21 @@
-#' GermaParl R package.
+#' GermaParl R Data Package.
 #' 
+#' The package offers a convenient dissemination mechanism for the 
+#' GermaParl corpus that has been linguistically annotated and indexed (data format
+#' of the Corpus Workbench / CWB). After installation, only a small sample corpus
+#' will be included in the package. Use the \code{germaparl_download_corpus} function
+#' to download the full corpus. The package offers further functionality to amend 
+#' the corpus.
+#' 
+#' Note that the R package and the corpus are two different kinds of research
+#' data: The package offers a mechanism to ship, easily install and augment the data.
+#' The indexed corpus is the actual data. Package and corpus have different version
+#' numbers and should be quoted in combination in publications. We recommend to follow 
+#' the instructions you see when calling \code{citation(package = "GermaParl")}.
+#' 
+#' @references Blaette, Andreas (2018): "Using Data Packages to Ship Annotated
+#'   Corpora of Parliamentary Protocols: The GermaParl R Package". ISBN
+#'   979-10-95546-02-3.
 #' @author Andreas Blaette (andreas.blaette@@uni-due.de)
 #' @keywords package
 #' @docType package
@@ -18,6 +34,54 @@
 NULL
 
 
+#' @details \code{germaparl_is_installed} is an auxiliary function that returns \code{TRUE}
+#'   if the corpus has been installed, and \code{FALSE} if not.
+#' @rdname GermaParl-package
+#' @export germaparl_is_installed
+germaparl_is_installed <- function(){
+  if (nchar(system.file(package = "GermaParl", "extdata", "cwb", "registry", "germaparl"))){
+    TRUE
+  } else {
+    FALSE
+  }
+}
+
+
+#' @details \code{germaparl_get_doi} is an auxiliary function that extracts the DOI
+#'   (Document Object Identifier) from the registry file of the GERMAPARL corpus. If
+#'   the corpus has not yet been installed, \code{NULL} is returned and a warning 
+#'   will be issued.
+#' @rdname GermaParl-package
+#' @export germaparl_get_doi
+germaparl_get_doi <- function(){
+  if (isFALSE(germaparl_is_installed())){
+    warning("Cannot get DOI for corpus GERMAPARL: Corpus has not yet been installed.")
+    return(NULL)
+  }
+  regdir <- system.file(package = "GermaParl", "extdata", "cwb", "registry")
+  regdata <- registry_file_parse(corpus = "GERMAPARL", registry_dir = regdir)
+  regdata[["properties"]][["doi"]]
+}
+
+
+#' @details \code{germaparl_get_version} is an auxiliary function that extracts the 
+#'   version of the GERMAPARL corpus from the registry file. If the corpus has not
+#'   yet been installed, \code{NULL} is returned, and a warning message is issued.
+#' @rdname GermaParl-package
+#' @export germaparl_get_version
+germaparl_get_version <- function(){
+  if (isFALSE(germaparl_is_installed())){
+    warning("Cannot get GERMAPARL version: Corpus has not yet been installed.")
+    return(NULL)
+  }
+  regdir <- system.file(package = "GermaParl", "extdata", "cwb", "registry")
+  regdata <- registry_file_parse(corpus = "GERMAPARL", registry_dir = regdir)
+  regdata[["properties"]][["version"]]
+}
+
+
+
+
 #' LDA Tuning Results
 #' 
 #' @name lda_tuning
@@ -28,6 +92,8 @@ NULL
 
 #' Table with information on GermaParl by year
 #' 
+#' Dataset with information on the corpus on a year-by-year basis. The code used
+#' to generate the data is reported in the examples section.
 #' @name germaparl_by_year
 #' @rdname germaparl_by_year
 #' @examples 

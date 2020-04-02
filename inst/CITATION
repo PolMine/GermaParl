@@ -1,0 +1,29 @@
+citHeader("To cite package 'GermaParl' in publications use:")
+
+citEntry(entry = "Manual",
+         title = "GermaParl R Data Package",
+         author = person("Andreas", "Blaette", email = "andreas.blaette@uni-due.de"),
+         year = "2020",
+         note = packageVersion("GermaParl"),
+         textVersion = sprintf(
+           "Blaette, Andreas (%s): GermaParl R Data Package. v%s.", 
+           format(Sys.time(), "%Y"),
+           packageVersion("GermaParl")
+         )
+)
+
+if (GermaParl::germaparl_is_installed()){
+  citEntry(entry = "Misc",
+         title = "GermaParl CWB Corpus",
+         author = person("Andreas", "Blaette", email = "andreas.blaette@uni-due.de"),
+         year = "2020",
+         note = GermaParl::germaparl_get_version(),
+         url = GermaParl::germaparl_get_doi(),
+         textVersion = sprintf(
+           "Blaette, Andreas (%s): GermaParl CWB Corpus (%s). %s", 
+           format(Sys.time(), "%Y"),
+           GermaParl::germaparl_get_version(),
+           GermaParl::germaparl_get_doi()
+         )
+  )
+}
