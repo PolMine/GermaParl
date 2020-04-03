@@ -45,14 +45,15 @@ germaparl_add_s_attribute_speech <- function(mc = 1L, progress = TRUE){
   setnames(dt, old = c("V1", "V2"), new = c("cpos_left", "cpos_right"))
   dt[, "speech" := do.call(c, Map(rep, names(speeches), sapply(speeches@objects, function(x) nrow(x@cpos))))]
   setorderv(dt, cols = "cpos_left", order = 1L)
+  regdir <- system.file(package = "GermaParl", "extdata", "cwb", "registry")
   s_attribute_encode(
     values = dt[["speech"]], # is still UTF-8, recoding done by s_attribute_encode
-    data_dir = registry_file_parse(corpus = "GERMAPARL")[["home"]],
+    data_dir = system.file(package = "GermaParl", "extdata", "cwb", "indexed_corpora", "germaparl"),
     s_attribute = "speech",
     corpus = "GERMAPARL",
     region_matrix = as.matrix(dt[, c("cpos_left", "cpos_right")]),
     registry_dir = system.file(package = "GermaParl", "extdata", "cwb", "registry"),
-    encoding = registry_file_parse(corpus = "GERMAPARL")[["properties"]][["charset"]],
+    encoding = registry_file_parse(corpus = "GERMAPARL", registry_dir = regdir)[["properties"]][["charset"]],
     method = "R",
     verbose = TRUE,
     delete = FALSE
