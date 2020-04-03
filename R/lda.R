@@ -44,7 +44,7 @@ germaparl_download_lda <- function(k = c(100L, 150L, 175L, 200L, 225L, 250L, 275
 #' 
 #' @param n Number of topics to write to corpus
 #' @importFrom polmineR decode partition s_attributes
-#' @importFrom data.table setkeyv := setcolorder
+#' @importFrom data.table setkeyv := setcolorder as.data.table
 #' @importFrom topicmodels topics
 #' @importFrom cwbtools s_attribute_encode
 #' @export germaparl_encode_lda_topics
@@ -56,10 +56,8 @@ germaparl_download_lda <- function(k = c(100L, 150L, 175L, 200L, 225L, 250L, 275
 #' @rdname germaparl_topics
 germaparl_encode_lda_topics <- function(k = 200, n = 5){
   
-  germaparl_data_dir <- registry_file_parse(
-    corpus = "GERMAPARL",
-    registry_dir = system.file(package = "GermaParl", "extdata", "cwb", "registry")
-    )[["home"]]
+  regdir <- system.file(package = "GermaParl", "extdata", "cwb", "registry")
+  germaparl_data_dir <- system.file(package = "GermaParl", "extdata", "cwb", "indexed_corpora", "germaparl")
   corpus_charset <- registry_file_parse(corpus = "GERMAPARL")[["properties"]][["charset"]]
   
   model <- germaparl_load_topicmodel(k = k)
@@ -75,18 +73,23 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5){
   message("... decoding s-attribute speech")
   if (!"speech" %in% s_attributes("GERMAPARL")){
     stop("The s-attributes 'speech' is not yet present.",
-         "Use the function germaparl_add_s_attribute_speech to generate it.")
+         "Use the function germaparl_add_s_attribute_speech() to generate it.")
   }
-  cpos_dt <- decode("GERMAPARL", s_attribute = "speech")
-  setkeyv(cpos_dt, "speech")
-  
-  
+  cpos_df <- RcppCWB::s_attribute_decode(
+    "GERMAPARL",
+    data_dir = germaparl_data_dir,
+    registry = regdir,
+    encoding = corpus_charset,
+    s_attribute = "speech",
+    method = "R"
+  )
+  cpos_dt <- as.data.table(cpos_df)
+  setnames(cpos_dt, old = "value", new = "speech")
+
   ## Merge tables
-  cpos_dt2 <- topic_dt[cpos_dt]
+  cpos_dt2 <- topic_dt[cpos_dt, on = "speech"]
   setorderv(cpos_dt2, cols = "cpos_left", order = 1L)
-  cpos_dt2[["speech"]] <- NULL
-  cpos_dt2[["id"]] <- NULL
-  cpos_dt2[, topics := ifelse(is.na(topics), "||", topics)]
+  cpos_dt2[, "speech" := NULL][, "topics" := ifelse(is.na(topics), "||", topics)]
   setcolorder(cpos_dt2, c("cpos_left", "cpos_right", "topics"))
   
   # some sanity tests
@@ -105,7 +108,7 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5){
     s_attribute = "topics",
     corpus = "GERMAPARL",
     region_matrix = as.matrix(cpos_dt2[, c("cpos_left", "cpos_right")]),
-    registry_dir = system.file(package = "GermaParl", "extdata", "cwb", "registry"),
+    registry_dir = regdir,
     encoding = corpus_charset,
     method = "R",
     verbose = TRUE
@@ -156,6 +159,8 @@ germaparl_load_topicmodel <- function(k, verbose = TRUE){
 #' }
 #' @rdname germaparl_topics
 germaparl_get_speeches_for_topic <- function(n){
-  P <- partition("GERMAPARL", topics = sprintf("\\|%d\\|", n), regex = TRUE)
-  as.speeches(P, s_attribute_date = "date", s_attribute_name = "speaker")
+  # regex <- sprintf("\\|%d\\|", n)
+  # sc <- subset("GERMAPARL", grep(regex, topics))
+  p <- partition("GERMAPARL", topics = sprintf("\\|%d\\|", n), regex = TRUE)
+  as.speeches(p, s_attribute_date = "date", s_attribute_name = "speaker")
 }

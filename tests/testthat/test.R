@@ -24,9 +24,14 @@ test_that(
 test_that(
   "add s-attribute speech",
   {
+    skip_on_cran()
+    # Sys.setenv(CORPUS_REGISTRY = "")
     library(polmineR)
     use("GermaParl")
+    
     germaparl_add_s_attribute_speech()
+    
+    RcppCWB::cl_delete_corpus(corpus = "GERMAPARL", registry = registry())
     use("GermaParl")
     
     s_attrs <- s_attributes("GERMAPARL")
@@ -34,7 +39,19 @@ test_that(
     
     s_attrs <- s_attributes("GERMAPARL", "speech")
     expect_identical(length(s_attrs), 162023L)
-    
-  }
-)
 
+    dtm <- as.DocumentTermMatrix("GERMAPARL", p_attribute = "word", s_attribute = "speech")
+    expect_equal(sum(slam::row_sums(dtm)), size("GERMAPARL"))
+    expect_identical(dim(dtm)[1], length(s_attributes("GERMAPARL", "speech", unique = TRUE)))
+    
+    germaparl_download_lda(k = 250L)
+    lda <- germaparl_load_topicmodel(k = 250)
+    germaparl_encode_lda_topics(k = 250)
+    
+    RcppCWB::cl_delete_corpus(corpus = "GERMAPARL", registry = registry())
+    use("GermaParl")
+    
+    t <- s_attributes("GERMAPARL", "topics")
+    # x <- subset("GERMAPARL", grep("133", topics)) %>% 
+    #   as.speeches(s_attribute_name = "speaker")
+})

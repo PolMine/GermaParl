@@ -17,7 +17,8 @@ Imports:
 Suggests:
   knitr,
   rmarkdown,
-  testthat
+  testthat,
+  RcppCWB
 LazyData: yes
 Description: Data package with the GermaParl Corpus of Parliamentary Debates (German Bundestag) 
   preprared in the PolMine Project. The package includes a small subset of the corpus as a demo

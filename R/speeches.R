@@ -25,15 +25,16 @@
 #' @export germaparl_add_s_attribute_speech
 #' @examples 
 #' \dontrun{
-#' germaparl_download_corpus()
+#' if (isFALSE(germaparl_is_installed())) germaparl_download_corpus()
 #' use("GermaParl")
 #' germaparl_add_s_attribute_speech()
 #' 
 #' library(polmineR)
+#' RcppCWB::cl_delete_corpus("GERMAPARL", registry = registry())
 #' use("GermaParl")
 #' s_attributes("GERMAPARL")
 #' s_attributes("GERMAPARL", "speech")
-#' size("GERMAPARL", s_attribute = "speech")
+#' sizes <- size("GERMAPARL", s_attribute = "speech")
 #' dtm <- as.DocumentTermMatrix("GERMAPARL", p_attribute = "word", s_attribute = "speech")
 #' } 
 germaparl_add_s_attribute_speech <- function(mc = 1L, progress = TRUE){
