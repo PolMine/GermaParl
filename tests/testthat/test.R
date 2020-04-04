@@ -1,14 +1,10 @@
 testthat::context("download")
 
-test_that(
-  "corpus not available initially",
-  {
-    expect_identical(germaparl_is_installed(), FALSE)
-  }
-)
 
+if (Sys.getenv("NOT_CRAN") != "true"){
+  germaparl_download_corpus()
+}
 
-germaparl_download_corpus()
 
 test_that(
   "availability of corpus after installation",
