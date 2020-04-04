@@ -5,31 +5,33 @@
 [![Travis-CI Build
 Status](https://travis-ci.org/PolMine/GermaParl.svg?branch=zenodo)](https://travis-ci.org/PolMine/GermaParl)
 [![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/PolMine/GermaParl?branch=zenodo&svg=true)](https://ci.appveyor.com/project/PolMine/zenodo)
+Status](https://ci.appveyor.com/api/projects/status/github/PolMine/GermaParl?branch=zenodo&svg=true)](https://ci.appveyor.com/project/PolMine/germaparl)
 [![codecov](https://codecov.io/gh/PolMine/GermaParl/branch/zenodo/graph/badge.svg)](https://codecov.io/gh/PolMine/GermaParl/branch/zenodo)
 
 # The GermaParl R Data Package <img src="https://raw.githubusercontent.com/PolMine/GermaParl/master/inst/sticker/hexsticker.png" align="right" />
 
-### About
+## About
 
 GermaParl is a R data package that includes:
 
-  - a small subset of the linguistically annotated and CWB indexed
+  - A small subset of the linguistically annotated and CWB-indexed
     GermaParl corpus of plenary protocols of the German Bundestag by
     default;
-  - functionality to load the the full CWB version of GermaParl from
-    another data source, and
-  - supplemantary functionality to work with topic models and
-    annotations.
+  - Functionality to load the the full CWB version of GermaParl from the
+    Open Science repository [Zenodo](https://zenodo.org/), and
+  - Additional functionality to work with topic models.
 
-The GitHub repository
+The companion GitHub repository
 [GermaParlTEI](https://github.com/PolMine/GermaParlTEI) offers the
-TEI-XML versions of the corpus. The GermaParl data package makes
-accessible an indexed version of the data. It has been imported into the
-[Corpus Workbench (CWB)](http://cwb.sourceforge.net/). Using the CWB
-keeps the data size modest, ensures performance, exposes the syntax of
-the Corpus Query Processor (CQP), and generates opportunites to combine
-quantitative and qualitative approaches to analysing text.
+TEI-XML versions of the corpus. The GermaParl data package is designed
+to provide easy access to a linguistically annotated and indexed version
+of the data.
+
+More specifically, GermaParl has been imported into the [Corpus
+Workbench (CWB)](http://cwb.sourceforge.net/). Using the CWB keeps the
+data size modest, ensures performance, exposes the syntax of the Corpus
+Query Processor (CQP), and generates opportunites to combine
+quantitative and qualitative approaches to analyzing text.
 
 The GermaParl package is designed to be used with
 [polmineR](https://cran.r-project.org/package=polmineR) as a toolset for
@@ -39,32 +41,26 @@ as going back to the original full-text). Using polmineR, you can easily
 generate data structures (such as term-document matrices) that are
 required as input for advanced statistical procedures.
 
-### Installation
+## Installation
 
-#### Fast Track Installation
+### CRAN Release
 
-The GermaParl package can be installed from the ‘drat’ repository at
-GitHub presence of the PolMine
-Project:
+The GermaParl package can be installed from CRAN:
 
 ``` r
-if (!"drat" %in% rownames(available.packages())) install.packages("drat")
-drat::addRepo("polmine") # lowercase necessary in this case
 install.packages("GermaParl")
 ```
 
-#### Installing the development version
+### Development Version
 
 The development version of the GermaParl package may include
 consolidated or new functionality, and improved documentation. To
-install the development version of GermaParl package (from GitHub), you
-need to install the cwbtools-package first, a package which is not yet
-available at
-CRAN.
+install the development version of GermaParl package from GitHub,
+proceed as
+follows.
 
 ``` r
 if (!"devtools" %in% rownames(available.packages())) install.packages("devtools")
-devtools::install_github("PolMine/cwbtools", ref = "dev")
 devtools::install_github("PolMine/GermaParl", ref = "dev")
 ```
 
@@ -72,29 +68,35 @@ Please note that on Windows systems, it may be necessary to install
 [Rtools](https://cran.r-project.org/bin/windows/Rtools/) to be able to
 use the full functionality of the devtools package.
 
-#### Download and install the full corpus
+### Download and install the GermaParl corpus
 
 After the initial installation, the package only includes a small subset
-of the GermaParl corpus. The subset serves as sample data and for
-running package tests. To download the full corpus, use a function to
-download the full corpus from an external webspace (amazon AWS, for the
-time being):
+of the GermaParl corpus (“GERMAPARLMINI”). The subset serves as sample
+data and is used for running package tests. To download the full corpus,
+use a function to download the full corpus from the Open Science
+repository [Zenodo](https://about.zenodo.org/):
 
 ``` r
 library(GermaParl)
 germaparl_download_corpus()
 ```
 
+Note that the corpus will be stored within the directory structure of
+the GermaParl package. Whenever you update the GermaParl R package, it
+will be necessary to download the corpus anew.
+
 To avoid bloating the data that needs to be downloaded - it is somewhat
 large already -, further annotation can be generated on demand. See the
 package documentation to learn about the functionality that is
 available.
 
-### Using GermaParl
+## Using GermaParl
 
-The CWB version of GermaParl can be used with any tool for working with
-CWB indexed corora. The CQP command line tool would be a classic choice.
-The dissemination mechanism is optimized to work with the
+The CWB indexed version of GermaParl can be used with any tool for
+working with CWB indexed corpora (such as
+[CQP](http://cwb.sourceforge.net/) or
+[CQPweb](http://cwb.sourceforge.net/cqpweb.php)). The GermaParl R
+package is optimized to work with the
 [polmineR](https://github.com/PolMine/polmineR) R package. See the
 documentation for instructions how to install polmineR.
 
@@ -109,43 +111,60 @@ corpus() # to see whether the GERMAPARL corpus is listed
 size("GERMAPARL") # to learn about the size of the corpus
 ```
 
-### License
+## License
 
-The data comes with a CC BY-NC-SA 4.0 license. That means:
+To keep things simple, both the GermaParl R package and the GermaParl
+corpus have a [CC
+BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license.
+That means:
 
 **BY** - Attribution — You must give appropriate credit, provide a link
 to the license, and indicate if changes were made. You may do so in any
 reasonable manner, but not in any way that suggests the licensor
 endorses you or your use.
 
-**NC** - NonCommercial — You may not use the material for commercial
-purposes.
-
 **SA** - ShareAlike — If you remix, transform, or build upon the
 material, you must distribute your contributions under the same license
 as the original.
 
-See the [CC Attribution-NonCommercial-ShareAlike 4.0 Unported
-License](https://creativecommons.org/licenses/by-nc-sa/4.0/) for further
+See the [CC Attribution-ShareAlike 4.0 Unported
+License](https://creativecommons.org/licenses/by-sa/4.0/) for further
 explanations.
 
-### Quoting GermaParl
+## Quoting GermaParl
 
-If you work with GermaParl package, please include the following
-reference in your bibliography to attribute the language resource:
+The ‘GermaParl’ R package and the ‘GermaParl’ corpus are two different
+pieces of research data, with different version numbers, document object
+identifiers (DOIs) and recommendations for quotation. If you use
+GermaParl for your research, maximum transparency on the tools you used
+is attained, when both the package and the corpus is quoted in your
+publication. To ensure the reproducibility of your research, it is more
+important to refer to and specify the corpus (including version, DOI)
+you used.
 
-*Blaette, Andreas* (2020): GermaParl. R Data Package for the GermaParl
-Corpus of Plenary Protocols of the German Bundestag (v1.2.1.9003).
-Available from: <https://doi.org/10.5281/zenodo.1312551>.
+Blaette, Andreas (2020): GermaParl R Data Package. v1.2.1.9003.
+<https://CRAN.R-project.org/package=GermaParl>
 
-### Feedback
+Blaette, Andreas (2020): GermaParl CWB Corpus (v1.0.5).
+<https://doi.org/10.5281/zenodo.3735141>
 
-We hope that GermaParl in combination with polmineR will inspire your
-research and make it more productive. We would be glad to learn what you
-do with the data, and make your blog entries or publications visible
-here.
+NOTE: In an R session, you can get this recommendation how to quote
+GermaParl by calling the usual `citation()` function:
+
+``` r
+citation("GermaParl")
+```
+
+## Feedback
+
+We hope that GermaParl (and polmineR) will inspire your research and
+make it more productive. We would be glad to learn what you do with the
+data, and make your blog entries or publications visible here.
 
 And please do not forget to bring issues that you come across to our
-attention. Improving data quality is an important concern of the PolMine
-Project, this is why the data is versioned. The resource will benefit
-from its community of users and your feedback\!
+attention. We cordially invite you to use the [GitHub issues of this
+package](https://github.com/PolMine/GermaParl/issues) to report bugs,
+shortcomings and to suggest enhancements. Improving data quality is an
+important concern of the PolMine Project, this is why the data is
+versioned. The resource will benefit from its community of users and
+your feedback\!

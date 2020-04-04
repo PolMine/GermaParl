@@ -5,7 +5,6 @@
 \alias{topics}
 \alias{germaparl_encode_lda_topics}
 \alias{germaparl_load_topicmodel}
-\alias{germaparl_get_speeches_for_topic}
 \title{Use topicmodels prepared for GermaParl.}
 \usage{
 germaparl_download_lda(
@@ -17,15 +16,13 @@ germaparl_download_lda(
 germaparl_encode_lda_topics(k = 200, n = 5)
 
 germaparl_load_topicmodel(k, verbose = TRUE)
-
-germaparl_get_speeches_for_topic(n)
 }
 \arguments{
 \item{k}{The number of topics of the topicmodel.}
 
-\item{rds_file}{filename of the RData file}
+\item{rds_file}{Filename of the RDS file}
 
-\item{webdir}{The web location.}
+\item{webdir}{The web location (amazon S3).}
 
 \item{n}{Number of topics to write to corpus}
 
@@ -36,8 +33,8 @@ A set of LDA topicmodels is deposited at a Amazon S3 webspace, for a number
 of topics between 100 and 500.
 }
 \details{
-The function \code{germaparl_download_lda} to download the
-  *.rds-file. It will be stored in the \code{extdata/topicmodels/}
+The function \code{germaparl_download_lda} will download an
+  rds-file that will be stored in the \code{extdata/topicmodels/}
   subdirectory of the installed GermaParl package.
 
 \code{germaparl_encode_lda_topics} will add a new s-attributes
@@ -50,34 +47,27 @@ The function \code{germaparl_download_lda} to download the
   The function will return a \code{LDA_Gibbs} topicmodel, if the topicmodel
   for \code{k} is present; \code{NULL} if the topicmodel has not yet been
   downloaded.
-
-@code{germaparl_get_speeches_for_topic} will get a bundle with
-  Speeches for Topic.
 }
 \examples{
-topicmodel_dir <- system.file(package = "GermaParl", "extdata", "topicmodels")
-lda_files <- Sys.glob(paths = sprintf("\%s/germaparl_lda_speeches_*.rds", topicmodel_dir))
-if (length(lda_files) > 0  && requireNamespace("topicmodels")){
-  lda <- readRDS(lda_files[1])
-  lda_terms <- terms(lda, 50)
+\dontrun{
+germaparl_download_lda(k = 250)
+lda <- germaparl_load_topicmodel(k = 250)
+lda_terms <- topicmodels::terms(lda, 50)
+
+if ("speech" in s_attributes("GERMAPARL")){
+  germaparl_add_s_attribute_speech()
+}
+germaparl_encode_lda_topics(k = 250, n = 5)
+
+library(polmineR)
+use("GermaParl")
+s_attributes("GERMAPARL")
+sc <- corpus("GERMAPARL") \%>\%
+  subset(grep("\\\\|133\\\\|", topics))
+b <- as.speeches(sc, s_attribute_name = "speaker")
+length(b)
 }
 \dontrun{
 germaparl_encode_lda_topics(k = 250, n = 3)
-}
-\dontrun{
-k <- 250
-model <- germaparl_load_topicmodel(k = k)
-T <- topicmodels::terms(model, k)
-topic <- 181 # topic nuclear energy
-topic <- 133 # foreigners law
-topic <- 65 # right-wing extremism
-
-PB <- germaparl_get_speeches_for_topic(topic)
-for (i in 1L:length(PB)) {
-  fulltext <- read(PB[[i]])
-  fulltext <- highlight(fulltext, list(yellow = T[1:100,topic]))
-  print(fulltext)
-  if (readline() == "q") stop()
-}
 }
 }

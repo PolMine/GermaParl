@@ -16,7 +16,7 @@
 #' @references Blaette, Andreas (2018): "Using Data Packages to Ship Annotated
 #'   Corpora of Parliamentary Protocols: The GermaParl R Package". ISBN
 #'   979-10-95546-02-3.
-#' @author Andreas Blaette (andreas.blaette@@uni-due.de)
+#' @author Andreas Blaette \email{andreas.blaette@@uni-due.de}
 #' @keywords package
 #' @docType package
 #' @aliases GermaParl GermaParl-package
@@ -27,7 +27,7 @@
 #' library(polmineR)
 #' use("GermaParl")
 #' corpus() # will include GERMAPARLMINI, sample corpus included in pkg
-#' germaparl_download_corpus() # takes time!
+#' if (!germaparl_is_installed()) germaparl_download_corpus() # ~1 GB, takes time ...
 #' use("GermaParl")
 #' corpus() # will include GERMAPARL, full corpus
 #' }
@@ -38,6 +38,8 @@ NULL
 #'   if the corpus has been installed, and \code{FALSE} if not.
 #' @rdname GermaParl-package
 #' @export germaparl_is_installed
+#' @examples 
+#' germaparl_is_installed() # to check whether GERMAPARL has been downloaded
 germaparl_is_installed <- function(){
   if (nchar(system.file(package = "GermaParl", "extdata", "cwb", "registry", "germaparl"))){
     TRUE
@@ -53,6 +55,8 @@ germaparl_is_installed <- function(){
 #'   will be issued.
 #' @rdname GermaParl-package
 #' @export germaparl_get_doi
+#' @examples
+#' germaparl_get_doi() # get 'document object identifier' (DOI) of GERMAPARL corpus
 germaparl_get_doi <- function(){
   if (isFALSE(germaparl_is_installed())){
     warning("Cannot get DOI for corpus GERMAPARL: Corpus has not yet been installed.")
@@ -69,6 +73,8 @@ germaparl_get_doi <- function(){
 #'   yet been installed, \code{NULL} is returned, and a warning message is issued.
 #' @rdname GermaParl-package
 #' @export germaparl_get_version
+#' @examples
+#' germaparl_get_version
 germaparl_get_version <- function(){
   if (isFALSE(germaparl_is_installed())){
     warning("Cannot get GERMAPARL version: Corpus has not yet been installed.")
@@ -80,9 +86,13 @@ germaparl_get_version <- function(){
 }
 
 
-
-
 #' LDA Tuning Results
+#' 
+#' The R package \href{https://CRAN.R-project.org/package=ldatuning}{ldatuning}
+#' has been used to get guidance on the optimal number of topics when fitting an
+#' LDA topic model on the GermaParl corpus. Using around 250 topics is a good
+#' choice. The data object \code{lda_tuning} reports the different metrics of the
+#' ldatuning package.
 #' 
 #' @name lda_tuning
 #' @rdname lda_tuning
@@ -92,8 +102,12 @@ germaparl_get_version <- function(){
 
 #' Table with information on GermaParl by year
 #' 
-#' Dataset with information on the corpus on a year-by-year basis. The code used
-#' to generate the data is reported in the examples section.
+#' A dataset with information on the corpus on a year-by-year basis is included
+#' in the package to be included in the data report of the package vignette. The 
+#' code used to generate the data is reported in the examples section.
+#' 
+#' Note that the table is based on v1.0.5 of the corpus.
+#' 
 #' @name germaparl_by_year
 #' @rdname germaparl_by_year
 #' @examples 
@@ -123,6 +137,12 @@ germaparl_get_version <- function(){
 
 
 #' Table with information on GermaParl by legislative period
+#' 
+#' A dataset with information on the corpus on a year-by-year basis is included
+#' in the package to be included in the data report of the package vignette. The 
+#' code used to generate the data is reported in the examples section.
+#' 
+#' Note that the table is based on v1.0.5 of the corpus.
 #' 
 #' @name germaparl_by_lp
 #' @rdname germaparl_by_lp

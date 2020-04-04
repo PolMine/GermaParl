@@ -27,7 +27,7 @@
 #' @importFrom jsonlite fromJSON
 #' @examples
 #' \dontrun{
-#' germaparl_download_corpus()
+#' if (!germaparl_is_installed()) germaparl_download_corpus()
 #' use("GermaParl")
 #' corpus() # should include GERMAPARLMINI and GERMAPARL
 #' count("GERMAPARL", "Daten") # an arbitrary test

@@ -47,10 +47,13 @@ the instructions you see when calling \code{citation(package = "GermaParl")}.
 library(polmineR)
 use("GermaParl")
 corpus() # will include GERMAPARLMINI, sample corpus included in pkg
-germaparl_download_corpus() # takes time!
+if (!germaparl_is_installed()) germaparl_download_corpus() # ~1 GB, takes time ...
 use("GermaParl")
 corpus() # will include GERMAPARL, full corpus
 }
+germaparl_is_installed() # to check whether GERMAPARL has been downloaded
+germaparl_get_doi() # get 'document object identifier' (DOI) of GERMAPARL corpus
+germaparl_get_version
 }
 \references{
 Blaette, Andreas (2018): "Using Data Packages to Ship Annotated
@@ -58,6 +61,6 @@ Blaette, Andreas (2018): "Using Data Packages to Ship Annotated
   979-10-95546-02-3.
 }
 \author{
-Andreas Blaette (andreas.blaette@uni-due.de)
+Andreas Blaette \email{andreas.blaette@uni-due.de}
 }
 \keyword{package}

@@ -1,14 +1,23 @@
-citHeader("To cite package 'GermaParl' in publications use:")
+citHeader(
+    "The 'GermaParl' R package and the 'GermaParl' corpus are two different pieces of research data, ",
+    "with different version numbers, document object identifiers (DOIs) and recommendations for quotation. ",
+    "If you use GermaParl for your research, maximum transparency on the tools you used is attained, ",
+    "when both the package and the corpus is quoted in your publication. To ensure the reproducibility",
+    "of your research, it is more important to refer to and specify the corpus (including version, DOI) ",
+    "you used."
+)
 
 citEntry(entry = "Manual",
-         title = "GermaParl R Data Package",
+         title = "GermaParl R Data Package ",
          author = person("Andreas", "Blaette", email = "andreas.blaette@uni-due.de"),
-         year = "2020",
+         year = format(as.Date(packageDescription("GermaParl")[["Date"]]), "%Y"),
          note = packageVersion("GermaParl"),
+         url = "https://CRAN.R-project.org/package=GermaParl",
          textVersion = sprintf(
-           "Blaette, Andreas (%s): GermaParl R Data Package. v%s.", 
-           format(Sys.time(), "%Y"),
-           packageVersion("GermaParl")
+           "Blaette, Andreas (%s): GermaParl R Data Package. v%s. %s", 
+           format(as.Date(packageDescription("GermaParl")[["Date"]]), "%Y"),
+           packageVersion("GermaParl"),
+           "https://CRAN.R-project.org/package=GermaParl"
          )
 )
 

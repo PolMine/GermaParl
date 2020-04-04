@@ -22,6 +22,7 @@
 #' @importFrom polmineR as.speeches use
 #' @importFrom utils download.file
 #' @importFrom methods slot
+#' @importFrom RcppCWB cqp_is_initialized cqp_get_registry
 #' @export germaparl_add_s_attribute_speech
 #' @examples 
 #' \dontrun{
@@ -47,6 +48,7 @@ germaparl_add_s_attribute_speech <- function(mc = 1L, progress = TRUE){
   dt[, "speech" := do.call(c, Map(rep, names(speeches), sapply(speeches@objects, function(x) nrow(x@cpos))))]
   setorderv(dt, cols = "cpos_left", order = 1L)
   regdir <- system.file(package = "GermaParl", "extdata", "cwb", "registry")
+  
   s_attribute_encode(
     values = dt[["speech"]], # is still UTF-8, recoding done by s_attribute_encode
     data_dir = system.file(package = "GermaParl", "extdata", "cwb", "indexed_corpora", "germaparl"),
@@ -59,5 +61,8 @@ germaparl_add_s_attribute_speech <- function(mc = 1L, progress = TRUE){
     verbose = TRUE,
     delete = FALSE
   )
+  use("GermaParl", verbose = TRUE)
+  RcppCWB::cl_delete_corpus("GERMAPARL")
+  use("GermaParl", verbose = TRUE)
   invisible(dt)
 }

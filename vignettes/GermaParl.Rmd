@@ -23,7 +23,7 @@ The digital availability of plenary protocols is excellent and limited at the sa
 
 GermaParl is made available in two ways:
 
-- The base format of the corpus is a XMLification of the raw data (i.e. the original protocols) that is modelled on the standards of the [Text Encoding Initiative (TEI)](http://www.tei-c.org/index.xml). Releases of the TEI format of GermaParl  are available via the [GermaParlTEI repository at GitHub](https://github.com/PolMine/GermaParlTEI).  It results from an automized, fully reproducible pipeline, i.e. raw protocols (pdf and txt file format) have been turned into an XML/TEI-based standard.
+- The base format of the corpus is a XMLification of the raw data (i.e. the original protocols) that is modelled on the standards of the [Text Encoding Initiative (TEI)](http://www.tei-c.org/index.xml). Releases of the TEI format of GermaParl  are available via the [GermaParlTEI repository at GitHub](https://github.com/PolMine/GermaParlTEI).  It results from an automatized, fully reproducible pipeline, i.e. raw protocols (pdf and txt file format) have been turned into an XML/TEI-based standard.
 
 - A linguistically annotated, indexed and consolidated version of the corpus is included in the GermaParl R data package documented with this vignette. XML/TEI files serve the point of departure, but the version emanates from (a) performing some standard Natural Language Processing (NLP) tasks (such as tokenization, lemmatization, part-of-speech annotation); (b) importing the linguistically annotated  data into the [Corpus Workbench (CWB)](http://cwb.sourceforge.net/) and (c) consolidating the data in a set of postprocessing tasks to remove known errors. The steps of the annotation/indexing/consolidation workflow are documented, ensuring full reproducibility, with the vignette "GermaParl - From XML to CWB" included in this R data package.
 
@@ -40,7 +40,7 @@ The preparation of the TEI version of GermaParl implements the following workflo
 
 - __Consolidation__: Consolidating speaker names and enriching documents.
 
-The preprocessing step is not as trivial as it might seem. Older plain text files are offered by the German Bundestag in all kinds of encodings that are have come out of use. The pdf documents have a two-column layout that is difficult to handle. Experience to handle these issues is captured by the respective functionality that is included in the R package [ctk](https://www.github.com/PolMine/ctk). For handlung the two-column layout of pdf documents, the R package [trickypdf](https://github.com/PolMine/trickypdf) has been developed.
+The preprocessing step is not as trivial as it might seem. Older plain text files are offered by the German Bundestag in all kinds of encodings that are have come out of use. The pdf documents have a two-column layout that is difficult to handle. Experience to handle these issues is captured by the respective functionality that is included in the R package [ctk](https://www.github.com/PolMine/ctk). For handling the two-column layout of pdf documents, the R package [trickypdf](https://github.com/PolMine/trickypdf) has been developed.
 
 The essential instrument for the XMLification is a set of regular expressions to extract relevant metadata (such as legislative period, session number or date), to find the beginning and the end of a debate, the call upon the speakers, and the beginning and end of agenda items. The matches are used to generate the structural annotation of parliamentary speech in the XML document.
 
@@ -59,7 +59,7 @@ The code for corpus preparation is wrapped in a R package, and upon preparing a 
 
 The XML/TEI version of GermaParl is taken through a pipeline of standard Natural Language Processing (NLP) tasks. Starting with version 1.1.0, Stanford CoreNLP is used for tokenization and part-of-speech (POS) annotation. To add lemmas to the corpus, the  [TreeTagger](http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/) is used. A full (technical) documentation of the linguistic annotation of the corpus is included in the vignette "GermaParl - From XML to CWB" and not reproduced here.
 
-Note that the TreeTagger outpus #unknown# if it cannot successfully lemmatize a wordform. See the tables in the annex to learn about the unknown ratio in the corpus. 
+Note that the TreeTagger outputs #unknown# if it cannot successfully lemmatize a wordform. See the tables in the annex to learn about the unknown ratio in the corpus. 
 
 Moving to Stanford CoreNLP as the base annotation tool will be the basis for adding further annotation layers to the corpus (such as an annotation of sentences, or named entities) in the future. 
 
@@ -127,7 +127,7 @@ if ("GERMAPARL" %in% corpus()[["corpus"]]) size("GERMAPARL") # to learn about th
 
 #### A very brief tutorial
 
-The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as [CQPweb](http://cwb.sourceforge.net/cqpweb.php)). However, most technical decisions during corpus preparation had in mind to optimise using the GermaParl corpus in combination with the polmineR package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands. Note that in the following examples, we will use GERMAPARLMINI to illustrate functions, as the full GERMAPARL corpus will only be available after the full installation of the corpus.
+The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as [CQPweb](http://cwb.sourceforge.net/cqpweb.php)). However, most technical decisions during corpus preparation had in mind to optimize using the GermaParl corpus in combination with the polmineR package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands. Note that in the following examples, we will use GERMAPARLMINI to illustrate functions, as the full GERMAPARL corpus will only be available after the full installation of the corpus.
 
 First, you may want to learn about the p-attributes (positional attributes), and s-attributes (structural attributes) that are available.
 
@@ -224,7 +224,7 @@ The resource is under active development. Apart from improving data quality and 
 
 * There are many scenarios for using the corpus that require an ability to create classification-based subcorpora. Writing the results of an optimized topicmodel to the corpus as structural attributes is being prepared, and will relieve users from the cumbersome task of running multiple topicmodels. Given the size of the corpus, every run to train a topicmodel takes considerably time, and multiple models need to be trained to learn about the optimal number of topics.
 
-* Perspectively, classification based on a supervised learning approach will be superior to unsupervised learning. In a CLARIN-funded project, training data has been prepared to obtain the basis for a classification of debates according to a (somewhat expanded) classification scheme of the Comparative Agendas Project (CAP). An annotation of the hand-coded text passages will be included in the corpus.
+* Classification based on a supervised learning approach will be superior to unsupervised learning. In a CLARIN-funded project, training data has been prepared to obtain the basis for a classification of debates according to a (somewhat expanded) classification scheme of the Comparative Agendas Project (CAP). An annotation of the hand-coded text passages will be included in the corpus.
 
 Hopefully, GermaParl will make qualitative and quantitative research with German parliamentary debates more productive. A final note on user feedback: Improving data quality is an important concern of the PolMine Project. This is why the data is versioned. The resource will benefit from its community of users - feedback that helps to improve data quality is more than welcome!
 

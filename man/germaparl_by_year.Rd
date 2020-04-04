@@ -9,8 +9,12 @@
 germaparl_by_year
 }
 \description{
-Dataset with information on the corpus on a year-by-year basis. The code used
-to generate the data is reported in the examples section.
+A dataset with information on the corpus on a year-by-year basis is included
+in the package to be included in the data report of the package vignette. The 
+code used to generate the data is reported in the examples section.
+}
+\details{
+Note that the table is based on v1.0.5 of the corpus.
 }
 \examples{
 \dontrun{

@@ -1,6 +1,6 @@
 Package: GermaParl
 Type: Package
-Title: GermaParl Data Package
+Title: GermaParl R Data Package 
 Version: 1.2.1.9003
 Date: 2020-04-01
 Authors@R: c(person(given = "Andreas", family = "Blaette", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de"))
@@ -13,15 +13,15 @@ Imports:
   RCurl,
   topicmodels,
   methods,
-  jsonlite
+  jsonlite,
+  RcppCWB
 Suggests:
   knitr,
   rmarkdown,
-  testthat,
-  RcppCWB
+  testthat
 LazyData: yes
 Description: Data package with the GermaParl Corpus of Parliamentary Debates (German Bundestag) 
-  preprared in the PolMine Project. The package includes a small subset of the corpus as a demo
+  prepared in the PolMine Project. The package includes a small subset of the corpus as a demo
   and for testing purposes. The package includes functionality to load the full corpus from the
   zenodo repository and some auxiliary functions to enhance the corpus.
 URL: https://github.com/polmine/GermaParl
