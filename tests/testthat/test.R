@@ -25,6 +25,8 @@ test_that(
   "add s-attribute speech",
   {
     skip_on_cran()
+    
+    use("GermaParl")
 
     germaparl_add_s_attribute_speech()
     

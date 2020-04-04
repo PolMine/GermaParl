@@ -1,8 +1,8 @@
 Package: GermaParl
 Type: Package
 Title: GermaParl R Data Package 
-Version: 1.2.1.9003
-Date: 2020-04-01
+Version: 1.3.0
+Date: 2020-04-04
 Authors@R: c(person(given = "Andreas", family = "Blaette", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de"))
 Depends:
     R (>= 3.5.0)
