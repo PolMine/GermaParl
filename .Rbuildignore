@@ -3,4 +3,5 @@
 ^data-raw$
 ^README.Rmd$
 ^\.travis\.yml$
-^appveyor\.com$
+^appveyor\.yml$
+^cran-comments\.md$$

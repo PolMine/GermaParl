@@ -5,6 +5,7 @@ author: "Andreas Blaette (andreas.blaette@uni-due.de)"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 fontsize: 12pt
+bibliography: references.bibtex
 vignette: >
   %\VignetteIndexEntry{GermaParl}
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,15 +18,17 @@ Sys.setenv("CORPUS_REGISTRY" = "")
 
 ### A Corpus of Plenary Protocols
 
-Parliamentary debates convey the arguments, interpretations and contestations that shape political decision-making. They are recorded and transcribed by parliamentary administrations with diligence, and published as plenary protocols. These documents are available for long periods of time -- for several decades and more -- and they cover the full breadth of topics that is processed by a political system: Plenary protocols are a valuable resource for research on policy and politics, and for citizens. They are a crucial building block of the public digital archive of democracy.
+Parliamentary debates convey the arguments, interpretations and conflicts that shape political decision-making. They are recorded and transcribed by parliamentary administrations with diligence, and published as plenary protocols. These documents are available for long periods of time -- for several decades and more -- and they cover the full breadth of topics that is processed by a political system: Plenary protocols are a valuable resource for research on policy and politics, and for citizens. They are a crucial building block of the public digital archive of democracy.
 
-The digital availability of plenary protocols is excellent and limited at the same time. Documents can be downloaded without technical or legal restrictions as txt, html or pdf documents. But this data format does not match the requirements for digital-era data processing. To exploit the analytical potential of the data, original documents need to be converted into a semi-structured data format (typically XML). The GermaParl corpus as it has been prepared in the [PolMine Project](www.polmine.de) implements this notion and is based on an XMLification of txt and pdf documents. The aim is to make a contribution to the broader development of preparing corpora of plenary protocols -- the naming of GermaParl is inspired by the EuroParl and DutchParl corpus, see Marx & Schuth 2010. GermaParl is intended to serve as an example how to make corpora available in a sustainable way, meeting the technological standards and requirements of the digital era.
+The digital availability of plenary protocols is excellent and limited at the same time. Documents can be downloaded without technical or legal restrictions as txt, html or pdf documents. But this data format does not match the requirements for digital-era data processing. To exploit the analytical potential of the data, original documents need to be converted into a semi-structured data format (typically XML). This is the essence of the preparation of the GermaParl corpus.
+
+The GermaParl corpus as it has been prepared in the [PolMine Project](https://polmine.github.io/) is based on an XMLification of txt and pdf documents. The aim is to make a contribution to the broader development of preparing corpora of plenary protocols -- the naming of GermaParl is inspired by the EuroParl and DutchParl corpus [@DBLP:conf/lrec/MarxS10]. GermaParl is intended to serve as an example how to make corpora available in a sustainable way, meeting the technological standards and requirements of the digital era.
 
 GermaParl is made available in two ways:
 
-- The base format of the corpus is a XMLification of the raw data (i.e. the original protocols) that is modelled on the standards of the [Text Encoding Initiative (TEI)](http://www.tei-c.org/index.xml). Releases of the TEI format of GermaParl  are available via the [GermaParlTEI repository at GitHub](https://github.com/PolMine/GermaParlTEI).  It results from an automatized, fully reproducible pipeline, i.e. raw protocols (pdf and txt file format) have been turned into an XML/TEI-based standard.
+- The base format of the corpus is a XMLification of the raw data (i.e. the original protocols) that is modelled on the standards of the [Text Encoding Initiative (TEI)](https://tei-c.org/). Releases of the TEI format of GermaParl  are available via the [GermaParlTEI repository at GitHub](https://github.com/PolMine/GermaParlTEI).  It results from an automatized, fully reproducible pipeline, i.e. raw protocols (pdf and txt file format) have been turned into an XML/TEI-based standard.
 
-- A linguistically annotated, indexed and consolidated version of the corpus is included in the GermaParl R data package documented with this vignette. XML/TEI files serve the point of departure, but the version emanates from (a) performing some standard Natural Language Processing (NLP) tasks (such as tokenization, lemmatization, part-of-speech annotation); (b) importing the linguistically annotated  data into the [Corpus Workbench (CWB)](http://cwb.sourceforge.net/) and (c) consolidating the data in a set of postprocessing tasks to remove known errors. The steps of the annotation/indexing/consolidation workflow are documented, ensuring full reproducibility, with the vignette "GermaParl - From XML to CWB" included in this R data package.
+- A linguistically annotated, indexed and consolidated version of the corpus is disseminated with  the GermaParl R data package documented with this vignette. XML/TEI files serve the point of departure, but the version emanates from (a) performing some standard Natural Language Processing (NLP) tasks (such as tokenization, lemmatization, part-of-speech annotation); (b) importing the linguistically annotated  data into the [Corpus Workbench (CWB)](http://cwb.sourceforge.net/) and (c) consolidating the data in a set of postprocessing tasks to remove known errors.
 
 The corpus includes all plenary protocols that were published by the German Bundestag between 1996 and 2016. Plain text documents issued by the German Bundestag were considered the best raw data format for corpus preparation and were used whenever they are available. For a period between 2008 and 2010, txt files are not available throughout. To fill the gap, pdf documents were processed. The following sections explain corpus preparation and the data made available with this package in some more detail.
 
@@ -40,7 +43,7 @@ The preparation of the TEI version of GermaParl implements the following workflo
 
 - __Consolidation__: Consolidating speaker names and enriching documents.
 
-The preprocessing step is not as trivial as it might seem. Older plain text files are offered by the German Bundestag in all kinds of encodings that are have come out of use. The pdf documents have a two-column layout that is difficult to handle. Experience to handle these issues is captured by the respective functionality that is included in the R package [ctk](https://www.github.com/PolMine/ctk). For handling the two-column layout of pdf documents, the R package [trickypdf](https://github.com/PolMine/trickypdf) has been developed.
+The preprocessing step is not as trivial as it might seem. Older plain text files are offered by the German Bundestag in all kinds of encodings that are have come out of use. The pdf documents have a two-column layout that is difficult to handle. For coping with the two-column layout of pdf documents, the R package [trickypdf](https://github.com/PolMine/trickypdf) has been developed.
 
 The essential instrument for the XMLification is a set of regular expressions to extract relevant metadata (such as legislative period, session number or date), to find the beginning and the end of a debate, the call upon the speakers, and the beginning and end of agenda items. The matches are used to generate the structural annotation of parliamentary speech in the XML document.
 
@@ -50,14 +53,12 @@ The result of the base XMLification still includes considerable noise. Inconsist
 
 Easy digital access is not the only justification for this choice. Wikipedia pages for the parliamentary sessions are being taken care of by a team of dedicated volunteers. Furthermore, Wikipedia pages meet  permanent public scrutiny, ensuring quality checks on the data quality in a manner traditional printed material does not necessarily ensure.
 
-The code for corpus preparation is wrapped in a R package, and upon preparing a corpus, the version number of the package used is included in the TEI metadata, so that the corpus preparation is fully transparent and reproducible.
-
 
 ### Annotation
 
 #### Linguistic Annotation
 
-The XML/TEI version of GermaParl is taken through a pipeline of standard Natural Language Processing (NLP) tasks. Starting with version 1.1.0, Stanford CoreNLP is used for tokenization and part-of-speech (POS) annotation. To add lemmas to the corpus, the  [TreeTagger](http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/) is used. A full (technical) documentation of the linguistic annotation of the corpus is included in the vignette "GermaParl - From XML to CWB" and not reproduced here.
+The XML/TEI version of GermaParl is taken through a pipeline of standard Natural Language Processing (NLP) tasks. Starting with version 1.1.0, Stanford CoreNLP is used for tokenization and part-of-speech (POS) annotation. To add lemmas to the corpus, the  [TreeTagger](http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/) is used.
 
 Note that the TreeTagger outputs #unknown# if it cannot successfully lemmatize a wordform. See the tables in the annex to learn about the unknown ratio in the corpus. 
 
@@ -71,7 +72,7 @@ In the XML/TEI data format, all passages of uninterrupted speech are tagged with
 The following table provides short explanations of the s-attributes that are present in the GermaParl corpus.
 
 ```{r s-attributes, echo = FALSE, message = FALSE}
-sAttrsList <- list(
+s_attrs <- list(
   c("lp", "legislative period", "13 to 18"),
   c("session", "session/protocol number", "1 to 253"),
   c("src", "source material for data preparation", "txt or pdf"),
@@ -86,7 +87,7 @@ sAttrsList <- list(
   c("parliamentary_group", "Parliamentary group", "partliamentary group the speaker is affiliated with"),
   c("party", "Party", "party of the speaker")
 )
-tab <- do.call(rbind, sAttrsList)
+tab <- do.call(rbind, s_attrs)
 colnames(tab) <- c("s-attribute", "description", "values")
 knitr::kable(tab, format = "markdown")
 ```
@@ -96,19 +97,13 @@ knitr::kable(tab, format = "markdown")
 
 #### Getting started - installing GermaParl
 
-The GermaParl data package that includes the CWB indexed version of the corpus is hosted at a private CRAN-style package repository on the Web-Server of the PolMine Project. The polmineR-package offers a convenient installation mechanism.
+The GermaParl R Data Package can be installed from CRAN. It is a "pure R" package. There are no differences whether you install on Linux, MacOS or Windows.
 
 ```{r installing_GermaParl, eval = FALSE}
-library(polmineR)
-if ("drat" %in% rownames(available.packages()) == FALSE) install.packages("drat")
-drat::addRepo("polmine") # lowercase necessary in this case
-if ("GermaParl" %in% rownames(available.packages()) == FALSE){
-  install.packages("GermaParl")
-}
-
+install.packages("GermaParl")
 ```
 
-After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from an external webspace (amazon AWS, for the time being):
+After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from [Zenodo](https://zenodo.org/), an open science data repository:
 
 ```{r load_germaparl, eval = FALSE}
 library(GermaParl)
@@ -127,7 +122,7 @@ if ("GERMAPARL" %in% corpus()[["corpus"]]) size("GERMAPARL") # to learn about th
 
 #### A very brief tutorial
 
-The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as [CQPweb](http://cwb.sourceforge.net/cqpweb.php)). However, most technical decisions during corpus preparation had in mind to optimize using the GermaParl corpus in combination with the polmineR package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands. Note that in the following examples, we will use GERMAPARLMINI to illustrate functions, as the full GERMAPARL corpus will only be available after the full installation of the corpus.
+The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as [CQPweb](http://cwb.sourceforge.net/cqpweb.php)). However, most technical decisions during corpus preparation had in mind to optimize using the GermaParl corpus in combination with the [polmineR](https://CRAN.R-project.org/package=polmineR) package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands. Note that in the following examples, we will use GERMAPARLMINI to illustrate functions, as the full GERMAPARL corpus will only be available after the full installation of the corpus.
 
 First, you may want to learn about the p-attributes (positional attributes), and s-attributes (structural attributes) that are available.
 
@@ -164,21 +159,21 @@ count("GERMAPARLMINI", query = c("Integration", "Flucht", "Abschiebung"))
 To get the dispersion of a query, use the dispersion-method.
 
 ```{r dispersion, eval = TRUE}
-D <- dispersion("GERMAPARLMINI", query = "Integration", s_attribute = "date")
-D
+d <- dispersion("GERMAPARLMINI", query = "Integration", s_attribute = "date")
+d
 ```
 
 Visualise the result as a barplot...
 
 ```{r dispersion_barplot, eval = TRUE}
-barplot(D[["count"]], names.arg = D[["date"]], las = 2)
+barplot(d[["count"]], names.arg = d[["date"]], las = 2)
 ```
 
 The cooccurrences-method will get you the cooccurrences of a query.
 
 ```{r cooc, eval = FALSE}
-C <- cooccurrences("GERMAPARLMINI", query = "Wir")
-C@stat[1:5]
+coocs <- cooccurrences("GERMAPARLMINI", query = "Wir")
+format(coocs)
 dotplot(C)
 ```
 
@@ -200,14 +195,14 @@ cooccurrences("GERMAPARLMINI", query = "Europa") %>%
   dotplot()
 ```
 
-This is just a short glimpse into the analytical opportunities of using GermaParl in combination with polmineR. One of the most important aspects that cannot be explained here is the possibility to use the syntax of the Corpus Query Processor (CQP) that comes with the CWB backend. The as.TermDocumentMatrix method will prepare data structures efficiently needed for more advanced analytical techniques such as topicmodelling.Consult the vignette of the polmineR package to learn more!
+This is just a short glimpse into the analytical potential of using GermaParl in combination with polmineR. One of the most important aspects that cannot be explained here is the possibility to use the syntax of the Corpus Query Processor (CQP) that comes with the CWB backend. The `as.TermDocumentMatrix` method will prepare data structures efficiently needed for more advanced analytical techniques such as topicmodelling. Consult the vignette of the polmineR package to learn more!
 
 
 #### Some caveats
 
 A set of general remarks may help to avoid pitfalls when working with GermaParl:
 
-* Plenary protocols meticulously report interjections. To maintain the integrity of the original documents, interjections are annotated in the corpus. By using the s-attribute 'interjection' that assumes the values 'TRUE' or 'FALSE', you can limit your analysis to speech or interjections.
+* Plenary protocols meticulously report interjections. To maintain the integrity of the original documents, interjections are annotated in the corpus. By using the s-attribute 'interjection' that assumes the values `TRUE` or `FALSE`, you can limit your analysis to speech or interjections.
 
 * Plenary protocols report membership in a parliamentary group only. Information on party membership is derived from external data sources and written back to the corpus. More specifically, the s-attribute 'parliamentary_group' refers to the parliamentary group, 'party' refers to the party a speaker is a member of. To distinguish between CDU and CSU speakers, using the s-attribute 'party' is necessary. 
 
@@ -222,8 +217,6 @@ The resource is under active development. Apart from improving data quality and 
 
 * Moving to Stanford CoreNLP as the core tool for the NLP pipe (a step that has been taken with version 1.1.0) provides the basis for adding sentence annotation, and a basic annotation of named entities in the future. 
 
-* There are many scenarios for using the corpus that require an ability to create classification-based subcorpora. Writing the results of an optimized topicmodel to the corpus as structural attributes is being prepared, and will relieve users from the cumbersome task of running multiple topicmodels. Given the size of the corpus, every run to train a topicmodel takes considerably time, and multiple models need to be trained to learn about the optimal number of topics.
-
 * Classification based on a supervised learning approach will be superior to unsupervised learning. In a CLARIN-funded project, training data has been prepared to obtain the basis for a classification of debates according to a (somewhat expanded) classification scheme of the Comparative Agendas Project (CAP). An annotation of the hand-coded text passages will be included in the corpus.
 
 Hopefully, GermaParl will make qualitative and quantitative research with German parliamentary debates more productive. A final note on user feedback: Improving data quality is an important concern of the PolMine Project. This is why the data is versioned. The resource will benefit from its community of users - feedback that helps to improve data quality is more than welcome!
@@ -231,22 +224,33 @@ Hopefully, GermaParl will make qualitative and quantitative research with German
 
 ### License
 
-While the raw data, the plenary protocols published by the German Bundestag, are in the public domain, the GermaParl corpus comes with a CC BY+NC+SA license. That means:
+While the raw data, the plenary protocols published by the German Bundestag, are in the public domain, the GermaParl corpus comes with a CC BY-SA license. That means:
 
 __BY__ - Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
 
-__NC__ - NonCommercial — You may not use the material for commercial purposes.
-
 __SA__ - ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 
-See the [CC Attribution-NonCommercial-ShareAlike 4.0 Unported License](https://creativecommons.org/licenses/by-nc-sa/4.0/) for further explanations.
+See the [CC Attribution-ShareAlike 4.0 Unported License](https://creativecommons.org/licenses/by-sa/4.0/) for further explanations.
 
 
 ### Quotation
 
-If you work with GermaParl package, please include the following reference in your bibliography to attribute the language resource:
+The 'GermaParl' R package and the 'GermaParl' corpus are two different pieces of research data,
+with different version numbers, document object identifiers (DOIs) and recommendations for quotation.
+If you use GermaParl for your research, maximum transparency on the tools you used is attained,
+when both the package and the corpus is quoted in your publication. To ensure the reproducibility
+of your research, it is more important to refer to and specify the corpus (including version, DOI)
+you used.
 
-_Blaette, Andreas_ (2018): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.2.0). Available from: https://doi.org/10.5281/zenodo.1312551.
+Blaette, Andreas (2020): GermaParl R Data Package. v1.2.1.9003. https://CRAN.R-project.org/package=GermaParl
+
+Blaette, Andreas (2020): GermaParl CWB Corpus (v1.0.5). https://doi.org/10.5281/zenodo.3735141
+
+NOTE: In an R session, you can get this recommendation how to quote GermaParl by calling the usual `citation()` function:
+
+```{r, eval = FALSE}
+citation("GermaParl")
+```
 
 
 ### Annex
@@ -295,3 +299,4 @@ knitr::kable(tab, format = "markdown")
 ```
 
 
+## References

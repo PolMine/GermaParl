@@ -20,13 +20,13 @@ Suggests:
   rmarkdown,
   testthat
 LazyData: yes
-Description: Data package with the GermaParl Corpus of Parliamentary Debates (German Bundestag) 
-  prepared in the PolMine Project. The package includes a small subset of the corpus as a demo
+Description: Data package with the 'GermaParl' Corpus of Parliamentary Debates (German Bundestag) 
+  prepared in the 'PolMine Project'. The package includes a small subset of the corpus as a demo
   and for testing purposes. The package includes functionality to load the full corpus from the
-  zenodo repository and some auxiliary functions to enhance the corpus.
+  open science 'Zenodo' repository and some auxiliary functions to enhance the corpus.
 URL: https://github.com/polmine/GermaParl
 BugReports: https://github.com/polmine/GermaParl/issues
-License: CC BY-SA 4.0
+License: GPL-3
 VignetteBuilder: knitr
 Encoding: UTF-8
 Collate:

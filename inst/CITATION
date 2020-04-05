@@ -1,10 +1,12 @@
 citHeader(
     "The 'GermaParl' R package and the 'GermaParl' corpus are two different pieces of research data, ",
-    "with different version numbers, document object identifiers (DOIs) and recommendations for quotation. ",
+    "with different version numbers, document object identifiers (DOIs), licenses and recommendations for quotation. ",
     "If you use GermaParl for your research, maximum transparency on the tools you used is attained, ",
-    "when both the package and the corpus is quoted in your publication. To ensure the reproducibility",
+    "when both the package and the corpus are quoted in your publication. To ensure the reproducibility",
     "of your research, it is more important to refer to and specify the corpus (including version, DOI) ",
-    "you used."
+    "you used. Note that the GermaParl R package uses the GPL-3 license as a standard license for open ",
+    "source software. The license of the GermaParl corpus is the Creative Commons Attibution ShareAlike 4.0 ",
+    "(CC BY-SA 4.0), which is common for data and makes the expectation that the data is quoted explicit."
 )
 
 citEntry(entry = "Manual",

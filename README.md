@@ -113,10 +113,12 @@ size("GERMAPARL") # to learn about the size of the corpus
 
 ## License
 
-To keep things simple, both the GermaParl R package and the GermaParl
-corpus have a [CC
-BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license.
-That means:
+The GermaParl R package uses the
+[GPL-3](https://www.gnu.org/licenses/gpl-3.0.en.html) license as a
+standard license for open source software. The license of the GermaParl
+corpus is the [Creative Commons Attibution ShareAlike 4.0 License (CC
+BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/). That
+means:
 
 **BY** - Attribution — You must give appropriate credit, provide a link
 to the license, and indicate if changes were made. You may do so in any
@@ -127,7 +129,7 @@ endorses you or your use.
 material, you must distribute your contributions under the same license
 as the original.
 
-See the [CC Attribution-ShareAlike 4.0 Unported
+See the [CC Attribution-ShareAlike 4.0
 License](https://creativecommons.org/licenses/by-sa/4.0/) for further
 explanations.
 
