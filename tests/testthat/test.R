@@ -1,9 +1,7 @@
 testthat::context("download")
 
 
-if (Sys.getenv("NOT_CRAN") != "true"){
-  germaparl_download_corpus()
-}
+if (Sys.getenv("NOT_CRAN") == "true") germaparl_download_corpus()
 
 
 test_that(
