@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GermaParl (v1.2.0) • GermaParl</title>
+<title>GermaParl • GermaParl</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="GermaParl (v1.2.0)">
+<script src="../pkgdown.js"></script><meta property="og:title" content="GermaParl">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -73,8 +73,8 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>GermaParl (v1.2.0)</h1>
-            <h3 class="subtitle">Corpus Documentation</h3>
+      <h1>GermaParl</h1>
+            <h3 class="subtitle">Introducing the Data Package and the Corpus</h3>
                         <h4 class="author">Andreas Blaette (<a href="mailto:andreas.blaette@uni-due.de" class="email">andreas.blaette@uni-due.de</a>)</h4>
             
             <h4 class="date">2020-04-05</h4>
@@ -86,9 +86,9 @@
 
     
     
-<div id="a-corpus-of-plenary-protocols" class="section level3">
-<h3 class="hasAnchor">
-<a href="#a-corpus-of-plenary-protocols" class="anchor"></a>A Corpus of Plenary Protocols</h3>
+<div id="a-corpus-of-plenary-protocols" class="section level2">
+<h2 class="hasAnchor">
+<a href="#a-corpus-of-plenary-protocols" class="anchor"></a>A Corpus of Plenary Protocols</h2>
 <p>Parliamentary debates convey the arguments, interpretations and conflicts that shape political decision-making. They are recorded and transcribed by parliamentary administrations with diligence, and published as plenary protocols. These documents are available for long periods of time – for several decades and more – and they cover the full breadth of topics that is processed by a political system: Plenary protocols are a valuable resource for research on policy and politics, and for citizens. They are a crucial building block of the public digital archive of democracy.</p>
 <p>The digital availability of plenary protocols is excellent and limited at the same time. Documents can be downloaded without technical or legal restrictions as txt, html or pdf documents. But this data format does not match the requirements for digital-era data processing. To exploit the analytical potential of the data, original documents need to be converted into a semi-structured data format (typically XML). This is the essence of the preparation of the GermaParl corpus.</p>
 <p>The GermaParl corpus as it has been prepared in the <a href="https://polmine.github.io/">PolMine Project</a> is based on an XMLification of txt and pdf documents. The aim is to make a contribution to the broader development of preparing corpora of plenary protocols – the naming of GermaParl is inspired by the EuroParl and DutchParl corpus <span class="citation">(Marx and Schuth 2010)</span>. GermaParl is intended to serve as an example how to make corpora available in a sustainable way, meeting the technological standards and requirements of the digital era.</p>
@@ -99,9 +99,9 @@
 </ul>
 <p>The corpus includes all plenary protocols that were published by the German Bundestag between 1996 and 2016. Plain text documents issued by the German Bundestag were considered the best raw data format for corpus preparation and were used whenever they are available. For a period between 2008 and 2010, txt files are not available throughout. To fill the gap, pdf documents were processed. The following sections explain corpus preparation and the data made available with this package in some more detail.</p>
 </div>
-<div id="corpus-preparation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#corpus-preparation" class="anchor"></a>Corpus Preparation</h3>
+<div id="corpus-preparation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#corpus-preparation" class="anchor"></a>Corpus Preparation</h2>
 <p>The preparation of the TEI version of GermaParl implements the following workflow:</p>
 <ul>
 <li><p><strong>Preprocessing</strong>: Prepare consolidated UTF-8 plain text documents (ensuring uniformity of encodings, conversion of pdf to txt if necessary);</p></li>
@@ -114,19 +114,19 @@
 <p>The result of the base XMLification still includes considerable noise. Inconsistencies that occur with names are a particularly serious issue. To obtain consolidated metadata, information that has been extracted is checked (including approximate string matching) against an external data source. We opted for lists of members of parliamentarians, cabinet members and further speakers that are available on Wikipedia (see the <a href="https://de.wikipedia.org/wiki/Liste_der_Mitglieder_des_Deutschen_Bundestages_(17._Wahlperiode)">page for the 17th Bundestag</a>, for instance).</p>
 <p>Easy digital access is not the only justification for this choice. Wikipedia pages for the parliamentary sessions are being taken care of by a team of dedicated volunteers. Furthermore, Wikipedia pages meet permanent public scrutiny, ensuring quality checks on the data quality in a manner traditional printed material does not necessarily ensure.</p>
 </div>
-<div id="annotation" class="section level3">
+<div id="annotation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#annotation" class="anchor"></a>Annotation</h2>
+<div id="linguistic-annotation" class="section level3">
 <h3 class="hasAnchor">
-<a href="#annotation" class="anchor"></a>Annotation</h3>
-<div id="linguistic-annotation" class="section level4">
-<h4 class="hasAnchor">
-<a href="#linguistic-annotation" class="anchor"></a>Linguistic Annotation</h4>
+<a href="#linguistic-annotation" class="anchor"></a>Linguistic Annotation</h3>
 <p>The XML/TEI version of GermaParl is taken through a pipeline of standard Natural Language Processing (NLP) tasks. Starting with version 1.1.0, Stanford CoreNLP is used for tokenization and part-of-speech (POS) annotation. To add lemmas to the corpus, the <a href="http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/">TreeTagger</a> is used.</p>
 <p>Note that the TreeTagger outputs #unknown# if it cannot successfully lemmatize a wordform. See the tables in the annex to learn about the unknown ratio in the corpus.</p>
 <p>Moving to Stanford CoreNLP as the base annotation tool will be the basis for adding further annotation layers to the corpus (such as an annotation of sentences, or named entities) in the future.</p>
 </div>
-<div id="structural-annotation-metadata" class="section level4">
-<h4 class="hasAnchor">
-<a href="#structural-annotation-metadata" class="anchor"></a>Structural Annotation (Metadata)</h4>
+<div id="structural-annotation-metadata" class="section level3">
+<h3 class="hasAnchor">
+<a href="#structural-annotation-metadata" class="anchor"></a>Structural Annotation (Metadata)</h3>
 <p>In the XML/TEI data format, all passages of uninterrupted speech are tagged with metadata, or so-called structural attributes (s-attributes). For instance, parliamentary speeches are often interrupted by interjections - the information whether an utterance is an interjection or an actual speech, is maintained in the corpus. The legislative period, session, date, name of a speaker and his/her parliamentary group are included, among others. The structural annotation is the basis for all kinds of diachronic or synchronic comparisons users may want to perform.</p>
 <p>The following table provides short explanations of the s-attributes that are present in the GermaParl corpus.</p>
 <table class="table">
@@ -210,12 +210,12 @@
 </table>
 </div>
 </div>
-<div id="using-the-germaparl-corpus" class="section level3">
+<div id="using-the-germaparl-corpus" class="section level2">
+<h2 class="hasAnchor">
+<a href="#using-the-germaparl-corpus" class="anchor"></a>Using the GermaParl corpus</h2>
+<div id="getting-started---installing-germaparl" class="section level3">
 <h3 class="hasAnchor">
-<a href="#using-the-germaparl-corpus" class="anchor"></a>Using the GermaParl corpus</h3>
-<div id="getting-started---installing-germaparl" class="section level4">
-<h4 class="hasAnchor">
-<a href="#getting-started---installing-germaparl" class="anchor"></a>Getting started - installing GermaParl</h4>
+<a href="#getting-started---installing-germaparl" class="anchor"></a>Getting started - installing GermaParl</h3>
 <p>The GermaParl R Data Package can be installed from CRAN. It is a “pure R” package. There are no differences whether you install on Linux, MacOS or Windows.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"GermaParl"</span>)</a></code></pre></div>
 <p>After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from <a href="https://zenodo.org/">Zenodo</a>, an open science data repository:</p>
@@ -231,9 +231,10 @@
 ## 2       REUTERS   4050     TRUE</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="cf">if</span> (<span class="st">"GERMAPARL"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/corpus-class.html">corpus</a></span>()[[<span class="st">"corpus"</span>]]) <span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/size-method.html">size</a></span>(<span class="st">"GERMAPARL"</span>) <span class="co"># to learn about the size of the corpus</span></a></code></pre></div>
 </div>
-<div id="a-very-brief-tutorial" class="section level4">
-<h4 class="hasAnchor">
-<a href="#a-very-brief-tutorial" class="anchor"></a>A very brief tutorial</h4>
+</div>
+<div id="a-very-brief-tutorial" class="section level2">
+<h2 class="hasAnchor">
+<a href="#a-very-brief-tutorial" class="anchor"></a>A very brief tutorial</h2>
 <p>The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as <a href="http://cwb.sourceforge.net/cqpweb.php">CQPweb</a>). However, most technical decisions during corpus preparation had in mind to optimize using the GermaParl corpus in combination with the <a href="https://CRAN.R-project.org/package=polmineR">polmineR</a> package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands. Note that in the following examples, we will use GERMAPARLMINI to illustrate functions, as the full GERMAPARL corpus will only be available after the full installation of the corpus.</p>
 <p>First, you may want to learn about the p-attributes (positional attributes), and s-attributes (structural attributes) that are available.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/s_attributes-method.html">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>)</a></code></pre></div>
@@ -413,9 +414,9 @@
 <a class="sourceLine" id="cb25-5" title="5"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/dotplot-method.html">dotplot</a></span>()</a></code></pre></div>
 <p>This is just a short glimpse into the analytical potential of using GermaParl in combination with polmineR. One of the most important aspects that cannot be explained here is the possibility to use the syntax of the Corpus Query Processor (CQP) that comes with the CWB backend. The <code>as.TermDocumentMatrix</code> method will prepare data structures efficiently needed for more advanced analytical techniques such as topicmodelling. Consult the vignette of the polmineR package to learn more!</p>
 </div>
-<div id="some-caveats" class="section level4">
-<h4 class="hasAnchor">
-<a href="#some-caveats" class="anchor"></a>Some caveats</h4>
+<div id="some-caveats" class="section level2">
+<h2 class="hasAnchor">
+<a href="#some-caveats" class="anchor"></a>Some caveats</h2>
 <p>A set of general remarks may help to avoid pitfalls when working with GermaParl:</p>
 <ul>
 <li><p>Plenary protocols meticulously report interjections. To maintain the integrity of the original documents, interjections are annotated in the corpus. By using the s-attribute ‘interjection’ that assumes the values <code>TRUE</code> or <code>FALSE</code>, you can limit your analysis to speech or interjections.</p></li>
@@ -423,10 +424,9 @@
 <li><p>The GermaParl corpus is a corpus of the debates and speeches that were actually given in the German Bundestag. Speeches that were only included in the printed protocol (i.e. included in the annex to a protocol) are not yet covered by corpus preparation.</p></li>
 </ul>
 </div>
-</div>
-<div id="perspectives" class="section level3">
-<h3 class="hasAnchor">
-<a href="#perspectives" class="anchor"></a>Perspectives</h3>
+<div id="perspectives" class="section level2">
+<h2 class="hasAnchor">
+<a href="#perspectives" class="anchor"></a>Perspectives</h2>
 <p>GermaParl is not the only corpus of plenary protocols. Apart from PolMine, several further projects have worked on preparing respective corpora. There is an ensuing dialogue among these projects, and GermaParl strives to contribute to this broader development, trying to serve as a example how reproducibility and quality control can be maintained during all steps of corpus preparation, and how corpora can be disseminated in a manner that lowers the barriers of entry for new users.</p>
 <p>The resource is under active development. Apart from improving data quality and preparing updates, one important concern is to add further annotation layers:</p>
 <ul>
@@ -435,29 +435,29 @@
 </ul>
 <p>Hopefully, GermaParl will make qualitative and quantitative research with German parliamentary debates more productive. A final note on user feedback: Improving data quality is an important concern of the PolMine Project. This is why the data is versioned. The resource will benefit from its community of users - feedback that helps to improve data quality is more than welcome!</p>
 </div>
-<div id="license" class="section level3">
-<h3 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h3>
+<div id="license" class="section level2">
+<h2 class="hasAnchor">
+<a href="#license" class="anchor"></a>License</h2>
 <p>While the raw data, the plenary protocols published by the German Bundestag, are in the public domain, the GermaParl corpus comes with a CC BY-SA license. That means:</p>
 <p><strong>BY</strong> - Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.</p>
 <p><strong>SA</strong> - ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.</p>
 <p>See the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC Attribution-ShareAlike 4.0 Unported License</a> for further explanations.</p>
 </div>
-<div id="quotation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#quotation" class="anchor"></a>Quotation</h3>
+<div id="quotation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#quotation" class="anchor"></a>Quotation</h2>
 <p>The ‘GermaParl’ R package and the ‘GermaParl’ corpus are two different pieces of research data, with different version numbers, document object identifiers (DOIs) and recommendations for quotation. If you use GermaParl for your research, maximum transparency on the tools you used is attained, when both the package and the corpus is quoted in your publication. To ensure the reproducibility of your research, it is more important to refer to and specify the corpus (including version, DOI) you used.</p>
 <p>Blaette, Andreas (2020): GermaParl R Data Package. v1.2.1.9003. <a href="https://CRAN.R-project.org/package=GermaParl" class="uri">https://CRAN.R-project.org/package=GermaParl</a></p>
 <p>Blaette, Andreas (2020): GermaParl CWB Corpus (v1.0.5). <a href="https://doi.org/10.5281/zenodo.3735141" class="uri">https://doi.org/10.5281/zenodo.3735141</a></p>
 <p>NOTE: In an R session, you can get this recommendation how to quote GermaParl by calling the usual <code><a href="https://rdrr.io/r/utils/citation.html">citation()</a></code> function:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span>(<span class="st">"GermaParl"</span>)</a></code></pre></div>
 </div>
-<div id="annex" class="section level3">
+<div id="annex" class="section level2">
+<h2 class="hasAnchor">
+<a href="#annex" class="anchor"></a>Annex</h2>
+<div id="corpus-data-by-electoral-period" class="section level3">
 <h3 class="hasAnchor">
-<a href="#annex" class="anchor"></a>Annex</h3>
-<div id="corpus-data-by-electoral-period" class="section level4">
-<h4 class="hasAnchor">
-<a href="#corpus-data-by-electoral-period" class="anchor"></a>Corpus data (by electoral period)</h4>
+<a href="#corpus-data-by-electoral-period" class="anchor"></a>Corpus data (by electoral period)</h3>
 <table class="table">
 <thead><tr class="header">
 <th align="right">lp</th>
@@ -511,9 +511,9 @@
 </tbody>
 </table>
 </div>
-<div id="corpus-data-by-year" class="section level4">
-<h4 class="hasAnchor">
-<a href="#corpus-data-by-year" class="anchor"></a>Corpus data (by year)</h4>
+<div id="corpus-data-by-year" class="section level3">
+<h3 class="hasAnchor">
+<a href="#corpus-data-by-year" class="anchor"></a>Corpus data (by year)</h3>
 <table class="table">
 <thead><tr class="header">
 <th align="left">year</th>
@@ -703,9 +703,9 @@
 </tbody>
 </table>
 </div>
-<div id="data-sources" class="section level4">
-<h4 class="hasAnchor">
-<a href="#data-sources" class="anchor"></a>Data sources</h4>
+<div id="data-sources" class="section level3">
+<h3 class="hasAnchor">
+<a href="#data-sources" class="anchor"></a>Data sources</h3>
 <p>Starting from the 17th legislative period, txt versions of plenary protocols were retrieved from the <a href="http://www.bundestag.de/dokumente/protokolle/plenarprotokolle/plenarprotokolle/index.html">homepage of the German Bundestag</a>. The following table reports the URLs that have been used to download txt versions of older plenary protocols.</p>
 <table class="table">
 <colgroup>
@@ -794,7 +794,17 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#references">References</a></li>
+<li><a href="#a-corpus-of-plenary-protocols">A Corpus of Plenary Protocols</a></li>
+      <li><a href="#corpus-preparation">Corpus Preparation</a></li>
+      <li><a href="#annotation">Annotation</a></li>
+      <li><a href="#using-the-germaparl-corpus">Using the GermaParl corpus</a></li>
+      <li><a href="#a-very-brief-tutorial">A very brief tutorial</a></li>
+      <li><a href="#some-caveats">Some caveats</a></li>
+      <li><a href="#perspectives">Perspectives</a></li>
+      <li><a href="#license">License</a></li>
+      <li><a href="#quotation">Quotation</a></li>
+      <li><a href="#annex">Annex</a></li>
+      <li><a href="#references">References</a></li>
       </ul>
 </div>
       </div>
