@@ -12,7 +12,7 @@ lda_tuning
 The R package \href{https://CRAN.R-project.org/package=ldatuning}{ldatuning}
 has been used to get guidance on the optimal number of topics when fitting an
 LDA topic model on the GermaParl corpus. Using around 250 topics is a good
-coice. The data object \code{lda_tuning} reports the different metrics of the
+choice. The data object \code{lda_tuning} reports the different metrics of the
 ldatuning package.
 }
 \keyword{datasets}

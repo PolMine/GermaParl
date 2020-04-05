@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GermaParl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
       </span>
     </div>
 
@@ -77,7 +77,7 @@
             <h3 class="subtitle">Corpus Documentation</h3>
                         <h4 class="author">Andreas Blaette (<a href="mailto:andreas.blaette@uni-due.de" class="email">andreas.blaette@uni-due.de</a>)</h4>
             
-            <h4 class="date">2020-04-03</h4>
+            <h4 class="date">2020-04-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/polmine/GermaParl/blob/master/vignettes/GermaParl.Rmd"><code>vignettes/GermaParl.Rmd</code></a></small>
       <div class="hidden name"><code>GermaParl.Rmd</code></div>
@@ -89,12 +89,13 @@
 <div id="a-corpus-of-plenary-protocols" class="section level3">
 <h3 class="hasAnchor">
 <a href="#a-corpus-of-plenary-protocols" class="anchor"></a>A Corpus of Plenary Protocols</h3>
-<p>Parliamentary debates convey the arguments, interpretations and contestations that shape political decision-making. They are recorded and transcribed by parliamentary administrations with diligence, and published as plenary protocols. These documents are available for long periods of time – for several decades and more – and they cover the full breadth of topics that is processed by a political system: Plenary protocols are a valuable resource for research on policy and politics, and for citizens. They are a crucial building block of the public digital archive of democracy.</p>
-<p>The digital availability of plenary protocols is excellent and limited at the same time. Documents can be downloaded without technical or legal restrictions as txt, html or pdf documents. But this data format does not match the requirements for digital-era data processing. To exploit the analytical potential of the data, original documents need to be converted into a semi-structured data format (typically XML). The GermaParl corpus as it has been prepared in the <a href="www.polmine.de">PolMine Project</a> implements this notion and is based on an XMLification of txt and pdf documents. The aim is to make a contribution to the broader development of preparing corpora of plenary protocols – the naming of GermaParl is inspired by the EuroParl and DutchParl corpus, see Marx &amp; Schuth 2010. GermaParl is intended to serve as an example how to make corpora available in a sustainable way, meeting the technological standards and requirements of the digital era.</p>
+<p>Parliamentary debates convey the arguments, interpretations and conflicts that shape political decision-making. They are recorded and transcribed by parliamentary administrations with diligence, and published as plenary protocols. These documents are available for long periods of time – for several decades and more – and they cover the full breadth of topics that is processed by a political system: Plenary protocols are a valuable resource for research on policy and politics, and for citizens. They are a crucial building block of the public digital archive of democracy.</p>
+<p>The digital availability of plenary protocols is excellent and limited at the same time. Documents can be downloaded without technical or legal restrictions as txt, html or pdf documents. But this data format does not match the requirements for digital-era data processing. To exploit the analytical potential of the data, original documents need to be converted into a semi-structured data format (typically XML). This is the essence of the preparation of the GermaParl corpus.</p>
+<p>The GermaParl corpus as it has been prepared in the <a href="https://polmine.github.io/">PolMine Project</a> is based on an XMLification of txt and pdf documents. The aim is to make a contribution to the broader development of preparing corpora of plenary protocols – the naming of GermaParl is inspired by the EuroParl and DutchParl corpus <span class="citation">(Marx and Schuth 2010)</span>. GermaParl is intended to serve as an example how to make corpora available in a sustainable way, meeting the technological standards and requirements of the digital era.</p>
 <p>GermaParl is made available in two ways:</p>
 <ul>
-<li><p>The base format of the corpus is a XMLification of the raw data (i.e. the original protocols) that is modelled on the standards of the <a href="http://www.tei-c.org/index.xml">Text Encoding Initiative (TEI)</a>. Releases of the TEI format of GermaParl are available via the <a href="https://github.com/PolMine/GermaParlTEI">GermaParlTEI repository at GitHub</a>. It results from an automized, fully reproducible pipeline, i.e. raw protocols (pdf and txt file format) have been turned into an XML/TEI-based standard.</p></li>
-<li><p>A linguistically annotated, indexed and consolidated version of the corpus is included in the GermaParl R data package documented with this vignette. XML/TEI files serve the point of departure, but the version emanates from (a) performing some standard Natural Language Processing (NLP) tasks (such as tokenization, lemmatization, part-of-speech annotation); (b) importing the linguistically annotated data into the <a href="http://cwb.sourceforge.net/">Corpus Workbench (CWB)</a> and (c) consolidating the data in a set of postprocessing tasks to remove known errors. The steps of the annotation/indexing/consolidation workflow are documented, ensuring full reproducibility, with the vignette “GermaParl - From XML to CWB” included in this R data package.</p></li>
+<li><p>The base format of the corpus is a XMLification of the raw data (i.e. the original protocols) that is modelled on the standards of the <a href="https://tei-c.org/">Text Encoding Initiative (TEI)</a>. Releases of the TEI format of GermaParl are available via the <a href="https://github.com/PolMine/GermaParlTEI">GermaParlTEI repository at GitHub</a>. It results from an automatized, fully reproducible pipeline, i.e. raw protocols (pdf and txt file format) have been turned into an XML/TEI-based standard.</p></li>
+<li><p>A linguistically annotated, indexed and consolidated version of the corpus is disseminated with the GermaParl R data package documented with this vignette. XML/TEI files serve the point of departure, but the version emanates from (a) performing some standard Natural Language Processing (NLP) tasks (such as tokenization, lemmatization, part-of-speech annotation); (b) importing the linguistically annotated data into the <a href="http://cwb.sourceforge.net/">Corpus Workbench (CWB)</a> and (c) consolidating the data in a set of postprocessing tasks to remove known errors.</p></li>
 </ul>
 <p>The corpus includes all plenary protocols that were published by the German Bundestag between 1996 and 2016. Plain text documents issued by the German Bundestag were considered the best raw data format for corpus preparation and were used whenever they are available. For a period between 2008 and 2010, txt files are not available throughout. To fill the gap, pdf documents were processed. The following sections explain corpus preparation and the data made available with this package in some more detail.</p>
 </div>
@@ -107,12 +108,11 @@
 <li><p><strong>XMLification</strong>: Turn the plain text documents into TEI format: Extraction of metadata, annotation of speakers etc.;</p></li>
 <li><p><strong>Consolidation</strong>: Consolidating speaker names and enriching documents.</p></li>
 </ul>
-<p>The preprocessing step is not as trivial as it might seem. Older plain text files are offered by the German Bundestag in all kinds of encodings that are have come out of use. The pdf documents have a two-column layout that is difficult to handle. Experience to handle these issues is captured by the respective functionality that is included in the R package <a href="https://www.github.com/PolMine/ctk">ctk</a>. For handlung the two-column layout of pdf documents, the R package <a href="https://github.com/PolMine/trickypdf">trickypdf</a> has been developed.</p>
+<p>The preprocessing step is not as trivial as it might seem. Older plain text files are offered by the German Bundestag in all kinds of encodings that are have come out of use. The pdf documents have a two-column layout that is difficult to handle. For coping with the two-column layout of pdf documents, the R package <a href="https://github.com/PolMine/trickypdf">trickypdf</a> has been developed.</p>
 <p>The essential instrument for the XMLification is a set of regular expressions to extract relevant metadata (such as legislative period, session number or date), to find the beginning and the end of a debate, the call upon the speakers, and the beginning and end of agenda items. The matches are used to generate the structural annotation of parliamentary speech in the XML document.</p>
 <p>Due to the remaining haphazard variations that occur in plenary protocols, the quest is not for a universal battery of regular expressions that would always work without manual checks. Even though it introduces an element of manual work, our solution is to work with lists of mismatches (matches of regular expressions to omit), in combination with a brute-force preprocessing (hard-coded substitutions) that correct obvious errors that are already included in the original version of plenary protocol.</p>
 <p>The result of the base XMLification still includes considerable noise. Inconsistencies that occur with names are a particularly serious issue. To obtain consolidated metadata, information that has been extracted is checked (including approximate string matching) against an external data source. We opted for lists of members of parliamentarians, cabinet members and further speakers that are available on Wikipedia (see the <a href="https://de.wikipedia.org/wiki/Liste_der_Mitglieder_des_Deutschen_Bundestages_(17._Wahlperiode)">page for the 17th Bundestag</a>, for instance).</p>
 <p>Easy digital access is not the only justification for this choice. Wikipedia pages for the parliamentary sessions are being taken care of by a team of dedicated volunteers. Furthermore, Wikipedia pages meet permanent public scrutiny, ensuring quality checks on the data quality in a manner traditional printed material does not necessarily ensure.</p>
-<p>The code for corpus preparation is wrapped in a R package, and upon preparing a corpus, the version number of the package used is included in the TEI metadata, so that the corpus preparation is fully transparent and reproducible.</p>
 </div>
 <div id="annotation" class="section level3">
 <h3 class="hasAnchor">
@@ -120,8 +120,8 @@
 <div id="linguistic-annotation" class="section level4">
 <h4 class="hasAnchor">
 <a href="#linguistic-annotation" class="anchor"></a>Linguistic Annotation</h4>
-<p>The XML/TEI version of GermaParl is taken through a pipeline of standard Natural Language Processing (NLP) tasks. Starting with version 1.1.0, Stanford CoreNLP is used for tokenization and part-of-speech (POS) annotation. To add lemmas to the corpus, the <a href="http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/">TreeTagger</a> is used. A full (technical) documentation of the linguistic annotation of the corpus is included in the vignette “GermaParl - From XML to CWB” and not reproduced here.</p>
-<p>Note that the TreeTagger outpus #unknown# if it cannot successfully lemmatize a wordform. See the tables in the annex to learn about the unknown ratio in the corpus.</p>
+<p>The XML/TEI version of GermaParl is taken through a pipeline of standard Natural Language Processing (NLP) tasks. Starting with version 1.1.0, Stanford CoreNLP is used for tokenization and part-of-speech (POS) annotation. To add lemmas to the corpus, the <a href="http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/">TreeTagger</a> is used.</p>
+<p>Note that the TreeTagger outputs #unknown# if it cannot successfully lemmatize a wordform. See the tables in the annex to learn about the unknown ratio in the corpus.</p>
 <p>Moving to Stanford CoreNLP as the base annotation tool will be the basis for adding further annotation layers to the corpus (such as an annotation of sentences, or named entities) in the future.</p>
 </div>
 <div id="structural-annotation-metadata" class="section level4">
@@ -216,14 +216,9 @@
 <div id="getting-started---installing-germaparl" class="section level4">
 <h4 class="hasAnchor">
 <a href="#getting-started---installing-germaparl" class="anchor"></a>Getting started - installing GermaParl</h4>
-<p>The GermaParl data package that includes the CWB indexed version of the corpus is hosted at a private CRAN-style package repository on the Web-Server of the PolMine Project. The polmineR-package offers a convenient installation mechanism.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(polmineR)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="cf">if</span> (<span class="st">"drat"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw"><a href="https://rdrr.io/r/utils/available.packages.html">available.packages</a></span>()) <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>) <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"drat"</span>)</a>
-<a class="sourceLine" id="cb1-3" title="3">drat<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/drat/man/addRepo.html">addRepo</a></span>(<span class="st">"polmine"</span>) <span class="co"># lowercase necessary in this case</span></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="cf">if</span> (<span class="st">"GermaParl"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw"><a href="https://rdrr.io/r/utils/available.packages.html">available.packages</a></span>()) <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>){</a>
-<a class="sourceLine" id="cb1-5" title="5">  <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"GermaParl"</span>)</a>
-<a class="sourceLine" id="cb1-6" title="6">}</a></code></pre></div>
-<p>After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from an external webspace (amazon AWS, for the time being):</p>
+<p>The GermaParl R Data Package can be installed from CRAN. It is a “pure R” package. There are no differences whether you install on Linux, MacOS or Windows.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"GermaParl"</span>)</a></code></pre></div>
+<p>After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from <a href="https://zenodo.org/">Zenodo</a>, an open science data repository:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(GermaParl)</a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="../reference/download.html">germaparl_download_corpus</a></span>()</a></code></pre></div>
 <p>To check whether the installation has been successful, run the following commands. For further instructions, see the documentation of the polmineR package.</p>
@@ -239,7 +234,7 @@
 <div id="a-very-brief-tutorial" class="section level4">
 <h4 class="hasAnchor">
 <a href="#a-very-brief-tutorial" class="anchor"></a>A very brief tutorial</h4>
-<p>The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as <a href="http://cwb.sourceforge.net/cqpweb.php">CQPweb</a>). However, most technical decisions during corpus preparation had in mind to optimise using the GermaParl corpus in combination with the polmineR package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands. Note that in the following examples, we will use GERMAPARLMINI to illustrate functions, as the full GERMAPARL corpus will only be available after the full installation of the corpus.</p>
+<p>The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as <a href="http://cwb.sourceforge.net/cqpweb.php">CQPweb</a>). However, most technical decisions during corpus preparation had in mind to optimize using the GermaParl corpus in combination with the <a href="https://CRAN.R-project.org/package=polmineR">polmineR</a> package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands. Note that in the following examples, we will use GERMAPARLMINI to illustrate functions, as the full GERMAPARL corpus will only be available after the full installation of the corpus.</p>
 <p>First, you may want to learn about the p-attributes (positional attributes), and s-attributes (structural attributes) that are available.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/s_attributes-method.html">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>)</a></code></pre></div>
 <pre><code>## [1] "interjection" "date"         "party"        "speaker"</code></pre>
@@ -397,14 +392,14 @@
 ## 2:      Flucht     2 9.000860e-06
 ## 3: Abschiebung     1 4.500430e-06</code></pre>
 <p>To get the dispersion of a query, use the dispersion-method.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">D &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/dispersion-method.html">dispersion</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Integration"</span>, <span class="dt">s_attribute =</span> <span class="st">"date"</span>)</a>
-<a class="sourceLine" id="cb21-2" title="2">D</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">d &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/dispersion-method.html">dispersion</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Integration"</span>, <span class="dt">s_attribute =</span> <span class="st">"date"</span>)</a>
+<a class="sourceLine" id="cb21-2" title="2">d</a></code></pre></div>
 <p>Visualise the result as a barplot…</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span>(D[[<span class="st">"count"</span>]], <span class="dt">names.arg =</span> D[[<span class="st">"date"</span>]], <span class="dt">las =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span>(d[[<span class="st">"count"</span>]], <span class="dt">names.arg =</span> d[[<span class="st">"date"</span>]], <span class="dt">las =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="GermaParl_files/figure-html/dispersion_barplot-1.png" width="700"></p>
 <p>The cooccurrences-method will get you the cooccurrences of a query.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">C &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/cooccurrences.html">cooccurrences</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Wir"</span>)</a>
-<a class="sourceLine" id="cb23-2" title="2">C<span class="op">@</span>stat[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">coocs &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/cooccurrences.html">cooccurrences</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Wir"</span>)</a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/format.html">format</a></span>(coocs)</a>
 <a class="sourceLine" id="cb23-3" title="3"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/dotplot-method.html">dotplot</a></span>(C)</a></code></pre></div>
 <p>These are some if the core functions, applied to the whole corpus. The whole point of the structural annotation of the corpus (s-attributes) is to facilitate the creation of subcorpora / partitions. So every method that has been introduced can be applied to a partition.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">lp16 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/partition.html">partition</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">lp =</span> <span class="dv">16</span>)</a>
@@ -416,14 +411,14 @@
 <a class="sourceLine" id="cb25-3" title="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/subset.html">subset</a></span>(<span class="op">!</span>word <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(tm<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tm/man/stopwords.html">stopwords</a></span>(<span class="st">"de"</span>), <span class="st">","</span>, <span class="st">"."</span>)) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb25-4" title="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/subset.html">subset</a></span>(count_window <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb25-5" title="5"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/dotplot-method.html">dotplot</a></span>()</a></code></pre></div>
-<p>This is just a short glimpse into the analytical opportunities of using GermaParl in combination with polmineR. One of the most important aspects that cannot be explained here is the possibility to use the syntax of the Corpus Query Processor (CQP) that comes with the CWB backend. The as.TermDocumentMatrix method will prepare data structures efficiently needed for more advanced analytical techniques such as topicmodelling.Consult the vignette of the polmineR package to learn more!</p>
+<p>This is just a short glimpse into the analytical potential of using GermaParl in combination with polmineR. One of the most important aspects that cannot be explained here is the possibility to use the syntax of the Corpus Query Processor (CQP) that comes with the CWB backend. The <code>as.TermDocumentMatrix</code> method will prepare data structures efficiently needed for more advanced analytical techniques such as topicmodelling. Consult the vignette of the polmineR package to learn more!</p>
 </div>
 <div id="some-caveats" class="section level4">
 <h4 class="hasAnchor">
 <a href="#some-caveats" class="anchor"></a>Some caveats</h4>
 <p>A set of general remarks may help to avoid pitfalls when working with GermaParl:</p>
 <ul>
-<li><p>Plenary protocols meticulously report interjections. To maintain the integrity of the original documents, interjections are annotated in the corpus. By using the s-attribute ‘interjection’ that assumes the values ‘TRUE’ or ‘FALSE’, you can limit your analysis to speech or interjections.</p></li>
+<li><p>Plenary protocols meticulously report interjections. To maintain the integrity of the original documents, interjections are annotated in the corpus. By using the s-attribute ‘interjection’ that assumes the values <code>TRUE</code> or <code>FALSE</code>, you can limit your analysis to speech or interjections.</p></li>
 <li><p>Plenary protocols report membership in a parliamentary group only. Information on party membership is derived from external data sources and written back to the corpus. More specifically, the s-attribute ‘parliamentary_group’ refers to the parliamentary group, ‘party’ refers to the party a speaker is a member of. To distinguish between CDU and CSU speakers, using the s-attribute ‘party’ is necessary.</p></li>
 <li><p>The GermaParl corpus is a corpus of the debates and speeches that were actually given in the German Bundestag. Speeches that were only included in the printed protocol (i.e. included in the annex to a protocol) are not yet covered by corpus preparation.</p></li>
 </ul>
@@ -436,25 +431,26 @@
 <p>The resource is under active development. Apart from improving data quality and preparing updates, one important concern is to add further annotation layers:</p>
 <ul>
 <li><p>Moving to Stanford CoreNLP as the core tool for the NLP pipe (a step that has been taken with version 1.1.0) provides the basis for adding sentence annotation, and a basic annotation of named entities in the future.</p></li>
-<li><p>There are many scenarios for using the corpus that require an ability to create classification-based subcorpora. Writing the results of an optimized topicmodel to the corpus as structural attributes is being prepared, and will relieve users from the cumbersome task of running multiple topicmodels. Given the size of the corpus, every run to train a topicmodel takes considerably time, and multiple models need to be trained to learn about the optimal number of topics.</p></li>
-<li><p>Perspectively, classification based on a supervised learning approach will be superior to unsupervised learning. In a CLARIN-funded project, training data has been prepared to obtain the basis for a classification of debates according to a (somewhat expanded) classification scheme of the Comparative Agendas Project (CAP). An annotation of the hand-coded text passages will be included in the corpus.</p></li>
+<li><p>Classification based on a supervised learning approach will be superior to unsupervised learning. In a CLARIN-funded project, training data has been prepared to obtain the basis for a classification of debates according to a (somewhat expanded) classification scheme of the Comparative Agendas Project (CAP). An annotation of the hand-coded text passages will be included in the corpus.</p></li>
 </ul>
 <p>Hopefully, GermaParl will make qualitative and quantitative research with German parliamentary debates more productive. A final note on user feedback: Improving data quality is an important concern of the PolMine Project. This is why the data is versioned. The resource will benefit from its community of users - feedback that helps to improve data quality is more than welcome!</p>
 </div>
 <div id="license" class="section level3">
 <h3 class="hasAnchor">
 <a href="#license" class="anchor"></a>License</h3>
-<p>While the raw data, the plenary protocols published by the German Bundestag, are in the public domain, the GermaParl corpus comes with a CC BY+NC+SA license. That means:</p>
+<p>While the raw data, the plenary protocols published by the German Bundestag, are in the public domain, the GermaParl corpus comes with a CC BY-SA license. That means:</p>
 <p><strong>BY</strong> - Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.</p>
-<p><strong>NC</strong> - NonCommercial — You may not use the material for commercial purposes.</p>
 <p><strong>SA</strong> - ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.</p>
-<p>See the <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC Attribution-NonCommercial-ShareAlike 4.0 Unported License</a> for further explanations.</p>
+<p>See the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC Attribution-ShareAlike 4.0 Unported License</a> for further explanations.</p>
 </div>
 <div id="quotation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#quotation" class="anchor"></a>Quotation</h3>
-<p>If you work with GermaParl package, please include the following reference in your bibliography to attribute the language resource:</p>
-<p><em>Blaette, Andreas</em> (2018): GermaParl. Corpus of Plenary Protocols of the German Bundestag. R Data Package (v1.2.0). Available from: <a href="https://doi.org/10.5281/zenodo.1312551" class="uri">https://doi.org/10.5281/zenodo.1312551</a>.</p>
+<p>The ‘GermaParl’ R package and the ‘GermaParl’ corpus are two different pieces of research data, with different version numbers, document object identifiers (DOIs) and recommendations for quotation. If you use GermaParl for your research, maximum transparency on the tools you used is attained, when both the package and the corpus is quoted in your publication. To ensure the reproducibility of your research, it is more important to refer to and specify the corpus (including version, DOI) you used.</p>
+<p>Blaette, Andreas (2020): GermaParl R Data Package. v1.2.1.9003. <a href="https://CRAN.R-project.org/package=GermaParl" class="uri">https://CRAN.R-project.org/package=GermaParl</a></p>
+<p>Blaette, Andreas (2020): GermaParl CWB Corpus (v1.0.5). <a href="https://doi.org/10.5281/zenodo.3735141" class="uri">https://doi.org/10.5281/zenodo.3735141</a></p>
+<p>NOTE: In an R session, you can get this recommendation how to quote GermaParl by calling the usual <code><a href="https://rdrr.io/r/utils/citation.html">citation()</a></code> function:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span>(<span class="st">"GermaParl"</span>)</a></code></pre></div>
 </div>
 <div id="annex" class="section level3">
 <h3 class="hasAnchor">
@@ -781,10 +777,26 @@
 </table>
 </div>
 </div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h2>
+<div id="refs" class="references">
+<div id="ref-DBLP:conf/lrec/MarxS10">
+<p>Marx, Maarten, and Anne Schuth. 2010. “DutchParl. The Parliamentary Documents in Dutch.” In <em>Proceedings of the International Conference on Language Resources and Evaluation, LREC 2010, 17-23 May 2010, Valletta, Malta</em>. <a href="http://www.lrec-conf.org/proceedings/lrec2010/summaries/263.html">http://www.lrec-conf.org/proceedings/lrec2010/summaries/263.html</a>.</p>
+</div>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
 
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#references">References</a></li>
+      </ul>
+</div>
       </div>
 
 </div>

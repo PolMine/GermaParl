@@ -74,7 +74,7 @@ the corpus." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GermaParl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
       </span>
     </div>
 
@@ -164,10 +164,23 @@ the instructions you see when calling <code><a href='https://rdrr.io/r/utils/cit
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>polmineR</span>)
 <span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/use.html'>use</a></span>(<span class='st'>"GermaParl"</span>)
 <span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/corpus-class.html'>corpus</a></span>() <span class='co'># will include GERMAPARLMINI, sample corpus included in pkg</span>
-<span class='fu'><a href='download.html'>germaparl_download_corpus</a></span>() <span class='co'># takes time!</span>
+<span class='kw'>if</span> (!<span class='fu'>germaparl_is_installed</span>()) <span class='fu'><a href='download.html'>germaparl_download_corpus</a></span>() <span class='co'># ~1 GB, takes time ...</span>
 <span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/use.html'>use</a></span>(<span class='st'>"GermaParl"</span>)
 <span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/corpus-class.html'>corpus</a></span>() <span class='co'># will include GERMAPARL, full corpus</span>
-}</div></pre>
+}
+<span class='fu'>germaparl_is_installed</span>() <span class='co'># to check whether GERMAPARL has been downloaded</span></div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>germaparl_get_doi</span>() <span class='co'># get 'document object identifier' (DOI) of GERMAPARL corpus</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Cannot get DOI for corpus GERMAPARL: Corpus has not yet been installed.</span></div><div class='output co'>#&gt; NULL</div><div class='input'><span class='no'>germaparl_get_version</span></div><div class='output co'>#&gt; function () 
+#&gt; {
+#&gt;     if (isFALSE(germaparl_is_installed())) {
+#&gt;         warning("Cannot get GERMAPARL version: Corpus has not yet been installed.")
+#&gt;         return(NULL)
+#&gt;     }
+#&gt;     regdir &lt;- system.file(package = "GermaParl", "extdata", "cwb", 
+#&gt;         "registry")
+#&gt;     regdata &lt;- registry_file_parse(corpus = "GERMAPARL", registry_dir = regdir)
+#&gt;     regdata[["properties"]][["version"]]
+#&gt; }
+#&gt; &lt;bytecode: 0x7fc65c628448&gt;
+#&gt; &lt;environment: namespace:GermaParl&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -178,7 +191,7 @@ the instructions you see when calling <code><a href='https://rdrr.io/r/utils/cit
     </ul>
 
     <h2>Author</h2>
-    <p>Andreas Blaette (andreas.blaette@uni-due.de)</p>
+    <p>Andreas Blaette <a href='mailto:andreas.blaette@uni-due.de'>andreas.blaette@uni-due.de</a></p>
   </div>
 </div>
 

@@ -70,7 +70,7 @@ of topics between 100 and 500." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GermaParl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
       </span>
     </div>
 
@@ -130,9 +130,7 @@ of topics between 100 and 500.</p>
 
 <span class='fu'>germaparl_encode_lda_topics</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 
-<span class='fu'>germaparl_load_topicmodel</span>(<span class='no'>k</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>germaparl_get_speeches_for_topic</span>(<span class='no'>n</span>)</pre>
+<span class='fu'>germaparl_load_topicmodel</span>(<span class='no'>k</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,11 +141,11 @@ of topics between 100 and 500.</p>
     </tr>
     <tr>
       <th>rds_file</th>
-      <td><p>filename of the RData file</p></td>
+      <td><p>Filename of the RDS file</p></td>
     </tr>
     <tr>
       <th>webdir</th>
-      <td><p>The web location.</p></td>
+      <td><p>The web location (amazon S3).</p></td>
     </tr>
     <tr>
       <th>n</th>
@@ -161,8 +159,8 @@ of topics between 100 and 500.</p>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The function <code>germaparl_download_lda</code> to download the
-  *.rds-file. It will be stored in the <code>extdata/topicmodels/</code>
+    <p>The function <code>germaparl_download_lda</code> will download an
+  rds-file that will be stored in the <code>extdata/topicmodels/</code>
   subdirectory of the installed GermaParl package.</p>
 <p><code>germaparl_encode_lda_topics</code> will add a new s-attributes
   'topics' to GermaParl corpus with topicmodel for <code>k</code> topics. The
@@ -173,34 +171,26 @@ of topics between 100 and 500.</p>
   The function will return a <code>LDA_Gibbs</code> topicmodel, if the topicmodel
   for <code>k</code> is present; <code>NULL</code> if the topicmodel has not yet been
   downloaded.</p>
-<p>@codegermaparl_get_speeches_for_topic will get a bundle with
-  Speeches for Topic.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>topicmodel_dir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"GermaParl"</span>, <span class='st'>"extdata"</span>, <span class='st'>"topicmodels"</span>)
-<span class='no'>lda_files</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.glob.html'>Sys.glob</a></span>(<span class='kw'>paths</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span>(<span class='st'>"%s/germaparl_lda_speeches_*.rds"</span>, <span class='no'>topicmodel_dir</span>))
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>lda_files</span>) <span class='kw'>&gt;</span> <span class='fl'>0</span>  <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"topicmodels"</span>)){
-  <span class='no'>lda</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></span>(<span class='no'>lda_files</span>[<span class='fl'>1</span>])
-  <span class='no'>lda_terms</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/terms.html'>terms</a></span>(<span class='no'>lda</span>, <span class='fl'>50</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>germaparl_download_lda</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>250</span>)
+<span class='no'>lda</span> <span class='kw'>&lt;-</span> <span class='fu'>germaparl_load_topicmodel</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>250</span>)
+<span class='no'>lda_terms</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>topicmodels</span><span class='kw ns'>::</span><span class='fu'>terms</span>(<span class='no'>lda</span>, <span class='fl'>50</span>)
+
+<span class='kw'>if</span> (!<span class='st'>"speech"</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/s_attributes-method.html'>s_attributes</a></span>(<span class='st'>"GERMAPARL"</span>)) <span class='fu'><a href='germaparl_add_s_attribute_speech.html'>germaparl_add_s_attribute_speech</a></span>()
+<span class='fu'>germaparl_encode_lda_topics</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>250</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>polmineR</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/use.html'>use</a></span>(<span class='st'>"GermaParl"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/s_attributes-method.html'>s_attributes</a></span>(<span class='st'>"GERMAPARL"</span>)
+<span class='no'>sc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/corpus-class.html'>corpus</a></span>(<span class='st'>"GERMAPARL"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/subset.html'>subset</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span>(<span class='st'>"\\|133\\|"</span>, <span class='no'>topics</span>))
+<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/as.speeches.html'>as.speeches</a></span>(<span class='no'>sc</span>, <span class='kw'>s_attribute_name</span> <span class='kw'>=</span> <span class='st'>"speaker"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>b</span>)
 }
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'>germaparl_encode_lda_topics</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>250</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-}
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>k</span> <span class='kw'>&lt;-</span> <span class='fl'>250</span>
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'>germaparl_load_topicmodel</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='no'>k</span>)
-<span class='no'>T</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>topicmodels</span><span class='kw ns'>::</span><span class='fu'>terms</span>(<span class='no'>model</span>, <span class='no'>k</span>)
-<span class='no'>topic</span> <span class='kw'>&lt;-</span> <span class='fl'>181</span> <span class='co'># topic nuclear energy</span>
-<span class='no'>topic</span> <span class='kw'>&lt;-</span> <span class='fl'>133</span> <span class='co'># foreigners law</span>
-<span class='no'>topic</span> <span class='kw'>&lt;-</span> <span class='fl'>65</span> <span class='co'># right-wing extremism</span>
-
-<span class='no'>PB</span> <span class='kw'>&lt;-</span> <span class='fu'>germaparl_get_speeches_for_topic</span>(<span class='no'>topic</span>)
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1L</span>:<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>PB</span>)) {
-  <span class='no'>fulltext</span> <span class='kw'>&lt;-</span> <span class='fu'>read</span>(<span class='no'>PB</span><span class='kw'>[[</span><span class='no'>i</span>]])
-  <span class='no'>fulltext</span> <span class='kw'>&lt;-</span> <span class='fu'>highlight</span>(<span class='no'>fulltext</span>, <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>yellow</span> <span class='kw'>=</span> <span class='no'>T</span>[<span class='fl'>1</span>:<span class='fl'>100</span>,<span class='no'>topic</span>]))
-  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>fulltext</span>)
-  <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/readline.html'>readline</a></span>() <span class='kw'>==</span> <span class='st'>"q"</span>) <span class='fu'><a href='https://rdrr.io/r/base/stop.html'>stop</a></span>()
-}
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

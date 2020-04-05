@@ -76,7 +76,7 @@ needs to be downloaded." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GermaParl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
       </span>
     </div>
 
@@ -167,7 +167,7 @@ GermaParl.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>germaparl_download_corpus</span>()
+<span class='kw'>if</span> (!<span class='fu'><a href='GermaParl-package.html'>germaparl_is_installed</a></span>()) <span class='fu'>germaparl_download_corpus</span>()
 <span class='fu'>use</span>(<span class='st'>"GermaParl"</span>)
 <span class='fu'>corpus</span>() <span class='co'># should include GERMAPARLMINI and GERMAPARL</span>
 <span class='fu'>count</span>(<span class='st'>"GERMAPARL"</span>, <span class='st'>"Daten"</span>) <span class='co'># an arbitrary test</span>

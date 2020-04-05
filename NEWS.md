@@ -1,4 +1,4 @@
-# GermaParl v1.2.1.9002
+# GermaParl v1.3.0
 
 - The GermaParl corpus is downloaded now from a storage location at zenodo. The 
   `germapar_download_corpus()` function has been reworked accordingly. It now
@@ -21,9 +21,6 @@
 - The `germaparl_search_speeches()` function has been removed from the package. The
   functionality is nice, but there should either be a generic implementation in the
   polmineR package, or it might be offered as a recipe.
-
-# GermaParl 1.2.1.9001
-
 - Documentation for function to work with topicmodels have been integrated into one 
   documentation object.
 - Bug removed from `germaparl_download_lda` examples.
@@ -31,11 +28,7 @@
   lda model is not present.
 - `germaparl_encode_lda_topics` will now issue a warning (instead of crashing) if the
   s-attribute 'speeches' has not yet been generated.
-- The function `use_germaparl()` has been replaced by `germaparl_regdir`, it will return
-  the registry directory with the R data package.
-- The tarball is downloaded from the webserver of the PolMine Project.
-- Upon loading the package, the registry file included in the package is copied to the 
-  temporary registry by default, making the corpus available. 
+- The tarball is downloaded from Zenodo.
 
 # GermaParl 1.2.1
 

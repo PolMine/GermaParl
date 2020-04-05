@@ -17,9 +17,7 @@
 #' lda <- germaparl_load_topicmodel(k = 250)
 #' lda_terms <- topicmodels::terms(lda, 50)
 #' 
-#' if ("speech" in s_attributes("GERMAPARL")){
-#'   germaparl_add_s_attribute_speech()
-#' }
+#' if (!"speech" %in% s_attributes("GERMAPARL")) germaparl_add_s_attribute_speech()
 #' germaparl_encode_lda_topics(k = 250, n = 5)
 #' 
 #' library(polmineR)
