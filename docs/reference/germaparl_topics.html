@@ -36,8 +36,8 @@
 
 
 <meta property="og:title" content="Use topicmodels prepared for GermaParl. — germaparl_download_lda" />
-<meta property="og:description" content="A set of LDA topicmodels is deposited at a Amazon S3 webspace, for a number
-of topics between 100 and 500." />
+<meta property="og:description" content="A set of LDA topicmodels is part of the Zenodo release of GermaParl, for a number
+of topics between 100 and 450." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,14 +118,13 @@ of topics between 100 and 500." />
     </div>
 
     <div class="ref-description">
-    <p>A set of LDA topicmodels is deposited at a Amazon S3 webspace, for a number
-of topics between 100 and 500.</p>
+    <p>A set of LDA topicmodels is part of the Zenodo release of GermaParl, for a number
+of topics between 100 and 450.</p>
     </div>
 
     <pre class="usage"><span class='fu'>germaparl_download_lda</span>(
-  <span class='kw'>k</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100L</span>, <span class='fl'>150L</span>, <span class='fl'>175L</span>, <span class='fl'>200L</span>, <span class='fl'>225L</span>, <span class='fl'>250L</span>, <span class='fl'>275L</span>, <span class='fl'>300L</span>, <span class='fl'>350L</span>, <span class='fl'>400L</span>, <span class='fl'>450L</span>, <span class='fl'>500L</span>),
-  <span class='kw'>rds_file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span>(<span class='st'>"germaparl_lda_speeches_%d.rds"</span>, <span class='no'>k</span>),
-  <span class='kw'>webdir</span> <span class='kw'>=</span> <span class='st'>"https://s3.eu-central-1.amazonaws.com/polmine/corpora/cwb/germaparl"</span>
+  <span class='kw'>k</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100L</span>, <span class='fl'>150L</span>, <span class='fl'>175L</span>, <span class='fl'>200L</span>, <span class='fl'>225L</span>, <span class='fl'>250L</span>, <span class='fl'>275L</span>, <span class='fl'>300L</span>, <span class='fl'>350L</span>, <span class='fl'>400L</span>, <span class='fl'>450L</span>),
+  <span class='kw'>doi</span> <span class='kw'>=</span> <span class='st'>"https://doi.org/10.5281/zenodo.3742113"</span>
 )
 
 <span class='fu'>germaparl_encode_lda_topics</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
@@ -137,15 +136,13 @@ of topics between 100 and 500.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>k</th>
-      <td><p>The number of topics of the topicmodel.</p></td>
+      <td><p>A numeric or integer vector, the number of topics of the topicmodel.
+If multiple values are provided, several topic models can be downloaded at
+once.</p></td>
     </tr>
     <tr>
-      <th>rds_file</th>
-      <td><p>Filename of the RDS file</p></td>
-    </tr>
-    <tr>
-      <th>webdir</th>
-      <td><p>The web location (amazon S3).</p></td>
+      <th>doi</th>
+      <td><p>The DOI of GermaParl at Zenodo (preferrably given as an URL).</p></td>
     </tr>
     <tr>
       <th>n</th>
