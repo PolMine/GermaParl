@@ -32,24 +32,22 @@
 #' corpus() # should include GERMAPARLMINI and GERMAPARL
 #' count("GERMAPARL", "Daten") # an arbitrary test
 #' }
-germaparl_download_corpus <- function(doi = "https://doi.org/10.5281/zenodo.3735141", quiet = FALSE){
+germaparl_download_corpus <- function(doi = "https://doi.org/10.5281/zenodo.3742113", quiet = FALSE){
   if (isFALSE(is.logical(quiet))) stop("Argument 'quiet' needs to be a logical value.")
-  if (isFALSE(grepl("^.*?10\\.5281/zenodo\\.\\d+$", doi))){
-    stop("Argument 'doi' is expected to offer a DOI (Digital Object Identifier) that refers to data",
-         "hosted with zenodo, i.e. starting with 10.5281/zenodo.")
-  }
-  record_id <- gsub("^.*?10\\.5281/zenodo\\.(\\d+)$", "\\1", doi)
-  zenodo_api_url <- sprintf("https://zenodo.org/api/records/%d", as.integer(record_id))
-  zenodo_api_info <- fromJSON(getURL(zenodo_api_url))
-  tarball <- zenodo_api_info[["files"]][["links"]][["self"]]
-  if (isFALSE(quiet)) message("... downloading tarball: ", tarball)
-  corpus_install(pkg = "GermaParl", tarball = tarball, verbose = !quiet)
+  zenodo_info <- .germaparl_zenodo_info(doi = doi)
+  corpus_tarball <- grep(
+    "^.*/germaparl_v\\d+\\.\\d+\\.\\d+\\.tar\\.gz$",
+    zenodo_info[["files"]][["links"]][["self"]],
+    value = TRUE
+  )
+  if (isFALSE(quiet)) message("... downloading tarball: ", corpus_tarball)
+  corpus_install(pkg = "GermaParl", tarball = corpus_tarball, verbose = !quiet)
   regdata <- registry_file_parse(
     corpus = "GERMAPARL",
     registry_dir = system.file(package = "GermaParl", "extdata", "cwb", "registry")
   )
   regdata[["properties"]][["doi"]] <- doi
-  regdata[["properties"]][["version"]] <- zenodo_api_info[["metadata"]][["version"]]
+  regdata[["properties"]][["version"]] <- zenodo_info[["metadata"]][["version"]]
   regdata[["home"]] <- system.file(package = "GermaParl", "extdata", "cwb", "indexed_corpora", "germaparl")
   registry_file_write(
     data = regdata,
@@ -57,4 +55,14 @@ germaparl_download_corpus <- function(doi = "https://doi.org/10.5281/zenodo.3735
     registry_dir = system.file(package = "GermaParl", "extdata", "cwb", "registry")
   )
   return(TRUE)
+}
+
+.germaparl_zenodo_info <- function(doi){
+  if (isFALSE(grepl("^.*?10\\.5281/zenodo\\.\\d+$", doi))){
+    stop("Argument 'doi' is expected to offer a DOI (Digital Object Identifier) that refers to data",
+         "hosted with zenodo, i.e. starting with 10.5281/zenodo.")
+  }
+  record_id <- gsub("^.*?10\\.5281/zenodo\\.(\\d+)$", "\\1", doi)
+  zenodo_api_url <- sprintf("https://zenodo.org/api/records/%d", as.integer(record_id))
+  fromJSON(getURL(zenodo_api_url))
 }

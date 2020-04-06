@@ -9,8 +9,8 @@ test_that(
   {
     skip_on_cran()
     expect_identical(germaparl_is_installed(), TRUE)
-    expect_identical(germaparl_get_doi(), "https://doi.org/10.5281/zenodo.3735141")
-    expect_identical(germaparl_get_version(), "v1.0.5")
+    expect_true(grepl("https://doi.org/10.5281/zenodo.\\d+", germaparl_get_doi()))
+    expect_true(grepl("v\\d+\\.\\d+\\.\\d+", germaparl_get_version()))
   }
 )
 

@@ -1,6 +1,6 @@
 ## General remarks
 
-This is the initial submission of the GermaParl package. It is a data package with minimal 
+This is the initial submission of the 'GermaParl' package. It is a data package with essential 
 functionality to download and augment that actual dataset (a ~1GB corpus). 
 
 Once GermaParl is accepted by CRAN, my package "polmineR" can rely on the test data of the 

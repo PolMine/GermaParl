@@ -1,14 +1,18 @@
+#' @include download.R
+NULL
+
 #' Use topicmodels prepared for GermaParl.
 #' 
-#' A set of LDA topicmodels is deposited at a Amazon S3 webspace, for a number
-#' of topics between 100 and 500.
+#' A set of LDA topicmodels is part of the Zenodo release of GermaParl, for a number
+#' of topics between 100 and 450.
 #' 
 #' @details The function \code{germaparl_download_lda} will download an
 #'   rds-file that will be stored in the \code{extdata/topicmodels/}
 #'   subdirectory of the installed GermaParl package.
-#' @param k The number of topics of the topicmodel.
-#' @param webdir The web location (amazon S3).
-#' @param rds_file Filename of the RDS file
+#' @param k A numeric or integer vector, the number of topics of the topicmodel.
+#'   If multiple values are provided, several topic models can be downloaded at
+#'   once.
+#' @param doi The DOI of GermaParl at Zenodo (preferrably given as an URL).
 #' @export germaparl_download_lda
 #' @aliases topics
 #' @examples
@@ -29,19 +33,26 @@
 #' length(b)
 #' }
 #' @rdname germaparl_topics
-germaparl_download_lda <- function(k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L, 300L, 350L, 400L, 450L, 500L), rds_file = sprintf("germaparl_lda_speeches_%d.rds", k), webdir = "https://s3.eu-central-1.amazonaws.com/polmine/corpora/cwb/germaparl"){
-  tarball <- file.path(webdir, rds_file)
-  if (!url.exists(tarball)){
-    warning(sprintf("file '%s' is not available"), rds_file)
-    return(FALSE)
+germaparl_download_lda <- function(k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L, 300L, 350L, 400L, 450L), doi = "https://doi.org/10.5281/zenodo.3742113"){
+  if (!is.numeric(k)) stop("Argument k is required to be a numeric vector.")
+  if (length(k) > 1L){
+    sapply(1L:length(k), function(i) germaparl_download_lda(k = k[i], doi = doi))
   } else {
-    message("... downloading: ", tarball)
-    download.file(
-      url = tarball,
-      destfile = file.path(system.file(package = "GermaParl", "extdata", "topicmodels"), rds_file)
-    )
-    return(invisible(TRUE))
-  } 
+    rds_file <- sprintf("germaparl_lda_speeches_%d.rds", k) 
+    zenodo_files <- .germaparl_zenodo_info(doi = doi)[["files"]][["links"]][["self"]]
+    lda_tarball <- grep(sprintf("^.*/%s$", rds_file), zenodo_files, value = TRUE)
+    if (!nchar(lda_tarball)){
+      warning(sprintf("File '%s' is not available at Zenodo repository for the DOI given.", rds_file))
+      return(FALSE)
+    } else {
+      message("... downloading: ", lda_tarball)
+      download.file(
+        url = lda_tarball,
+        destfile = file.path(system.file(package = "GermaParl", "extdata", "topicmodels"), rds_file)
+      )
+      return(invisible(TRUE))
+    } 
+  }
 }
 
 

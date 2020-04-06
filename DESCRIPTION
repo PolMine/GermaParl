@@ -1,6 +1,6 @@
 Package: GermaParl
 Type: Package
-Title: GermaParl R Data Package 
+Title: Download and Augment the Corpus of Plenary Protocols of the German Bundestag
 Version: 1.3.0
 Date: 2020-04-04
 Authors@R: c(person(given = "Andreas", family = "Blaette", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de"))
@@ -30,8 +30,8 @@ License: GPL-3
 VignetteBuilder: knitr
 Encoding: UTF-8
 Collate:
-  'download.R'
-  'GermaParl.R'
-  'speeches.R'
-  'lda.R'
+    'GermaParl.R'
+    'download.R'
+    'lda.R'
+    'speeches.R'
 RoxygenNote: 7.0.2

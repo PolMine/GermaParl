@@ -5,7 +5,7 @@
 \title{Download full GermaParl corpus.}
 \usage{
 germaparl_download_corpus(
-  doi = "https://doi.org/10.5281/zenodo.3735141",
+  doi = "https://doi.org/10.5281/zenodo.3742113",
   quiet = FALSE
 )
 }

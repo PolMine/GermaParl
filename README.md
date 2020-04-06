@@ -144,11 +144,13 @@ publication. To ensure the reproducibility of your research, it is more
 important to refer to and specify the corpus (including version, DOI)
 you used.
 
-Blaette, Andreas (2020): GermaParl R Data Package. v1.2.1.9003.
+Blaette, Andreas (2020): GermaParl. Download and Augment the Corpus of
+Plenary Protocols of the German Bundestag. R package version 1.3.0.
 <https://CRAN.R-project.org/package=GermaParl>
 
-Blaette, Andreas (2020): GermaParl CWB Corpus (v1.0.5).
-<https://doi.org/10.5281/zenodo.3735141>
+Blaette, Andreas (2020): GermaParl. Linguistically Annotated and Indexed
+Corpus of Plenary Protocols of the German Bundestag. CWB corpus version
+1.0.5. <https://doi.org/10.5281/zenodo.3735141>
 
 NOTE: In an R session, you can get this recommendation how to quote
 GermaParl by calling the usual `citation()` function:

@@ -8,9 +8,8 @@
 \title{Use topicmodels prepared for GermaParl.}
 \usage{
 germaparl_download_lda(
-  k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L, 300L, 350L, 400L, 450L, 500L),
-  rds_file = sprintf("germaparl_lda_speeches_\%d.rds", k),
-  webdir = "https://s3.eu-central-1.amazonaws.com/polmine/corpora/cwb/germaparl"
+  k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L, 300L, 350L, 400L, 450L),
+  doi = "https://doi.org/10.5281/zenodo.3742113"
 )
 
 germaparl_encode_lda_topics(k = 200, n = 5)
@@ -18,19 +17,19 @@ germaparl_encode_lda_topics(k = 200, n = 5)
 germaparl_load_topicmodel(k, verbose = TRUE)
 }
 \arguments{
-\item{k}{The number of topics of the topicmodel.}
+\item{k}{A numeric or integer vector, the number of topics of the topicmodel.
+If multiple values are provided, several topic models can be downloaded at
+once.}
 
-\item{rds_file}{Filename of the RDS file}
-
-\item{webdir}{The web location (amazon S3).}
+\item{doi}{The DOI of GermaParl at Zenodo (preferrably given as an URL).}
 
 \item{n}{Number of topics to write to corpus}
 
 \item{verbose}{logical}
 }
 \description{
-A set of LDA topicmodels is deposited at a Amazon S3 webspace, for a number
-of topics between 100 and 500.
+A set of LDA topicmodels is part of the Zenodo release of GermaParl, for a number
+of topics between 100 and 450.
 }
 \details{
 The function \code{germaparl_download_lda} will download an

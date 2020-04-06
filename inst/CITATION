@@ -1,35 +1,58 @@
 citHeader(
     "The 'GermaParl' R package and the 'GermaParl' corpus are two different pieces of research data, ",
     "with different version numbers, document object identifiers (DOIs), licenses and recommendations for quotation. ",
-    "If you use GermaParl for your research, maximum transparency on the tools you used is attained, ",
-    "when both the package and the corpus are quoted in your publication. To ensure the reproducibility",
-    "of your research, it is more important to refer to and specify the corpus (including version, DOI) ",
-    "you used. Note that the GermaParl R package uses the GPL-3 license as a standard license for open ",
-    "source software. The license of the GermaParl corpus is the Creative Commons Attibution ShareAlike 4.0 ",
-    "(CC BY-SA 4.0), which is common for data and makes the expectation that the data is quoted explicit."
+    "If you use GermaParl for your research, maximum transparency on the tools you used is attained ",
+    "when both the package and the corpus are quoted in your publication. To safeguard the reproducibility",
+    "of your research, it is particularly important to refer to and specify the corpus ",
+    "you used (including version number and DOI). ",
+    "Note that the GermaParl R package uses the GPL-3 license as a standard license for open ",
+    "source software. The license of the GermaParl corpus is the Creative Commons Attibution ShareAlike 4.0 License ",
+    "(CC BY-SA 4.0), which is common for data and makes the expectation explicit that the data is quoted. ",
+    "As different versions of the GermaParl corpus may be available, the specific recommendation how to quote ",
+    "the corpus will only be available when a corpus has been downloaded and is liinstalled."
 )
 
-citEntry(entry = "Manual",
-         title = "GermaParl R Data Package ",
+
+if (requireNamespace("GermaParl", quietly = TRUE) && requireNamespace("utils", quietly = TRUE)){
+  citEntry(entry = "Manual",
+         title = "GermaParl. Download and Augment the Corpus of Plenary Protocols of the German Bundestag",
+         author = person("Andreas", "Blaette", email = "andreas.blaette@uni-due.de"),
+         year = format(as.Date(utils::packageDescription("GermaParl")[["Date"]]), "%Y"),
+         note = sprintf("R package version %s", utils::packageVersion("GermaParl")),
+         url = "https://CRAN.R-project.org/package=GermaParl",
+         textVersion = sprintf(
+           "Blaette, Andreas (%s): GermaParl. Download and Augment the Corpus of Plenary Protocols of the German Bundestag. R package version %s. %s",
+           format(as.Date(utils::packageDescription("GermaParl")[["Date"]]), "%Y"),
+           utils::packageVersion("GermaParl"),
+           "https://CRAN.R-project.org/package=GermaParl"
+         )
+  )
+} else {
+  citEntry(entry = "Manual",
+         title = "GermaParl. Download and Augment the Corpus of Plenary Protocols of the German Bundestag",
          author = person("Andreas", "Blaette", email = "andreas.blaette@uni-due.de"),
          year = "2020",
          note = "R package version 1.3.0",
          url = "https://CRAN.R-project.org/package=GermaParl",
-         textVersion = "Blaette, Andreas (2020): GermaParl R Data Package. v1.3.0. https://CRAN.R-project.org/package=GermaParl"
-)
+         textVersion = "Blaette, Andreas (2020): GermaParl. Download and Augment the Corpus of Plenary Protocols of the German Bundestag. R package version 1.3.0. https://CRAN.R-project.org/package=GermaParl"
+  )
+}
 
 if (requireNamespace("GermaParl", quietly = TRUE)){
   if (GermaParl::germaparl_is_installed()){
     citEntry(entry = "Misc",
-        title = "GermaParl CWB Corpus",
+        title = "GermaParl. Linguistically Annotated and Indexed Corpus of Plenary Protocols of the German Bundestag",
          author = person("Andreas", "Blaette", email = "andreas.blaette@uni-due.de"),
          year = "2020",
-         note = GermaParl::germaparl_get_version(),
+         note = sprintf(
+           "CWB corpus version %s",
+           gsub("^.*?(\\d+)\\.(\\d+)\\.(\\d+)$", "\\1.\\2.\\3", GermaParl::germaparl_get_version())
+         ),
          url = GermaParl::germaparl_get_doi(),
          textVersion = sprintf(
-           "Blaette, Andreas (%s): GermaParl CWB Corpus (%s). %s", 
+           "Blaette, Andreas (%s): GermaParl. Linguistically Annotated and Indexed Corpus of Plenary Protocols of the German Bundestag. CWB corpus version %s. %s", 
            format(Sys.time(), "%Y"),
-           GermaParl::germaparl_get_version(),
+           gsub("^.*?(\\d+)\\.(\\d+)\\.(\\d+)$", "\\1.\\2.\\3", GermaParl::germaparl_get_version()),
            GermaParl::germaparl_get_doi()
          )
     )
