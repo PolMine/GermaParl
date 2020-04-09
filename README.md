@@ -3,10 +3,10 @@
 
 [![DOI](https://zenodo.org/badge/141028057.svg)](https://zenodo.org/badge/latestdoi/141028057)
 [![Travis-CI Build
-Status](https://travis-ci.org/PolMine/GermaParl.svg?branch=zenodo)](https://travis-ci.org/PolMine/GermaParl)
+Status](https://travis-ci.org/PolMine/GermaParl.svg?branch=master)](https://travis-ci.org/PolMine/GermaParl)
 [![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/PolMine/GermaParl?branch=zenodo&svg=true)](https://ci.appveyor.com/project/PolMine/germaparl)
-[![codecov](https://codecov.io/gh/PolMine/GermaParl/branch/zenodo/graph/badge.svg)](https://codecov.io/gh/PolMine/GermaParl/branch/zenodo)
+Status](https://ci.appveyor.com/api/projects/status/github/PolMine/GermaParl?branch=master&svg=true)](https://ci.appveyor.com/project/PolMine/germaparl)
+[![codecov](https://codecov.io/gh/PolMine/GermaParl/branch/master/graph/badge.svg)](https://codecov.io/gh/PolMine/GermaParl/branch/master)
 
 # The GermaParl R Data Package <img src="https://raw.githubusercontent.com/PolMine/GermaParl/master/inst/sticker/hexsticker.png" align="right" />
 
@@ -150,7 +150,7 @@ Plenary Protocols of the German Bundestag. R package version 1.3.0.
 
 Blaette, Andreas (2020): GermaParl. Linguistically Annotated and Indexed
 Corpus of Plenary Protocols of the German Bundestag. CWB corpus version
-1.0.5. <https://doi.org/10.5281/zenodo.3735141>
+1.0.6. <https://doi.org/10.5281/zenodo.3735141>
 
 NOTE: In an R session, you can get this recommendation how to quote
 GermaParl by calling the usual `citation()` function:
