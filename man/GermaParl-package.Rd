@@ -9,11 +9,11 @@
 \alias{germaparl_get_version}
 \title{GermaParl R Data Package.}
 \usage{
-germaparl_is_installed()
+germaparl_is_installed(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
 
-germaparl_get_doi()
+germaparl_get_doi(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
 
-germaparl_get_version()
+germaparl_get_version(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
 }
 \description{
 The package offers a convenient dissemination mechanism for the 

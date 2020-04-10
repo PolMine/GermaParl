@@ -6,6 +6,7 @@
 \usage{
 germaparl_download_corpus(
   doi = "https://doi.org/10.5281/zenodo.3742113",
+  registry_dir = cwbtools::cwb_registry_dir(),
   quiet = FALSE
 )
 }
@@ -13,6 +14,9 @@ germaparl_download_corpus(
 \item{doi}{The DOI (Digital Object Identifier) of the GermaParl tarball at
 zenodo, presented as a hyperlink. Defaults to the latest version of 
 GermaParl.}
+
+\item{registry_dir}{Path to the system registry directory. Defaults to value
+of \code{cwbtools::cwb_registry_dir()}.}
 
 \item{quiet}{Whether to suppress progress messages, defaults to \code{FALSE}.}
 }
@@ -25,10 +29,11 @@ The GermaParl R package includes only a small subset of the GermaParl corpus
 (GERMAPARLMINI). The full corpus is deposited with
 \href{https://zenodo.org/}{zenodo}, a repository for research data. The
 \code{germaparl_download_corpus} function downloads a tarball with the
-indexed corpus from the zenodo repository and installs the corpus within the
-GermaParl package. When calling the function, a stable and fast internet
-connection will be useful as the size of the data amounts to ~1 GB which
-needs to be downloaded.
+indexed corpus from the zenodo repository and moves the corpus data to the
+system corpus storage. If a corpus registry has not yet been created, an
+interactive dialogie will help to do so. When calling the function, a stable
+and fast internet connection will be useful as the size of the data amounts
+to ~1 GB which needs to be downloaded.
 }
 \details{
 After downloading and installing the tarball with the CWB indexed

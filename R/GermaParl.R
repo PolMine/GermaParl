@@ -40,12 +40,8 @@ NULL
 #' @export germaparl_is_installed
 #' @examples 
 #' germaparl_is_installed() # to check whether GERMAPARL has been downloaded
-germaparl_is_installed <- function(){
-  if (nchar(system.file(package = "GermaParl", "extdata", "cwb", "registry", "germaparl"))){
-    TRUE
-  } else {
-    FALSE
-  }
+germaparl_is_installed <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
+  "GERMAPARL" %in% list.files(registry__dir)
 }
 
 
@@ -57,13 +53,12 @@ germaparl_is_installed <- function(){
 #' @export germaparl_get_doi
 #' @examples
 #' germaparl_get_doi() # get 'document object identifier' (DOI) of GERMAPARL corpus
-germaparl_get_doi <- function(){
+germaparl_get_doi <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
   if (isFALSE(germaparl_is_installed())){
     warning("Cannot get DOI for corpus GERMAPARL: Corpus has not yet been installed.")
     return(NULL)
   }
-  regdir <- system.file(package = "GermaParl", "extdata", "cwb", "registry")
-  regdata <- registry_file_parse(corpus = "GERMAPARL", registry_dir = regdir)
+  regdata <- registry_file_parse(corpus = "GERMAPARL", registry_dir = registry_dir)
   regdata[["properties"]][["doi"]]
 }
 
@@ -75,13 +70,12 @@ germaparl_get_doi <- function(){
 #' @export germaparl_get_version
 #' @examples
 #' germaparl_get_version
-germaparl_get_version <- function(){
+germaparl_get_version <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
   if (isFALSE(germaparl_is_installed())){
     warning("Cannot get GERMAPARL version: Corpus has not yet been installed.")
     return(NULL)
   }
-  regdir <- system.file(package = "GermaParl", "extdata", "cwb", "registry")
-  regdata <- registry_file_parse(corpus = "GERMAPARL", registry_dir = regdir)
+  regdata <- registry_file_parse(corpus = "GERMAPARL", registry_dir = registry_dir)
   regdata[["properties"]][["version"]]
 }
 
