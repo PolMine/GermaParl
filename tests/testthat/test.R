@@ -26,7 +26,11 @@ test_that(
     )
 
     library("polmineR")
+    if (!RcppCWB::cqp_is_initialized()) RcppCWB::cqp_initialize()
+    count("GERMAPARL", query = '"erfolgreiche" "Integration"')
+    RcppCWB::cl_delete_corpus("GERMAPARL")
     registry_reset()
+    count("GERMAPARL", query = '"erfolgreiche" "Integration"')
 
     s_attrs <- s_attributes("GERMAPARL")
     expect_identical(TRUE, "speech" %in% s_attrs)
@@ -52,7 +56,13 @@ test_that(
       overwrite = TRUE
     )
     
-    registry_reset() 
+    library("polmineR")
+    if (!RcppCWB::cqp_is_initialized()) RcppCWB::cqp_initialize()
+    count("GERMAPARL", query = '"erfolgreiche" "Integration"')
+    RcppCWB::cl_delete_corpus("GERMAPARL")
+    registry_reset()
+    count("GERMAPARL", query = '"erfolgreiche" "Integration"')
+    
     expect_true("topics" %in% s_attributes("GERMAPARL"))
     # x <- subset("GERMAPARL", grep("133", topics)) %>% 
     #   as.speeches(s_attribute_name = "speaker")
