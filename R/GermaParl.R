@@ -13,6 +13,7 @@
 #' numbers and should be quoted in combination in publications. We recommend to follow 
 #' the instructions you see when calling \code{citation(package = "GermaParl")}.
 #' 
+#' @param registry_dir Path to the system registry directory.
 #' @references Blaette, Andreas (2018): "Using Data Packages to Ship Annotated
 #'   Corpora of Parliamentary Protocols: The GermaParl R Package". ISBN
 #'   979-10-95546-02-3.
@@ -41,7 +42,7 @@ NULL
 #' @examples 
 #' germaparl_is_installed() # to check whether GERMAPARL has been downloaded
 germaparl_is_installed <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
-  "GERMAPARL" %in% list.files(registry__dir)
+  "germaparl" %in% list.files(registry_dir)
 }
 
 

@@ -15,10 +15,14 @@
 #' @param mc An \code{integer} value, the number of cores to use, passed into the
 #'   \code{as.speeches} function
 #' @param progress A \code{logical} value, whether to show a progress bar.
+#' @param registry_dir The registry directory where the registry file for the 
+#'   GERMAPARL corpus resides.
+#' @param corpus_dir The directory where CWB data_directories reside.
 #' @return A \code{data.table} with the regions of speeches and speech ids is
 #'   returned invisibly.
 #' @importFrom data.table data.table setnames setorderv :=
-#' @importFrom cwbtools s_attribute_encode registry_file_parse
+#' @importFrom cwbtools s_attribute_encode registry_file_parse cwb_corpus_dir
+#'   cwb_directories
 #' @importFrom polmineR as.speeches use
 #' @importFrom utils download.file
 #' @importFrom methods slot
@@ -38,7 +42,7 @@
 #' sizes <- size("GERMAPARL", s_attribute = "speech")
 #' dtm <- as.DocumentTermMatrix("GERMAPARL", p_attribute = "word", s_attribute = "speech")
 #' } 
-germaparl_add_s_attribute_speech <- function(mc = 1L, progress = TRUE){
+germaparl_add_s_attribute_speech <- function(mc = 1L, progress = TRUE, registry_dir = cwbtools::cwb_registry_dir(), corpus_dir = NULL){
   speeches <- as.speeches(
     "GERMAPARL", gap = 500, mc = mc, progress = progress,
     s_attribute_date = "date", s_attribute_name = "speaker"
@@ -47,22 +51,30 @@ germaparl_add_s_attribute_speech <- function(mc = 1L, progress = TRUE){
   setnames(dt, old = c("V1", "V2"), new = c("cpos_left", "cpos_right"))
   dt[, "speech" := do.call(c, Map(rep, names(speeches), sapply(speeches@objects, function(x) nrow(x@cpos))))]
   setorderv(dt, cols = "cpos_left", order = 1L)
-  regdir <- system.file(package = "GermaParl", "extdata", "cwb", "registry")
+  
+  cwb_dirs <- cwb_directories(registry_dir = registry_dir, corpus_dir = corpus_dir)
   
   s_attribute_encode(
     values = dt[["speech"]], # is still UTF-8, recoding done by s_attribute_encode
-    data_dir = system.file(package = "GermaParl", "extdata", "cwb", "indexed_corpora", "germaparl"),
+    data_dir = file.path(cwb_dirs[["corpus_dir"]], "germaparl"),
     s_attribute = "speech",
     corpus = "GERMAPARL",
     region_matrix = as.matrix(dt[, c("cpos_left", "cpos_right")]),
-    registry_dir = system.file(package = "GermaParl", "extdata", "cwb", "registry"),
-    encoding = registry_file_parse(corpus = "GERMAPARL", registry_dir = regdir)[["properties"]][["charset"]],
+    registry_dir = cwb_dirs[["registry_dir"]],
+    encoding = registry_file_parse(corpus = "GERMAPARL", registry_dir = cwb_dirs[["registry_dir"]])[["properties"]][["charset"]],
     method = "R",
     verbose = TRUE,
     delete = FALSE
   )
-  use("GermaParl", verbose = TRUE)
-  RcppCWB::cl_delete_corpus("GERMAPARL")
-  use("GermaParl", verbose = TRUE)
+  
+  if (isNamespaceLoaded("polmineR")){
+    file.copy(
+      from = file.path(cwb_dirs[["registry_dir"]], tolower("GERMAPARL")),
+      to = file.path(polmineR::registry(), tolower("GERMAPARL")),
+      overwrite = TRUE
+    )
+    polmineR::registry_reset(registryDir = polmineR::registry())
+  }
+
   invisible(dt)
 }

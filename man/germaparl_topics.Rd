@@ -9,12 +9,18 @@
 \usage{
 germaparl_download_lda(
   k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L, 300L, 350L, 400L, 450L),
-  doi = "https://doi.org/10.5281/zenodo.3742113"
+  doi = "https://doi.org/10.5281/zenodo.3742113",
+  data_dir = file.path(cwb_corpus_dir(), "germaparl")
 )
 
-germaparl_encode_lda_topics(k = 200, n = 5)
+germaparl_encode_lda_topics(
+  k = 200,
+  n = 5,
+  registry_dir = cwb_registry_dir(),
+  data_dir = file.path(cwb_corpus_dir, "germaparl")
+)
 
-germaparl_load_topicmodel(k, verbose = TRUE)
+germaparl_load_topicmodel(k, registry_dir = cwb_registry_dir(), verbose = TRUE)
 }
 \arguments{
 \item{k}{A numeric or integer vector, the number of topics of the topicmodel.
@@ -24,6 +30,9 @@ once.}
 \item{doi}{The DOI of GermaParl at Zenodo (preferrably given as an URL).}
 
 \item{n}{Number of topics to write to corpus}
+
+\item{registry_dir}{The registry directory where the registry file for GERMAPARL
+is located.}
 
 \item{verbose}{logical}
 }

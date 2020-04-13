@@ -4,13 +4,23 @@
 \alias{germaparl_add_s_attribute_speech}
 \title{Add Annotation of Speeches to GermaParl Corpus}
 \usage{
-germaparl_add_s_attribute_speech(mc = 1L, progress = TRUE)
+germaparl_add_s_attribute_speech(
+  mc = 1L,
+  progress = TRUE,
+  registry_dir = cwbtools::cwb_registry_dir(),
+  corpus_dir = NULL
+)
 }
 \arguments{
 \item{mc}{An \code{integer} value, the number of cores to use, passed into the
 \code{as.speeches} function}
 
 \item{progress}{A \code{logical} value, whether to show a progress bar.}
+
+\item{registry_dir}{The registry directory where the registry file for the 
+GERMAPARL corpus resides.}
+
+\item{corpus_dir}{The directory where CWB data_directories reside.}
 }
 \value{
 A \code{data.table} with the regions of speeches and speech ids is

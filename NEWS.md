@@ -1,3 +1,14 @@
+# GermaParl v1.4.0
+
+- To meet CRAN requirements, the corpus is not stored within the package as in 
+  previous version, but in a system corpus directory. The same is applies to
+  supplementary data such as LDA topic models fitted on GERMAPARL.
+- The core of the functionality of `germaparl_download_corpus()` to download the 
+  corpus has been moved to cwbtools (v0.2.0). The `germaparl_download_corpus()` 
+  function is now a convenience wrapper for `cwbtools::corpus_install()` that 
+  ensures that the correct DOI (argument `doi`) is passed to `corpus_install()`.
+
+
 # GermaParl v1.3.0
 
 - The GermaParl corpus is downloaded now from a storage location at zenodo. The 

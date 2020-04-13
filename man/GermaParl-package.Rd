@@ -15,6 +15,9 @@ germaparl_get_doi(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
 
 germaparl_get_version(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
 }
+\arguments{
+\item{registry_dir}{Path to the system registry directory.}
+}
 \description{
 The package offers a convenient dissemination mechanism for the 
 GermaParl corpus that has been linguistically annotated and indexed (data format
