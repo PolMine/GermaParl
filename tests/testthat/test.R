@@ -1,8 +1,6 @@
 testthat::context("download")
 
 
-
-
 test_that(
   "availability of corpus after installation",
   {
@@ -40,11 +38,22 @@ test_that(
     expect_equal(sum(dtm$v), size("GERMAPARL"))
     expect_identical(dim(dtm)[1], length(s_attributes("GERMAPARL", "speech", unique = TRUE)))
 
-    # germaparl_download_lda(k = 250L)
-    # lda <- germaparl_load_topicmodel(k = 250)
-    # germaparl_encode_lda_topics(k = 250)
-    # 
-    # t <- s_attributes("GERMAPARL", "topics")
+    germaparl_download_lda(k = 250L)
+    lda <- germaparl_load_topicmodel(k = 250)
+    germaparl_encode_lda_topics(
+      k = 250,
+      registry_dir = cwb_dirs[["registry_dir"]],
+      data_dir = file.path(cwb_dirs[["corpus_dir"]], "germaparl")
+    )
+    
+    file.copy(
+      from = file.path(cwb_dirs[["registry_dir"]], "germaparl"),
+      to = file.path(registry(), "germaparl"),
+      overwrite = TRUE
+    )
+    
+    registry_reset() 
+    expect_true("topics" %in% s_attributes("GERMAPARL"))
     # x <- subset("GERMAPARL", grep("133", topics)) %>% 
     #   as.speeches(s_attribute_name = "speaker")
 })

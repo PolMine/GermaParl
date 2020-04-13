@@ -25,6 +25,7 @@ Description: Data package with the 'GermaParl' Corpus of Parliamentary Debates (
   and for testing purposes. The package includes functionality to load the full corpus from the
   open science 'Zenodo' repository and some auxiliary functions to enhance the corpus.
 URL: https://github.com/polmine/GermaParl
+Additional_repositories: https://PolMine.github.io/drat/
 BugReports: https://github.com/polmine/GermaParl/issues
 License: GPL-3
 VignetteBuilder: knitr

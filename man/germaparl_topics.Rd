@@ -20,7 +20,11 @@ germaparl_encode_lda_topics(
   data_dir = file.path(cwb_corpus_dir, "germaparl")
 )
 
-germaparl_load_topicmodel(k, registry_dir = cwb_registry_dir(), verbose = TRUE)
+germaparl_load_topicmodel(
+  k,
+  registry_dir = cwbtools::cwb_registry_dir(),
+  verbose = TRUE
+)
 }
 \arguments{
 \item{k}{A numeric or integer vector, the number of topics of the topicmodel.
@@ -28,6 +32,8 @@ If multiple values are provided, several topic models can be downloaded at
 once.}
 
 \item{doi}{The DOI of GermaParl at Zenodo (preferrably given as an URL).}
+
+\item{data_dir}{The data directory with the binary files of the GERMAPARL corpus.}
 
 \item{n}{Number of topics to write to corpus}
 

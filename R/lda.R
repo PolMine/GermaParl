@@ -15,6 +15,8 @@ NULL
 #' @param doi The DOI of GermaParl at Zenodo (preferrably given as an URL).
 #' @param registry_dir The registry directory where the registry file for GERMAPARL
 #'   is located.
+#' @param data_dir The data directory with the binary files of the GERMAPARL corpus.
+#' 
 #' @importFrom jsonlite fromJSON
 #' @importFrom RCurl getURL
 #' @export germaparl_download_lda
@@ -40,7 +42,8 @@ NULL
 germaparl_download_lda <- function(
   k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L, 300L, 350L, 400L, 450L),
   doi = "https://doi.org/10.5281/zenodo.3742113",
-  data_dir = file.path(cwb_corpus_dir(), "germaparl")){
+  data_dir = file.path(cwb_corpus_dir(), "germaparl")
+  ){
   if (!is.numeric(k)) stop("Argument k is required to be a numeric vector.")
   if (length(k) > 1L){
     sapply(1L:length(k), function(i) germaparl_download_lda(k = k[i], doi = doi))
@@ -88,7 +91,7 @@ germaparl_download_lda <- function(
 #' @rdname germaparl_topics
 germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_registry_dir(), data_dir = file.path(cwb_corpus_dir, "germaparl")){
   
-  data_dir <- system.file(package = "GermaParl", "extdata", "cwb", "indexed_corpora", "germaparl")
+  # data_dir <- system.file(package = "GermaParl", "extdata", "cwb", "indexed_corpora", "germaparl")
   corpus_charset <- registry_file_parse(corpus = "GERMAPARL")[["properties"]][["charset"]]
   
   model <- germaparl_load_topicmodel(k = k)
@@ -158,9 +161,9 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_regis
 #'   downloaded.
 #' @param verbose logical
 #' @export germaparl_load_topicmodel
-#' @importFrom cwbtools registry_file_parse
+#' @importFrom cwbtools registry_file_parse cwb_registry_dir
 #' @rdname germaparl_topics
-germaparl_load_topicmodel <- function(k, registry_dir = cwb_registry_dir(), verbose = TRUE){
+germaparl_load_topicmodel <- function(k, registry_dir = cwbtools::cwb_registry_dir(), verbose = TRUE){
   if (verbose) message(sprintf("... loading topicmodel for k = %d", k))
   topicmodel_dir <- registry_file_parse(corpus = "germaparl", registry_dir = registry_dir)
   lda_files <- Sys.glob(paths = sprintf("%s/germaparl_lda_speeches_*.rds", topicmodel_dir))
