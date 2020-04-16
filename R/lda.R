@@ -30,9 +30,12 @@ NULL
 #' @aliases topics
 #' @examples
 #' \donttest{
-#' if (!germaparl_is_installed()) germaparl_download_corpus()
-#' registry_reset()
-#' 
+#' library(polmineR)
+#' if (!germaparl_is_installed()){
+#'   germaparl_download_corpus()
+#'   polmineR::registry_reset()
+#' }
+#'
 #' germaparl_download_lda(k = 250)
 #' lda <- germaparl_load_topicmodel(k = 250)
 #' lda_terms <- topicmodels::terms(lda, 50)
@@ -40,8 +43,11 @@ NULL
 #' if (!"speech" %in% s_attributes("GERMAPARL")) germaparl_add_s_attribute_speech()
 #' germaparl_encode_lda_topics(k = 250, n = 5)
 #' 
-#' library(polmineR)
-#' use("GermaParl")
+#' # make amended corpus available
+#' count("GERMAPARL", "Integration")
+#' RcppCWB::cl_delete_corpus()
+#' polmineR::registry_reset()
+#' 
 #' s_attributes("GERMAPARL")
 #' sc <- corpus("GERMAPARL") %>%
 #'   subset(grep("\\|133\\|", topics))

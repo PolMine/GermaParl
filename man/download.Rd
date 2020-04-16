@@ -51,8 +51,10 @@ After downloading and installing the tarball with the CWB indexed
 }
 \examples{
 \donttest{
-if (!germaparl_is_installed()) germaparl_download_corpus()
-registry_reset() # necessary to make corpus available
+cwb_dirs <- cwbtools::create_cwb_directories(prefix = tempdir(), ask = interactive())
+germaparl_download_corpus(registry_dir = cwb_dirs[["registry_dir"]])
+
+library(polmineR)
 corpus() # should include GERMAPARLMINI as well as GERMAPARL
 count("GERMAPARL", "Daten") # an arbitrary test
 }

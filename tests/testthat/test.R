@@ -42,7 +42,7 @@ test_that(
     expect_equal(sum(dtm$v), size("GERMAPARL"))
     expect_identical(dim(dtm)[1], length(s_attributes("GERMAPARL", "speech", unique = TRUE)))
 
-    germaparl_download_lda(k = 250L)
+    germaparl_download_lda(k = 250L, data_dir = file.path(cwb_dirs[["corpus_dir"]], "germaparl"))
     lda <- germaparl_load_topicmodel(k = 250)
     germaparl_encode_lda_topics(
       k = 250,

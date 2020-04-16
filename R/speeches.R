@@ -32,13 +32,13 @@
 #' @examples 
 #' \donttest{
 #' if (isFALSE(germaparl_is_installed())) germaparl_download_corpus()
-#' registry_reset()
+#' polmineR::registry_reset()
 #' germaparl_add_s_attribute_speech()
 #' 
 #' library(polmineR)
 #' count("GERMAPARL", '"Integration"', cqp = TRUE)
 #' RcppCWB::cl_delete_corpus("GERMAPARL", registry = registry())
-#' registry_reset()
+#' polmineR::registry_reset()
 #' s_attributes("GERMAPARL")
 #' s_attributes("GERMAPARL", "speech")
 #' sizes <- size("GERMAPARL", s_attribute = "speech")

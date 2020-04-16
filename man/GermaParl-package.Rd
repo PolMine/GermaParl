@@ -4,25 +4,9 @@
 \name{GermaParl-package}
 \alias{GermaParl-package}
 \alias{GermaParl}
-\alias{germaparl_get_doi}
-\alias{germaparl_get_version}
 \title{GermaParl R Data Package.}
-\usage{
-germaparl_get_doi(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
-
-germaparl_get_version(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
-}
 \arguments{
-\item{registry_dir}{Path to the registry directory.}
-}
-\value{
-If the DOI is declared in the registry file, a length-one
-  \code{character} vector with it is returned. If the corpus has not yet been
-  installed, \code{NULL} is returned and a warning will be issued.
-
-The return value is the version of the corpus (class
-  \code{numeric_version}). If the corpus has not yet been installed,
-  \code{NULL} is returned, and a warning message is issued.
+\item{registry_dir}{Path to the system registry directory.}
 }
 \description{
 The package offers a convenient dissemination mechanism for the 
@@ -38,27 +22,6 @@ data: The package offers a mechanism to ship, easily install and augment the dat
 The indexed corpus is the actual data. Package and corpus have different version
 numbers and should be quoted in combination in publications. We recommend to follow 
 the instructions you see when calling \code{citation(package = "GermaParl")}.
-
-Auxiliary function that extracts the DOI (Document Object
-  Identifier) from the registry file of the GERMAPARL corpus.
-
-\code{germaparl_get_version} is an auxiliary function that extracts
-  the version of the GERMAPARL corpus from the registry.
-}
-\examples{
-\donttest{
-library(polmineR)
-use("GermaParl")
-corpus() # will include GERMAPARLMINI, sample corpus included in pkg
-
-if (!germaparl_is_installed()) germaparl_download_corpus() # ~1 GB, takes time ...
-
-registry_reset() # necessary to make corpus available
-
-corpus() # will include GERMAPARL, full corpus
-}
-germaparl_get_doi() # get 'document object identifier' (DOI) of GERMAPARL corpus
-germaparl_get_version()
 }
 \references{
 Blaette, Andreas (2018): "Using Data Packages to Ship Annotated

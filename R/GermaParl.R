@@ -23,18 +23,6 @@
 #' @aliases GermaParl GermaParl-package
 #' @rdname GermaParl-package
 #' @name GermaParl-package
-#' @examples 
-#' \donttest{
-#' library(polmineR)
-#' use("GermaParl")
-#' corpus() # will include GERMAPARLMINI, sample corpus included in pkg
-#' 
-#' if (!germaparl_is_installed()) germaparl_download_corpus() # ~1 GB, takes time ...
-#' 
-#' registry_reset() # necessary to make corpus available
-#' 
-#' corpus() # will include GERMAPARL, full corpus
-#' }
 NULL
 
 
@@ -59,10 +47,11 @@ germaparl_is_installed <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
 #' @return If the DOI is declared in the registry file, a length-one
 #'   \code{character} vector with it is returned. If the corpus has not yet been
 #'   installed, \code{NULL} is returned and a warning will be issued.
-#' @rdname GermaParl-package
 #' @export germaparl_get_doi
 #' @examples
-#' germaparl_get_doi() # get 'document object identifier' (DOI) of GERMAPARL corpus
+#' if (germaparl_is_installed()){
+#'   germaparl_get_doi() # get 'document object identifier' (DOI) of GERMAPARL corpus
+#' }
 germaparl_get_doi <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
   if (isFALSE(germaparl_is_installed())){
     warning("Cannot get DOI for corpus GERMAPARL: Corpus has not yet been installed.")
@@ -83,10 +72,11 @@ germaparl_get_doi <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
 #' @return The return value is the version of the corpus (class
 #'   \code{numeric_version}). If the corpus has not yet been installed,
 #'   \code{NULL} is returned, and a warning message is issued.
-#' @rdname GermaParl-package
 #' @export germaparl_get_version
 #' @examples
-#' germaparl_get_version()
+#' if (germaparl_is_installed()){
+#'   germaparl_get_version()
+#' }
 germaparl_get_version <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
   if (isFALSE(germaparl_is_installed())){
     warning("Cannot get GERMAPARL version: Corpus has not yet been installed.")
