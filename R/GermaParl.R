@@ -24,20 +24,25 @@
 #' @rdname GermaParl-package
 #' @name GermaParl-package
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' library(polmineR)
 #' use("GermaParl")
 #' corpus() # will include GERMAPARLMINI, sample corpus included in pkg
+#' 
 #' if (!germaparl_is_installed()) germaparl_download_corpus() # ~1 GB, takes time ...
-#' use("GermaParl")
+#' 
+#' registry_reset() # necessary to make corpus available
+#' 
 #' corpus() # will include GERMAPARL, full corpus
 #' }
 NULL
 
 
-#' @details \code{germaparl_is_installed} is an auxiliary function that returns \code{TRUE}
-#'   if the corpus has been installed, and \code{FALSE} if not.
-#' @rdname GermaParl-package
+#' Get installation status of GERMAPARL
+#' 
+#' @param registry_dir Path to the registry directory.
+#' Auxiliary function to detect whether GERMAPARL is installed or not.
+#' @return \code{TRUE} if the corpus has been installed, and \code{FALSE} if not.
 #' @export germaparl_is_installed
 #' @examples 
 #' germaparl_is_installed() # to check whether GERMAPARL has been downloaded
@@ -46,10 +51,14 @@ germaparl_is_installed <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
 }
 
 
-#' @details \code{germaparl_get_doi} is an auxiliary function that extracts the DOI
-#'   (Document Object Identifier) from the registry file of the GERMAPARL corpus. If
-#'   the corpus has not yet been installed, \code{NULL} is returned and a warning 
-#'   will be issued.
+#' Get DOI of corpus
+#' 
+#' @param registry_dir Path to the registry directory.
+#' @details Auxiliary function that extracts the DOI (Document Object
+#'   Identifier) from the registry file of the GERMAPARL corpus.
+#' @return If the DOI is declared in the registry file, a length-one
+#'   \code{character} vector with it is returned. If the corpus has not yet been
+#'   installed, \code{NULL} is returned and a warning will be issued.
 #' @rdname GermaParl-package
 #' @export germaparl_get_doi
 #' @examples
@@ -64,20 +73,29 @@ germaparl_get_doi <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
 }
 
 
-#' @details \code{germaparl_get_version} is an auxiliary function that extracts the 
-#'   version of the GERMAPARL corpus from the registry file. If the corpus has not
-#'   yet been installed, \code{NULL} is returned, and a warning message is issued.
+#' Get GERMAPARL version
+#' 
+#' 
+#' @details \code{germaparl_get_version} is an auxiliary function that extracts
+#'   the version of the GERMAPARL corpus from the registry. 
+#'   
+#' @param registry_dir Path to the registry directory.
+#' @return The return value is the version of the corpus (class
+#'   \code{numeric_version}). If the corpus has not yet been installed,
+#'   \code{NULL} is returned, and a warning message is issued.
 #' @rdname GermaParl-package
 #' @export germaparl_get_version
 #' @examples
-#' germaparl_get_version
+#' germaparl_get_version()
 germaparl_get_version <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
   if (isFALSE(germaparl_is_installed())){
     warning("Cannot get GERMAPARL version: Corpus has not yet been installed.")
     return(NULL)
   }
   regdata <- registry_file_parse(corpus = "GERMAPARL", registry_dir = registry_dir)
-  regdata[["properties"]][["version"]]
+  version <- regdata[["properties"]][["version"]]
+  version <- gsub("^(v|)(\\d+\\.\\d+\\.\\d+)", "\\2", version)
+  as.numeric_version(version)
 }
 
 
@@ -106,7 +124,9 @@ germaparl_get_version <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
 #' @name germaparl_by_year
 #' @rdname germaparl_by_year
 #' @examples 
-#' \dontrun{
+#' \donttest{
+#' if (!germaparl_is_installed()) germaparl_download_corpus()
+#' 
 #' dts <- lapply(
 #'  13:17,
 #'  function(lp){
@@ -142,7 +162,9 @@ germaparl_get_version <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
 #' @name germaparl_by_lp
 #' @rdname germaparl_by_lp
 #' @examples 
-#' \dontrun{
+#' \donttest{
+#' if (!germaparl_is_installed()) germaparl_download_corpus()
+#' 
 #' years <- as.integer(s_attributes("GERMAPARL", "year"))
 #' dts <- lapply(
 #'   min(years):max(years),

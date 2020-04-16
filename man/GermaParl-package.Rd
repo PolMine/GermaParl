@@ -4,19 +4,25 @@
 \name{GermaParl-package}
 \alias{GermaParl-package}
 \alias{GermaParl}
-\alias{germaparl_is_installed}
 \alias{germaparl_get_doi}
 \alias{germaparl_get_version}
 \title{GermaParl R Data Package.}
 \usage{
-germaparl_is_installed(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
-
 germaparl_get_doi(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
 
 germaparl_get_version(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
 }
 \arguments{
-\item{registry_dir}{Path to the system registry directory.}
+\item{registry_dir}{Path to the registry directory.}
+}
+\value{
+If the DOI is declared in the registry file, a length-one
+  \code{character} vector with it is returned. If the corpus has not yet been
+  installed, \code{NULL} is returned and a warning will be issued.
+
+The return value is the version of the corpus (class
+  \code{numeric_version}). If the corpus has not yet been installed,
+  \code{NULL} is returned, and a warning message is issued.
 }
 \description{
 The package offers a convenient dissemination mechanism for the 
@@ -33,30 +39,26 @@ The indexed corpus is the actual data. Package and corpus have different version
 numbers and should be quoted in combination in publications. We recommend to follow 
 the instructions you see when calling \code{citation(package = "GermaParl")}.
 
-\code{germaparl_is_installed} is an auxiliary function that returns \code{TRUE}
-  if the corpus has been installed, and \code{FALSE} if not.
+Auxiliary function that extracts the DOI (Document Object
+  Identifier) from the registry file of the GERMAPARL corpus.
 
-\code{germaparl_get_doi} is an auxiliary function that extracts the DOI
-  (Document Object Identifier) from the registry file of the GERMAPARL corpus. If
-  the corpus has not yet been installed, \code{NULL} is returned and a warning 
-  will be issued.
-
-\code{germaparl_get_version} is an auxiliary function that extracts the 
-  version of the GERMAPARL corpus from the registry file. If the corpus has not
-  yet been installed, \code{NULL} is returned, and a warning message is issued.
+\code{germaparl_get_version} is an auxiliary function that extracts
+  the version of the GERMAPARL corpus from the registry.
 }
 \examples{
-\dontrun{
+\donttest{
 library(polmineR)
 use("GermaParl")
 corpus() # will include GERMAPARLMINI, sample corpus included in pkg
+
 if (!germaparl_is_installed()) germaparl_download_corpus() # ~1 GB, takes time ...
-use("GermaParl")
+
+registry_reset() # necessary to make corpus available
+
 corpus() # will include GERMAPARL, full corpus
 }
-germaparl_is_installed() # to check whether GERMAPARL has been downloaded
 germaparl_get_doi() # get 'document object identifier' (DOI) of GERMAPARL corpus
-germaparl_get_version
+germaparl_get_version()
 }
 \references{
 Blaette, Andreas (2018): "Using Data Packages to Ship Annotated

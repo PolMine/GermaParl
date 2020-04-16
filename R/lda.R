@@ -19,10 +19,20 @@ NULL
 #' 
 #' @importFrom jsonlite fromJSON
 #' @importFrom RCurl getURL
+#' @importFrom polmineR registry_reset count
+#' @return The functions \code{germaparl_download_lda} and
+#'   \code{germaparl_encode_lda_topics} are returned for their side effects
+#'   (downloading topic model and encoding topic model). They return \code{TRUE}
+#'   if this has been succesful. The \code{germaparl_download_lda} function will
+#'   return a \code{LDA_Gibbs} class object as defined in the topicmodels
+#'   package.
 #' @export germaparl_download_lda
 #' @aliases topics
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' if (!germaparl_is_installed()) germaparl_download_corpus()
+#' registry_reset()
+#' 
 #' germaparl_download_lda(k = 250)
 #' lda <- germaparl_load_topicmodel(k = 250)
 #' lda_terms <- topicmodels::terms(lda, 50)
@@ -67,6 +77,7 @@ germaparl_download_lda <- function(
       return(invisible(TRUE))
     } 
   }
+  invisible(TRUE)
 }
 
 
@@ -84,10 +95,6 @@ germaparl_download_lda <- function(
 #' @importFrom cwbtools s_attribute_encode
 #' @export germaparl_encode_lda_topics
 #' @importFrom polmineR size
-#' @examples 
-#' \dontrun{
-#' germaparl_encode_lda_topics(k = 250, n = 3)
-#' }
 #' @rdname germaparl_topics
 germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_registry_dir(), data_dir = file.path(cwb_corpus_dir, "germaparl")){
   
@@ -148,11 +155,11 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_regis
     verbose = TRUE,
     delete = FALSE
   )
-  use("GermaParl", verbose = TRUE)
+  count("GERMAPARL", "Daten")
   RcppCWB::cl_delete_corpus("GERMAPARL")
-  use("GermaParl", verbose = TRUE)
+  registry_reset()
 
-  retval
+  invisible(TRUE)
 }
 
 #' @details \code{germaparl_load_topicmodel} will load a topicmodel into memory.

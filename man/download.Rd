@@ -28,7 +28,7 @@ of \code{cwbtools::cwb_registry_dir()}.}
 replacing an existing corpus.}
 }
 \value{
-A logical value, \code{TRUE} if the corpus has been installed
+Logical value \code{TRUE} if the corpus has been installed
   successfully.
 }
 \description{
@@ -50,10 +50,10 @@ After downloading and installing the tarball with the CWB indexed
   \code{citation}.
 }
 \examples{
-\dontrun{
+\donttest{
 if (!germaparl_is_installed()) germaparl_download_corpus()
-use("GermaParl")
-corpus() # should include GERMAPARLMINI and GERMAPARL
+registry_reset() # necessary to make corpus available
+corpus() # should include GERMAPARLMINI as well as GERMAPARL
 count("GERMAPARL", "Daten") # an arbitrary test
 }
 }

@@ -15,8 +15,9 @@
 #' @param mc An \code{integer} value, the number of cores to use, passed into the
 #'   \code{as.speeches} function
 #' @param progress A \code{logical} value, whether to show a progress bar.
-#' @param registry_dir The registry directory where the registry file for the 
-#'   GERMAPARL corpus resides.
+#' @param registry_dir The registry directory where the registry file for the
+#'   GERMAPARL corpus resides. The function is usually called for its sied
+#'   effects, i.e. adding the structural annotation of speeches to the corpus.
 #' @param corpus_dir The directory where CWB data_directories reside.
 #' @return A \code{data.table} with the regions of speeches and speech ids is
 #'   returned invisibly.
@@ -29,14 +30,15 @@
 #' @importFrom RcppCWB cqp_is_initialized cqp_get_registry
 #' @export germaparl_add_s_attribute_speech
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' if (isFALSE(germaparl_is_installed())) germaparl_download_corpus()
-#' use("GermaParl")
+#' registry_reset()
 #' germaparl_add_s_attribute_speech()
 #' 
 #' library(polmineR)
+#' count("GERMAPARL", '"Integration"', cqp = TRUE)
 #' RcppCWB::cl_delete_corpus("GERMAPARL", registry = registry())
-#' use("GermaParl")
+#' registry_reset()
 #' s_attributes("GERMAPARL")
 #' s_attributes("GERMAPARL", "speech")
 #' sizes <- size("GERMAPARL", s_attribute = "speech")

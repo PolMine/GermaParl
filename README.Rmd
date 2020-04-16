@@ -119,7 +119,7 @@ when both the package and the corpus is quoted in your publication. To ensure th
 of your research, it is more important to refer to and specify the corpus (including version, DOI)
 you used.
 
-Blaette, Andreas (2020): GermaParl. Download and Augment the Corpus of Plenary Protocols of the German Bundestag. R package version 1.4.0. https://CRAN.R-project.org/package=GermaParl
+Blaette, Andreas (2020): GermaParl. Download and Augment the Corpus of Plenary Protocols of the German Bundestag. R package version 1.4.1. https://CRAN.R-project.org/package=GermaParl
 
 Blaette, Andreas (2020): GermaParl. Linguistically Annotated and Indexed Corpus of Plenary Protocols of the German Bundestag. CWB corpus version 1.0.6. https://doi.org/10.5281/zenodo.3735141
 

@@ -81,9 +81,18 @@ library(GermaParl)
 germaparl_download_corpus()
 ```
 
-Note that the corpus will be stored within the directory structure of
-the GermaParl package. Whenever you update the GermaParl R package, it
-will be necessary to download the corpus anew.
+Note that the corpus will be installed in the system corpus directory by
+default. If the required directory structure is not available, a
+dialogue will guide the user through creating the registry directory and
+the corpus directory. If you want to download the corpus into the R
+package, you might use the following code.
+
+``` r
+germaparl_download_corpus(
+  registry_dir = system.file(package = "GermaParl", "extdata", "cwb", "registry"),
+  corpus_dir = system.file(package = "GermaParl", "extdata", "cwb", "indexed_corpora")
+)
+```
 
 To avoid bloating the data that needs to be downloaded - it is somewhat
 large already -, further annotation can be generated on demand. See the
@@ -106,7 +115,7 @@ polmineR](https://polmine.github.io/polmineR/).
 
 ``` r
 library(polmineR)
-use("GermaParl") # to activate the corpus in the data package
+use("GermaParl") # only necessary if you have downloaded the corpus into GermaParl package
 corpus() # to see whether the GERMAPARL corpus is listed
 size("GERMAPARL") # to learn about the size of the corpus
 ```
@@ -145,7 +154,7 @@ important to refer to and specify the corpus (including version, DOI)
 you used.
 
 Blaette, Andreas (2020): GermaParl. Download and Augment the Corpus of
-Plenary Protocols of the German Bundestag. R package version 1.3.0.
+Plenary Protocols of the German Bundestag. R package version 1.4.1.
 <https://CRAN.R-project.org/package=GermaParl>
 
 Blaette, Andreas (2020): GermaParl. Linguistically Annotated and Indexed

@@ -17,7 +17,9 @@ code used to generate the data is reported in the examples section.
 Note that the table is based on v1.0.5 of the corpus.
 }
 \examples{
-\dontrun{
+\donttest{
+if (!germaparl_is_installed()) germaparl_download_corpus()
+
 years <- as.integer(s_attributes("GERMAPARL", "year"))
 dts <- lapply(
   min(years):max(years),

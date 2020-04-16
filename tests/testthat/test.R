@@ -18,7 +18,7 @@ test_that(
 
     expect_identical(germaparl_is_installed(), TRUE)
     expect_true(grepl("https://doi.org/10.5281/zenodo.\\d+", germaparl_get_doi()))
-    expect_true(grepl("v\\d+\\.\\d+\\.\\d+", germaparl_get_version()))
+    expect_true(grepl("\\d+\\.\\d+\\.\\d+", as.character(germaparl_get_version())))
     
     germaparl_add_s_attribute_speech(
       registry_dir = cwb_dirs[["registry_dir"]],

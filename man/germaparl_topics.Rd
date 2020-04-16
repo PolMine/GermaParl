@@ -42,6 +42,14 @@ is located.}
 
 \item{verbose}{logical}
 }
+\value{
+The functions \code{germaparl_download_lda} and
+  \code{germaparl_encode_lda_topics} are returned for their side effects
+  (downloading topic model and encoding topic model). They return \code{TRUE}
+  if this has been succesful. The \code{germaparl_download_lda} function will
+  return a \code{LDA_Gibbs} class object as defined in the topicmodels
+  package.
+}
 \description{
 A set of LDA topicmodels is part of the Zenodo release of GermaParl, for a number
 of topics between 100 and 450.
@@ -63,7 +71,10 @@ The function \code{germaparl_download_lda} will download an
   downloaded.
 }
 \examples{
-\dontrun{
+\donttest{
+if (!germaparl_is_installed()) germaparl_download_corpus()
+registry_reset()
+
 germaparl_download_lda(k = 250)
 lda <- germaparl_load_topicmodel(k = 250)
 lda_terms <- topicmodels::terms(lda, 50)
@@ -78,8 +89,5 @@ sc <- corpus("GERMAPARL") \%>\%
   subset(grep("\\\\|133\\\\|", topics))
 b <- as.speeches(sc, s_attribute_name = "speaker")
 length(b)
-}
-\dontrun{
-germaparl_encode_lda_topics(k = 250, n = 3)
 }
 }

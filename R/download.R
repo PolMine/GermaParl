@@ -26,15 +26,15 @@
 #' @param corpus_dir Directory where data directories of corpora are located.
 #' @param verbose Whether to show messages, defaults to \code{TRUE}.
 #' @export germaparl_download_corpus
-#' @return A logical value, \code{TRUE} if the corpus has been installed
+#' @return Logical value \code{TRUE} if the corpus has been installed
 #'   successfully.
 #' @rdname download
 #' @importFrom cwbtools corpus_install cwb_registry_dir cwb_corpus_dir
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' if (!germaparl_is_installed()) germaparl_download_corpus()
-#' use("GermaParl")
-#' corpus() # should include GERMAPARLMINI and GERMAPARL
+#' registry_reset() # necessary to make corpus available
+#' corpus() # should include GERMAPARLMINI as well as GERMAPARL
 #' count("GERMAPARL", "Daten") # an arbitrary test
 #' }
 germaparl_download_corpus <- function(doi = "https://doi.org/10.5281/zenodo.3742113", registry_dir = cwb_registry_dir(), corpus_dir = cwb_corpus_dir(registry_dir), verbose = TRUE, ask = interactive()){
