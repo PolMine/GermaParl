@@ -14,32 +14,8 @@ in the package to be included in the data report of the package vignette. The
 code used to generate the data is reported in the examples section.
 }
 \details{
-Note that the table is based on v1.0.5 of the corpus.
-}
-\examples{
-\donttest{
-if (!germaparl_is_installed()) germaparl_download_corpus()
-
-dts <- lapply(
- 13:17,
- function(lp){
-  print(lp)
-  P <- partition("GERMAPARL", lp = lp)
-  dates <- as.Date(s_attributes(P, "date"))
-  dt <- count(P, p_attribute = "lemma")
-  unknown <- round(sum(dt[grepl("#unknown#", dt[["lemma"]])][["count"]]) / size(P), digits = 3)
-  
-  data.table(
-    lp = lp,
-    protocols = length(unique(s_attributes(P, "session"))),
-    first = min(dates, na.rm = TRUE),
-    last = min(dates, na.rm = TRUE),
-    size = size(P),
-    unknown = unknown
-  )
-}
-)
-germaparl_by_lp <- rbindlist(dts)
-}
+Note that the table is based on v1.0.5 of the corpus. The script to reproduce
+the table can be found in the file
+\url{https://github.com/PolMine/GermaParl/blob/master/data-raw/stats_for_vignette.R}{data-raw/stats_for_vignette.R}.
 }
 \keyword{datasets}

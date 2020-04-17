@@ -29,21 +29,6 @@
 #' @importFrom methods slot
 #' @importFrom RcppCWB cqp_is_initialized cqp_get_registry
 #' @export germaparl_add_s_attribute_speech
-#' @examples 
-#' \donttest{
-#' if (isFALSE(germaparl_is_installed())) germaparl_download_corpus()
-#' polmineR::registry_reset()
-#' germaparl_add_s_attribute_speech()
-#' 
-#' library(polmineR)
-#' count("GERMAPARL", '"Integration"', cqp = TRUE)
-#' RcppCWB::cl_delete_corpus("GERMAPARL", registry = registry())
-#' polmineR::registry_reset()
-#' s_attributes("GERMAPARL")
-#' s_attributes("GERMAPARL", "speech")
-#' sizes <- size("GERMAPARL", s_attribute = "speech")
-#' dtm <- as.DocumentTermMatrix("GERMAPARL", p_attribute = "word", s_attribute = "speech")
-#' } 
 germaparl_add_s_attribute_speech <- function(mc = 1L, progress = TRUE, registry_dir = cwbtools::cwb_registry_dir(), corpus_dir = NULL){
   speeches <- as.speeches(
     "GERMAPARL", gap = 500, mc = mc, progress = progress,

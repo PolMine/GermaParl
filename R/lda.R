@@ -28,32 +28,6 @@ NULL
 #'   package.
 #' @export germaparl_download_lda
 #' @aliases topics
-#' @examples
-#' \donttest{
-#' library(polmineR)
-#' if (!germaparl_is_installed()){
-#'   germaparl_download_corpus()
-#'   polmineR::registry_reset()
-#' }
-#'
-#' germaparl_download_lda(k = 250)
-#' lda <- germaparl_load_topicmodel(k = 250)
-#' lda_terms <- topicmodels::terms(lda, 50)
-#' 
-#' if (!"speech" %in% s_attributes("GERMAPARL")) germaparl_add_s_attribute_speech()
-#' germaparl_encode_lda_topics(k = 250, n = 5)
-#' 
-#' # make amended corpus available
-#' count("GERMAPARL", "Integration")
-#' RcppCWB::cl_delete_corpus()
-#' polmineR::registry_reset()
-#' 
-#' s_attributes("GERMAPARL")
-#' sc <- corpus("GERMAPARL") %>%
-#'   subset(grep("\\|133\\|", topics))
-#' b <- as.speeches(sc, s_attribute_name = "speaker")
-#' length(b)
-#' }
 #' @rdname germaparl_topics
 germaparl_download_lda <- function(
   k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L, 300L, 350L, 400L, 450L),
@@ -102,7 +76,7 @@ germaparl_download_lda <- function(
 #' @export germaparl_encode_lda_topics
 #' @importFrom polmineR size
 #' @rdname germaparl_topics
-germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_registry_dir(), data_dir = file.path(cwb_corpus_dir, "germaparl")){
+germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_registry_dir(), data_dir = file.path(cwb_corpus_dir(), "germaparl")){
   
   # data_dir <- system.file(package = "GermaParl", "extdata", "cwb", "indexed_corpora", "germaparl")
   corpus_charset <- registry_file_parse(corpus = "GERMAPARL")[["properties"]][["charset"]]

@@ -21,8 +21,3 @@ Get DOI of corpus
 Auxiliary function that extracts the DOI (Document Object
   Identifier) from the registry file of the GERMAPARL corpus.
 }
-\examples{
-if (germaparl_is_installed()){
-  germaparl_get_doi() # get 'document object identifier' (DOI) of GERMAPARL corpus
-}
-}

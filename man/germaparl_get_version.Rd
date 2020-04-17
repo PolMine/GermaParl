@@ -21,8 +21,3 @@ Get GERMAPARL version
 \code{germaparl_get_version} is an auxiliary function that extracts
   the version of the GERMAPARL corpus from the registry.
 }
-\examples{
-if (germaparl_is_installed()){
-  germaparl_get_version()
-}
-}

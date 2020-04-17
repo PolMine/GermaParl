@@ -5,23 +5,78 @@
 \alias{GermaParl-package}
 \alias{GermaParl}
 \title{GermaParl R Data Package.}
-\arguments{
-\item{registry_dir}{Path to the system registry directory.}
-}
 \description{
-The package offers a convenient dissemination mechanism for the 
-GermaParl corpus that has been linguistically annotated and indexed (data format
-of the Corpus Workbench / CWB). After installation, only a small sample corpus
-will be included in the package. Use the \code{germaparl_download_corpus} function
-to download the full corpus. The package offers further functionality to amend 
-the corpus.
+The package offers a convenient dissemination mechanism for the GermaParl
+corpus. It has been linguistically annotated and indexed (data format of the
+Corpus Workbench / CWB). After installation, only a small sample corpus will
+be included in the package. Use the \code{germaparl_download_corpus} function
+to download the full corpus. The package offers further functionality to
+amend the corpus.
 }
 \details{
-Note that the R package and the corpus are two different kinds of research
-data: The package offers a mechanism to ship, easily install and augment the data.
-The indexed corpus is the actual data. Package and corpus have different version
-numbers and should be quoted in combination in publications. We recommend to follow 
-the instructions you see when calling \code{citation(package = "GermaParl")}.
+The GermaParl R package and the GermaParl corpus are two different kinds of
+research data: The package offers a mechanism to ship, easily install and
+augment the data. The indexed corpus is the actual data. Package and corpus
+have different version numbers and should be quoted in combination in
+publications. We recommend to follow the instructions you see when calling
+\code{citation(package = "GermaParl")}.
+}
+\examples{
+\donttest{
+cwb_dirs <- cwbtools::create_cwb_directories(prefix = tempdir(), ask = interactive())
+registry_tmp <- cwb_dirs[["registry_dir"]]
+germaparl_download_corpus(registry_dir = registry_tmp)
+
+library(polmineR)
+corpus() # should include GERMAPARLMINI as well as GERMAPARL
+count("GERMAPARL", "Daten") # an arbitrary test
+
+germaparl_is_installed() # TRUE now
+germaparl_get_version()
+germaparl_get_doi() # get 'document object identifier' (DOI) of GERMAPARL corpus
+
+# Removing the internal C representation and reloading corpora defined in the
+# registry is necessary to make the amendments to the corpus available
+germaparl_add_s_attribute_speech(registry_dir = registry_tmp)
+file.copy(
+  from = file.path(registry_tmp, "germaparl"),
+  to = file.path(registry(), "germaparl"),
+  overwrite = TRUE
+)
+RcppCWB::cl_delete_corpus("GERMAPARL", registry = registry())
+polmineR::registry_reset()
+
+s_attributes("GERMAPARL")
+s_attributes("GERMAPARL", "speech")
+sizes <- size("GERMAPARL", s_attribute = "speech")
+dtm <- as.DocumentTermMatrix("GERMAPARL", p_attribute = "word", s_attribute = "speech")
+
+germaparl_download_lda(k = 250)
+lda <- germaparl_load_topicmodel(k = 250)
+lda_terms <- topicmodels::terms(lda, 50)
+
+germaparl_encode_lda_topics(
+  k = 250, n = 5,
+  registry_dir = cwb_dirs[["registry_dir"]],
+  data_dir = file.path(cwb_dirs[["corpus_dir"]], "germaparl")
+)
+
+# make amended corpus available
+file.copy(
+  from = file.path(registry_tmp, "germaparl"),
+  to = file.path(registry(), "germaparl"),
+  overwrite = TRUE
+)
+count("GERMAPARL", "Integration")
+RcppCWB::cl_delete_corpus("GERMAPARL")
+polmineR::registry_reset()
+
+s_attributes("GERMAPARL")
+sc <- corpus("GERMAPARL") \%>\%
+  subset(grep("\\\\|133\\\\|", topics))
+b <- as.speeches(sc, s_attribute_name = "speaker")
+length(b)
+}
 }
 \references{
 Blaette, Andreas (2018): "Using Data Packages to Ship Annotated

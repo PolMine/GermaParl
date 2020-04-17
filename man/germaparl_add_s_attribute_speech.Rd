@@ -41,19 +41,3 @@ The \code{as.speeches}-function may consume several minutes. For writing the
 structural attribute, the \code{s_attribute_encode} from the \code{cwbtools}
 package is used.
 }
-\examples{
-\donttest{
-if (isFALSE(germaparl_is_installed())) germaparl_download_corpus()
-polmineR::registry_reset()
-germaparl_add_s_attribute_speech()
-
-library(polmineR)
-count("GERMAPARL", '"Integration"', cqp = TRUE)
-RcppCWB::cl_delete_corpus("GERMAPARL", registry = registry())
-polmineR::registry_reset()
-s_attributes("GERMAPARL")
-s_attributes("GERMAPARL", "speech")
-sizes <- size("GERMAPARL", s_attribute = "speech")
-dtm <- as.DocumentTermMatrix("GERMAPARL", p_attribute = "word", s_attribute = "speech")
-} 
-}

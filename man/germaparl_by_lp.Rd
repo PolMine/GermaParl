@@ -14,36 +14,8 @@ in the package to be included in the data report of the package vignette. The
 code used to generate the data is reported in the examples section.
 }
 \details{
-Note that the table is based on v1.0.5 of the corpus.
-}
-\examples{
-\donttest{
-if (!germaparl_is_installed()) germaparl_download_corpus()
-
-years <- as.integer(s_attributes("GERMAPARL", "year"))
-dts <- lapply(
-  min(years):max(years),
-  function(year){
-    P <- partition("GERMAPARL", year = as.character(year), verbose = FALSE)
-    P.txt <- partition(P, src = "txt")
-    P.pdf <- partition(P, src = "pdf")
-    dt <- polmineR::count(P, p_attribute = "lemma")
-    unknowns <- round(sum(dt[grepl("#unknown#", dt[["lemma"]])][["count"]]) / size(P), digits = 3)
-    data.table(
-      year = year,
-      protocols = length(unique(s_attributes(P, "session"))),
-      txt = length(s_attributes(P.txt, "session")),
-      pdf = length(s_attributes(P.pdf, "session")),
-      size = size(P),
-      unknown = unknowns
-    )
-  }
-)
-dt1 <- rbindlist(dts)
-dt2 <- rbind(dt1, t(data.table(colSums(dt1))), use.names = FALSE, fill = FALSE)
-dt2[["year"]] <- as.character(dt2[["year"]])
-dt2[nrow(dt2), 1] <- "TOTAL"
-germaparl_by_year <- dt2
-}
+Note that the table is based on v1.0.5 of the corpus. The script to reproduce
+the table can be found in the file
+\url{https://github.com/PolMine/GermaParl/blob/master/data-raw/stats_for_vignette.R}{data-raw/stats_for_vignette.R}.
 }
 \keyword{datasets}

@@ -30,15 +30,6 @@
 #'   successfully.
 #' @rdname download
 #' @importFrom cwbtools corpus_install cwb_registry_dir cwb_corpus_dir
-#' @examples
-#' \donttest{
-#' cwb_dirs <- cwbtools::create_cwb_directories(prefix = tempdir(), ask = interactive())
-#' germaparl_download_corpus(registry_dir = cwb_dirs[["registry_dir"]])
-#' 
-#' library(polmineR)
-#' corpus() # should include GERMAPARLMINI as well as GERMAPARL
-#' count("GERMAPARL", "Daten") # an arbitrary test
-#' }
 germaparl_download_corpus <- function(doi = "https://doi.org/10.5281/zenodo.3742113", registry_dir = cwb_registry_dir(), corpus_dir = cwb_corpus_dir(registry_dir), verbose = TRUE, ask = interactive()){
   corpus_install(doi = doi, registry_dir = registry_dir, corpus_dir = corpus_dir, ask = ask, verbose = verbose)
   return(TRUE)
