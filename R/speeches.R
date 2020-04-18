@@ -1,3 +1,6 @@
+#' @include utils.R
+NULL
+
 #' Add Annotation of Speeches to GermaParl Corpus
 #' 
 #' The basic text unit in the GermaParl corpus are units of uninterrupted

@@ -1,4 +1,4 @@
-#' @include download.R
+#' @include download.R utils.R
 NULL
 
 #' Use topicmodels prepared for GermaParl.
