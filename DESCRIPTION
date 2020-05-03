@@ -2,7 +2,7 @@ Package: GermaParl
 Type: Package
 Title: Download and Augment the Corpus of Plenary Protocols of the German Bundestag
 Version: 1.4.1
-Date: 2020-04-17
+Date: 2020-05-03
 Authors@R: c(person(given = "Andreas", family = "Blaette", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de"))
 Depends:
     R (>= 3.5.0)
@@ -10,20 +10,21 @@ Imports:
   polmineR,
   cwbtools (>= 0.2.0),
   data.table,
-  topicmodels,
   methods,
   RcppCWB,
   jsonlite,
   RCurl
 Suggests:
+  topicmodels,
   knitr,
   rmarkdown,
   testthat
 LazyData: yes
-Description: Data package with the 'GermaParl' Corpus of Parliamentary Debates (German Bundestag) 
-  prepared in the 'PolMine Project'. The package includes a small subset of the corpus as a demo
-  and for testing purposes. The package includes functionality to load the full corpus from the
-  open science 'Zenodo' repository and some auxiliary functions to enhance the corpus.
+Description: Data package to disseminate the  'GermaParl' corpus of parliamentary debates of 
+  the German Bundestag prepared in the 'PolMine Project'. The package includes a small subset of
+  the corpus for demonstration and testing purposes. The package includes functionality to load 
+  the full corpus from the open science repository 'Zenodo' and some auxiliary functions to
+  enhance the corpus.
 URL: https://github.com/polmine/GermaParl
 BugReports: https://github.com/polmine/GermaParl/issues
 License: GPL-3
@@ -31,7 +32,6 @@ VignetteBuilder: knitr
 Encoding: UTF-8
 Collate:
     'GermaParl.R'
-    'utils.R'
     'download.R'
     'lda.R'
     'speeches.R'

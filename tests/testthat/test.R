@@ -20,7 +20,7 @@ test_that(
     expect_true(grepl("https://doi.org/10.5281/zenodo.\\d+", germaparl_get_doi()))
     expect_true(grepl("\\d+\\.\\d+\\.\\d+", as.character(germaparl_get_version())))
     
-    germaparl_add_s_attribute_speech(
+    germaparl_encode_speeches(
       registry_dir = cwb_dirs[["registry_dir"]],
       corpus_dir = cwb_dirs[["corpus_dir"]]
     )

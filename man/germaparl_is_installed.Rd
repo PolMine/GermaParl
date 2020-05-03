@@ -7,15 +7,18 @@
 germaparl_is_installed(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
 }
 \arguments{
-\item{registry_dir}{Path to the registry directory.
-Auxiliary function to detect whether GERMAPARL is installed or not.}
+\item{registry_dir}{Path to the registry directory.}
 }
 \value{
 \code{TRUE} if the corpus has been installed, and \code{FALSE} if not.
 }
 \description{
-Get installation status of GERMAPARL
+Auxiliary function to detect whether GERMAPARL is installed or not.
 }
 \examples{
 germaparl_is_installed() # to check whether GERMAPARL has been downloaded
+}
+\seealso{
+See the examples section of the overview documentation of the
+  \link{GermaParl} package for an example.
 }

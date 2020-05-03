@@ -27,11 +27,11 @@ germaparl_load_topicmodel(
 )
 }
 \arguments{
-\item{k}{A numeric or integer vector, the number of topics of the topicmodel.
-If multiple values are provided, several topic models can be downloaded at
-once.}
+\item{k}{A \code{numeric} or \code{integer} vector, the number of topics of
+the topicmodel. Multiple values can be provided to download several topic
+models at once.}
 
-\item{doi}{The DOI of GermaParl at Zenodo (preferrably given as an URL).}
+\item{doi}{The DOI of GermaParl at Zenodo (stated as URL).}
 
 \item{data_dir}{The data directory with the binary files of the GERMAPARL corpus.}
 
@@ -46,27 +46,34 @@ is located.}
 The functions \code{germaparl_download_lda} and
   \code{germaparl_encode_lda_topics} are returned for their side effects
   (downloading topic model and encoding topic model). They return \code{TRUE}
-  if this has been succesful. The \code{germaparl_download_lda} function will
-  return a \code{LDA_Gibbs} class object as defined in the topicmodels
-  package.
+  if the operation has been succesful. The \code{germaparl_download_lda}
+  function will return a \code{LDA_Gibbs} class object as defined in the
+  topicmodels package.
 }
 \description{
-A set of LDA topicmodels is part of the Zenodo release of GermaParl, for a number
-of topics between 100 and 450.
+A set of LDA topicmodels is part of the Zenodo release of GermaParl (k
+between 100 and 450). These topic models can be downloaded using
+\code{germaparl_download_lda} and loaded using \code{germaparl_load_topicmodel}.
+Use \code{germaparl_encode_lda_topics} to add a structural attribute with
+topic information for speeches to the encoded corpus.
 }
 \details{
 The function \code{germaparl_download_lda} will download an
-  rds-file that will be stored in the \code{extdata/topicmodels/}
-  subdirectory of the installed GermaParl package.
+  \code{rds}-file that will be stored in the data directory of the GermaParl corpus.
 
 \code{germaparl_encode_lda_topics} will add a new s-attributes
   'topics' to GermaParl corpus with topicmodel for \code{k} topics. The
   \code{n} topics for speeches will be written to the corpus. A requirement
   for the function to work is that the s-attribute 'speech' has been
-  generated beforehand using \code{germaparl_add_s_attribute_speech}.
+  generated beforehand using \code{germaparl_encode_speeches}.
 
 \code{germaparl_load_topicmodel} will load a topicmodel into memory.
   The function will return a \code{LDA_Gibbs} topicmodel, if the topicmodel
   for \code{k} is present; \code{NULL} if the topicmodel has not yet been
   downloaded.
+}
+\seealso{
+The workflow to add an lda topic annotation of speeches to the
+  corpus is part of the examples section of the overview documentation of the
+  \link{GermaParl} package.
 }

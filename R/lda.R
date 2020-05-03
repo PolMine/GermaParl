@@ -1,18 +1,20 @@
-#' @include download.R utils.R
+#' @include download.R GermaParl.R
 NULL
 
 #' Use topicmodels prepared for GermaParl.
 #' 
-#' A set of LDA topicmodels is part of the Zenodo release of GermaParl, for a number
-#' of topics between 100 and 450.
+#' A set of LDA topicmodels is part of the Zenodo release of GermaParl (k
+#' between 100 and 450). These topic models can be downloaded using
+#' \code{germaparl_download_lda} and loaded using \code{germaparl_load_topicmodel}.
+#' Use \code{germaparl_encode_lda_topics} to add a structural attribute with
+#' topic information for speeches to the encoded corpus.
 #' 
 #' @details The function \code{germaparl_download_lda} will download an
-#'   rds-file that will be stored in the \code{extdata/topicmodels/}
-#'   subdirectory of the installed GermaParl package.
-#' @param k A numeric or integer vector, the number of topics of the topicmodel.
-#'   If multiple values are provided, several topic models can be downloaded at
-#'   once.
-#' @param doi The DOI of GermaParl at Zenodo (preferrably given as an URL).
+#'   \code{rds}-file that will be stored in the data directory of the GermaParl corpus.
+#' @param k A \code{numeric} or \code{integer} vector, the number of topics of
+#'   the topicmodel. Multiple values can be provided to download several topic
+#'   models at once.
+#' @param doi The DOI of GermaParl at Zenodo (stated as URL).
 #' @param registry_dir The registry directory where the registry file for GERMAPARL
 #'   is located.
 #' @param data_dir The data directory with the binary files of the GERMAPARL corpus.
@@ -23,9 +25,12 @@ NULL
 #' @return The functions \code{germaparl_download_lda} and
 #'   \code{germaparl_encode_lda_topics} are returned for their side effects
 #'   (downloading topic model and encoding topic model). They return \code{TRUE}
-#'   if this has been succesful. The \code{germaparl_download_lda} function will
-#'   return a \code{LDA_Gibbs} class object as defined in the topicmodels
-#'   package.
+#'   if the operation has been succesful. The \code{germaparl_download_lda}
+#'   function will return a \code{LDA_Gibbs} class object as defined in the
+#'   topicmodels package.
+#' @seealso The workflow to add an lda topic annotation of speeches to the
+#'   corpus is part of the examples section of the overview documentation of the
+#'   \link{GermaParl} package.
 #' @export germaparl_download_lda
 #' @aliases topics
 #' @rdname germaparl_topics
@@ -63,22 +68,27 @@ germaparl_download_lda <- function(
 
 
 #' @details \code{germaparl_encode_lda_topics} will add a new s-attributes
-#'   'topics' to GermaParl corpus with topicmodel for \code{k} topics. The
+#'   \emph{topics} to GermaParl corpus with topicmodel for \code{k} topics. The
 #'   \code{n} topics for speeches will be written to the corpus. A requirement
-#'   for the function to work is that the s-attribute 'speech' has been
-#'   generated beforehand using \code{germaparl_add_s_attribute_speech}.
+#'   for the function to work is that the s-attribute \code{speech} has been
+#'   generated beforehand using \code{germaparl_encode_speeches}.
 #' 
 #' @param n Number of topics to write to corpus
 #' @importFrom polmineR decode partition s_attributes
 #' @importFrom data.table setkeyv := setcolorder as.data.table
-#' @importFrom topicmodels topics
 #' @importFrom cwbtools s_attribute_encode
 #' @export germaparl_encode_lda_topics
 #' @importFrom polmineR size
 #' @rdname germaparl_topics
 germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_registry_dir(), data_dir = file.path(cwb_corpus_dir(), "germaparl")){
   
-  # data_dir <- system.file(package = "GermaParl", "extdata", "cwb", "indexed_corpora", "germaparl")
+  if (!requireNamespace("topicmodels", quietly = TRUE)){
+    stop(
+      "Package 'topicmodels' required but not available. ",
+      "Please install the 'topicmodels' package and try again."
+    )
+  }
+  
   corpus_charset <- registry_file_parse(corpus = "GERMAPARL")[["properties"]][["charset"]]
   
   model <- germaparl_load_topicmodel(k = k)
@@ -94,7 +104,7 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_regis
   message("... decoding s-attribute speech")
   if (!"speech" %in% s_attributes("GERMAPARL")){
     stop("The s-attributes 'speech' is not yet present.",
-         "Use the function germaparl_add_s_attribute_speech() to generate it.")
+         "Use the function germaparl_encode_speeches() to generate it.")
   }
   cpos_df <- RcppCWB::s_attribute_decode(
     "GERMAPARL",
@@ -110,7 +120,8 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_regis
   ## Merge tables
   cpos_dt2 <- topic_dt[cpos_dt, on = "speech"]
   setorderv(cpos_dt2, cols = "cpos_left", order = 1L)
-  cpos_dt2[, "speech" := NULL][, "topics" := ifelse(is.na(topics), "||", topics)]
+  cpos_dt2[, "speech" := NULL]
+  cpos_dt2[, "topics" := ifelse(is.na(cpos_dt2[["topics"]]), "||", cpos_dt2[["topics"]])]
   setcolorder(cpos_dt2, c("cpos_left", "cpos_right", "topics"))
   
   # some sanity tests
@@ -135,9 +146,13 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_regis
     verbose = TRUE,
     delete = FALSE
   )
-  count("GERMAPARL", "Daten")
-  RcppCWB::cl_delete_corpus("GERMAPARL")
-  registry_reset()
+  
+  if (isNamespaceLoaded("polmineR")){
+    germaparl_refresh(
+      system_registry_dir = registry_dir,
+      session_registry_dir = registry()
+    )
+  }
 
   invisible(TRUE)
 }

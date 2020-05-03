@@ -1,4 +1,10 @@
-# GermaParl v1.4.0
+# GermaParl 1.4.1
+
+- The 'topicmodels' package has been turned into a suggested package and has been
+  moved from the 'Depends' section to the 'Suggests' section in the DESCRIPTION 
+  file.
+
+# GermaParl 1.4.0
 
 - To meet CRAN requirements, the corpus is not stored within the package as in 
   previous version, but in a system corpus directory. The same is applies to
@@ -9,7 +15,7 @@
   ensures that the correct DOI (argument `doi`) is passed to `corpus_install()`.
 
 
-# GermaParl v1.3.0
+# GermaParl 1.3.0
 
 - The GermaParl corpus is downloaded now from a storage location at zenodo. The 
   `germapar_download_corpus()` function has been reworked accordingly. It now

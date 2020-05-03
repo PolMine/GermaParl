@@ -9,13 +9,13 @@
 germaparl_by_lp
 }
 \description{
-A dataset with information on the corpus on a year-by-year basis is included
-in the package to be included in the data report of the package vignette. The 
-code used to generate the data is reported in the examples section.
+A dataset with information on the corpus by legislative period is included
+in the package to be included in the data report of the package vignette.
 }
 \details{
-Note that the table is based on v1.0.5 of the corpus. The script to reproduce
-the table can be found in the file
-\url{https://github.com/PolMine/GermaParl/blob/master/data-raw/stats_for_vignette.R}{data-raw/stats_for_vignette.R}.
+The table is based on v1.0.5 of the corpus. To prepare the table, the script
+available at
+\href{https://github.com/PolMine/GermaParl/blob/master/data-raw/stats_for_vignette.R}{data-raw/stats_for_vignette.R}
+has been used.
 }
 \keyword{datasets}

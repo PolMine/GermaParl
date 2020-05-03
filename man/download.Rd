@@ -28,7 +28,7 @@ of \code{cwbtools::cwb_registry_dir()}.}
 replacing an existing corpus.}
 }
 \value{
-Logical value \code{TRUE} if the corpus has been installed
+Logical value. \code{TRUE} if the corpus has been installed
   successfully.
 }
 \description{
@@ -36,16 +36,21 @@ The GermaParl R package includes only a small subset of the GermaParl corpus
 (GERMAPARLMINI). The full corpus is deposited with
 \href{https://zenodo.org/}{Zenodo}, an open science repository for research
 data. The \code{germaparl_download_corpus} function downloads a tarball with
-the indexed corpus from the zenodo repository and moves the corpus data to
+the indexed corpus from the Zenodo repository and moves the corpus data to
 the system corpus storage. If a corpus registry has not yet been created, an
-interactive dialogue will help to do so. When calling the function, a stable
-and fast internet connection will be useful as the size of the data amounts
-to ~1 GB which needs to be downloaded.
+interactive dialogue will assist doing so. When calling the function, a
+stable internet connection is recommended. The size of the data to be
+downloaded is about 1 GB.
 }
 \details{
 After downloading and installing the tarball with the CWB indexed
   corpus, the registry file for the GERMAPARL corpus will be amended by the
-  DOI and the corpus version, to make this information available for the
-  citation information that is provided when calling the function
-  \code{citation}.
+  DOI and the corpus version. Afterwards, this information is available for a
+  citation information fitting the corpus used that is provided when calling
+  \code{citation(package = "GermaParl")}.
+}
+\seealso{
+An example for using the \code{germaparl_download_corpus} function
+  is part of the examples section of the overview documentation of the
+  \link{GermaParl} package.
 }

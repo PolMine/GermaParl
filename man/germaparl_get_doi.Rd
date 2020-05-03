@@ -15,9 +15,10 @@ If the DOI is declared in the registry file, a length-one
   installed, \code{NULL} is returned and a warning will be issued.
 }
 \description{
-Get DOI of corpus
+Auxiliary function that extracts the DOI (Document Object Identifier) from
+the registry file of the GERMAPARL corpus.
 }
-\details{
-Auxiliary function that extracts the DOI (Document Object
-  Identifier) from the registry file of the GERMAPARL corpus.
+\seealso{
+See the examples section of the overview documentation of the
+  \link{GermaParl} package for an example.
 }

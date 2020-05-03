@@ -15,9 +15,10 @@ The return value is the version of the corpus (class
   \code{NULL} is returned, and a warning message is issued.
 }
 \description{
-Get GERMAPARL version
-}
-\details{
 \code{germaparl_get_version} is an auxiliary function that extracts
   the version of the GERMAPARL corpus from the registry.
+}
+\seealso{
+See the examples section of the overview documentation of the
+  \link{GermaParl} package for an example.
 }
