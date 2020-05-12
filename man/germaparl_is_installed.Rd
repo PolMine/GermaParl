@@ -4,10 +4,17 @@
 \alias{germaparl_is_installed}
 \title{Get installation status of GERMAPARL}
 \usage{
-germaparl_is_installed(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
+germaparl_is_installed(
+  registry_dir = Sys.getenv("CORPUS_REGISTRY"),
+  sample = FALSE
+)
 }
 \arguments{
 \item{registry_dir}{Path to the registry directory.}
+
+\item{sample}{A \code{logical} value. If \code{FALSE} (default), the
+GERMAPARL corpus will be used, if \code{TRUE}, the GERMAPARLSAMPLE corpus
+will be used.}
 }
 \value{
 \code{TRUE} if the corpus has been installed, and \code{FALSE} if not.

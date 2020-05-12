@@ -10,20 +10,23 @@
 germaparl_download_lda(
   k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L, 300L, 350L, 400L, 450L),
   doi = "https://doi.org/10.5281/zenodo.3742113",
-  data_dir = file.path(cwb_corpus_dir(), "germaparl")
+  data_dir,
+  sample = FALSE
 )
 
 germaparl_encode_lda_topics(
   k = 200,
   n = 5,
   registry_dir = cwb_registry_dir(),
-  data_dir = file.path(cwb_corpus_dir(), "germaparl")
+  data_dir,
+  sample = FALSE
 )
 
 germaparl_load_topicmodel(
   k,
   registry_dir = cwbtools::cwb_registry_dir(),
-  verbose = TRUE
+  verbose = TRUE,
+  sample = FALSE
 )
 }
 \arguments{
@@ -33,7 +36,12 @@ models at once.}
 
 \item{doi}{The DOI of GermaParl at Zenodo (stated as URL).}
 
-\item{data_dir}{The data directory with the binary files of the GERMAPARL corpus.}
+\item{data_dir}{The data directory with the binary files of the GERMAPARL
+corpus. If missing, the directory will be guessed using the function
+\code{cwb::cwb_corpus_dir}}
+
+\item{sample}{A \code{logical} value, if \code{TRUE}, use GERMAPARLSAMPLE
+corpus rather than GERMAPARL.}
 
 \item{n}{Number of topics to write to corpus}
 
@@ -62,9 +70,9 @@ The function \code{germaparl_download_lda} will download an
   \code{rds}-file that will be stored in the data directory of the GermaParl corpus.
 
 \code{germaparl_encode_lda_topics} will add a new s-attributes
-  'topics' to GermaParl corpus with topicmodel for \code{k} topics. The
+  \emph{topics} to GermaParl corpus with topicmodel for \code{k} topics. The
   \code{n} topics for speeches will be written to the corpus. A requirement
-  for the function to work is that the s-attribute 'speech' has been
+  for the function to work is that the s-attribute \code{speech} has been
   generated beforehand using \code{germaparl_encode_speeches}.
 
 \code{germaparl_load_topicmodel} will load a topicmodel into memory.

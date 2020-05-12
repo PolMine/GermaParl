@@ -22,9 +22,14 @@
 #' @param ask A \code{logical} value, whether to ask for user input before
 #'   replacing an existing corpus.
 #' @param registry_dir Path to the system registry directory. Defaults to value
-#'   of \code{cwbtools::cwb_registry_dir()}.
-#' @param corpus_dir Directory where data directories of corpora are located.
+#'   of \code{cwbtools::cwb_registry_dir()} to guess the registry directory. 
+#'   We recommend to state the registry directory explicitly.
+#' @param corpus_dir Directory where data directories of corpora are located. By
+#'   default, the directory is guessed using \code{cwbtools::cwb_registry_dir}.
+#'   We recommend to state the directory explicitly.
 #' @param verbose Whether to show messages, defaults to \code{TRUE}.
+#' @param sample A \code{logical} value, whether to download sample data
+#'   (GERMAPARLSAMPLE) rather than full corpus (GERMAPARL) for testing purposes.
 #' @export germaparl_download_corpus
 #' @seealso An example for using the \code{germaparl_download_corpus} function
 #'   is part of the examples section of the overview documentation of the
@@ -33,7 +38,8 @@
 #'   successfully.
 #' @rdname download
 #' @importFrom cwbtools corpus_install cwb_registry_dir cwb_corpus_dir
-germaparl_download_corpus <- function(doi = "https://doi.org/10.5281/zenodo.3742113", registry_dir = cwb_registry_dir(), corpus_dir = cwb_corpus_dir(registry_dir), verbose = TRUE, ask = interactive()){
+germaparl_download_corpus <- function(doi = "https://doi.org/10.5281/zenodo.3742113", registry_dir = cwb_registry_dir(), corpus_dir = cwb_corpus_dir(registry_dir), verbose = interactive(), ask = interactive(), sample = FALSE){
+  if (isTRUE(sample)) doi <- "https://doi.org/10.5281/zenodo.3823245"
   corpus_install(doi = doi, registry_dir = registry_dir, corpus_dir = corpus_dir, ask = ask, verbose = verbose)
   return(TRUE)
 }

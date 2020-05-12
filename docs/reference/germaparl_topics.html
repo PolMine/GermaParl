@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -36,9 +40,11 @@
 
 
 <meta property="og:title" content="Use topicmodels prepared for GermaParl. — germaparl_download_lda" />
-<meta property="og:description" content="A set of LDA topicmodels is part of the Zenodo release of GermaParl, for a number
-of topics between 100 and 450." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:description" content="A set of LDA topicmodels is part of the Zenodo release of GermaParl (k
+between 100 and 450). These topic models can be downloaded using
+germaparl_download_lda and loaded using germaparl_load_topicmodel.
+Use germaparl_encode_lda_topics to add a structural attribute with
+topic information for speeches to the encoded corpus." />
 
 
 
@@ -56,7 +62,7 @@ of topics between 100 and 450." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -70,7 +76,7 @@ of topics between 100 and 450." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GermaParl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.2</span>
       </span>
     </div>
 
@@ -94,7 +100,7 @@ of topics between 100 and 450." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/polmine/GermaParl">
+  <a href="https://github.com/polmine/GermaParl/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -118,35 +124,67 @@ of topics between 100 and 450." />
     </div>
 
     <div class="ref-description">
-    <p>A set of LDA topicmodels is part of the Zenodo release of GermaParl, for a number
-of topics between 100 and 450.</p>
+    <p>A set of LDA topicmodels is part of the Zenodo release of GermaParl (k
+between 100 and 450). These topic models can be downloaded using
+<code>germaparl_download_lda</code> and loaded using <code>germaparl_load_topicmodel</code>.
+Use <code>germaparl_encode_lda_topics</code> to add a structural attribute with
+topic information for speeches to the encoded corpus.</p>
     </div>
 
     <pre class="usage"><span class='fu'>germaparl_download_lda</span>(
   <span class='kw'>k</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100L</span>, <span class='fl'>150L</span>, <span class='fl'>175L</span>, <span class='fl'>200L</span>, <span class='fl'>225L</span>, <span class='fl'>250L</span>, <span class='fl'>275L</span>, <span class='fl'>300L</span>, <span class='fl'>350L</span>, <span class='fl'>400L</span>, <span class='fl'>450L</span>),
-  <span class='kw'>doi</span> <span class='kw'>=</span> <span class='st'>"https://doi.org/10.5281/zenodo.3742113"</span>
+  <span class='kw'>doi</span> <span class='kw'>=</span> <span class='st'>"https://doi.org/10.5281/zenodo.3742113"</span>,
+  <span class='no'>data_dir</span>,
+  <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )
 
-<span class='fu'>germaparl_encode_lda_topics</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+<span class='fu'>germaparl_encode_lda_topics</span>(
+  <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>200</span>,
+  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>registry_dir</span> <span class='kw'>=</span> <span class='fu'>cwb_registry_dir</span>(),
+  <span class='no'>data_dir</span>,
+  <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)
 
-<span class='fu'>germaparl_load_topicmodel</span>(<span class='no'>k</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>germaparl_load_topicmodel</span>(
+  <span class='no'>k</span>,
+  <span class='kw'>registry_dir</span> <span class='kw'>=</span> <span class='kw pkg'>cwbtools</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cwbtools/man/directories.html'>cwb_registry_dir</a></span>(),
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>k</th>
-      <td><p>A numeric or integer vector, the number of topics of the topicmodel.
-If multiple values are provided, several topic models can be downloaded at
-once.</p></td>
+      <td><p>A <code>numeric</code> or <code>integer</code> vector, the number of topics of
+the topicmodel. Multiple values can be provided to download several topic
+models at once.</p></td>
     </tr>
     <tr>
       <th>doi</th>
-      <td><p>The DOI of GermaParl at Zenodo (preferrably given as an URL).</p></td>
+      <td><p>The DOI of GermaParl at Zenodo (stated as URL).</p></td>
+    </tr>
+    <tr>
+      <th>data_dir</th>
+      <td><p>The data directory with the binary files of the GERMAPARL
+corpus. If missing, the directory will be guessed using the function
+<code>cwb::cwb_corpus_dir</code></p></td>
+    </tr>
+    <tr>
+      <th>sample</th>
+      <td><p>A <code>logical</code> value, if <code>TRUE</code>, use GERMAPARLSAMPLE
+corpus rather than GERMAPARL.</p></td>
     </tr>
     <tr>
       <th>n</th>
       <td><p>Number of topics to write to corpus</p></td>
+    </tr>
+    <tr>
+      <th>registry_dir</th>
+      <td><p>The registry directory where the registry file for GERMAPARL
+is located.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -154,50 +192,38 @@ once.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The functions <code>germaparl_download_lda</code> and
+  <code>germaparl_encode_lda_topics</code> are returned for their side effects
+  (downloading topic model and encoding topic model). They return <code>TRUE</code>
+  if the operation has been succesful. The <code>germaparl_download_lda</code>
+  function will return a <code>LDA_Gibbs</code> class object as defined in the
+  topicmodels package.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function <code>germaparl_download_lda</code> will download an
-  rds-file that will be stored in the <code>extdata/topicmodels/</code>
-  subdirectory of the installed GermaParl package.</p>
+  <code>rds</code>-file that will be stored in the data directory of the GermaParl corpus.</p>
 <p><code>germaparl_encode_lda_topics</code> will add a new s-attributes
-  'topics' to GermaParl corpus with topicmodel for <code>k</code> topics. The
+  <em>topics</em> to GermaParl corpus with topicmodel for <code>k</code> topics. The
   <code>n</code> topics for speeches will be written to the corpus. A requirement
-  for the function to work is that the s-attribute 'speech' has been
-  generated beforehand using <code>germaparl_add_s_attribute_speech</code>.</p>
+  for the function to work is that the s-attribute <code>speech</code> has been
+  generated beforehand using <code>germaparl_encode_speeches</code>.</p>
 <p><code>germaparl_load_topicmodel</code> will load a topicmodel into memory.
   The function will return a <code>LDA_Gibbs</code> topicmodel, if the topicmodel
   for <code>k</code> is present; <code>NULL</code> if the topicmodel has not yet been
   downloaded.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>germaparl_download_lda</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>250</span>)
-<span class='no'>lda</span> <span class='kw'>&lt;-</span> <span class='fu'>germaparl_load_topicmodel</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>250</span>)
-<span class='no'>lda_terms</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>topicmodels</span><span class='kw ns'>::</span><span class='fu'>terms</span>(<span class='no'>lda</span>, <span class='fl'>50</span>)
+    <div class='dont-index'><p>The workflow to add an lda topic annotation of speeches to the
+  corpus is part of the examples section of the overview documentation of the
+  <a href='GermaParl-package.html'>GermaParl</a> package.</p></div>
 
-<span class='kw'>if</span> (!<span class='st'>"speech"</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/s_attributes-method.html'>s_attributes</a></span>(<span class='st'>"GERMAPARL"</span>)) <span class='fu'><a href='germaparl_add_s_attribute_speech.html'>germaparl_add_s_attribute_speech</a></span>()
-<span class='fu'>germaparl_encode_lda_topics</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>250</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>polmineR</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/use.html'>use</a></span>(<span class='st'>"GermaParl"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/s_attributes-method.html'>s_attributes</a></span>(<span class='st'>"GERMAPARL"</span>)
-<span class='no'>sc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/corpus-class.html'>corpus</a></span>(<span class='st'>"GERMAPARL"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/subset.html'>subset</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span>(<span class='st'>"\\|133\\|"</span>, <span class='no'>topics</span>))
-<span class='no'>b</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/as.speeches.html'>as.speeches</a></span>(<span class='no'>sc</span>, <span class='kw'>s_attribute_name</span> <span class='kw'>=</span> <span class='st'>"speaker"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>b</span>)
-}
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>germaparl_encode_lda_topics</span>(<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>250</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-}</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -208,7 +234,7 @@ once.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

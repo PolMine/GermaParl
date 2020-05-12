@@ -17,8 +17,11 @@ NULL
 #' @param doi The DOI of GermaParl at Zenodo (stated as URL).
 #' @param registry_dir The registry directory where the registry file for GERMAPARL
 #'   is located.
-#' @param data_dir The data directory with the binary files of the GERMAPARL corpus.
-#' 
+#' @param data_dir The data directory with the binary files of the GERMAPARL
+#'   corpus. If missing, the directory will be guessed using the function
+#'   \code{cwb::cwb_corpus_dir}
+#' @param sample A \code{logical} value, if \code{TRUE}, use GERMAPARLSAMPLE
+#'   corpus rather than GERMAPARL.
 #' @importFrom jsonlite fromJSON
 #' @importFrom RCurl getURL
 #' @importFrom polmineR registry_reset count
@@ -37,19 +40,23 @@ NULL
 germaparl_download_lda <- function(
   k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L, 300L, 350L, 400L, 450L),
   doi = "https://doi.org/10.5281/zenodo.3742113",
-  data_dir = file.path(cwb_corpus_dir(), "germaparl")
+  data_dir,
+  sample = FALSE
   ){
+  
+  if (isTRUE(sample)) doi <- "https://doi.org/10.5281/zenodo.3823245"
+  corpus_id <- if (isFALSE(sample)) "GERMAPARL" else "GERMAPARLSAMPLE"
+  if (missing(data_dir)) data_dir <- file.path(cwb_corpus_dir(), tolower(corpus_id))
   if (!is.numeric(k)) stop("Argument k is required to be a numeric vector.")
   if (length(k) > 1L){
     sapply(1L:length(k), function(i) germaparl_download_lda(k = k[i], doi = doi))
   } else {
-    rds_file <- sprintf("germaparl_lda_speeches_%d.rds", k) 
-    
     record_id <- gsub("^.*?10\\.5281/zenodo\\.(\\d+)$", "\\1", doi)
     zenodo_api_url <- sprintf("https://zenodo.org/api/records/%d", as.integer(record_id))
     zenodo_files <- fromJSON(getURL(zenodo_api_url))[["files"]][["links"]][["self"]]
 
-    lda_tarball <- grep(sprintf("^.*/%s$", rds_file), zenodo_files, value = TRUE)
+    lda_tarball <- grep(sprintf("^.*/%s_lda_.*?%d\\.rds$", tolower(corpus_id), k), zenodo_files, value = TRUE)
+    rds_file <- basename(lda_tarball)
     if (!nchar(lda_tarball)){
       warning(sprintf("File '%s' is not available at Zenodo repository for the DOI given.", rds_file))
       return(FALSE)
@@ -80,7 +87,10 @@ germaparl_download_lda <- function(
 #' @export germaparl_encode_lda_topics
 #' @importFrom polmineR size
 #' @rdname germaparl_topics
-germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_registry_dir(), data_dir = file.path(cwb_corpus_dir(), "germaparl")){
+germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_registry_dir(), data_dir, sample = FALSE){
+  
+  corpus_id <- if (isFALSE(sample)) "GERMAPARL" else "GERMAPARLSAMPLE"
+  if (missing(data_dir)) data_dir <- file.path(cwb_corpus_dir(registry_dir), tolower(corpus_id))
   
   if (!requireNamespace("topicmodels", quietly = TRUE)){
     stop(
@@ -89,9 +99,9 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_regis
     )
   }
   
-  corpus_charset <- registry_file_parse(corpus = "GERMAPARL")[["properties"]][["charset"]]
+  corpus_charset <- registry_file_parse(corpus = corpus_id)[["properties"]][["charset"]]
   
-  model <- germaparl_load_topicmodel(k = k)
+  model <- germaparl_load_topicmodel(k = k, registry_dir = registry_dir, sample = sample)
   
   message("... getting topic matrix")
   topic_matrix <- topicmodels::topics(model, k = n)
@@ -102,12 +112,12 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_regis
   )
   
   message("... decoding s-attribute speech")
-  if (!"speech" %in% s_attributes("GERMAPARL")){
+  if (!"speech" %in% s_attributes(corpus_id)){
     stop("The s-attributes 'speech' is not yet present.",
          "Use the function germaparl_encode_speeches() to generate it.")
   }
   cpos_df <- RcppCWB::s_attribute_decode(
-    "GERMAPARL",
+    corpus_id,
     data_dir = data_dir,
     registry = registry_dir,
     encoding = corpus_charset,
@@ -127,18 +137,18 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_regis
   # some sanity tests
   message("... running some sanity checks")
   coverage <- sum(cpos_dt2[["cpos_right"]] - cpos_dt2[["cpos_left"]]) + nrow(cpos_dt2)
-  if (coverage != size("GERMAPARL")) stop()
-  P <- partition("GERMAPARL", speech = ".*", regex = TRUE)
+  if (coverage != size(corpus_id)) stop()
+  P <- partition(corpus_id, speech = ".*", regex = TRUE)
   if (sum(cpos_dt2[["cpos_left"]] - P@cpos[,1]) != 0) stop()
   if (sum(cpos_dt2[["cpos_right"]] - P@cpos[,2]) != 0) stop()
-  if (length(s_attributes("GERMAPARL", "speech", unique = FALSE)) != nrow(cpos_dt2)) stop()
+  if (length(s_attributes(corpus_id, "speech", unique = FALSE)) != nrow(cpos_dt2)) stop()
   
   message("... encoding s-attribute 'topics'")
   retval <- s_attribute_encode(
     values = cpos_dt2[["topics"]], # is still UTF-8, recoding done by s_attribute_encode
     data_dir = data_dir,
     s_attribute = "topics",
-    corpus = "GERMAPARL",
+    corpus = corpus_id,
     region_matrix = as.matrix(cpos_dt2[, c("cpos_left", "cpos_right")]),
     registry_dir = registry_dir,
     encoding = corpus_charset,
@@ -150,7 +160,8 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_regis
   if (isNamespaceLoaded("polmineR")){
     germaparl_refresh(
       system_registry_dir = registry_dir,
-      session_registry_dir = registry()
+      session_registry_dir = registry(),
+      sample = sample
     )
   }
 
@@ -165,11 +176,12 @@ germaparl_encode_lda_topics <- function(k = 200, n = 5, registry_dir = cwb_regis
 #' @export germaparl_load_topicmodel
 #' @importFrom cwbtools registry_file_parse cwb_registry_dir
 #' @rdname germaparl_topics
-germaparl_load_topicmodel <- function(k, registry_dir = cwbtools::cwb_registry_dir(), verbose = TRUE){
+germaparl_load_topicmodel <- function(k, registry_dir = cwbtools::cwb_registry_dir(), verbose = TRUE, sample = FALSE){
+  corpus_id <- if (isFALSE(sample)) "GERMAPARL" else "GERMAPARLSAMPLE" 
   if (verbose) message(sprintf("... loading topicmodel for k = %d", k))
-  topicmodel_dir <- registry_file_parse(corpus = "germaparl", registry_dir = registry_dir)
-  lda_files <- Sys.glob(paths = sprintf("%s/germaparl_lda_speeches_*.rds", topicmodel_dir))
-  ks <- as.integer(gsub("germaparl_lda_speeches_(\\d+)\\.rds", "\\1", basename(lda_files)))
+  topicmodel_dir <- registry_file_parse(corpus = tolower(corpus_id), registry_dir = registry_dir)[["home"]]
+  lda_files <- Sys.glob(paths = sprintf("%s/%s_lda_*.rds", topicmodel_dir, tolower(corpus_id)))
+  ks <- as.integer(gsub(sprintf("%s_lda_.*?(\\d+)\\.rds$", tolower(corpus_id)), "\\1", basename(lda_files)))
   if (!k %in% ks){
     warning("no topicmodel available for k provided")
     return(NULL)

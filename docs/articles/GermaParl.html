@@ -6,19 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GermaParl • GermaParl</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="GermaParl">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="GermaParl">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GermaParl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.2</span>
       </span>
     </div>
 
@@ -55,7 +55,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/polmine/GermaParl">
+  <a href="https://github.com/polmine/GermaParl/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -73,11 +73,11 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>GermaParl</h1>
+      <h1 data-toc-skip>GermaParl</h1>
             <h3 class="subtitle">Introducing the Data Package and the Corpus</h3>
                         <h4 class="author">Andreas Blaette (<a href="mailto:andreas.blaette@uni-due.de" class="email">andreas.blaette@uni-due.de</a>)</h4>
             
-            <h4 class="date">2020-04-06</h4>
+            <h4 class="date">2020-05-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/polmine/GermaParl/blob/master/vignettes/GermaParl.Rmd"><code>vignettes/GermaParl.Rmd</code></a></small>
       <div class="hidden name"><code>GermaParl.Rmd</code></div>
@@ -217,19 +217,19 @@
 <h3 class="hasAnchor">
 <a href="#getting-started---installing-germaparl" class="anchor"></a>Getting started - installing GermaParl</h3>
 <p>The GermaParl R Data Package can be installed from CRAN. It is a “pure R” package. There are no differences whether you install on Linux, MacOS or Windows.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"GermaParl"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"GermaParl"</span>)</pre></body></html></div>
 <p>After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from <a href="https://zenodo.org/">Zenodo</a>, an open science data repository:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(GermaParl)</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="../reference/download.html">germaparl_download_corpus</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">GermaParl</span>)
+<span class="fu"><a href="../reference/download.html">germaparl_download_corpus</a></span>()</pre></body></html></div>
 <p>To check whether the installation has been successful, run the following commands. For further instructions, see the documentation of the polmineR package.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(polmineR)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/use.html">use</a></span>(<span class="st">"GermaParl"</span>) <span class="co"># to activate the corpus in the data package</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">polmineR</span>)
+<span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/use.html">use</a></span>(<span class="st">"GermaParl"</span>) <span class="co"># to activate the corpus in the data package</span></pre></body></html></div>
 <pre><code>## ... activating corpus: GERMAPARLMINI</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/corpus-class.html">corpus</a></span>() <span class="co"># to see whether the GERMAPARL corpus is listed</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/corpus-class.html">corpus</a></span>() <span class="co"># to see whether the GERMAPARL corpus is listed</span></pre></body></html></div>
 <pre><code>##          corpus   size template
 ## 1 GERMAPARLMINI 222201     TRUE
 ## 2       REUTERS   4050     TRUE</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="cf">if</span> (<span class="st">"GERMAPARL"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/corpus-class.html">corpus</a></span>()[[<span class="st">"corpus"</span>]]) <span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/size-method.html">size</a></span>(<span class="st">"GERMAPARL"</span>) <span class="co"># to learn about the size of the corpus</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="kw">if</span> (<span class="st">"GERMAPARL"</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/corpus-class.html">corpus</a></span>()<span class="kw">[[</span><span class="st">"corpus"</span>]]) <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/size-method.html">size</a></span>(<span class="st">"GERMAPARL"</span>) <span class="co"># to learn about the size of the corpus</span></pre></body></html></div>
 </div>
 </div>
 <div id="a-very-brief-tutorial" class="section level2">
@@ -237,23 +237,23 @@
 <a href="#a-very-brief-tutorial" class="anchor"></a>A very brief tutorial</h2>
 <p>The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as <a href="http://cwb.sourceforge.net/cqpweb.php">CQPweb</a>). However, most technical decisions during corpus preparation had in mind to optimize using the GermaParl corpus in combination with the <a href="https://CRAN.R-project.org/package=polmineR">polmineR</a> package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands. Note that in the following examples, we will use GERMAPARLMINI to illustrate functions, as the full GERMAPARL corpus will only be available after the full installation of the corpus.</p>
 <p>First, you may want to learn about the p-attributes (positional attributes), and s-attributes (structural attributes) that are available.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/s_attributes-method.html">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/s_attributes-method.html">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>)</pre></body></html></div>
 <pre><code>## [1] "interjection" "date"         "party"        "speaker"</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/p_attributes.html">p_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/p_attributes.html">p_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>)</pre></body></html></div>
 <pre><code>## [1] "word" "pos"</code></pre>
 <p>To learn about the values of s-attributes, specify the param s_attribute:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/s_attributes-method.html">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="st">"date"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/s_attributes-method.html">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="st">"date"</span>)</pre></body></html></div>
 <pre><code>## [1] "2009-10-27" "2009-10-28" "2009-11-10" "2009-11-11" "2009-11-12"</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/s_attributes-method.html">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="st">"party"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/s_attributes-method.html">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="st">"party"</span>)</pre></body></html></div>
 <pre><code>## [1] "NA"              "CDU_CSU"         "SPD"             "FDP"            
 ## [5] "DIE_LINKE"       "B90_DIE_GRUENEN"</code></pre>
 <p>To inspect keywords-in-context (KWIC), use the kwic-method:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">K &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/kwic.html">kwic</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Integration"</span>)</a>
-<a class="sourceLine" id="cb16-2" title="2"><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()){</a>
-<a class="sourceLine" id="cb16-3" title="3">  K</a>
-<a class="sourceLine" id="cb16-4" title="4">} <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb16-5" title="5">  knitr<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(K), <span class="dt">format =</span> <span class="st">"markdown"</span>)</a>
-<a class="sourceLine" id="cb16-6" title="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">K</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/kwic.html">kwic</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="st">"Integration"</span>)
+<span class="kw">if</span> (<span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()){
+  <span class="no">K</span>
+} <span class="kw">else</span> {
+  <span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="no">K</span>), <span class="kw">format</span> <span class="kw">=</span> <span class="st">"markdown"</span>)
+}</pre></body></html></div>
 <table class="table">
 <colgroup>
 <col width="46%">
@@ -384,34 +384,34 @@
 </tbody>
 </table>
 <p>The count-method is used for counting. You can supply one or multiple queries:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/count-method.html">count</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Integration"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/count-method.html">count</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="st">"Integration"</span>)</pre></body></html></div>
 <pre><code>##          query count         freq
 ## 1: Integration    23 0.0001035099</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/count-method.html">count</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Integration"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/count-method.html">count</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Integration"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))</pre></body></html></div>
 <pre><code>##          query count         freq
 ## 1: Integration    23 1.035099e-04
 ## 2:      Flucht     2 9.000860e-06
 ## 3: Abschiebung     1 4.500430e-06</code></pre>
 <p>To get the dispersion of a query, use the dispersion-method.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">d &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/dispersion-method.html">dispersion</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Integration"</span>, <span class="dt">s_attribute =</span> <span class="st">"date"</span>)</a>
-<a class="sourceLine" id="cb21-2" title="2">d</a></code></pre></div>
+<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/dispersion-method.html">dispersion</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="st">"Integration"</span>, <span class="kw">s_attribute</span> <span class="kw">=</span> <span class="st">"date"</span>)
+<span class="no">d</span></pre></body></html></div>
 <p>Visualise the result as a barplot…</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span>(d[[<span class="st">"count"</span>]], <span class="dt">names.arg =</span> d[[<span class="st">"date"</span>]], <span class="dt">las =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span>(<span class="no">d</span><span class="kw">[[</span><span class="st">"count"</span>]], <span class="kw">names.arg</span> <span class="kw">=</span> <span class="no">d</span><span class="kw">[[</span><span class="st">"date"</span>]], <span class="kw">las</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
 <p><img src="GermaParl_files/figure-html/dispersion_barplot-1.png" width="700"></p>
 <p>The cooccurrences-method will get you the cooccurrences of a query.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">coocs &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/cooccurrences.html">cooccurrences</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Wir"</span>)</a>
-<a class="sourceLine" id="cb23-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/format.html">format</a></span>(coocs)</a>
-<a class="sourceLine" id="cb23-3" title="3"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/dotplot-method.html">dotplot</a></span>(C)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">coocs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/cooccurrences.html">cooccurrences</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="st">"Wir"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span>(<span class="no">coocs</span>)
+<span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/dotplot-method.html">dotplot</a></span>(<span class="no">C</span>)</pre></body></html></div>
 <p>These are some if the core functions, applied to the whole corpus. The whole point of the structural annotation of the corpus (s-attributes) is to facilitate the creation of subcorpora / partitions. So every method that has been introduced can be applied to a partition.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">lp16 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/partition.html">partition</a></span>(<span class="st">"GERMAPARL"</span>, <span class="dt">lp =</span> <span class="dv">16</span>)</a>
-<a class="sourceLine" id="cb24-2" title="2"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/count-method.html">count</a></span>(lp16, <span class="dt">query =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Asyl"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))</a>
-<a class="sourceLine" id="cb24-3" title="3"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/dispersion-method.html">dispersion</a></span>(lp16, <span class="dt">query =</span> <span class="st">"Flüchtlinge", sAttribute = "</span>year<span class="st">")</span></a></code></pre></div>
+<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">lp16</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/partition.html">partition</a></span>(<span class="st">"GERMAPARL"</span>, <span class="kw">lp</span> <span class="kw">=</span> <span class="fl">16</span>)
+<span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/count-method.html">count</a></span>(<span class="no">lp16</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Asyl"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))
+<span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/dispersion-method.html">dispersion</a></span>(<span class="no">lp16</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="st">"Flüchtlinge"</span>, <span class="kw">sAttribute</span> <span class="kw">=</span> <span class="st">"year"</span>)</pre></body></html></div>
 <p>Finally, note that the methods of polmineR can also be used with the pipe functionality offered by the magrittr package.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
-<a class="sourceLine" id="cb25-2" title="2"><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/cooccurrences.html">cooccurrences</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="dt">query =</span> <span class="st">"Europa"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb25-3" title="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/subset.html">subset</a></span>(<span class="op">!</span>word <span class="op">%in%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(tm<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/tm/man/stopwords.html">stopwords</a></span>(<span class="st">"de"</span>), <span class="st">","</span>, <span class="st">"."</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb25-4" title="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/subset.html">subset</a></span>(count_window <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb25-5" title="5"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/polmineR/man/dotplot-method.html">dotplot</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">magrittr</span>)
+<span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/cooccurrences.html">cooccurrences</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="st">"Europa"</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/subset.html">subset</a></span>(!<span class="no">word</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw pkg">tm</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/tm/man/stopwords.html">stopwords</a></span>(<span class="st">"de"</span>), <span class="st">","</span>, <span class="st">"."</span>)) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/subset.html">subset</a></span>(<span class="no">count_window</span> <span class="kw">&gt;=</span> <span class="fl">5</span>) <span class="kw">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/dotplot-method.html">dotplot</a></span>()</pre></body></html></div>
 <p>This is just a short glimpse into the analytical potential of using GermaParl in combination with polmineR. One of the most important aspects that cannot be explained here is the possibility to use the syntax of the Corpus Query Processor (CQP) that comes with the CWB backend. The <code>as.TermDocumentMatrix</code> method will prepare data structures efficiently needed for more advanced analytical techniques such as topicmodelling. Consult the vignette of the polmineR package to learn more!</p>
 </div>
 <div id="some-caveats" class="section level2">
@@ -450,7 +450,7 @@
 <p>Blaette, Andreas (2020): GermaParl. Download and Augment the Corpus of Plenary Protocols of the German Bundestag. R package version 1.3.0. <a href="https://CRAN.R-project.org/package=GermaParl" class="uri">https://CRAN.R-project.org/package=GermaParl</a></p>
 <p>Blaette, Andreas (2020): GermaParl. Linguistically Annotated and Indexed Corpus of Plenary Protocols of the German Bundestag. CWB corpus version 1.0.6. <a href="https://doi.org/10.5281/zenodo.3735141" class="uri">https://doi.org/10.5281/zenodo.3735141</a></p>
 <p>NOTE: In an R session, you can get this recommendation how to quote GermaParl by calling the usual <code><a href="https://rdrr.io/r/utils/citation.html">citation()</a></code> function:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span>(<span class="st">"GermaParl"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span>(<span class="st">"GermaParl"</span>)</pre></body></html></div>
 </div>
 <div id="annex" class="section level2">
 <h2 class="hasAnchor">
@@ -788,26 +788,11 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#a-corpus-of-plenary-protocols">A Corpus of Plenary Protocols</a></li>
-      <li><a href="#corpus-preparation">Corpus Preparation</a></li>
-      <li><a href="#annotation">Annotation</a></li>
-      <li><a href="#using-the-germaparl-corpus">Using the GermaParl corpus</a></li>
-      <li><a href="#a-very-brief-tutorial">A very brief tutorial</a></li>
-      <li><a href="#some-caveats">Some caveats</a></li>
-      <li><a href="#perspectives">Perspectives</a></li>
-      <li><a href="#license">License</a></li>
-      <li><a href="#quotation">Quotation</a></li>
-      <li><a href="#annex">Annex</a></li>
-      <li><a href="#references">References</a></li>
-      </ul>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
@@ -818,7 +803,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

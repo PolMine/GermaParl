@@ -4,10 +4,13 @@
 \alias{germaparl_get_doi}
 \title{Get DOI of corpus}
 \usage{
-germaparl_get_doi(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
+germaparl_get_doi(registry_dir = Sys.getenv("CORPUS_REGISTRY"), sample = FALSE)
 }
 \arguments{
 \item{registry_dir}{Path to the registry directory.}
+
+\item{sample}{A \code{logical} value, if \code{FALSE} (default), use
+GERMAPARL, if \code{TRUE}, use GERMAPARLSAMPLE.}
 }
 \value{
 If the DOI is declared in the registry file, a length-one

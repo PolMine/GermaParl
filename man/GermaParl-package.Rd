@@ -30,54 +30,72 @@ available only when a version of \emph{GermaParl} has been downloaded and
 installed.
 }
 \examples{
-\donttest{
+# This example uses the GERMAPARLSAMPLE corpus rather than the full GERMAPARL 
+# so that the time consumed for testing the code is not excessive. To apply
+# everything on GERMAPARL rather than GERMAPARLSAMPLE, set variable 'samplemode' 
+# to FALSE, or simply omit argument 'sample'.
+
+samplemode <- TRUE
+corpus_id <- "GERMAPARLSAMPLE"
+# corpus_id <- "GERMAPARL"
+
 # This example assumes that the directories used by the CWB do not yet exist, so
 # temporary directories are created.
 cwb_dirs <- cwbtools::create_cwb_directories(prefix = tempdir(), ask = interactive())
 registry_tmp <- cwb_dirs[["registry_dir"]]
 
 # Download corpus from Zenodo
-germaparl_download_corpus(registry_dir = registry_tmp)
+germaparl_download_corpus(
+  registry_dir = registry_tmp,
+  corpus_dir = cwb_dirs[["corpus_dir"]],
+  verbose = FALSE,
+  sample = samplemode
+)
 
 # Check availability of the corpus
 library(polmineR)
-corpus() # should include GERMAPARLMINI as well as GERMAPARL
-count("GERMAPARL", "Daten") # an arbitrary test
-germaparl_is_installed() # TRUE now
-germaparl_get_version() # get version of indexed corpus
-germaparl_get_doi() # get 'document object identifier' (DOI) of GERMAPARL corpus
+corpus() # should include downloaded GERMAPARL(SAMPLE) corpus
+count("GERMAPARLSAMPLE", "Daten") # an arbitrary test
+germaparl_is_installed(sample = samplemode) # TRUE now
+germaparl_get_version(sample = samplemode) # get version of indexed corpus
+germaparl_get_doi(sample = samplemode) # get 'document object identifier' (DOI) of GERMAPARL corpus
 
 # Encode structural attribute 'speech'
 germaparl_encode_speeches(
   registry_dir = cwb_dirs[["registry_dir"]],
-  corpus_dir = cwb_dirs[["corpus_dir"]]
+  corpus_dir = cwb_dirs[["corpus_dir"]],
+  sample = samplemode
 )
 
 # Check whether the new attribute is available 
-s_attributes("GERMAPARL")
-values <- s_attributes("GERMAPARL", "speech")
-sizes <- size("GERMAPARL", s_attribute = "speech")
-dtm <- as.DocumentTermMatrix("GERMAPARL", p_attribute = "word", s_attribute = "speech")
+s_attributes(corpus_id)
+values <- s_attributes(corpus_id, "speech")
+sizes <- size(corpus_id, s_attribute = "speech")
+dtm <- as.DocumentTermMatrix(corpus_id, p_attribute = "word", s_attribute = "speech")
 
 # Download topic model (k = 250)
-germaparl_download_lda(k = 250, data_dir = file.path(cwb_dirs[["corpus_dir"]]))
-lda <- germaparl_load_topicmodel(k = 250)
-lda_terms <- topicmodels::terms(lda, 50)
+germaparl_download_lda(
+  k = 30, # use k = 250 for full GERMAPARL corpus
+  data_dir = file.path(cwb_dirs[["corpus_dir"]], tolower(corpus_id)),
+  sample = samplemode
+)
+lda <- germaparl_load_topicmodel(k = 30L, registry_dir = registry_tmp, sample = samplemode)
+lda_terms <- topicmodels::terms(lda, 10)
 
 # Encode topic model classification of speeches
 germaparl_encode_lda_topics(
-  k = 250, n = 5,
+  k = 30, # use k = 250 for full GERMAPARL corpus
+  n = 3,
   registry_dir = cwb_dirs[["registry_dir"]],
-  data_dir = file.path(cwb_dirs[["corpus_dir"]], "germaparl")
+  data_dir = file.path(cwb_dirs[["corpus_dir"]], tolower(corpus_id)),
+  sample = samplemode
 )
 
 # Check whether the newly encoded attribute 'topics' is available
-s_attributes("GERMAPARL")
-sc <- corpus("GERMAPARL") \%>\%
-  subset(grep("\\\\|133\\\\|", topics))
+s_attributes(corpus_id)
+sc <- corpus(corpus_id) \%>\% subset(grep("\\\\|18\\\\|", topics))
 b <- as.speeches(sc, s_attribute_name = "speaker")
 length(b)
-}
 }
 \references{
 Blaette, Andreas (2018): "Using Data Packages to Ship Annotated

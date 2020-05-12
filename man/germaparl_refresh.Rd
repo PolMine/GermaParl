@@ -6,7 +6,8 @@
 \usage{
 germaparl_refresh(
   session_registry_dir = polmineR::registry(),
-  system_registry_dir = getOption("polmineR.corpus_registry")
+  system_registry_dir = getOption("polmineR.corpus_registry"),
+  sample = FALSE
 )
 }
 \arguments{
@@ -14,6 +15,10 @@ germaparl_refresh(
 and used by the polmineR package.}
 
 \item{system_registry_dir}{The non-temporary system registry directory.}
+
+\item{sample}{A \code{logical} value, if \code{TRUE}, the GERMAPARLSAMPLE
+corpus will be used. The default is \code{FALSE}, and the GERMAPARL corpus
+will be refreshed.}
 }
 \description{
 After adding attributes to the corpus, new annotations will not be available
@@ -22,7 +27,7 @@ The function is used internally by functions adding s-attributes to the
 corpus. It is exported and documented as a matter of transparency.
 }
 \details{
-The function ensures that a modified/updated registry file will be copied 
-from the system registry directory (directory where registry files are
-stored permanently) to the temporary registry directory used by polmineR.
+The function ensures that a modified/updated registry file will be copied
+from the system registry directory (directory where registry files are stored
+permanently) to the temporary registry directory used by polmineR.
 }

@@ -1,8 +1,8 @@
 Package: GermaParl
 Type: Package
 Title: Download and Augment the Corpus of Plenary Protocols of the German Bundestag
-Version: 1.4.1
-Date: 2020-05-03
+Version: 1.4.2
+Date: 2020-05-12
 Authors@R: c(person(given = "Andreas", family = "Blaette", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de"))
 Depends:
     R (>= 3.5.0)
@@ -35,4 +35,4 @@ Collate:
     'download.R'
     'lda.R'
     'speeches.R'
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0

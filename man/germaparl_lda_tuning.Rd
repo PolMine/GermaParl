@@ -4,7 +4,9 @@
 \name{germaparl_lda_tuning}
 \alias{germaparl_lda_tuning}
 \title{LDA Tuning Results}
-\format{An object of class \code{data.frame} with 10 rows and 5 columns.}
+\format{
+An object of class \code{data.frame} with 10 rows and 5 columns.
+}
 \usage{
 germaparl_lda_tuning
 }

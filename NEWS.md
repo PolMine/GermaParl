@@ -1,8 +1,17 @@
+# GermaParl 1.4.2
+
+- Most functions now include an argument `sample` that defaults to `FALSE`. If set as
+  `TRUE`, functionality to retrieve information from the corpus or to modify the corpus
+  will be applied to the smaller GERMAPARLSAMPLE corpus rather than the GERMAPARL corpus.
+- The sample workflow of the overall package documentation object will now rely on the
+  GERMAPARLSAMPLE corpus rather than the full GERMAPARL corpus.
+
 # GermaParl 1.4.1
 
 - The 'topicmodels' package has been turned into a suggested package and has been
   moved from the 'Depends' section to the 'Suggests' section in the DESCRIPTION 
   file.
+- Rework of the documentation, including examples.
 
 # GermaParl 1.4.0
 

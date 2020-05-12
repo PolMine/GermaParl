@@ -8,7 +8,8 @@ germaparl_encode_speeches(
   mc = 1L,
   progress = TRUE,
   registry_dir = cwbtools::cwb_registry_dir(),
-  corpus_dir = NULL
+  corpus_dir = NULL,
+  sample = FALSE
 )
 }
 \arguments{
@@ -18,14 +19,19 @@ germaparl_encode_speeches(
 \item{progress}{A \code{logical} value, whether to show a progress bar.}
 
 \item{registry_dir}{The registry directory where the registry file for the
-GERMAPARL corpus resides. The function is usually called for its sied
-effects, i.e. adding the structural annotation of speeches to the corpus.}
+GERMAPARL corpus resides. By default, the function
+\code{cwbtools::cwb_registry_dir} is used to guess the registry directory.
+We recommend to state the registry directory explicitly.}
 
 \item{corpus_dir}{The directory where CWB data_directories reside.}
+
+\item{sample}{A \code{logical} value, if \code{FALSE}, enrich "GERMAPARL",
+enrich "GERMAPARLSAMPLE" if \code{TRUE}.}
 }
 \value{
 A \code{data.table} with the regions of speeches and speech ids is
-  returned invisibly.
+  returned invisibly. The function is usually called for its side
+  effects, i.e. adding the structural annotation of speeches to the corpus.
 }
 \description{
 The basic text unit in the \emph{GermaParl} corpus are units of uninterrupted

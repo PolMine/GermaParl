@@ -8,8 +8,9 @@ germaparl_download_corpus(
   doi = "https://doi.org/10.5281/zenodo.3742113",
   registry_dir = cwb_registry_dir(),
   corpus_dir = cwb_corpus_dir(registry_dir),
-  verbose = TRUE,
-  ask = interactive()
+  verbose = interactive(),
+  ask = interactive(),
+  sample = FALSE
 )
 }
 \arguments{
@@ -18,14 +19,20 @@ zenodo, presented as a hyperlink. Defaults to the latest version of
 GermaParl.}
 
 \item{registry_dir}{Path to the system registry directory. Defaults to value
-of \code{cwbtools::cwb_registry_dir()}.}
+of \code{cwbtools::cwb_registry_dir()} to guess the registry directory. 
+We recommend to state the registry directory explicitly.}
 
-\item{corpus_dir}{Directory where data directories of corpora are located.}
+\item{corpus_dir}{Directory where data directories of corpora are located. By
+default, the directory is guessed using \code{cwbtools::cwb_registry_dir}.
+We recommend to state the directory explicitly.}
 
 \item{verbose}{Whether to show messages, defaults to \code{TRUE}.}
 
 \item{ask}{A \code{logical} value, whether to ask for user input before
 replacing an existing corpus.}
+
+\item{sample}{A \code{logical} value, whether to download sample data
+(GERMAPARLSAMPLE) rather than full corpus (GERMAPARL) for testing purposes.}
 }
 \value{
 Logical value. \code{TRUE} if the corpus has been installed

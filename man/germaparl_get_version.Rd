@@ -4,10 +4,16 @@
 \alias{germaparl_get_version}
 \title{Get GERMAPARL version}
 \usage{
-germaparl_get_version(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
+germaparl_get_version(
+  registry_dir = Sys.getenv("CORPUS_REGISTRY"),
+  sample = FALSE
+)
 }
 \arguments{
 \item{registry_dir}{Path to the registry directory.}
+
+\item{sample}{If \code{TRUE}, work with GERMAPARLSAMPLE corpus, if
+\code{FALSE} (default), use GERMAPARL corpus.}
 }
 \value{
 The return value is the version of the corpus (class

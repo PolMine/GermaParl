@@ -4,7 +4,9 @@
 \name{germaparl_by_lp}
 \alias{germaparl_by_lp}
 \title{Table with information on GermaParl by legislative period}
-\format{An object of class \code{data.table} (inherits from \code{data.frame}) with 5 rows and 6 columns.}
+\format{
+An object of class \code{data.table} (inherits from \code{data.frame}) with 5 rows and 6 columns.
+}
 \usage{
 germaparl_by_lp
 }

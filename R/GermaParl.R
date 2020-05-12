@@ -32,54 +32,72 @@
 #' @rdname GermaParl-package
 #' @name GermaParl-package
 #' @examples 
-#' \donttest{
+#' # This example uses the GERMAPARLSAMPLE corpus rather than the full GERMAPARL 
+#' # so that the time consumed for testing the code is not excessive. To apply
+#' # everything on GERMAPARL rather than GERMAPARLSAMPLE, set variable 'samplemode' 
+#' # to FALSE, or simply omit argument 'sample'.
+#' 
+#' samplemode <- TRUE
+#' corpus_id <- "GERMAPARLSAMPLE"
+#' # corpus_id <- "GERMAPARL"
+#' 
 #' # This example assumes that the directories used by the CWB do not yet exist, so
 #' # temporary directories are created.
 #' cwb_dirs <- cwbtools::create_cwb_directories(prefix = tempdir(), ask = interactive())
 #' registry_tmp <- cwb_dirs[["registry_dir"]]
 #' 
 #' # Download corpus from Zenodo
-#' germaparl_download_corpus(registry_dir = registry_tmp)
+#' germaparl_download_corpus(
+#'   registry_dir = registry_tmp,
+#'   corpus_dir = cwb_dirs[["corpus_dir"]],
+#'   verbose = FALSE,
+#'   sample = samplemode
+#' )
 #' 
 #' # Check availability of the corpus
 #' library(polmineR)
-#' corpus() # should include GERMAPARLMINI as well as GERMAPARL
-#' count("GERMAPARL", "Daten") # an arbitrary test
-#' germaparl_is_installed() # TRUE now
-#' germaparl_get_version() # get version of indexed corpus
-#' germaparl_get_doi() # get 'document object identifier' (DOI) of GERMAPARL corpus
+#' corpus() # should include downloaded GERMAPARL(SAMPLE) corpus
+#' count("GERMAPARLSAMPLE", "Daten") # an arbitrary test
+#' germaparl_is_installed(sample = samplemode) # TRUE now
+#' germaparl_get_version(sample = samplemode) # get version of indexed corpus
+#' germaparl_get_doi(sample = samplemode) # get 'document object identifier' (DOI) of GERMAPARL corpus
 #' 
 #' # Encode structural attribute 'speech'
 #' germaparl_encode_speeches(
 #'   registry_dir = cwb_dirs[["registry_dir"]],
-#'   corpus_dir = cwb_dirs[["corpus_dir"]]
+#'   corpus_dir = cwb_dirs[["corpus_dir"]],
+#'   sample = samplemode
 #' )
 #' 
 #' # Check whether the new attribute is available 
-#' s_attributes("GERMAPARL")
-#' values <- s_attributes("GERMAPARL", "speech")
-#' sizes <- size("GERMAPARL", s_attribute = "speech")
-#' dtm <- as.DocumentTermMatrix("GERMAPARL", p_attribute = "word", s_attribute = "speech")
+#' s_attributes(corpus_id)
+#' values <- s_attributes(corpus_id, "speech")
+#' sizes <- size(corpus_id, s_attribute = "speech")
+#' dtm <- as.DocumentTermMatrix(corpus_id, p_attribute = "word", s_attribute = "speech")
 #' 
 #' # Download topic model (k = 250)
-#' germaparl_download_lda(k = 250, data_dir = file.path(cwb_dirs[["corpus_dir"]]))
-#' lda <- germaparl_load_topicmodel(k = 250)
-#' lda_terms <- topicmodels::terms(lda, 50)
+#' germaparl_download_lda(
+#'   k = 30, # use k = 250 for full GERMAPARL corpus
+#'   data_dir = file.path(cwb_dirs[["corpus_dir"]], tolower(corpus_id)),
+#'   sample = samplemode
+#' )
+#' lda <- germaparl_load_topicmodel(k = 30L, registry_dir = registry_tmp, sample = samplemode)
+#' lda_terms <- topicmodels::terms(lda, 10)
 #' 
 #' # Encode topic model classification of speeches
 #' germaparl_encode_lda_topics(
-#'   k = 250, n = 5,
+#'   k = 30, # use k = 250 for full GERMAPARL corpus
+#'   n = 3,
 #'   registry_dir = cwb_dirs[["registry_dir"]],
-#'   data_dir = file.path(cwb_dirs[["corpus_dir"]], "germaparl")
+#'   data_dir = file.path(cwb_dirs[["corpus_dir"]], tolower(corpus_id)),
+#'   sample = samplemode
 #' )
 #' 
 #' # Check whether the newly encoded attribute 'topics' is available
-#' s_attributes("GERMAPARL")
-#' sc <- corpus("GERMAPARL") %>%
-#'   subset(grep("\\|133\\|", topics))
+#' s_attributes(corpus_id)
+#' sc <- corpus(corpus_id) %>% subset(grep("\\|18\\|", topics))
 #' b <- as.speeches(sc, s_attribute_name = "speaker")
 #' length(b)
-#' }
 "_PACKAGE"
 
 
@@ -87,14 +105,18 @@
 #' 
 #' Auxiliary function to detect whether GERMAPARL is installed or not.
 #' @param registry_dir Path to the registry directory.
+#' @param sample A \code{logical} value. If \code{FALSE} (default), the
+#'   GERMAPARL corpus will be used, if \code{TRUE}, the GERMAPARLSAMPLE corpus
+#'   will be used.
 #' @seealso See the examples section of the overview documentation of the
 #'   \link{GermaParl} package for an example.
 #' @return \code{TRUE} if the corpus has been installed, and \code{FALSE} if not.
 #' @export germaparl_is_installed
 #' @examples 
 #' germaparl_is_installed() # to check whether GERMAPARL has been downloaded
-germaparl_is_installed <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
-  "germaparl" %in% list.files(registry_dir)
+germaparl_is_installed <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY"), sample = FALSE){
+  corpus_id <- if (isFALSE(sample)) "GERMAPARL" else "GERMAPARLSAMPLE"
+  tolower(corpus_id) %in% list.files(registry_dir)
 }
 
 
@@ -104,18 +126,21 @@ germaparl_is_installed <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY"))
 #' the registry file of the GERMAPARL corpus.
 #' 
 #' @param registry_dir Path to the registry directory.
+#' @param sample A \code{logical} value, if \code{FALSE} (default), use
+#'   GERMAPARL, if \code{TRUE}, use GERMAPARLSAMPLE.
 #' @seealso See the examples section of the overview documentation of the
 #'   \link{GermaParl} package for an example.
 #' @return If the DOI is declared in the registry file, a length-one
 #'   \code{character} vector with it is returned. If the corpus has not yet been
 #'   installed, \code{NULL} is returned and a warning will be issued.
 #' @export germaparl_get_doi
-germaparl_get_doi <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
+germaparl_get_doi <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY"), sample = FALSE){
+  corpus_id <- if (isFALSE(sample)) "GERMAPARL" else "GERMAPARLSAMPLE"
   if (isFALSE(germaparl_is_installed())){
     warning("Cannot get DOI for corpus GERMAPARL: Corpus has not yet been installed.")
     return(NULL)
   }
-  regdata <- registry_file_parse(corpus = "GERMAPARL", registry_dir = registry_dir)
+  regdata <- registry_file_parse(corpus = corpus_id, registry_dir = registry_dir)
   regdata[["properties"]][["doi"]]
 }
 
@@ -127,47 +152,55 @@ germaparl_get_doi <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
 #'   the version of the GERMAPARL corpus from the registry. 
 #'   
 #' @param registry_dir Path to the registry directory.
+#' @param sample If \code{TRUE}, work with GERMAPARLSAMPLE corpus, if
+#'   \code{FALSE} (default), use GERMAPARL corpus.
 #' @seealso See the examples section of the overview documentation of the
 #'   \link{GermaParl} package for an example.
 #' @return The return value is the version of the corpus (class
 #'   \code{numeric_version}). If the corpus has not yet been installed,
 #'   \code{NULL} is returned, and a warning message is issued.
 #' @export germaparl_get_version
-germaparl_get_version <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY")){
-  if (isFALSE(germaparl_is_installed())){
+germaparl_get_version <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY"), sample = FALSE){
+  corpus_id <- if (isFALSE(sample)) "GERMAPARL" else "GERMAPARLSAMPLE"
+  if (isFALSE(germaparl_is_installed(sample = sample))){
     warning("Cannot get GERMAPARL version: Corpus has not yet been installed.")
     return(NULL)
   }
-  regdata <- registry_file_parse(corpus = "GERMAPARL", registry_dir = registry_dir)
+  regdata <- registry_file_parse(corpus = corpus_id, registry_dir = registry_dir)
   version <- regdata[["properties"]][["version"]]
   version <- gsub("^(v|)(\\d+\\.\\d+\\.\\d+)", "\\2", version)
   as.numeric_version(version)
 }
 
 #' Unload and relaod GERMAPARL corpus
-#' 
+#'
 #' After adding attributes to the corpus, new annotations will not be available
 #' until the internal C representation of the corpus is deleted and reloaded.
 #' The function is used internally by functions adding s-attributes to the
 #' corpus. It is exported and documented as a matter of transparency.
-#' 
-#' The function ensures that a modified/updated registry file will be copied 
-#' from the system registry directory (directory where registry files are
-#' stored permanently) to the temporary registry directory used by polmineR.
-#' 
+#'
+#' The function ensures that a modified/updated registry file will be copied
+#' from the system registry directory (directory where registry files are stored
+#' permanently) to the temporary registry directory used by polmineR.
+#'
 #' @param session_registry_dir The temporary session registry directory created
 #'   and used by the polmineR package.
 #' @param system_registry_dir The non-temporary system registry directory.
-germaparl_refresh <- function(session_registry_dir = polmineR::registry(), system_registry_dir = getOption("polmineR.corpus_registry")){
+#' @param sample A \code{logical} value, if \code{TRUE}, the GERMAPARLSAMPLE
+#'   corpus will be used. The default is \code{FALSE}, and the GERMAPARL corpus
+#'   will be refreshed.
+#' @export germaparl_refresh
+germaparl_refresh <- function(session_registry_dir = polmineR::registry(), system_registry_dir = getOption("polmineR.corpus_registry"), sample = FALSE){
+  corpus_id <- if (isFALSE(sample)) "GERMAPARL" else "GERMAPARLSAMPLE"
   file.copy(
-    from = file.path(system_registry_dir, "germaparl"),
-    to = file.path(session_registry_dir, "germaparl"),
+    from = file.path(system_registry_dir, tolower(corpus_id)),
+    to = file.path(session_registry_dir, tolower(corpus_id)),
     overwrite = TRUE
   )
   # RcppCWB_cl_delete_corpus will crash if the corpus has not been used before (missing C representation of
   # the corpus). A minimal corpus query - RcppCWB::cl_cpos2id() - is necessary to avoid the crash
-  RcppCWB::cl_cpos2id(corpus = "GERMAPARL", p_attribute = "word", cpos = 0L, registry = session_registry_dir)
-  RcppCWB::cl_delete_corpus("GERMAPARL", registry = session_registry_dir)
+  RcppCWB::cl_cpos2id(corpus = corpus_id, p_attribute = "word", cpos = 0L, registry = session_registry_dir)
+  RcppCWB::cl_delete_corpus(corpus_id, registry = session_registry_dir)
   polmineR::registry_reset()
 }
 

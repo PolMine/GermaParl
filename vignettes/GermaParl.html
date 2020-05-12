@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Andreas Blaette (andreas.blaette@uni-due.de)" />
+
+<meta name="date" content="2020-05-05" />
+
+<title>GermaParl</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">GermaParl</h1>
+<h3 class="subtitle">Introducing the Data Package and the Corpus</h3>
+<h4 class="author">Andreas Blaette (<a href="mailto:andreas.blaette@uni-due.de" class="email">andreas.blaette@uni-due.de</a>)</h4>
+<h4 class="date">2020-05-05</h4>
+
+
+
+<div id="a-corpus-of-plenary-protocols" class="section level2">
+<h2>A Corpus of Plenary Protocols</h2>
+<p>Parliamentary debates convey the arguments, interpretations and conflicts that shape political decision-making. They are recorded and transcribed by parliamentary administrations with diligence, and published as plenary protocols. These documents are available for long periods of time – for several decades and more – and they cover the full breadth of topics that is processed by a political system: Plenary protocols are a valuable resource for research on policy and politics, and for citizens. They are a crucial building block of the public digital archive of democracy.</p>
+<p>The digital availability of plenary protocols is excellent and limited at the same time. Documents can be downloaded without technical or legal restrictions as txt, html or pdf documents. But this data format does not match the requirements for digital-era data processing. To exploit the analytical potential of the data, original documents need to be converted into a semi-structured data format (typically XML). This is the essence of the preparation of the GermaParl corpus.</p>
+<p>The GermaParl corpus as it has been prepared in the <a href="https://polmine.github.io/">PolMine Project</a> is based on an XMLification of txt and pdf documents. The aim is to make a contribution to the broader development of preparing corpora of plenary protocols – the naming of GermaParl is inspired by the EuroParl and DutchParl corpus <span class="citation">(Marx and Schuth 2010)</span>. GermaParl is intended to serve as an example how to make corpora available in a sustainable way, meeting the technological standards and requirements of the digital era.</p>
+<p>GermaParl is made available in two ways:</p>
+<ul>
+<li><p>The base format of the corpus is a XMLification of the raw data (i.e. the original protocols) that is modelled on the standards of the <a href="https://tei-c.org/">Text Encoding Initiative (TEI)</a>. Releases of the TEI format of GermaParl are available via the <a href="https://github.com/PolMine/GermaParlTEI">GermaParlTEI repository at GitHub</a>. It results from an automatized, fully reproducible pipeline, i.e. raw protocols (pdf and txt file format) have been turned into an XML/TEI-based standard.</p></li>
+<li><p>A linguistically annotated, indexed and consolidated version of the corpus is disseminated with the GermaParl R data package documented with this vignette. XML/TEI files serve the point of departure, but the version emanates from (a) performing some standard Natural Language Processing (NLP) tasks (such as tokenization, lemmatization, part-of-speech annotation); (b) importing the linguistically annotated data into the <a href="http://cwb.sourceforge.net/">Corpus Workbench (CWB)</a> and (c) consolidating the data in a set of postprocessing tasks to remove known errors.</p></li>
+</ul>
+<p>The corpus includes all plenary protocols that were published by the German Bundestag between 1996 and 2016. Plain text documents issued by the German Bundestag were considered the best raw data format for corpus preparation and were used whenever they are available. For a period between 2008 and 2010, txt files are not available throughout. To fill the gap, pdf documents were processed. The following sections explain corpus preparation and the data made available with this package in some more detail.</p>
+</div>
+<div id="corpus-preparation" class="section level2">
+<h2>Corpus Preparation</h2>
+<p>The preparation of the TEI version of GermaParl implements the following workflow:</p>
+<ul>
+<li><p><strong>Preprocessing</strong>: Prepare consolidated UTF-8 plain text documents (ensuring uniformity of encodings, conversion of pdf to txt if necessary);</p></li>
+<li><p><strong>XMLification</strong>: Turn the plain text documents into TEI format: Extraction of metadata, annotation of speakers etc.;</p></li>
+<li><p><strong>Consolidation</strong>: Consolidating speaker names and enriching documents.</p></li>
+</ul>
+<p>The preprocessing step is not as trivial as it might seem. Older plain text files are offered by the German Bundestag in all kinds of encodings that are have come out of use. The pdf documents have a two-column layout that is difficult to handle. For coping with the two-column layout of pdf documents, the R package <a href="https://github.com/PolMine/trickypdf">trickypdf</a> has been developed.</p>
+<p>The essential instrument for the XMLification is a set of regular expressions to extract relevant metadata (such as legislative period, session number or date), to find the beginning and the end of a debate, the call upon the speakers, and the beginning and end of agenda items. The matches are used to generate the structural annotation of parliamentary speech in the XML document.</p>
+<p>Due to the remaining haphazard variations that occur in plenary protocols, the quest is not for a universal battery of regular expressions that would always work without manual checks. Even though it introduces an element of manual work, our solution is to work with lists of mismatches (matches of regular expressions to omit), in combination with a brute-force preprocessing (hard-coded substitutions) that correct obvious errors that are already included in the original version of plenary protocol.</p>
+<p>The result of the base XMLification still includes considerable noise. Inconsistencies that occur with names are a particularly serious issue. To obtain consolidated metadata, information that has been extracted is checked (including approximate string matching) against an external data source. We opted for lists of members of parliamentarians, cabinet members and further speakers that are available on Wikipedia (see the <a href="https://de.wikipedia.org/wiki/Liste_der_Mitglieder_des_Deutschen_Bundestages_(17._Wahlperiode)">page for the 17th Bundestag</a>, for instance).</p>
+<p>Easy digital access is not the only justification for this choice. Wikipedia pages for the parliamentary sessions are being taken care of by a team of dedicated volunteers. Furthermore, Wikipedia pages meet permanent public scrutiny, ensuring quality checks on the data quality in a manner traditional printed material does not necessarily ensure.</p>
+</div>
+<div id="annotation" class="section level2">
+<h2>Annotation</h2>
+<div id="linguistic-annotation" class="section level3">
+<h3>Linguistic Annotation</h3>
+<p>The XML/TEI version of GermaParl is taken through a pipeline of standard Natural Language Processing (NLP) tasks. Starting with version 1.1.0, Stanford CoreNLP is used for tokenization and part-of-speech (POS) annotation. To add lemmas to the corpus, the <a href="http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/">TreeTagger</a> is used.</p>
+<p>Note that the TreeTagger outputs #unknown# if it cannot successfully lemmatize a wordform. See the tables in the annex to learn about the unknown ratio in the corpus.</p>
+<p>Moving to Stanford CoreNLP as the base annotation tool will be the basis for adding further annotation layers to the corpus (such as an annotation of sentences, or named entities) in the future.</p>
+</div>
+<div id="structural-annotation-metadata" class="section level3">
+<h3>Structural Annotation (Metadata)</h3>
+<p>In the XML/TEI data format, all passages of uninterrupted speech are tagged with metadata, or so-called structural attributes (s-attributes). For instance, parliamentary speeches are often interrupted by interjections - the information whether an utterance is an interjection or an actual speech, is maintained in the corpus. The legislative period, session, date, name of a speaker and his/her parliamentary group are included, among others. The structural annotation is the basis for all kinds of diachronic or synchronic comparisons users may want to perform.</p>
+<p>The following table provides short explanations of the s-attributes that are present in the GermaParl corpus.</p>
+<table>
+<colgroup>
+<col width="18%"></col>
+<col width="33%"></col>
+<col width="47%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">s-attribute</th>
+<th align="left">description</th>
+<th align="left">values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">lp</td>
+<td align="left">legislative period</td>
+<td align="left">13 to 18</td>
+</tr>
+<tr class="even">
+<td align="left">session</td>
+<td align="left">session/protocol number</td>
+<td align="left">1 to 253</td>
+</tr>
+<tr class="odd">
+<td align="left">src</td>
+<td align="left">source material for data preparation</td>
+<td align="left">txt or pdf</td>
+</tr>
+<tr class="even">
+<td align="left">url</td>
+<td align="left">URL</td>
+<td align="left">URL of the original document</td>
+</tr>
+<tr class="odd">
+<td align="left">agenda_item</td>
+<td align="left">agenda item</td>
+<td align="left">number of the agenda item</td>
+</tr>
+<tr class="even">
+<td align="left">agenda_item_type</td>
+<td align="left">type of agenda item</td>
+<td align="left">debate/question_time/government_declaration/…</td>
+</tr>
+<tr class="odd">
+<td align="left">date</td>
+<td align="left">date of the session</td>
+<td align="left">YYYY-MM-TT (e.g. ‘2013-06-28’)</td>
+</tr>
+<tr class="even">
+<td align="left">year</td>
+<td align="left">year of the session</td>
+<td align="left">1996 to 2016</td>
+</tr>
+<tr class="odd">
+<td align="left">interjection</td>
+<td align="left">whether contribution is interjection</td>
+<td align="left">TRUE/FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">role</td>
+<td align="left">role of the speaker</td>
+<td align="left">presidency/mp/government/…</td>
+</tr>
+<tr class="odd">
+<td align="left">speaker</td>
+<td align="left">Name</td>
+<td align="left">speaker name</td>
+</tr>
+<tr class="even">
+<td align="left">parliamentary_group</td>
+<td align="left">Parliamentary group</td>
+<td align="left">partliamentary group the speaker is affiliated with</td>
+</tr>
+<tr class="odd">
+<td align="left">party</td>
+<td align="left">Party</td>
+<td align="left">party of the speaker</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="using-the-germaparl-corpus" class="section level2">
+<h2>Using the GermaParl corpus</h2>
+<div id="getting-started---installing-germaparl" class="section level3">
+<h3>Getting started - installing GermaParl</h3>
+<p>The GermaParl R Data Package can be installed from CRAN. It is a “pure R” package. There are no differences whether you install on Linux, MacOS or Windows.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;GermaParl&quot;</span>)</a></code></pre></div>
+<p>After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from <a href="https://zenodo.org/">Zenodo</a>, an open science data repository:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(GermaParl)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">germaparl_download_corpus</span>()</a></code></pre></div>
+<p>To check whether the installation has been successful, run the following commands. For further instructions, see the documentation of the polmineR package.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">library</span>(polmineR)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">use</span>(<span class="st">&quot;GermaParl&quot;</span>) <span class="co"># to activate the corpus in the data package</span></a></code></pre></div>
+<pre><code>## ... activating corpus: GERMAPARLMINI</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">corpus</span>() <span class="co"># to see whether the GERMAPARL corpus is listed</span></a></code></pre></div>
+<pre><code>##          corpus   size template
+## 1 GERMAPARLMINI 222201     TRUE
+## 2       REUTERS   4050     TRUE</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="cf">if</span> (<span class="st">&quot;GERMAPARL&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">corpus</span>()[[<span class="st">&quot;corpus&quot;</span>]]) <span class="kw">size</span>(<span class="st">&quot;GERMAPARL&quot;</span>) <span class="co"># to learn about the size of the corpus</span></a></code></pre></div>
+</div>
+</div>
+<div id="a-very-brief-tutorial" class="section level2">
+<h2>A very brief tutorial</h2>
+<p>The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as <a href="http://cwb.sourceforge.net/cqpweb.php">CQPweb</a>). However, most technical decisions during corpus preparation had in mind to optimize using the GermaParl corpus in combination with the <a href="https://CRAN.R-project.org/package=polmineR">polmineR</a> package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands. Note that in the following examples, we will use GERMAPARLMINI to illustrate functions, as the full GERMAPARL corpus will only be available after the full installation of the corpus.</p>
+<p>First, you may want to learn about the p-attributes (positional attributes), and s-attributes (structural attributes) that are available.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">s_attributes</span>(<span class="st">&quot;GERMAPARLMINI&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;interjection&quot; &quot;date&quot;         &quot;party&quot;        &quot;speaker&quot;</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">p_attributes</span>(<span class="st">&quot;GERMAPARLMINI&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;word&quot; &quot;pos&quot;</code></pre>
+<p>To learn about the values of s-attributes, specify the param s_attribute:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">s_attributes</span>(<span class="st">&quot;GERMAPARLMINI&quot;</span>, <span class="st">&quot;date&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;2009-10-27&quot; &quot;2009-10-28&quot; &quot;2009-11-10&quot; &quot;2009-11-11&quot; &quot;2009-11-12&quot;</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">s_attributes</span>(<span class="st">&quot;GERMAPARLMINI&quot;</span>, <span class="st">&quot;party&quot;</span>)</a></code></pre></div>
+<pre><code>## [1] &quot;NA&quot;              &quot;CDU_CSU&quot;         &quot;SPD&quot;             &quot;FDP&quot;            
+## [5] &quot;DIE_LINKE&quot;       &quot;B90_DIE_GRUENEN&quot;</code></pre>
+<p>To inspect keywords-in-context (KWIC), use the kwic-method:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">K &lt;-<span class="st"> </span><span class="kw">kwic</span>(<span class="st">&quot;GERMAPARLMINI&quot;</span>, <span class="dt">query =</span> <span class="st">&quot;Integration&quot;</span>)</a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="cf">if</span> (<span class="kw">interactive</span>()){</a>
+<a class="sourceLine" id="cb16-3" title="3">  K</a>
+<a class="sourceLine" id="cb16-4" title="4">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb16-5" title="5">  knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">as.data.frame</span>(K), <span class="dt">format =</span> <span class="st">&quot;markdown&quot;</span>)</a>
+<a class="sourceLine" id="cb16-6" title="6">}</a></code></pre></div>
+<table>
+<colgroup>
+<col width="46%"></col>
+<col width="11%"></col>
+<col width="42%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">left</th>
+<th align="left">node</th>
+<th align="left">right</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Es ist eine Frage der</td>
+<td align="left">Integration</td>
+<td align="left">der Menschen , die in</td>
+</tr>
+<tr class="even">
+<td align="left">hilft weiter . Bildung ,</td>
+<td align="left">Integration</td>
+<td align="left">, solide Haushalte , generationengerechte</td>
+</tr>
+<tr class="odd">
+<td align="left">, die Bildung , die</td>
+<td align="left">Integration</td>
+<td align="left">, die Arbeitsmarktpolitik und die</td>
+</tr>
+<tr class="even">
+<td align="left">mit Nachdruck : Auch die</td>
+<td align="left">Integration</td>
+<td align="left">der Zuwanderer und ihrer Kinder</td>
+</tr>
+<tr class="odd">
+<td align="left">wie wir im Bereich der</td>
+<td align="left">Integration</td>
+<td align="left">nachholen , was wir jahrzehntelang</td>
+</tr>
+<tr class="even">
+<td align="left">ein Thema , das die</td>
+<td align="left">Integration</td>
+<td align="left">betrifft . Junge Menschen ,</td>
+</tr>
+<tr class="odd">
+<td align="left">Deutschland und Frankreich die europäische</td>
+<td align="left">Integration</td>
+<td align="left">in der Substanz - also</td>
+</tr>
+<tr class="even">
+<td align="left">Auf ihm hat die europäische</td>
+<td align="left">Integration</td>
+<td align="left">aufgebaut , und durch ihn</td>
+</tr>
+<tr class="odd">
+<td align="left">wird erwähnt , wie wichtig</td>
+<td align="left">Integration</td>
+<td align="left">, sozialer Zusammenhalt und Ressourcenschutz</td>
+</tr>
+<tr class="even">
+<td align="left">in Wohnquartieren einschließlich der besseren</td>
+<td align="left">Integration</td>
+<td align="left">von Menschen mit Migrationshintergrund und</td>
+</tr>
+<tr class="odd">
+<td align="left">Migrationsbewegungen und zunehmender Vielfalt ist</td>
+<td align="left">Integration</td>
+<td align="left">eine Schlüsselaufgabe für uns alle</td>
+</tr>
+<tr class="even">
+<td align="left">uns alle . Bei der</td>
+<td align="left">Integration</td>
+<td align="left">von Zuwanderern haben wir bereits</td>
+</tr>
+<tr class="odd">
+<td align="left">aber zu kurz gegriffen ,</td>
+<td align="left">Integration</td>
+<td align="left">nur im Zusammenhang mit Zuwanderern</td>
+</tr>
+<tr class="even">
+<td align="left">der Innenpolitik zu machen .</td>
+<td align="left">Integration</td>
+<td align="left">in einem umfassenden Sinne bedeutet</td>
+</tr>
+<tr class="odd">
+<td align="left">wirklich nicht getan ; denn</td>
+<td align="left">Integration</td>
+<td align="left">umfasst viele Bereiche , von</td>
+</tr>
+<tr class="even">
+<td align="left">und vorurteilsfrei ist . Die</td>
+<td align="left">Integration</td>
+<td align="left">von Menschen mit Migrationshintergrund ist</td>
+</tr>
+<tr class="odd">
+<td align="left">Bildung und Ausbildung , für</td>
+<td align="left">Integration</td>
+<td align="left">in den Beruf , für</td>
+</tr>
+<tr class="even">
+<td align="left">Rede . Wir brauchen verantwortungsbewusste</td>
+<td align="left">Integration</td>
+<td align="left">. Das bedeutet , jeder</td>
+</tr>
+<tr class="odd">
+<td align="left">der für das Gelingen der</td>
+<td align="left">Integration</td>
+<td align="left">verantwortlich ist , muss sich</td>
+</tr>
+<tr class="even">
+<td align="left">. Wir werden die europäische</td>
+<td align="left">Integration</td>
+<td align="left">nicht als Bedrohung verstehen ,</td>
+</tr>
+<tr class="odd">
+<td align="left">Das ist ein Schritt zur</td>
+<td align="left">Integration</td>
+<td align="left">; darin liegt für Kinder</td>
+</tr>
+<tr class="even">
+<td align="left">voranbringen und unsere Maßnahmen zur</td>
+<td align="left">Integration</td>
+<td align="left">von Jugendlichen durch Bildung und</td>
+</tr>
+<tr class="odd">
+<td align="left">Wie schaffen wir bes- sere</td>
+<td align="left">Integration</td>
+<td align="left">in und durch Bildung ?</td>
+</tr>
+</tbody>
+</table>
+<p>The count-method is used for counting. You can supply one or multiple queries:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">count</span>(<span class="st">&quot;GERMAPARLMINI&quot;</span>, <span class="dt">query =</span> <span class="st">&quot;Integration&quot;</span>)</a></code></pre></div>
+<pre><code>##          query count         freq
+## 1: Integration    23 0.0001035099</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">count</span>(<span class="st">&quot;GERMAPARLMINI&quot;</span>, <span class="dt">query =</span> <span class="kw">c</span>(<span class="st">&quot;Integration&quot;</span>, <span class="st">&quot;Flucht&quot;</span>, <span class="st">&quot;Abschiebung&quot;</span>))</a></code></pre></div>
+<pre><code>##          query count         freq
+## 1: Integration    23 1.035099e-04
+## 2:      Flucht     2 9.000860e-06
+## 3: Abschiebung     1 4.500430e-06</code></pre>
+<p>To get the dispersion of a query, use the dispersion-method.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">d &lt;-<span class="st"> </span><span class="kw">dispersion</span>(<span class="st">&quot;GERMAPARLMINI&quot;</span>, <span class="dt">query =</span> <span class="st">&quot;Integration&quot;</span>, <span class="dt">s_attribute =</span> <span class="st">&quot;date&quot;</span>)</a>
+<a class="sourceLine" id="cb21-2" title="2">d</a></code></pre></div>
+<p>Visualise the result as a barplot…</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">barplot</span>(d[[<span class="st">&quot;count&quot;</span>]], <span class="dt">names.arg =</span> d[[<span class="st">&quot;date&quot;</span>]], <span class="dt">las =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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Src8Ia6R4rcWf8RSAHmoHjPdJQzd8oiYdo3k9teBAsht4syPBEggSIACKIiCByRAAm4ToFset4nHyS/TXcLQLY+IaddIcZqnI1FcBXMEa/KJYsx/6tQpbfxL2WCW4sWLa7/syaeQszthjuP48ePaHTIMj2E5HNsj3ArwEAIzsWfPntVeQWAYzW3jZJleB27VdZb5mFCCY57/04JVdn+ijJEpIWB16NDBOnz4sKOYPvroI+vOO++01C9uWBly5cqlr69YscLR/GHyVXkHsZSwC8tfNVJtKG3YsGEWDJY5GWASNZPrwEm2yabNIViWYtnZizC1+uc//1latmwpXbt21aZQL126JDDDCp9cSjjIiBEjRHmPkAoVKtheGGwwhe8xpN23b1/d44BZ1Oeee066deumnSQOHTpUfzZr1sz2/JVwlUaNGgk+e/ToIXXr1pUjR47oTapKO1r3AidOnCjKaqMupxM9skyvA9srNdUEk5VUvM8eAv/97391r0NpIIclqDapWkooBK8NGTLEUvaCg+d2HqDnowRcWJKrVq2y0PtSHlL19Y0bN2qTsUowhN1nx8mLL75oKbvYYUkp76yWGn5a06ZN09fV0NCC+54//elPYffZccI6sIOiPWlwL5g9HJNOZfz48Zb6xY+6X3kq1XvDAl4w1LyQ9oqh5mei7s3JBeWSRwtA5e4nKhl465g9e3bw+s9//nNLOUcMntt1oHy/a48QkekpN0RWp06dgpeVYXxL9cCC53YdsA7sIpnzdLgMn2rXMcXn4IZ569atcuDAgbAUVq5cKdgbFdiTdejQIe0y2e7hB7xvYLUt0uPprl279GQwPDUEAuxEOzEhjMl2DK8iAxhE5o9JabsD68BuojlIL+cyjClkhwCGOPBMWr16dT28UG6QLTX3or2QduzYUSel5mi0V1RM0joRkK5yxWwNGjTI+vDDDy0196SHRErYWOghKY1sq3379pYSVhY8eNgd4JFDNVkL74t3ff/99/WENK7NmjXLUvNhmgmGhLjX7sA6sJto6ulxCJY6u5Sf3LBhg1WxYsWw1R81IR2cf8EXs3///tplS8qZxHkQw7t27dqF5X/zzTdb69at009NnjzZwvBr/fr1cVLJWdSYMWP0kBNCB3+5c+e2lL8yneg333xjwTURhn+wneREYB04QTX7aVIPSLV+E0FNukpg2FOp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" /><!-- --></p>
+<p>The cooccurrences-method will get you the cooccurrences of a query.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">coocs &lt;-<span class="st"> </span><span class="kw">cooccurrences</span>(<span class="st">&quot;GERMAPARLMINI&quot;</span>, <span class="dt">query =</span> <span class="st">&quot;Wir&quot;</span>)</a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="kw">format</span>(coocs)</a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="kw">dotplot</span>(C)</a></code></pre></div>
+<p>These are some if the core functions, applied to the whole corpus. The whole point of the structural annotation of the corpus (s-attributes) is to facilitate the creation of subcorpora / partitions. So every method that has been introduced can be applied to a partition.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">lp16 &lt;-<span class="st"> </span><span class="kw">partition</span>(<span class="st">&quot;GERMAPARL&quot;</span>, <span class="dt">lp =</span> <span class="dv">16</span>)</a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="kw">count</span>(lp16, <span class="dt">query =</span> <span class="kw">c</span>(<span class="st">&quot;Asyl&quot;</span>, <span class="st">&quot;Flucht&quot;</span>, <span class="st">&quot;Abschiebung&quot;</span>))</a>
+<a class="sourceLine" id="cb24-3" title="3"><span class="kw">dispersion</span>(lp16, <span class="dt">query =</span> <span class="st">&quot;Flüchtlinge&quot;, sAttribute = &quot;</span>year<span class="st">&quot;)</span></a></code></pre></div>
+<p>Finally, note that the methods of polmineR can also be used with the pipe functionality offered by the magrittr package.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">library</span>(magrittr)</a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="kw">cooccurrences</span>(<span class="st">&quot;GERMAPARLMINI&quot;</span>, <span class="dt">query =</span> <span class="st">&quot;Europa&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb25-3" title="3"><span class="st">  </span><span class="kw">subset</span>(<span class="op">!</span>word <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(tm<span class="op">::</span><span class="kw">stopwords</span>(<span class="st">&quot;de&quot;</span>), <span class="st">&quot;,&quot;</span>, <span class="st">&quot;.&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-4" title="4"><span class="st">  </span><span class="kw">subset</span>(count_window <span class="op">&gt;=</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb25-5" title="5"><span class="st">  </span><span class="kw">dotplot</span>()</a></code></pre></div>
+<p>This is just a short glimpse into the analytical potential of using GermaParl in combination with polmineR. One of the most important aspects that cannot be explained here is the possibility to use the syntax of the Corpus Query Processor (CQP) that comes with the CWB backend. The <code>as.TermDocumentMatrix</code> method will prepare data structures efficiently needed for more advanced analytical techniques such as topicmodelling. Consult the vignette of the polmineR package to learn more!</p>
+</div>
+<div id="some-caveats" class="section level2">
+<h2>Some caveats</h2>
+<p>A set of general remarks may help to avoid pitfalls when working with GermaParl:</p>
+<ul>
+<li><p>Plenary protocols meticulously report interjections. To maintain the integrity of the original documents, interjections are annotated in the corpus. By using the s-attribute ‘interjection’ that assumes the values <code>TRUE</code> or <code>FALSE</code>, you can limit your analysis to speech or interjections.</p></li>
+<li><p>Plenary protocols report membership in a parliamentary group only. Information on party membership is derived from external data sources and written back to the corpus. More specifically, the s-attribute ‘parliamentary_group’ refers to the parliamentary group, ‘party’ refers to the party a speaker is a member of. To distinguish between CDU and CSU speakers, using the s-attribute ‘party’ is necessary.</p></li>
+<li><p>The GermaParl corpus is a corpus of the debates and speeches that were actually given in the German Bundestag. Speeches that were only included in the printed protocol (i.e. included in the annex to a protocol) are not yet covered by corpus preparation.</p></li>
+</ul>
+</div>
+<div id="perspectives" class="section level2">
+<h2>Perspectives</h2>
+<p>GermaParl is not the only corpus of plenary protocols. Apart from PolMine, several further projects have worked on preparing respective corpora. There is an ensuing dialogue among these projects, and GermaParl strives to contribute to this broader development, trying to serve as a example how reproducibility and quality control can be maintained during all steps of corpus preparation, and how corpora can be disseminated in a manner that lowers the barriers of entry for new users.</p>
+<p>The resource is under active development. Apart from improving data quality and preparing updates, one important concern is to add further annotation layers:</p>
+<ul>
+<li><p>Moving to Stanford CoreNLP as the core tool for the NLP pipe (a step that has been taken with version 1.1.0) provides the basis for adding sentence annotation, and a basic annotation of named entities in the future.</p></li>
+<li><p>Classification based on a supervised learning approach will be superior to unsupervised learning. In a CLARIN-funded project, training data has been prepared to obtain the basis for a classification of debates according to a (somewhat expanded) classification scheme of the Comparative Agendas Project (CAP). An annotation of the hand-coded text passages will be included in the corpus.</p></li>
+</ul>
+<p>Hopefully, GermaParl will make qualitative and quantitative research with German parliamentary debates more productive. A final note on user feedback: Improving data quality is an important concern of the PolMine Project. This is why the data is versioned. The resource will benefit from its community of users - feedback that helps to improve data quality is more than welcome!</p>
+</div>
+<div id="license" class="section level2">
+<h2>License</h2>
+<p>While the raw data, the plenary protocols published by the German Bundestag, are in the public domain, the GermaParl corpus comes with a CC BY-SA license. That means:</p>
+<p><strong>BY</strong> - Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.</p>
+<p><strong>SA</strong> - ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.</p>
+<p>See the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC Attribution-ShareAlike 4.0 Unported License</a> for further explanations.</p>
+</div>
+<div id="quotation" class="section level2">
+<h2>Quotation</h2>
+<p>The ‘GermaParl’ R package and the ‘GermaParl’ corpus are two different pieces of research data, with different version numbers, document object identifiers (DOIs) and recommendations for quotation. If you use GermaParl for your research, maximum transparency on the tools you used is attained, when both the package and the corpus is quoted in your publication. To ensure the reproducibility of your research, it is more important to refer to and specify the corpus (including version, DOI) you used.</p>
+<p>Blaette, Andreas (2020): GermaParl. Download and Augment the Corpus of Plenary Protocols of the German Bundestag. R package version 1.3.0. <a href="https://CRAN.R-project.org/package=GermaParl" class="uri">https://CRAN.R-project.org/package=GermaParl</a></p>
+<p>Blaette, Andreas (2020): GermaParl. Linguistically Annotated and Indexed Corpus of Plenary Protocols of the German Bundestag. CWB corpus version 1.0.6. <a href="https://doi.org/10.5281/zenodo.3735141" class="uri">https://doi.org/10.5281/zenodo.3735141</a></p>
+<p>NOTE: In an R session, you can get this recommendation how to quote GermaParl by calling the usual <code>citation()</code> function:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">citation</span>(<span class="st">&quot;GermaParl&quot;</span>)</a></code></pre></div>
+</div>
+<div id="annex" class="section level2">
+<h2>Annex</h2>
+<div id="corpus-data-by-electoral-period" class="section level3">
+<h3>Corpus data (by electoral period)</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="right">lp</th>
+<th align="right">protocols</th>
+<th align="left">first</th>
+<th align="left">last</th>
+<th align="right">size</th>
+<th align="right">unknown</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">13</td>
+<td align="right">163</td>
+<td align="left">1996-02-08</td>
+<td align="left">1996-02-08</td>
+<td align="right">11676618</td>
+<td align="right">0.050</td>
+</tr>
+<tr class="even">
+<td align="right">14</td>
+<td align="right">253</td>
+<td align="left">1998-10-26</td>
+<td align="left">1998-10-26</td>
+<td align="right">19349263</td>
+<td align="right">0.062</td>
+</tr>
+<tr class="odd">
+<td align="right">15</td>
+<td align="right">182</td>
+<td align="left">2002-10-17</td>
+<td align="left">2002-10-17</td>
+<td align="right">12785509</td>
+<td align="right">0.056</td>
+</tr>
+<tr class="even">
+<td align="right">16</td>
+<td align="right">233</td>
+<td align="left">2005-10-18</td>
+<td align="left">2005-10-18</td>
+<td align="right">18412812</td>
+<td align="right">0.052</td>
+</tr>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">252</td>
+<td align="left">2009-10-27</td>
+<td align="left">2009-10-27</td>
+<td align="right">23418060</td>
+<td align="right">0.056</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="corpus-data-by-year" class="section level3">
+<h3>Corpus data (by year)</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">year</th>
+<th align="right">protocols</th>
+<th align="right">txt</th>
+<th align="right">pdf</th>
+<th align="right">size</th>
+<th align="right">unknown</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1996</td>
+<td align="right">64</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">4480664</td>
+<td align="right">0.049</td>
+</tr>
+<tr class="even">
+<td align="left">1997</td>
+<td align="right">62</td>
+<td align="right">62</td>
+<td align="right">0</td>
+<td align="right">4422019</td>
+<td align="right">0.050</td>
+</tr>
+<tr class="odd">
+<td align="left">1998</td>
+<td align="right">51</td>
+<td align="right">49</td>
+<td align="right">2</td>
+<td align="right">3523861</td>
+<td align="right">0.051</td>
+</tr>
+<tr class="even">
+<td align="left">1999</td>
+<td align="right">65</td>
+<td align="right">65</td>
+<td align="right">0</td>
+<td align="right">5117808</td>
+<td align="right">0.052</td>
+</tr>
+<tr class="odd">
+<td align="left">2000</td>
+<td align="right">62</td>
+<td align="right">62</td>
+<td align="right">0</td>
+<td align="right">5035682</td>
+<td align="right">0.061</td>
+</tr>
+<tr class="even">
+<td align="left">2001</td>
+<td align="right">69</td>
+<td align="right">69</td>
+<td align="right">0</td>
+<td align="right">5145527</td>
+<td align="right">0.071</td>
+</tr>
+<tr class="odd">
+<td align="left">2002</td>
+<td align="right">60</td>
+<td align="right">60</td>
+<td align="right">0</td>
+<td align="right">4426916</td>
+<td align="right">0.064</td>
+</tr>
+<tr class="even">
+<td align="left">2003</td>
+<td align="right">66</td>
+<td align="right">65</td>
+<td align="right">1</td>
+<td align="right">4587196</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="odd">
+<td align="left">2004</td>
+<td align="right">65</td>
+<td align="right">65</td>
+<td align="right">0</td>
+<td align="right">4808168</td>
+<td align="right">0.057</td>
+</tr>
+<tr class="even">
+<td align="left">2005</td>
+<td align="right">43</td>
+<td align="right">39</td>
+<td align="right">4</td>
+<td align="right">2755203</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="odd">
+<td align="left">2006</td>
+<td align="right">65</td>
+<td align="right">64</td>
+<td align="right">1</td>
+<td align="right">4942175</td>
+<td align="right">0.052</td>
+</tr>
+<tr class="even">
+<td align="left">2007</td>
+<td align="right">60</td>
+<td align="right">59</td>
+<td align="right">1</td>
+<td align="right">4518292</td>
+<td align="right">0.052</td>
+</tr>
+<tr class="odd">
+<td align="left">2008</td>
+<td align="right">63</td>
+<td align="right">29</td>
+<td align="right">34</td>
+<td align="right">5071670</td>
+<td align="right">0.052</td>
+</tr>
+<tr class="even">
+<td align="left">2009</td>
+<td align="right">49</td>
+<td align="right">0</td>
+<td align="right">49</td>
+<td align="right">4213853</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="odd">
+<td align="left">2010</td>
+<td align="right">69</td>
+<td align="right">50</td>
+<td align="right">19</td>
+<td align="right">5984549</td>
+<td align="right">0.057</td>
+</tr>
+<tr class="even">
+<td align="left">2011</td>
+<td align="right">68</td>
+<td align="right">68</td>
+<td align="right">0</td>
+<td align="right">6244475</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="odd">
+<td align="left">2012</td>
+<td align="right">64</td>
+<td align="right">64</td>
+<td align="right">0</td>
+<td align="right">6172471</td>
+<td align="right">0.056</td>
+</tr>
+<tr class="even">
+<td align="left">2013</td>
+<td align="right">44</td>
+<td align="right">44</td>
+<td align="right">0</td>
+<td align="right">4427191</td>
+<td align="right">0.054</td>
+</tr>
+<tr class="odd">
+<td align="left">2014</td>
+<td align="right">71</td>
+<td align="right">71</td>
+<td align="right">0</td>
+<td align="right">5404010</td>
+<td align="right">0.055</td>
+</tr>
+<tr class="even">
+<td align="left">2015</td>
+<td align="right">69</td>
+<td align="right">69</td>
+<td align="right">0</td>
+<td align="right">5187762</td>
+<td align="right">0.057</td>
+</tr>
+<tr class="odd">
+<td align="left">2016</td>
+<td align="right">62</td>
+<td align="right">62</td>
+<td align="right">0</td>
+<td align="right">4544216</td>
+<td align="right">0.056</td>
+</tr>
+<tr class="even">
+<td align="left">TOTAL</td>
+<td align="right">1291</td>
+<td align="right">1180</td>
+<td align="right">111</td>
+<td align="right">101013708</td>
+<td align="right">1.166</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="data-sources" class="section level3">
+<h3>Data sources</h3>
+<p>Starting from the 17th legislative period, txt versions of plenary protocols were retrieved from the <a href="http://www.bundestag.de/dokumente/protokolle/plenarprotokolle/plenarprotokolle/index.html">homepage of the German Bundestag</a>. The following table reports the URLs that have been used to download txt versions of older plenary protocols.</p>
+<table>
+<colgroup>
+<col width="5%"></col>
+<col width="94%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">year</th>
+<th align="left">URL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1996</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1996/index.htm" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1996/index.htm</a></td>
+</tr>
+<tr class="even">
+<td align="left">1997</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1997/index.htm" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1997/index.htm</a></td>
+</tr>
+<tr class="odd">
+<td align="left">1998</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1998/index.htm" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1998/index.htm</a></td>
+</tr>
+<tr class="even">
+<td align="left">1999</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1999/index.htm" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1999/index.htm</a></td>
+</tr>
+<tr class="odd">
+<td align="left">2000</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2000/index.htm" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2000/index.htm</a></td>
+</tr>
+<tr class="even">
+<td align="left">2001</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2001/index.htm" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2001/index.htm</a></td>
+</tr>
+<tr class="odd">
+<td align="left">2002</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2002/index.html" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2002/index.html</a></td>
+</tr>
+<tr class="even">
+<td align="left">2003</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2003/index.html" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2003/index.html</a></td>
+</tr>
+<tr class="odd">
+<td align="left">2004</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2004/index.html" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2004/index.html</a></td>
+</tr>
+<tr class="even">
+<td align="left">2005</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2005/index.html" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2005/index.html</a></td>
+</tr>
+<tr class="odd">
+<td align="left">2006</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2006/index.html" class="uri">http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2006/index.html</a></td>
+</tr>
+<tr class="even">
+<td align="left">2007</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2007/index.html" class="uri">http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2007/index.html</a></td>
+</tr>
+<tr class="odd">
+<td align="left">2008</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2008/index.html" class="uri">http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2008/index.html</a></td>
+</tr>
+<tr class="even">
+<td align="left">2009</td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2009/index.html" class="uri">http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2009/index.html</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references">
+<div id="ref-DBLP:conf/lrec/MarxS10">
+<p>Marx, Maarten, and Anne Schuth. 2010. “DutchParl. The Parliamentary Documents in Dutch.” In <em>Proceedings of the International Conference on Language Resources and Evaluation, LREC 2010, 17-23 May 2010, Valletta, Malta</em>. <a href="http://www.lrec-conf.org/proceedings/lrec2010/summaries/263.html">http://www.lrec-conf.org/proceedings/lrec2010/summaries/263.html</a>.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
