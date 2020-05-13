@@ -5,6 +5,9 @@
   will be applied to the smaller GERMAPARLSAMPLE corpus rather than the GERMAPARL corpus.
 - The sample workflow of the overall package documentation object will now rely on the
   GERMAPARLSAMPLE corpus rather than the full GERMAPARL corpus.
+- A Rmarkdown document in the data-raw folder explains how the topic model for the sample
+  corpus has been prepared.
+  
 
 # GermaParl 1.4.1
 
