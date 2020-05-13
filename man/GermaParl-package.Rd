@@ -36,8 +36,7 @@ installed.
 # to FALSE, or simply omit argument 'sample'.
 
 samplemode <- TRUE
-corpus_id <- "GERMAPARLSAMPLE"
-# corpus_id <- "GERMAPARL"
+corpus_id <- "GERMAPARLSAMPLE" # to get/amend full corpus: corpus_id <- "GERMAPARL"
 
 # This example assumes that the directories used by the CWB do not yet exist, so
 # temporary directories are created.

@@ -38,8 +38,7 @@
 #' # to FALSE, or simply omit argument 'sample'.
 #' 
 #' samplemode <- TRUE
-#' corpus_id <- "GERMAPARLSAMPLE"
-#' # corpus_id <- "GERMAPARL"
+#' corpus_id <- "GERMAPARLSAMPLE" # to get/amend full corpus: corpus_id <- "GERMAPARL"
 #' 
 #' # This example assumes that the directories used by the CWB do not yet exist, so
 #' # temporary directories are created.
@@ -136,7 +135,7 @@ germaparl_is_installed <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY"),
 #' @export germaparl_get_doi
 germaparl_get_doi <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY"), sample = FALSE){
   corpus_id <- if (isFALSE(sample)) "GERMAPARL" else "GERMAPARLSAMPLE"
-  if (isFALSE(germaparl_is_installed())){
+  if (isFALSE(germaparl_is_installed(sample = sample))){
     warning("Cannot get DOI for corpus GERMAPARL: Corpus has not yet been installed.")
     return(NULL)
   }
