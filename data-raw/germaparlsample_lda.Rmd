@@ -24,8 +24,7 @@ library(DT)
 speeches <- as.speeches("GERMAPARLMINI", s_attribute_name = "speaker")
 # count_bundle <- count(speeches, p_attribute = c("word", "pos"), verbose = FALSE)
 as.list.bundle <- function(x, ...) x@objects
-count_bundle <- lapply(speeches, count, p_attribute = c("word", "pos")) %>%
-  lapply(subset, pos %in% "NN") %>%
+count_bundle <- lapply(speeches, count, p_attribute = c("word")) %>%
   as.bundle()
 names(count_bundle) <- names(speeches)
 
