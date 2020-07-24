@@ -5,7 +5,7 @@
 \title{Unload and relaod GERMAPARL corpus}
 \usage{
 germaparl_refresh(
-  session_registry_dir = polmineR::registry(),
+  session_registry_dir = file.path(tempdir(), "polmineR_registry"),
   system_registry_dir = getOption("polmineR.corpus_registry"),
   sample = FALSE
 )

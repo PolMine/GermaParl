@@ -64,6 +64,4 @@ test_that(
     count("GERMAPARL", query = '"erfolgreiche" "Integration"')
     
     expect_true("topics" %in% s_attributes("GERMAPARL"))
-    # x <- subset("GERMAPARL", grep("133", topics)) %>% 
-    #   as.speeches(s_attribute_name = "speaker")
 })

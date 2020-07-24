@@ -9,16 +9,17 @@
 \description{
 \emph{GermaParl} is  a corpus of parliamentary debates in the German
 Bundestag. The package offers a convenient dissemination mechanism for the
-\emph{GermaParl} corpus.  The corpus has been linguistically annotated and
+\emph{GermaParl} corpus. The corpus has been linguistically annotated and
 indexed using the data format of the \emph{Corpus Workbench} (CWB). To make
 full use if this data format, working with \emph{GermaParl} in combination
-with the \emph{polmineR} package is recommended. After installation, only a
-small sample corpus will be included in the package ("GERMAPARLMINI"). To
-download the full corpus from the open science repository \emph{Zenodo}, use
-the \code{germaparl_download_corpus} function. The package offers further
-functionality to augment the corpus (see the the examples section below).
+with the \emph{polmineR} package is recommended.
 }
 \details{
+The GermaParl package initially only includes  a subset of the GermaParl
+corpus which serves as a sample corpus ("GERMAPARLMINI"). To download the
+full corpus from the open science repository \emph{Zenodo}, use the
+\code{germaparl_download_corpus} function.
+
 The \emph{GermaParl} R package and the \emph{GermaParl} corpus are two
 different pieces of research data: The package offers a mechanism to ship,
 easily install and augment the data. The indexed corpus is the actual data.
@@ -30,8 +31,8 @@ available only when a version of \emph{GermaParl} has been downloaded and
 installed.
 }
 \examples{
-# This example uses the GERMAPARLSAMPLE corpus rather than the full GERMAPARL 
-# so that the time consumed for testing the code is not excessive. To apply
+# This example uses the GERMAPARLSAMPLE corpus rather than the full GERMAPARL
+# corpus in order to reduce the time required for testing the code. To apply
 # everything on GERMAPARL rather than GERMAPARLSAMPLE, set variable 'samplemode' 
 # to FALSE, or simply omit argument 'sample'.
 
@@ -52,25 +53,9 @@ germaparl_download_corpus(
 )
 
 # Check availability of the corpus
-library(polmineR)
-corpus() # should include downloaded GERMAPARL(SAMPLE) corpus
-count("GERMAPARLSAMPLE", "Daten") # an arbitrary test
 germaparl_is_installed(sample = samplemode) # TRUE now
 germaparl_get_version(sample = samplemode) # get version of indexed corpus
 germaparl_get_doi(sample = samplemode) # get 'document object identifier' (DOI) of GERMAPARL corpus
-
-# Encode structural attribute 'speech'
-germaparl_encode_speeches(
-  registry_dir = cwb_dirs[["registry_dir"]],
-  corpus_dir = cwb_dirs[["corpus_dir"]],
-  sample = samplemode
-)
-
-# Check whether the new attribute is available 
-s_attributes(corpus_id)
-values <- s_attributes(corpus_id, "speech")
-sizes <- size(corpus_id, s_attribute = "speech")
-dtm <- as.DocumentTermMatrix(corpus_id, p_attribute = "word", s_attribute = "speech")
 
 # Download topic model (k = 250)
 germaparl_download_lda(
@@ -80,21 +65,6 @@ germaparl_download_lda(
 )
 lda <- germaparl_load_topicmodel(k = 30L, registry_dir = registry_tmp, sample = samplemode)
 lda_terms <- topicmodels::terms(lda, 10)
-
-# Encode topic model classification of speeches
-germaparl_encode_lda_topics(
-  k = 30, # use k = 250 for full GERMAPARL corpus
-  n = 3,
-  registry_dir = cwb_dirs[["registry_dir"]],
-  data_dir = file.path(cwb_dirs[["corpus_dir"]], tolower(corpus_id)),
-  sample = samplemode
-)
-
-# Check whether the newly encoded attribute 'topics' is available
-s_attributes(corpus_id)
-sc <- corpus(corpus_id) \%>\% subset(grep("\\\\|18\\\\|", topics))
-b <- as.speeches(sc, s_attribute_name = "speaker")
-length(b)
 }
 \references{
 Blaette, Andreas (2018): "Using Data Packages to Ship Annotated
