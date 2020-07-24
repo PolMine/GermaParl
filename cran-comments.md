@@ -1,8 +1,8 @@
 ## General remarks
 
-The 'GermaParl' package has been present at CRAN already and has been archived when the RcppCWB failed to pass checks. Once the 'GermaParl' package is accepted by CRAN, my package 'polmineR' can rely on the test data of the 'GermaParl' package.
+The 'GermaParl' package has been archived a few weeks ago when the RcppCWB dependency failed to pass checks. Once the 'GermaParl' package makes it to CRAN again, the 'polmineR' package can use the data of the 'GermaParl' package as test data. That way, it will be possible to reduce the size of the polmineR package.
 
-Performing the download of the sample data at times took more than the 5s threshold on my machine (6-7 seconds). It seems that the download sometimes takes less than 5s, sometimes I see more. I hope this will still be tolerated.
+Performing a test download of sample data at times took more than the 5s threshold on my machine (6-7 seconds). It seems that the download sometimes takes less than 5s, sometimes a bit more. I hope this will still be tolerated.
 
 
 ## Test environments
@@ -11,8 +11,6 @@ Performing the download of the sample data at times took more than the 5s thresh
 * Ubuntu 14.04 (on Travis CI), R 4.0.0
 * Windows/AppVeyor, R 4.0.2 Patched
 * R win-builder (devel and release), R 4.0.0
-* Debian Linux, R-devel, GCC (R-hub builder), R 4.0.0
-* Debian Linux, R-devel, GCC (local Docker container), R-devel (r78462)
 
 
 ## R CMD check results
