@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GermaParl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -77,7 +77,7 @@
             <h3 class="subtitle">Introducing the Data Package and the Corpus</h3>
                         <h4 class="author">Andreas Blaette (<a href="mailto:andreas.blaette@uni-due.de" class="email">andreas.blaette@uni-due.de</a>)</h4>
             
-            <h4 class="date">2020-05-13</h4>
+            <h4 class="date">2020-07-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/polmine/GermaParl/blob/master/vignettes/GermaParl.Rmd"><code>vignettes/GermaParl.Rmd</code></a></small>
       <div class="hidden name"><code>GermaParl.Rmd</code></div>
@@ -218,201 +218,20 @@
 <a href="#getting-started---installing-germaparl" class="anchor"></a>Getting started - installing GermaParl</h3>
 <p>The GermaParl R Data Package can be installed from CRAN. It is a “pure R” package. There are no differences whether you install on Linux, MacOS or Windows.</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"GermaParl"</span>)</pre></body></html></div>
+<p>You can then load the GermaParl package.</p>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">GermaParl</span>)</pre></body></html></div>
 <p>After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from <a href="https://zenodo.org/">Zenodo</a>, an open science data repository:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">GermaParl</span>)
-<span class="fu"><a href="../reference/download.html">germaparl_download_corpus</a></span>()</pre></body></html></div>
-<p>To check whether the installation has been successful, run the following commands. For further instructions, see the documentation of the polmineR package.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">polmineR</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/use.html">use</a></span>(<span class="st">"GermaParl"</span>) <span class="co"># to activate the corpus in the data package</span></pre></body></html></div>
-<pre><code>## ... activating corpus: GERMAPARLMINI</code></pre>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/corpus-class.html">corpus</a></span>() <span class="co"># to see whether the GERMAPARL corpus is listed</span></pre></body></html></div>
-<pre><code>##          corpus   size template
-## 1 GERMAPARLMINI 222201     TRUE
-## 2       REUTERS   4050     TRUE</code></pre>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="kw">if</span> (<span class="st">"GERMAPARL"</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/corpus-class.html">corpus</a></span>()<span class="kw">[[</span><span class="st">"corpus"</span>]]) <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/size-method.html">size</a></span>(<span class="st">"GERMAPARL"</span>) <span class="co"># to learn about the size of the corpus</span></pre></body></html></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/download.html">germaparl_download_corpus</a></span>()</pre></body></html></div>
+<p>To check whether the installation has been successful, run the following commands.</p>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/germaparl_is_installed.html">germaparl_is_installed</a></span>()
+<span class="fu"><a href="../reference/germaparl_get_doi.html">germaparl_get_doi</a></span>()
+<span class="fu"><a href="../reference/germaparl_get_version.html">germaparl_get_version</a></span>()</pre></body></html></div>
 </div>
 </div>
-<div id="a-very-brief-tutorial" class="section level2">
+<div id="working-with-germaparl" class="section level2">
 <h2 class="hasAnchor">
-<a href="#a-very-brief-tutorial" class="anchor"></a>A very brief tutorial</h2>
-<p>The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as <a href="http://cwb.sourceforge.net/cqpweb.php">CQPweb</a>). However, most technical decisions during corpus preparation had in mind to optimize using the GermaParl corpus in combination with the <a href="https://CRAN.R-project.org/package=polmineR">polmineR</a> package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands. Note that in the following examples, we will use GERMAPARLMINI to illustrate functions, as the full GERMAPARL corpus will only be available after the full installation of the corpus.</p>
-<p>First, you may want to learn about the p-attributes (positional attributes), and s-attributes (structural attributes) that are available.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/s_attributes-method.html">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>)</pre></body></html></div>
-<pre><code>## [1] "interjection" "date"         "party"        "speaker"</code></pre>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/p_attributes.html">p_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>)</pre></body></html></div>
-<pre><code>## [1] "word" "pos"</code></pre>
-<p>To learn about the values of s-attributes, specify the param s_attribute:</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/s_attributes-method.html">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="st">"date"</span>)</pre></body></html></div>
-<pre><code>## [1] "2009-10-27" "2009-10-28" "2009-11-10" "2009-11-11" "2009-11-12"</code></pre>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/s_attributes-method.html">s_attributes</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="st">"party"</span>)</pre></body></html></div>
-<pre><code>## [1] "NA"              "CDU_CSU"         "SPD"             "FDP"            
-## [5] "DIE_LINKE"       "B90_DIE_GRUENEN"</code></pre>
-<p>To inspect keywords-in-context (KWIC), use the kwic-method:</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">K</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/kwic.html">kwic</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="st">"Integration"</span>)
-<span class="kw">if</span> (<span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()){
-  <span class="no">K</span>
-} <span class="kw">else</span> {
-  <span class="kw pkg">knitr</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="no">K</span>), <span class="kw">format</span> <span class="kw">=</span> <span class="st">"markdown"</span>)
-}</pre></body></html></div>
-<table class="table">
-<colgroup>
-<col width="46%">
-<col width="11%">
-<col width="42%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">left</th>
-<th align="left">node</th>
-<th align="left">right</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">Es ist eine Frage der</td>
-<td align="left">Integration</td>
-<td align="left">der Menschen , die in</td>
-</tr>
-<tr class="even">
-<td align="left">hilft weiter . Bildung ,</td>
-<td align="left">Integration</td>
-<td align="left">, solide Haushalte , generationengerechte</td>
-</tr>
-<tr class="odd">
-<td align="left">, die Bildung , die</td>
-<td align="left">Integration</td>
-<td align="left">, die Arbeitsmarktpolitik und die</td>
-</tr>
-<tr class="even">
-<td align="left">mit Nachdruck : Auch die</td>
-<td align="left">Integration</td>
-<td align="left">der Zuwanderer und ihrer Kinder</td>
-</tr>
-<tr class="odd">
-<td align="left">wie wir im Bereich der</td>
-<td align="left">Integration</td>
-<td align="left">nachholen , was wir jahrzehntelang</td>
-</tr>
-<tr class="even">
-<td align="left">ein Thema , das die</td>
-<td align="left">Integration</td>
-<td align="left">betrifft . Junge Menschen ,</td>
-</tr>
-<tr class="odd">
-<td align="left">Deutschland und Frankreich die europäische</td>
-<td align="left">Integration</td>
-<td align="left">in der Substanz - also</td>
-</tr>
-<tr class="even">
-<td align="left">Auf ihm hat die europäische</td>
-<td align="left">Integration</td>
-<td align="left">aufgebaut , und durch ihn</td>
-</tr>
-<tr class="odd">
-<td align="left">wird erwähnt , wie wichtig</td>
-<td align="left">Integration</td>
-<td align="left">, sozialer Zusammenhalt und Ressourcenschutz</td>
-</tr>
-<tr class="even">
-<td align="left">in Wohnquartieren einschließlich der besseren</td>
-<td align="left">Integration</td>
-<td align="left">von Menschen mit Migrationshintergrund und</td>
-</tr>
-<tr class="odd">
-<td align="left">Migrationsbewegungen und zunehmender Vielfalt ist</td>
-<td align="left">Integration</td>
-<td align="left">eine Schlüsselaufgabe für uns alle</td>
-</tr>
-<tr class="even">
-<td align="left">uns alle . Bei der</td>
-<td align="left">Integration</td>
-<td align="left">von Zuwanderern haben wir bereits</td>
-</tr>
-<tr class="odd">
-<td align="left">aber zu kurz gegriffen ,</td>
-<td align="left">Integration</td>
-<td align="left">nur im Zusammenhang mit Zuwanderern</td>
-</tr>
-<tr class="even">
-<td align="left">der Innenpolitik zu machen .</td>
-<td align="left">Integration</td>
-<td align="left">in einem umfassenden Sinne bedeutet</td>
-</tr>
-<tr class="odd">
-<td align="left">wirklich nicht getan ; denn</td>
-<td align="left">Integration</td>
-<td align="left">umfasst viele Bereiche , von</td>
-</tr>
-<tr class="even">
-<td align="left">und vorurteilsfrei ist . Die</td>
-<td align="left">Integration</td>
-<td align="left">von Menschen mit Migrationshintergrund ist</td>
-</tr>
-<tr class="odd">
-<td align="left">Bildung und Ausbildung , für</td>
-<td align="left">Integration</td>
-<td align="left">in den Beruf , für</td>
-</tr>
-<tr class="even">
-<td align="left">Rede . Wir brauchen verantwortungsbewusste</td>
-<td align="left">Integration</td>
-<td align="left">. Das bedeutet , jeder</td>
-</tr>
-<tr class="odd">
-<td align="left">der für das Gelingen der</td>
-<td align="left">Integration</td>
-<td align="left">verantwortlich ist , muss sich</td>
-</tr>
-<tr class="even">
-<td align="left">. Wir werden die europäische</td>
-<td align="left">Integration</td>
-<td align="left">nicht als Bedrohung verstehen ,</td>
-</tr>
-<tr class="odd">
-<td align="left">Das ist ein Schritt zur</td>
-<td align="left">Integration</td>
-<td align="left">; darin liegt für Kinder</td>
-</tr>
-<tr class="even">
-<td align="left">voranbringen und unsere Maßnahmen zur</td>
-<td align="left">Integration</td>
-<td align="left">von Jugendlichen durch Bildung und</td>
-</tr>
-<tr class="odd">
-<td align="left">Wie schaffen wir bes- sere</td>
-<td align="left">Integration</td>
-<td align="left">in und durch Bildung ?</td>
-</tr>
-</tbody>
-</table>
-<p>The count-method is used for counting. You can supply one or multiple queries:</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/count-method.html">count</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="st">"Integration"</span>)</pre></body></html></div>
-<pre><code>##          query count         freq
-## 1: Integration    23 0.0001035099</code></pre>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/count-method.html">count</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Integration"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))</pre></body></html></div>
-<pre><code>##          query count         freq
-## 1: Integration    23 1.035099e-04
-## 2:      Flucht     2 9.000860e-06
-## 3: Abschiebung     1 4.500430e-06</code></pre>
-<p>To get the dispersion of a query, use the dispersion-method.</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">d</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/dispersion-method.html">dispersion</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="st">"Integration"</span>, <span class="kw">s_attribute</span> <span class="kw">=</span> <span class="st">"date"</span>)
-<span class="no">d</span></pre></body></html></div>
-<p>Visualise the result as a barplot…</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span>(<span class="no">d</span><span class="kw">[[</span><span class="st">"count"</span>]], <span class="kw">names.arg</span> <span class="kw">=</span> <span class="no">d</span><span class="kw">[[</span><span class="st">"date"</span>]], <span class="kw">las</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
-<p><img src="GermaParl_files/figure-html/dispersion_barplot-1.png" width="700"></p>
-<p>The cooccurrences-method will get you the cooccurrences of a query.</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">coocs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/cooccurrences.html">cooccurrences</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="st">"Wir"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span>(<span class="no">coocs</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/dotplot-method.html">dotplot</a></span>(<span class="no">C</span>)</pre></body></html></div>
-<p>These are some if the core functions, applied to the whole corpus. The whole point of the structural annotation of the corpus (s-attributes) is to facilitate the creation of subcorpora / partitions. So every method that has been introduced can be applied to a partition.</p>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">lp16</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/partition.html">partition</a></span>(<span class="st">"GERMAPARL"</span>, <span class="kw">lp</span> <span class="kw">=</span> <span class="fl">16</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/count-method.html">count</a></span>(<span class="no">lp16</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Asyl"</span>, <span class="st">"Flucht"</span>, <span class="st">"Abschiebung"</span>))
-<span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/dispersion-method.html">dispersion</a></span>(<span class="no">lp16</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="st">"Flüchtlinge"</span>, <span class="kw">sAttribute</span> <span class="kw">=</span> <span class="st">"year"</span>)</pre></body></html></div>
-<p>Finally, note that the methods of polmineR can also be used with the pipe functionality offered by the magrittr package.</p>
-<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">magrittr</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/cooccurrences.html">cooccurrences</a></span>(<span class="st">"GERMAPARLMINI"</span>, <span class="kw">query</span> <span class="kw">=</span> <span class="st">"Europa"</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/subset.html">subset</a></span>(!<span class="no">word</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw pkg">tm</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/tm/man/stopwords.html">stopwords</a></span>(<span class="st">"de"</span>), <span class="st">","</span>, <span class="st">"."</span>)) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/subset.html">subset</a></span>(<span class="no">count_window</span> <span class="kw">&gt;=</span> <span class="fl">5</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/pkg/polmineR/man/dotplot-method.html">dotplot</a></span>()</pre></body></html></div>
-<p>This is just a short glimpse into the analytical potential of using GermaParl in combination with polmineR. One of the most important aspects that cannot be explained here is the possibility to use the syntax of the Corpus Query Processor (CQP) that comes with the CWB backend. The <code>as.TermDocumentMatrix</code> method will prepare data structures efficiently needed for more advanced analytical techniques such as topicmodelling. Consult the vignette of the polmineR package to learn more!</p>
+<a href="#working-with-germaparl" class="anchor"></a>Working with GermaParl</h2>
+<p>The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as <a href="http://cwb.sourceforge.net/cqpweb.php">CQPweb</a>). However, most technical decisions during corpus preparation had in mind to optimize using the GermaParl corpus in combination with the <a href="https://CRAN.R-project.org/package=polmineR">polmineR</a> package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl.</p>
 </div>
 <div id="some-caveats" class="section level2">
 <h2 class="hasAnchor">
@@ -450,7 +269,7 @@
 <p>Blaette, Andreas (2020): GermaParl. Download and Augment the Corpus of Plenary Protocols of the German Bundestag. R package version 1.3.0. <a href="https://CRAN.R-project.org/package=GermaParl" class="uri">https://CRAN.R-project.org/package=GermaParl</a></p>
 <p>Blaette, Andreas (2020): GermaParl. Linguistically Annotated and Indexed Corpus of Plenary Protocols of the German Bundestag. CWB corpus version 1.0.6. <a href="https://doi.org/10.5281/zenodo.3735141" class="uri">https://doi.org/10.5281/zenodo.3735141</a></p>
 <p>NOTE: In an R session, you can get this recommendation how to quote GermaParl by calling the usual <code><a href="https://rdrr.io/r/utils/citation.html">citation()</a></code> function:</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span>(<span class="st">"GermaParl"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span>(<span class="st">"GermaParl"</span>)</pre></body></html></div>
 </div>
 <div id="annex" class="section level2">
 <h2 class="hasAnchor">
@@ -768,10 +587,6 @@
 <tr class="odd">
 <td align="left">2008</td>
 <td align="left"><a href="http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2008/index.html" class="uri">http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2008/index.html</a></td>
-</tr>
-<tr class="even">
-<td align="left">2009</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2009/index.html" class="uri">http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2009/index.html</a></td>
 </tr>
 </tbody>
 </table>

@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GermaParl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -117,9 +117,20 @@
       <small>Source: <a href='https://github.com/polmine/GermaParl/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="germaparl-150" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.0">
+<a href="#germaparl-150" class="anchor"></a>GermaParl 1.5.0<small> Unreleased </small>
+</h1>
+<ul>
+<li>The package will not depend on the polmineR package any more. Higher-level functions of the polmineR package have been replaced by lower-level functions.</li>
+<li>The function <code>germaparl_encode_lda_topics()</code> has been removed from the GermaParl package and been moved to the <a href="https://www.github.com/PolMine/polmineR.misc">polmineR.misc package</a>.</li>
+<li>The functions <code>germaparl_encode_speeches()</code> and <code>germaparl_encode_lda_topics()</code> have been moved to the (GitHub-only) <a href="https://github.com/PolMine/polmineR.misc">polmineR.misc package</a>. These are higher-level functions that rely on polmineR classes and methods. Keeping them in the GermaParl package would require to make polmineR a dependency of GermaParl. But as GermaParl is designed to become a dependency of polmineR, we prevent a circular dependecy by removing the functions. What is more, both functions have been designed to augmment GermaParl, but their essence is morge generic. In the long run, a cwbtools.misc package (to be created) might be the most logical place for generic functionality to augment corpora.</li>
+</ul>
+</div>
     <div id="germaparl-142" class="section level1">
 <h1 class="page-header" data-toc-text="1.4.2">
-<a href="#germaparl-142" class="anchor"></a>GermaParl 1.4.2</h1>
+<a href="#germaparl-142" class="anchor"></a>GermaParl 1.4.2<small> 2020-05-25 </small>
+</h1>
 <ul>
 <li>Most functions now include an argument <code>sample</code> that defaults to <code>FALSE</code>. If set as <code>TRUE</code>, functionality to retrieve information from the corpus or to modify the corpus will be applied to the smaller GERMAPARLSAMPLE corpus rather than the GERMAPARL corpus.</li>
 <li>The sample workflow of the overall package documentation object will now rely on the GERMAPARLSAMPLE corpus rather than the full GERMAPARL corpus.</li>
@@ -128,7 +139,8 @@
 </div>
     <div id="germaparl-141" class="section level1">
 <h1 class="page-header" data-toc-text="1.4.1">
-<a href="#germaparl-141" class="anchor"></a>GermaParl 1.4.1</h1>
+<a href="#germaparl-141" class="anchor"></a>GermaParl 1.4.1<small> Unreleased </small>
+</h1>
 <ul>
 <li>The ‘topicmodels’ package has been turned into a suggested package and has been moved from the ‘Depends’ section to the ‘Suggests’ section in the DESCRIPTION file.</li>
 <li>Rework of the documentation, including examples.</li>
@@ -136,7 +148,8 @@
 </div>
     <div id="germaparl-140" class="section level1">
 <h1 class="page-header" data-toc-text="1.4.0">
-<a href="#germaparl-140" class="anchor"></a>GermaParl 1.4.0</h1>
+<a href="#germaparl-140" class="anchor"></a>GermaParl 1.4.0<small> Unreleased </small>
+</h1>
 <ul>
 <li>To meet CRAN requirements, the corpus is not stored within the package as in previous version, but in a system corpus directory. The same is applies to supplementary data such as LDA topic models fitted on GERMAPARL.</li>
 <li>The core of the functionality of <code><a href="../reference/download.html">germaparl_download_corpus()</a></code> to download the corpus has been moved to cwbtools (v0.2.0). The <code><a href="../reference/download.html">germaparl_download_corpus()</a></code> function is now a convenience wrapper for <code><a href="https://rdrr.io/pkg/cwbtools/man/corpus_utils.html">cwbtools::corpus_install()</a></code> that ensures that the correct DOI (argument <code>doi</code>) is passed to <code>corpus_install()</code>.</li>
@@ -144,7 +157,8 @@
 </div>
     <div id="germaparl-130" class="section level1">
 <h1 class="page-header" data-toc-text="1.3.0">
-<a href="#germaparl-130" class="anchor"></a>GermaParl 1.3.0</h1>
+<a href="#germaparl-130" class="anchor"></a>GermaParl 1.3.0<small> Unreleased </small>
+</h1>
 <ul>
 <li>The GermaParl corpus is downloaded now from a storage location at zenodo. The <code>germapar_download_corpus()</code> function has been reworked accordingly. It now takes the argument <code>doi</code>.</li>
 <li>The <code>GermaParl</code> R6 class has been dropped from the package. The main method of the function (<code>$summary()</code>) is superfluous as the <code>size()</code>-method of the polmineR package produces the same output (<code>data.table</code> with report of sizes of subcorpora on according to an <code>s_attribute</code>).</li>
@@ -164,14 +178,16 @@
 </div>
     <div id="germaparl-121" class="section level1">
 <h1 class="page-header" data-toc-text="1.2.1">
-<a href="#germaparl-121" class="anchor"></a>GermaParl 1.2.1</h1>
+<a href="#germaparl-121" class="anchor"></a>GermaParl 1.2.1<small> Unreleased </small>
+</h1>
 <ul>
 <li>configure.win script is removed so that installation works on Windows without Rtools installation</li>
 </ul>
 </div>
     <div id="germaparl-120" class="section level1">
 <h1 class="page-header" data-toc-text="1.2.0">
-<a href="#germaparl-120" class="anchor"></a>GermaParl 1.2.0</h1>
+<a href="#germaparl-120" class="anchor"></a>GermaParl 1.2.0<small> Unreleased </small>
+</h1>
 <ul>
 <li>Package includes sample data, but not full corpus upon installation, use <code><a href="../reference/download.html">germaparl_download_corpus()</a></code> for downloading full corpus.</li>
 <li>installation script setpaths.R in ./tools used for adapting paths</li>
@@ -179,7 +195,8 @@
 </div>
     <div id="germaparl-110" class="section level1">
 <h1 class="page-header" data-toc-text="1.1.0">
-<a href="#germaparl-110" class="anchor"></a>GermaParl 1.1.0</h1>
+<a href="#germaparl-110" class="anchor"></a>GermaParl 1.1.0<small> Unreleased </small>
+</h1>
 <ul>
 <li>Stanford CoreNLP (updated ctk package as interface) used for tokenization and annotation</li>
 <li>vignette “The Making of GermaParl” included that documents annotation procedure</li>
@@ -190,7 +207,8 @@
 </div>
     <div id="germaparl-105" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.5">
-<a href="#germaparl-105" class="anchor"></a>GermaParl 1.0.5</h1>
+<a href="#germaparl-105" class="anchor"></a>GermaParl 1.0.5<small> Unreleased </small>
+</h1>
 <ul>
 <li>extended README added</li>
 <li>English version of the package vignette prepared</li>
@@ -199,14 +217,16 @@
 </div>
     <div id="germaparl-104" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.4">
-<a href="#germaparl-104" class="anchor"></a>GermaParl 1.0.4</h1>
+<a href="#germaparl-104" class="anchor"></a>GermaParl 1.0.4<small> Unreleased </small>
+</h1>
 <ul>
 <li>template.json added to make use of new template mechanism (as offered by polmineR 0.7.4)</li>
 </ul>
 </div>
     <div id="germaparl-103" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.3">
-<a href="#germaparl-103" class="anchor"></a>GermaParl 1.0.3</h1>
+<a href="#germaparl-103" class="anchor"></a>GermaParl 1.0.3<small> Unreleased </small>
+</h1>
 <ul>
 <li>package/corpus renamed to GermaParl</li>
 <li>no substantial changes</li>
@@ -214,7 +234,8 @@
 </div>
     <div id="germaparl-102" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.2">
-<a href="#germaparl-102" class="anchor"></a>GermaParl 1.0.2</h1>
+<a href="#germaparl-102" class="anchor"></a>GermaParl 1.0.2<small> Unreleased </small>
+</h1>
 <ul>
 <li>adding a (German) vignette to the package</li>
 </ul>
