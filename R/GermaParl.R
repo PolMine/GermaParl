@@ -81,8 +81,6 @@
 #'   \link{GermaParl} package for an example.
 #' @return \code{TRUE} if the corpus has been installed, and \code{FALSE} if not.
 #' @export germaparl_is_installed
-#' @examples 
-#' germaparl_is_installed() # to check whether GERMAPARL has been downloaded
 germaparl_is_installed <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY"), sample = FALSE){
   corpus_id <- if (isFALSE(sample)) "GERMAPARL" else "GERMAPARLSAMPLE"
   tolower(corpus_id) %in% list.files(registry_dir)

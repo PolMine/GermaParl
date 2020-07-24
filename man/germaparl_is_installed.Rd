@@ -22,9 +22,6 @@ will be used.}
 \description{
 Auxiliary function to detect whether GERMAPARL is installed or not.
 }
-\examples{
-germaparl_is_installed() # to check whether GERMAPARL has been downloaded
-}
 \seealso{
 See the examples section of the overview documentation of the
   \link{GermaParl} package for an example.

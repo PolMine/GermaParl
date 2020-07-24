@@ -17,6 +17,6 @@ test_that(
     )
 
     expect_identical(germaparl_is_installed(), TRUE)
-    expect_true(grepl("https://doi.org/10.5281/zenodo.\\d+", germaparl_get_doi()))
+    expect_true(grepl("10.5281/zenodo.\\d+", germaparl_get_doi()))
     expect_true(grepl("\\d+\\.\\d+\\.\\d+", as.character(germaparl_get_version())))
 })
