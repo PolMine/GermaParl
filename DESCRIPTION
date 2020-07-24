@@ -3,7 +3,10 @@ Type: Package
 Title: Download and Augment the Corpus of Plenary Protocols of the German Bundestag
 Version: 1.5.0
 Date: 2020-07-24
-Authors@R: c(person(given = "Andreas", family = "Blaette", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de"))
+Authors@R: c(
+  person(given = "Andreas", family = "Blaette", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de"),
+  person("Christoph", "Leonhardt", role = "ctb")
+  )
 Depends:
     R (>= 3.5.0)
 Imports:
