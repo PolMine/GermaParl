@@ -39,7 +39,7 @@
 #' # to FALSE, or simply omit argument 'sample'.
 #' 
 #' samplemode <- TRUE
-#' corpus_id <- "GERMAPARLSAMPLE" # to get/amend full corpus: corpus_id <- "GERMAPARL"
+#' corpus_id <- "GERMAPARLSAMPLE" # to get full corpus: corpus_id <- "GERMAPARL"
 #' 
 #' # This example assumes that the directories used by the CWB do not yet exist, so
 #' # temporary directories are created.
@@ -58,15 +58,6 @@
 #' germaparl_is_installed(sample = samplemode) # TRUE now
 #' germaparl_get_version(sample = samplemode) # get version of indexed corpus
 #' germaparl_get_doi(sample = samplemode) # get 'document object identifier' (DOI) of GERMAPARL corpus
-#' 
-#' # Download topic model (k = 250)
-#' germaparl_download_lda(
-#'   k = 30, # use k = 250 for full GERMAPARL corpus
-#'   data_dir = file.path(cwb_dirs[["corpus_dir"]], tolower(corpus_id)),
-#'   sample = samplemode
-#' )
-#' lda <- germaparl_load_topicmodel(k = 30L, registry_dir = registry_tmp, sample = samplemode)
-#' lda_terms <- topicmodels::terms(lda, 10)
 "_PACKAGE"
 
 
@@ -139,41 +130,6 @@ germaparl_get_version <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY"), 
   as.numeric_version(version)
 }
 
-#' Unload and relaod GERMAPARL corpus
-#'
-#' After adding attributes to the corpus, new annotations will not be available
-#' until the internal C representation of the corpus is deleted and reloaded.
-#' The function is used internally by functions adding s-attributes to the
-#' corpus. It is exported and documented as a matter of transparency.
-#'
-#' The function ensures that a modified/updated registry file will be copied
-#' from the system registry directory (directory where registry files are stored
-#' permanently) to the temporary registry directory used by polmineR.
-#'
-#' @param session_registry_dir The temporary session registry directory created
-#'   and used by the polmineR package.
-#' @param system_registry_dir The non-temporary system registry directory.
-#' @param sample A \code{logical} value, if \code{TRUE}, the GERMAPARLSAMPLE
-#'   corpus will be used. The default is \code{FALSE}, and the GERMAPARL corpus
-#'   will be refreshed.
-#' @export germaparl_refresh
-#' @importFrom RcppCWB cqp_is_initialized cqp_initialize cqp_reset_registry
-germaparl_refresh <- function(session_registry_dir = file.path(tempdir(), "polmineR_registry"), system_registry_dir = getOption("polmineR.corpus_registry"), sample = FALSE){
-  corpus_id <- if (isFALSE(sample)) "GERMAPARL" else "GERMAPARLSAMPLE"
-  file.copy(
-    from = file.path(system_registry_dir, tolower(corpus_id)),
-    to = file.path(session_registry_dir, tolower(corpus_id)),
-    overwrite = TRUE
-  )
-  # RcppCWB_cl_delete_corpus will crash if the corpus has not been used before (missing C representation of
-  # the corpus). A minimal corpus query - RcppCWB::cl_cpos2id() - is necessary to avoid the crash
-  RcppCWB::cl_cpos2id(corpus = corpus_id, p_attribute = "word", cpos = 0L, registry = session_registry_dir)
-  RcppCWB::cl_delete_corpus(corpus_id, registry = session_registry_dir)
-  
-  # To avoid difficulties when resetting the registry, cqp is initialized
-  if (!RcppCWB::cqp_is_initialized()) RcppCWB::cqp_initialize(registry = session_registry_dir)
-  RcppCWB::cqp_reset_registry(registry = session_registry_dir)
-}
 
 
 #' LDA Tuning Results

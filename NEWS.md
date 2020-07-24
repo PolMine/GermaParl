@@ -1,7 +1,6 @@
 # GermaParl 1.5.0
 
 - The package will not depend on the polmineR package any more. Higher-level functions of the polmineR package have been replaced by lower-level functions.
-- The function `germaparl_encode_lda_topics()` has been removed from the GermaParl package and been moved to the [polmineR.misc package](https://www.github.com/PolMine/polmineR.misc).
 - The functions `germaparl_encode_speeches()` and `germaparl_encode_lda_topics()` have been moved to the (GitHub-only) [polmineR.misc package](https://github.com/PolMine/polmineR.misc). These are higher-level functions that rely on polmineR classes and methods. Keeping them in the GermaParl package would require to make polmineR a dependency of GermaParl. But as GermaParl is designed to become a dependency of polmineR, we prevent a circular dependecy by removing the functions. What is more, both functions have been designed to augmment GermaParl, but their essence is morge generic. In the long run, a cwbtools.misc package (to be created) might be the most logical place for generic functionality to augment corpora.
 
 

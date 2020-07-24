@@ -37,7 +37,7 @@ installed.
 # to FALSE, or simply omit argument 'sample'.
 
 samplemode <- TRUE
-corpus_id <- "GERMAPARLSAMPLE" # to get/amend full corpus: corpus_id <- "GERMAPARL"
+corpus_id <- "GERMAPARLSAMPLE" # to get full corpus: corpus_id <- "GERMAPARL"
 
 # This example assumes that the directories used by the CWB do not yet exist, so
 # temporary directories are created.
@@ -56,15 +56,6 @@ germaparl_download_corpus(
 germaparl_is_installed(sample = samplemode) # TRUE now
 germaparl_get_version(sample = samplemode) # get version of indexed corpus
 germaparl_get_doi(sample = samplemode) # get 'document object identifier' (DOI) of GERMAPARL corpus
-
-# Download topic model (k = 250)
-germaparl_download_lda(
-  k = 30, # use k = 250 for full GERMAPARL corpus
-  data_dir = file.path(cwb_dirs[["corpus_dir"]], tolower(corpus_id)),
-  sample = samplemode
-)
-lda <- germaparl_load_topicmodel(k = 30L, registry_dir = registry_tmp, sample = samplemode)
-lda_terms <- topicmodels::terms(lda, 10)
 }
 \references{
 Blaette, Andreas (2018): "Using Data Packages to Ship Annotated

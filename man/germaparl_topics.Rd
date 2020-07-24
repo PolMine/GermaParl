@@ -3,7 +3,7 @@
 \name{germaparl_download_lda}
 \alias{germaparl_download_lda}
 \alias{topics}
-\alias{germaparl_load_topicmodel}
+\alias{germaparl_load_lda}
 \title{Use topicmodels prepared for GermaParl.}
 \usage{
 germaparl_download_lda(
@@ -13,7 +13,7 @@ germaparl_download_lda(
   sample = FALSE
 )
 
-germaparl_load_topicmodel(
+germaparl_load_lda(
   k,
   registry_dir = cwbtools::cwb_registry_dir(),
   verbose = TRUE,
@@ -50,17 +50,37 @@ The functions \code{germaparl_download_lda} and
 \description{
 A set of LDA topicmodels is part of the Zenodo release of GermaParl (k
 between 100 and 450). These topic models can be downloaded using
-\code{germaparl_download_lda} and loaded using \code{germaparl_load_topicmodel}.
-Use \code{germaparl_encode_lda_topics} to add a structural attribute with
-topic information for speeches to the encoded corpus.
+\code{germaparl_download_lda} and loaded using \code{germaparl_load_lda}.
 }
 \details{
 The function \code{germaparl_download_lda} will download an
   \code{rds}-file that will be stored in the data directory of the GermaParl
   corpus.
 
-\code{germaparl_load_topicmodel} will load a topicmodel into memory.
+\code{germaparl_load_lda} will load a topicmodel into memory.
   The function will return a \code{LDA_Gibbs} topicmodel, if the topicmodel
   for \code{k} is present; \code{NULL} if the topicmodel has not yet been
   downloaded.
+}
+\examples{
+# This example assumes that the directories used by the CWB do not yet exist, so
+# temporary directories are created.
+cwb_dirs <- cwbtools::create_cwb_directories(prefix = tempdir(), ask = FALSE)
+
+samplemode <- TRUE
+corpus_id <- "GERMAPARLSAMPLE" # for full corpus: corpus_id <- "GERMAPARL"
+
+dir.create(file.path(cwb_dirs[["corpus_dir"]], tolower(corpus_id)))
+
+# Download topic model
+germaparl_download_lda(
+  k = 30, # k = 250 recommended for full GERMAPARL corpus
+  data_dir = file.path(cwb_dirs[["corpus_dir"]], tolower(corpus_id)),
+  sample = samplemode
+)
+lda <- germaparl_load_lda(
+  k = 30L, registry_dir = cwb_dirs[["registry_dir"]],
+  sample = samplemode
+)
+lda_terms <- topicmodels::terms(lda, 10)
 }
