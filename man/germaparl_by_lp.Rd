@@ -5,19 +5,34 @@
 \alias{germaparl_by_lp}
 \title{Table with information on GermaParl by legislative period}
 \format{
-An object of class \code{data.table} (inherits from \code{data.frame}) with 5 rows and 6 columns.
+A \code{data.frame} with 5 rows and 6 variables with summary
+  statistics on the GermaParl corpus on a year-by-year basis.
+\describe{
+  \item{lp}{legislative period (\code{integer} value)}
+  \item{protocols}{total number of protocols included in the corpus for the
+  respective legislative period (\code{integer} value)}
+  \item{first}{date of the first plenary protocol in the legislative period
+  (\code{Date} class)}
+  \item{last}{date of the last plenary protocol in the legislative period
+  (\code{Date} class)}
+  \item{size}{number of tokens in subcorpus for the respective legislative
+  period (\code{integer} value)}
+  \item{unknown}{share of words that cannot be lemmatized, resulting in
+  #unknown# tag (\code{numeric} value)}
+}
+The table is based on v1.0.6 of the corpus. To prepare the table, the script
+available at
+\href{https://github.com/PolMine/GermaParl/blob/master/data-raw/stats_for_vignette.R}{data-raw/stats_for_vignette.R}
+has been used.
 }
 \usage{
 germaparl_by_lp
 }
+\value{
+A \code{data.frame}.
+}
 \description{
 A dataset with information on the corpus by legislative period is included
 in the package to be included in the data report of the package vignette.
-}
-\details{
-The table is based on v1.0.5 of the corpus. To prepare the table, the script
-available at
-\href{https://github.com/PolMine/GermaParl/blob/master/data-raw/stats_for_vignette.R}{data-raw/stats_for_vignette.R}
-has been used.
 }
 \keyword{datasets}

@@ -151,10 +151,26 @@ germaparl_get_version <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY"), 
 #' A dataset with information on the corpus on a year-by-year basis is included
 #' in the package to be included in the data report of the package vignette.
 #' 
-#' The table is based on v1.0.5 of the corpus. The prepare the table, the script
+#' The table is based on v1.0.6 of the corpus. The prepare the table, the script
 #' available at
 #' \href{https://github.com/PolMine/GermaParl/blob/master/data-raw/stats_for_vignette.R}{data-raw/stats_for_vignette.R}
 #' has been used.
+#' @format A \code{data.frame} with 22 rows and 6 variables with summary
+#'   statistics on the GermaParl corpus on a year-by-year basis.
+#' \describe{
+#'   \item{year}{year reported on in the row (\code{integer} value)}
+#'   \item{protocols}{total number of protocols included in the corpus for the
+#'   respective year (\code{integer} value)}
+#'   \item{txt}{number of protocols prepared based on plain text versions of the
+#'   protocols (\code{integer} value)}
+#'   \item{pdf}{number of protocols prepared based on pdf versions of the
+#'   protocols (\code{integer} value)}
+#'   \item{size}{number of tokens in subcorpus for the respective year
+#'   (\code{integer} value)}
+#'   \item{unknown}{share of words that cannot be lemmatized, resulting in
+#'   #unknown# tag (\code{numeric} value)}
+#' }
+#' @return A \code{data.frame}.
 #' @name germaparl_by_year
 #' @rdname germaparl_by_year
 "germaparl_by_year"
@@ -164,11 +180,28 @@ germaparl_get_version <- function(registry_dir = Sys.getenv("CORPUS_REGISTRY"), 
 #' 
 #' A dataset with information on the corpus by legislative period is included
 #' in the package to be included in the data report of the package vignette.
-#' 
-#' The table is based on v1.0.5 of the corpus. To prepare the table, the script
+#' @format A \code{data.frame} with 5 rows and 6 variables with summary
+#'   statistics on the GermaParl corpus on a year-by-year basis.
+#' \describe{
+#'   \item{lp}{legislative period (\code{integer} value)}
+#'   \item{protocols}{total number of protocols included in the corpus for the
+#'   respective legislative period (\code{integer} value)}
+#'   \item{first}{date of the first plenary protocol in the legislative period
+#'   (\code{Date} class)}
+#'   \item{last}{date of the last plenary protocol in the legislative period
+#'   (\code{Date} class)}
+#'   \item{size}{number of tokens in subcorpus for the respective legislative
+#'   period (\code{integer} value)}
+#'   \item{unknown_total}{total number of words that cannot be lemmatized, resulting in
+#'   #unknown# tag (\code{numeric} value)}
+#'   \item{unknown_share}{share of words that cannot be lemmatized, resulting in
+#'   #unknown# tag (\code{numeric} value)}
+#' }
+#' The table is based on v1.0.6 of the corpus. To prepare the table, the script
 #' available at
 #' \href{https://github.com/PolMine/GermaParl/blob/master/data-raw/stats_for_vignette.R}{data-raw/stats_for_vignette.R}
 #' has been used.
+#' @return A \code{data.frame}.
 #' @name germaparl_by_lp
 #' @rdname germaparl_by_lp
 "germaparl_by_lp"
