@@ -1,9 +1,9 @@
 # GermaParl 1.5.1
 
+- Functions included in older versions of the package that used functions from the RcppCWB package had been dropped. An unnecessary declaration of RcppCWB in the 'Imports:' section of the DESCRIPTION file has been removed. 
 - The data objects `germaparl_by_lp` and `germaparl_by_year` were included as `data.table` objects, making the presence of the `data.table` package necessary. To reduce the number of packages imported from and to avoid an error that emerged on Windows, these tables are included as `data.frame` objects.
 - The documentation of the data objects `germaparl_by_lp` and `germaparl_by_year` now includes an explanation of what is reported in rows and columns.
-- The `germaparl_by_year` table now includes a column `unknown_total` and `unknown_share` with the total number of tokens that cannot be lemmatized, and their share, respectively. On this basis, an error in the calculation of the aggregate unknown share for all years can be corrected in the table with summary statistics in the package vignette by year.
-- Functions included in older versions of the package that used functions from the RcppCWB package had been dropped. An unnecessary declaration of RcppCWB in the 'Imports:' section of the DESCRIPTION file has been dropped. 
+- The `germaparl_by_year` table now includes a column `unknown_total` and `unknown_share` with the total number of tokens that cannot be lemmatized, and their share, respectively. On this basis, an error in the calculation of the aggregate unknown share for all years can be corrected.
 
 
 # GermaParl 1.5.0

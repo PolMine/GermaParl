@@ -7,9 +7,9 @@ editor_options:
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![DOI](https://zenodo.org/badge/141028057.svg)](https://zenodo.org/badge/latestdoi/141028057)
-[![Travis-CI Build Status](https://travis-ci.org/PolMine/GermaParl.svg?branch=dev)](https://travis-ci.org/PolMine/GermaParl)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/PolMine/GermaParl?branch=dev&svg=true)](https://ci.appveyor.com/project/PolMine/germaparl)
-[![codecov](https://codecov.io/gh/PolMine/GermaParl/branch/dev/graph/badge.svg)](https://codecov.io/gh/PolMine/GermaParl/branch/dev)
+[![Travis-CI Build Status](https://travis-ci.org/PolMine/GermaParl.svg?branch=master)](https://travis-ci.org/PolMine/GermaParl)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/PolMine/GermaParl?branch=master&svg=true)](https://ci.appveyor.com/project/PolMine/germaparl)
+[![codecov](https://codecov.io/gh/PolMine/GermaParl/branch/master/graph/badge.svg)](https://codecov.io/gh/PolMine/GermaParl/branch/master)
 
 
 ```{r, echo = FALSE}

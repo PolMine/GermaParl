@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GermaParl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
       </span>
     </div>
 
@@ -117,13 +117,23 @@
       <small>Source: <a href='https://github.com/polmine/GermaParl/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="germaparl-151" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.1">
+<a href="#germaparl-151" class="anchor"></a>GermaParl 1.5.1<small> Unreleased </small>
+</h1>
+<ul>
+<li>Functions included in older versions of the package that used functions from the RcppCWB package had been dropped. An unnecessary declaration of RcppCWB in the ‘Imports:’ section of the DESCRIPTION file has been removed.</li>
+<li>The data objects <code>germaparl_by_lp</code> and <code>germaparl_by_year</code> were included as <code>data.table</code> objects, making the presence of the <code>data.table</code> package necessary. To reduce the number of packages imported from and to avoid an error that emerged on Windows, these tables are included as <code>data.frame</code> objects.</li>
+<li>The documentation of the data objects <code>germaparl_by_lp</code> and <code>germaparl_by_year</code> now includes an explanation of what is reported in rows and columns.</li>
+<li>The <code>germaparl_by_year</code> table now includes a column <code>unknown_total</code> and <code>unknown_share</code> with the total number of tokens that cannot be lemmatized, and their share, respectively. On this basis, an error in the calculation of the aggregate unknown share for all years can be corrected.</li>
+</ul>
+</div>
     <div id="germaparl-150" class="section level1">
 <h1 class="page-header" data-toc-text="1.5.0">
-<a href="#germaparl-150" class="anchor"></a>GermaParl 1.5.0<small> Unreleased </small>
+<a href="#germaparl-150" class="anchor"></a>GermaParl 1.5.0<small> 2020-07-24 </small>
 </h1>
 <ul>
 <li>The package will not depend on the polmineR package any more. Higher-level functions of the polmineR package have been replaced by lower-level functions.</li>
-<li>The function <code>germaparl_encode_lda_topics()</code> has been removed from the GermaParl package and been moved to the <a href="https://www.github.com/PolMine/polmineR.misc">polmineR.misc package</a>.</li>
 <li>The functions <code>germaparl_encode_speeches()</code> and <code>germaparl_encode_lda_topics()</code> have been moved to the (GitHub-only) <a href="https://github.com/PolMine/polmineR.misc">polmineR.misc package</a>. These are higher-level functions that rely on polmineR classes and methods. Keeping them in the GermaParl package would require to make polmineR a dependency of GermaParl. But as GermaParl is designed to become a dependency of polmineR, we prevent a circular dependecy by removing the functions. What is more, both functions have been designed to augmment GermaParl, but their essence is morge generic. In the long run, a cwbtools.misc package (to be created) might be the most logical place for generic functionality to augment corpora.</li>
 </ul>
 </div>

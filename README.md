@@ -3,10 +3,10 @@
 
 [![DOI](https://zenodo.org/badge/141028057.svg)](https://zenodo.org/badge/latestdoi/141028057)
 [![Travis-CI Build
-Status](https://travis-ci.org/PolMine/GermaParl.svg?branch=dev)](https://travis-ci.org/PolMine/GermaParl)
+Status](https://travis-ci.org/PolMine/GermaParl.svg?branch=master)](https://travis-ci.org/PolMine/GermaParl)
 [![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/PolMine/GermaParl?branch=dev&svg=true)](https://ci.appveyor.com/project/PolMine/germaparl)
-[![codecov](https://codecov.io/gh/PolMine/GermaParl/branch/dev/graph/badge.svg)](https://codecov.io/gh/PolMine/GermaParl/branch/dev)
+Status](https://ci.appveyor.com/api/projects/status/github/PolMine/GermaParl?branch=master&svg=true)](https://ci.appveyor.com/project/PolMine/germaparl)
+[![codecov](https://codecov.io/gh/PolMine/GermaParl/branch/master/graph/badge.svg)](https://codecov.io/gh/PolMine/GermaParl/branch/master)
 
 # The GermaParl R Data Package <img src="https://raw.githubusercontent.com/PolMine/GermaParl/master/inst/sticker/hexsticker.png" align="right" />
 
@@ -56,8 +56,7 @@ install.packages("GermaParl")
 The development version of the GermaParl package may include
 consolidated or new functionality, and improved documentation. To
 install the development version of GermaParl package from GitHub,
-proceed as
-follows.
+proceed as follows.
 
 ``` r
 if (!"devtools" %in% rownames(available.packages())) install.packages("devtools")
