@@ -8,8 +8,10 @@ fontsize: 12pt
 bibliography: references.bibtex
 vignette: >
   %\VignetteIndexEntry{GermaParl}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, echo = FALSE, message = FALSE}
@@ -49,7 +51,7 @@ The essential instrument for the XMLification is a set of regular expressions to
 
 Due to the remaining haphazard variations that occur in plenary protocols, the quest is not for a universal battery of regular expressions that would always work without manual checks. Even though it introduces an element of manual work, our solution is to work with lists of mismatches (matches of regular expressions to omit), in combination with a brute-force preprocessing (hard-coded substitutions) that correct obvious errors that are already included in the original version of plenary protocol.
 
-The result of the base XMLification still includes considerable noise. Inconsistencies that occur with names are a particularly serious issue. To obtain consolidated metadata, information that has been extracted is checked (including approximate string matching) against an external data source. We opted for lists of members of parliamentarians, cabinet members and further speakers that are available on Wikipedia (see the [page for the 17th Bundestag](https://de.wikipedia.org/wiki/Liste_der_Mitglieder_des_Deutschen_Bundestages_(17._Wahlperiode)), for instance).
+The result of the base XMLification still includes considerable noise. Inconsistencies that occur with names are a particularly serious issue. To obtain consolidated metadata, information that has been extracted is checked (including approximate string matching) against an external data source. We opted for lists of members of parliamentarians, cabinet members and further speakers that are available on Wikipedia (see the [page for the 17th Bundestag](https://de.wikipedia.org/wiki/Liste_der_Mitglieder_des_Deutschen_Bundestages_\(17._Wahlperiode\)), for instance).
 
 Easy digital access is not the only justification for this choice. Wikipedia pages for the parliamentary sessions are being taken care of by a team of dedicated volunteers. Furthermore, Wikipedia pages meet  permanent public scrutiny, ensuring quality checks on the data quality in a manner traditional printed material does not necessarily ensure.
 
@@ -103,100 +105,30 @@ The GermaParl R Data Package can be installed from CRAN. It is a "pure R" packag
 install.packages("GermaParl")
 ```
 
+You can then load the GermaParl package.
+
+```{r}
+library(GermaParl)
+```
+
 After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from [Zenodo](https://zenodo.org/), an open science data repository:
 
 ```{r load_germaparl, eval = FALSE}
-library(GermaParl)
 germaparl_download_corpus()
 ```
 
-To check whether the installation has been successful, run the following commands. For further instructions, see the documentation of the polmineR package.
+To check whether the installation has been successful, run the following commands.
 
-```{r check_installation, eval = TRUE}
-library(polmineR)
-use("GermaParl") # to activate the corpus in the data package
-corpus() # to see whether the GERMAPARL corpus is listed
-if ("GERMAPARL" %in% corpus()[["corpus"]]) size("GERMAPARL") # to learn about the size of the corpus
+```{r check_installation, eval = FALSE}
+germaparl_is_installed()
+germaparl_get_doi()
+germaparl_get_version()
 ```
 
 
-## A very brief tutorial
+## Working with GermaParl
 
-The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as [CQPweb](http://cwb.sourceforge.net/cqpweb.php)). However, most technical decisions during corpus preparation had in mind to optimize using the GermaParl corpus in combination with the [polmineR](https://CRAN.R-project.org/package=polmineR) package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl. Here, we can only offer a very brief tutorial for basic commands. Note that in the following examples, we will use GERMAPARLMINI to illustrate functions, as the full GERMAPARL corpus will only be available after the full installation of the corpus.
-
-First, you may want to learn about the p-attributes (positional attributes), and s-attributes (structural attributes) that are available.
-
-```{r sAttributes, eval = TRUE}
-s_attributes("GERMAPARLMINI")
-p_attributes("GERMAPARLMINI")
-```
-
-To learn about the values of s-attributes, specify the param s_attribute:
-
-```{r sAttributes_year, eval = TRUE}
-s_attributes("GERMAPARLMINI", "date")
-s_attributes("GERMAPARLMINI", "party")
-```
-
-To inspect keywords-in-context (KWIC), use the kwic-method:
-
-```{r kwic, eval = TRUE}
-K <- kwic("GERMAPARLMINI", query = "Integration")
-if (interactive()){
-  K
-} else {
-  knitr::kable(as.data.frame(K), format = "markdown")
-}
-```
-
-The count-method is used for counting. You can supply one or multiple queries:
-
-```{r count, eval = TRUE}
-count("GERMAPARLMINI", query = "Integration")
-count("GERMAPARLMINI", query = c("Integration", "Flucht", "Abschiebung"))
-```
-
-To get the dispersion of a query, use the dispersion-method.
-
-```{r dispersion, eval = TRUE}
-d <- dispersion("GERMAPARLMINI", query = "Integration", s_attribute = "date")
-d
-```
-
-Visualise the result as a barplot...
-
-```{r dispersion_barplot, eval = TRUE}
-barplot(d[["count"]], names.arg = d[["date"]], las = 2)
-```
-
-The cooccurrences-method will get you the cooccurrences of a query.
-
-```{r cooc, eval = FALSE}
-coocs <- cooccurrences("GERMAPARLMINI", query = "Wir")
-format(coocs)
-dotplot(C)
-```
-
-These are some if the core functions, applied to the whole corpus. The whole point of the structural annotation of the corpus (s-attributes) is to facilitate the creation of subcorpora / partitions. So every method that has been introduced can be applied to a partition.
-
-```{r count_partition, eval = FALSE}
-lp16 <- partition("GERMAPARL", lp = 16)
-count(lp16, query = c("Asyl", "Flucht", "Abschiebung"))
-dispersion(lp16, query = "Flüchtlinge", sAttribute = "year")
-```
-
-Finally, note that the methods of polmineR can also be used with the pipe functionality offered by the magrittr package.
-
-```{r pipe, eval = FALSE}
-library(magrittr)
-cooccurrences("GERMAPARLMINI", query = "Europa") %>% 
-  subset(!word %in% c(tm::stopwords("de"), ",", ".")) %>%
-  subset(count_window >= 5) %>%
-  dotplot()
-```
-
-This is just a short glimpse into the analytical potential of using GermaParl in combination with polmineR. One of the most important aspects that cannot be explained here is the possibility to use the syntax of the Corpus Query Processor (CQP) that comes with the CWB backend. The `as.TermDocumentMatrix` method will prepare data structures efficiently needed for more advanced analytical techniques such as topicmodelling. Consult the vignette of the polmineR package to learn more!
-
+The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as [CQPweb](http://cwb.sourceforge.net/cqpweb.php)). However, most technical decisions during corpus preparation had in mind to optimize using the GermaParl corpus in combination with the [polmineR](https://CRAN.R-project.org/package=polmineR) package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl.
 
 ## Some caveats
 
@@ -266,7 +198,19 @@ knitr::kable(GermaParl::germaparl_by_lp, format = "markdown")
 
 
 ```{r stat_by_year, eval = TRUE, echo = FALSE, message = FALSE}
-knitr::kable(GermaParl::germaparl_by_year, format = "markdown")
+summary_row <- t(data.frame(colSums(GermaParl::germaparl_by_year)))
+rownames(summary_row) <- NULL
+content_rows <- GermaParl::germaparl_by_year
+rownames(content_rows) <- NULL
+tab <- rbind(content_rows, summary_row)
+tab[["year"]] <- as.character(tab[["year"]])
+tab[nrow(tab), "year"] <- "TOTAL"
+tab[nrow(tab), "unknown_share"] <- round(
+  sum(GermaParl::germaparl_by_year[["unknown_total"]]) / sum(GermaParl::germaparl_by_year[["size"]]),
+  digits = 3
+)
+colnames(tab)[6:7] <- c("unknown (total)", "unknown (share)")
+knitr::kable(tab, format = "markdown")
 ```
 
 
@@ -290,8 +234,7 @@ urls <- list(
   c("2005", "http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2005/index.html"),
   c("2006", "http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2006/index.html"),
   c("2007", "http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2007/index.html"),
-  c("2008", "http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2008/index.html"),
-  c("2009", "http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2009/index.html")
+  c("2008", "http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2008/index.html")
 )
 tab <- do.call(rbind, urls)
 colnames(tab) <- c("year", "URL")

@@ -4,44 +4,35 @@
 \name{germaparl_by_lp}
 \alias{germaparl_by_lp}
 \title{Table with information on GermaParl by legislative period}
-\format{An object of class \code{data.table} (inherits from \code{data.frame}) with 5 rows and 6 columns.}
+\format{
+A \code{data.frame} with 5 rows and 6 variables with summary
+  statistics on the GermaParl corpus on a year-by-year basis.
+\describe{
+  \item{lp}{legislative period (\code{integer} value)}
+  \item{protocols}{total number of protocols included in the corpus for the
+  respective legislative period (\code{integer} value)}
+  \item{first}{date of the first plenary protocol in the legislative period
+  (\code{Date} class)}
+  \item{last}{date of the last plenary protocol in the legislative period
+  (\code{Date} class)}
+  \item{size}{number of tokens in subcorpus for the respective legislative
+  period (\code{integer} value)}
+  \item{unknown}{share of words that cannot be lemmatized, resulting in
+  #unknown# tag (\code{numeric} value)}
+}
+The table is based on v1.0.6 of the corpus. To prepare the table, the script
+available at
+\href{https://github.com/PolMine/GermaParl/blob/master/data-raw/stats_for_vignette.R}{data-raw/stats_for_vignette.R}
+has been used.
+}
 \usage{
 germaparl_by_lp
 }
+\value{
+A \code{data.frame}.
+}
 \description{
-A dataset with information on the corpus on a year-by-year basis is included
-in the package to be included in the data report of the package vignette. The 
-code used to generate the data is reported in the examples section.
-}
-\details{
-Note that the table is based on v1.0.5 of the corpus.
-}
-\examples{
-\dontrun{
-years <- as.integer(s_attributes("GERMAPARL", "year"))
-dts <- lapply(
-  min(years):max(years),
-  function(year){
-    P <- partition("GERMAPARL", year = as.character(year), verbose = FALSE)
-    P.txt <- partition(P, src = "txt")
-    P.pdf <- partition(P, src = "pdf")
-    dt <- polmineR::count(P, p_attribute = "lemma")
-    unknowns <- round(sum(dt[grepl("#unknown#", dt[["lemma"]])][["count"]]) / size(P), digits = 3)
-    data.table(
-      year = year,
-      protocols = length(unique(s_attributes(P, "session"))),
-      txt = length(s_attributes(P.txt, "session")),
-      pdf = length(s_attributes(P.pdf, "session")),
-      size = size(P),
-      unknown = unknowns
-    )
-  }
-)
-dt1 <- rbindlist(dts)
-dt2 <- rbind(dt1, t(data.table(colSums(dt1))), use.names = FALSE, fill = FALSE)
-dt2[["year"]] <- as.character(dt2[["year"]])
-dt2[nrow(dt2), 1] <- "TOTAL"
-germaparl_by_year <- dt2
-}
+A dataset with information on the corpus by legislative period is included
+in the package to be included in the data report of the package vignette.
 }
 \keyword{datasets}

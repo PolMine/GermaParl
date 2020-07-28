@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -36,13 +40,12 @@
 
 
 <meta property="og:title" content="GermaParl R Data Package. — GermaParl-package" />
-<meta property="og:description" content="The package offers a convenient dissemination mechanism for the 
-GermaParl corpus that has been linguistically annotated and indexed (data format
-of the Corpus Workbench / CWB). After installation, only a small sample corpus
-will be included in the package. Use the germaparl_download_corpus function
-to download the full corpus. The package offers further functionality to amend 
-the corpus." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:description" content="GermaParl is  a corpus of parliamentary debates in the German
+Bundestag. The package offers a convenient dissemination mechanism for the
+GermaParl corpus. The corpus has been linguistically annotated and
+indexed using the data format of the Corpus Workbench (CWB). To make
+full use if this data format, working with GermaParl in combination
+with the polmineR package is recommended." />
 
 
 
@@ -60,7 +63,7 @@ the corpus." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,7 +77,7 @@ the corpus." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GermaParl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
       </span>
     </div>
 
@@ -98,7 +101,7 @@ the corpus." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/polmine/GermaParl">
+  <a href="https://github.com/polmine/GermaParl/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -122,76 +125,75 @@ the corpus." />
     </div>
 
     <div class="ref-description">
-    <p>The package offers a convenient dissemination mechanism for the 
-GermaParl corpus that has been linguistically annotated and indexed (data format
-of the Corpus Workbench / CWB). After installation, only a small sample corpus
-will be included in the package. Use the <code>germaparl_download_corpus</code> function
-to download the full corpus. The package offers further functionality to amend 
-the corpus.</p>
+    <p><em>GermaParl</em> is  a corpus of parliamentary debates in the German
+Bundestag. The package offers a convenient dissemination mechanism for the
+<em>GermaParl</em> corpus. The corpus has been linguistically annotated and
+indexed using the data format of the <em>Corpus Workbench</em> (CWB). To make
+full use if this data format, working with <em>GermaParl</em> in combination
+with the <em>polmineR</em> package is recommended.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>germaparl_is_installed</span>()
-
-<span class='fu'>germaparl_get_doi</span>()
-
-<span class='fu'>germaparl_get_version</span>()</pre>
 
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Note that the R package and the corpus are two different kinds of research
-data: The package offers a mechanism to ship, easily install and augment the data.
-The indexed corpus is the actual data. Package and corpus have different version
-numbers and should be quoted in combination in publications. We recommend to follow 
-the instructions you see when calling <code><a href='https://rdrr.io/r/utils/citation.html'>citation(package = "GermaParl")</a></code>.</p>
-<p><code>germaparl_is_installed</code> is an auxiliary function that returns <code>TRUE</code>
-  if the corpus has been installed, and <code>FALSE</code> if not.</p>
-<p><code>germaparl_get_doi</code> is an auxiliary function that extracts the DOI
-  (Document Object Identifier) from the registry file of the GERMAPARL corpus. If
-  the corpus has not yet been installed, <code>NULL</code> is returned and a warning 
-  will be issued.</p>
-<p><code>germaparl_get_version</code> is an auxiliary function that extracts the 
-  version of the GERMAPARL corpus from the registry file. If the corpus has not
-  yet been installed, <code>NULL</code> is returned, and a warning message is issued.</p>
+    <p>The GermaParl package initially only includes  a subset of the GermaParl
+corpus which serves as a sample corpus ("GERMAPARLMINI"). To download the
+full corpus from the open science repository <em>Zenodo</em>, use the
+<code>germaparl_download_corpus</code> function.</p>
+<p>The <em>GermaParl</em> R package and the <em>GermaParl</em> corpus are two
+different pieces of research data: The package offers a mechanism to ship,
+easily install and augment the data. The indexed corpus is the actual data.
+Package and corpus have different version numbers and should be quoted in
+combination in publications. We recommend to follow the instructions you see
+when calling <code><a href='https://rdrr.io/r/utils/citation.html'>citation(package = "GermaParl")</a></code>. To ensure that the
+recommended citation fits the corpus you use, the citation for the corpus is
+available only when a version of <em>GermaParl</em> has been downloaded and
+installed.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Blaette, Andreas (2018): "Using Data Packages to Ship Annotated
   Corpora of Parliamentary Protocols: The GermaParl R Package". ISBN
-  979-10-95546-02-3.</p>
+  979-10-95546-02-3. Available online at
+  <a href='http://lrec-conf.org/workshops/lrec2018/W2/pdf/15_W2.pdf'>http://lrec-conf.org/workshops/lrec2018/W2/pdf/15_W2.pdf</a>.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Useful links:</p><ul>
+<li><p><a href='https://github.com/polmine/GermaParl'>https://github.com/polmine/GermaParl</a></p></li>
+<li><p>Report bugs at <a href='https://github.com/polmine/GermaParl/issues'>https://github.com/polmine/GermaParl/issues</a></p></li>
+</ul>
+
+</div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>polmineR</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/use.html'>use</a></span>(<span class='st'>"GermaParl"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/corpus-class.html'>corpus</a></span>() <span class='co'># will include GERMAPARLMINI, sample corpus included in pkg</span>
-<span class='kw'>if</span> (!<span class='fu'>germaparl_is_installed</span>()) <span class='fu'><a href='download.html'>germaparl_download_corpus</a></span>() <span class='co'># ~1 GB, takes time ...</span>
-<span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/use.html'>use</a></span>(<span class='st'>"GermaParl"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/polmineR/man/corpus-class.html'>corpus</a></span>() <span class='co'># will include GERMAPARL, full corpus</span>
-}
-<span class='fu'>germaparl_is_installed</span>() <span class='co'># to check whether GERMAPARL has been downloaded</span></div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>germaparl_get_doi</span>() <span class='co'># get 'document object identifier' (DOI) of GERMAPARL corpus</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Cannot get DOI for corpus GERMAPARL: Corpus has not yet been installed.</span></div><div class='output co'>#&gt; NULL</div><div class='input'><span class='no'>germaparl_get_version</span></div><div class='output co'>#&gt; function () 
-#&gt; {
-#&gt;     if (isFALSE(germaparl_is_installed())) {
-#&gt;         warning("Cannot get GERMAPARL version: Corpus has not yet been installed.")
-#&gt;         return(NULL)
-#&gt;     }
-#&gt;     regdir &lt;- system.file(package = "GermaParl", "extdata", "cwb", 
-#&gt;         "registry")
-#&gt;     regdata &lt;- registry_file_parse(corpus = "GERMAPARL", registry_dir = regdir)
-#&gt;     regdata[["properties"]][["version"]]
-#&gt; }
-#&gt; &lt;bytecode: 0x7fdf3e54f540&gt;
-#&gt; &lt;environment: namespace:GermaParl&gt;</div></pre>
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#details">Details</a></li>
-      <li><a href="#references">References</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+    <pre class="examples"><div class='input'><span class='co'># This example uses the GERMAPARLSAMPLE corpus rather than the full GERMAPARL</span>
+<span class='co'># corpus in order to reduce the time required for testing the code. To apply</span>
+<span class='co'># everything on GERMAPARL rather than GERMAPARLSAMPLE, set variable 'samplemode' </span>
+<span class='co'># to FALSE, or simply omit argument 'sample'.</span>
 
-    <h2>Author</h2>
-    <p>Andreas Blaette <a href='mailto:andreas.blaette@uni-due.de'>andreas.blaette@uni-due.de</a></p>
+<span class='no'>samplemode</span> <span class='kw'>&lt;-</span> <span class='fl'>TRUE</span>
+<span class='no'>corpus_id</span> <span class='kw'>&lt;-</span> <span class='st'>"GERMAPARLSAMPLE"</span> <span class='co'># to get full corpus: corpus_id &lt;- "GERMAPARL"</span>
+
+<span class='co'># This example assumes that the directories used by the CWB do not yet exist, so</span>
+<span class='co'># temporary directories are created.</span>
+<span class='no'>cwb_dirs</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>cwbtools</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cwbtools/man/directories.html'>create_cwb_directories</a></span>(<span class='kw'>prefix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='kw'>ask</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>())</div><div class='output co'>#&gt; <span class='message'>── Create CWB directories ──────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span><span> Using existing directory</span>
+#&gt; <span class='message'>  </span><span style='color: #0000BB;'>/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpdbCC1H</span><span> as</span>
+#&gt; <span class='message'>  parent directory for registry directory and the corpus directory.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> registry directory </span><span style='color: #0000BB;'>/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpdbCC1H/registry</span><span> has been created</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> corpus directory </span><span style='color: #0000BB;'>/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpdbCC1H/indexed_corpora</span><span> has been created</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> environment variable </span><span style='color: #000000;background-color: #BBBBBB;'>`CORPUS_REGISTRY`</span><span> set as: </span><span style='color: #0000BB;'>/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpdbCC1H/registry</span><span></span></div><div class='input'><span class='no'>registry_tmp</span> <span class='kw'>&lt;-</span> <span class='no'>cwb_dirs</span><span class='kw'>[[</span><span class='st'>"registry_dir"</span>]]
+
+<span class='co'># Download corpus from Zenodo</span>
+<span class='fu'><a href='download.html'>germaparl_download_corpus</a></span>(
+  <span class='kw'>registry_dir</span> <span class='kw'>=</span> <span class='no'>registry_tmp</span>,
+  <span class='kw'>corpus_dir</span> <span class='kw'>=</span> <span class='no'>cwb_dirs</span><span class='kw'>[[</span><span class='st'>"corpus_dir"</span>]],
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>sample</span> <span class='kw'>=</span> <span class='no'>samplemode</span>
+)</div><div class='output co'>#&gt; ── Download corpus tarball ─────────────────────────────────────────────────────</div><div class='output co'>#&gt; <span class='message'></span><span style='color: #BB0000;'>✖</span><span> no info file found</span></div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># Check availability of the corpus</span>
+<span class='fu'><a href='germaparl_is_installed.html'>germaparl_is_installed</a></span>(<span class='kw'>sample</span> <span class='kw'>=</span> <span class='no'>samplemode</span>) <span class='co'># TRUE now</span></div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='germaparl_get_version.html'>germaparl_get_version</a></span>(<span class='kw'>sample</span> <span class='kw'>=</span> <span class='no'>samplemode</span>) <span class='co'># get version of indexed corpus</span></div><div class='output co'>#&gt; [1] ‘0.1.0’</div><div class='input'><span class='fu'><a href='germaparl_get_doi.html'>germaparl_get_doi</a></span>(<span class='kw'>sample</span> <span class='kw'>=</span> <span class='no'>samplemode</span>) <span class='co'># get 'document object identifier' (DOI) of GERMAPARL corpus</span></div><div class='output co'>#&gt; [1] "10.5281/zenodo.3823245"</div></span></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -202,7 +204,7 @@ the instructions you see when calling <code><a href='https://rdrr.io/r/utils/cit
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

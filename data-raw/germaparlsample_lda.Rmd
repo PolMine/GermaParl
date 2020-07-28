@@ -1,0 +1,97 @@
+---
+title: "Create LDA Topic Model for GermaParlSample"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+## Load libraries
+
+```{r load_libraries}
+library(polmineR)
+library(data.table)
+library(pbapply)
+library(topicmodels)
+library(ldatuning)
+library(DT)
+```
+
+
+## Prepare document-term-matrix
+
+```{r prepare_dtm}
+speeches <- as.speeches("GERMAPARLMINI", s_attribute_name = "speaker")
+# count_bundle <- count(speeches, p_attribute = c("word", "pos"), verbose = FALSE)
+as.list.bundle <- function(x, ...) x@objects
+count_bundle <- lapply(speeches, count, p_attribute = c("word")) %>%
+  as.bundle()
+names(count_bundle) <- names(speeches)
+
+dtm <- as.DocumentTermMatrix(count_bundle, p_attribute = "word", col = "count", verbose = FALSE)
+
+# remove short documents
+docs_to_drop_length <- which(slam::row_sums(dtm) < 100) # drop docs with less than 100 words
+if (length(docs_to_drop_length) > 0L) dtm <- dtm[-docs_to_drop_length,]
+
+# remove noisy words
+noise_to_drop <- noise(colnames(dtm), specialChars = NULL, stopwordsLanguage = "de", verbose = FALSE)
+noise_to_drop[["stopwords"]] <- c(
+  noise_to_drop[["stopwords"]],
+  paste(
+    toupper(substr(noise_to_drop[["stopwords"]], 1, 1)),
+    substr(noise_to_drop[["stopwords"]], 2, nchar(noise_to_drop[["stopwords"]])),
+    sep = ""
+  )
+)
+dtm <- dtm[,-which(unique(unlist(noise_to_drop)) %in% colnames(dtm))]
+
+# remove rare words
+terms_to_drop_rare <- which(slam::col_sums(dtm) <= 3L)
+if (length(terms_to_drop_rare) > 0L) dtm <- dtm[,-terms_to_drop_rare]
+
+# remove documents that are empty now
+empty_docs <- which(slam::row_sums(dtm) == 0L)
+if (length(empty_docs) > 0L) dtm <- dtm[-empty_docs,]
+```
+
+
+## Calculate topic models
+
+```{r prepare_lda_models}
+control <- list(burnin = 500, iter = 1000L, keep = 100, verbose = FALSE)
+topics <- seq.int(from = 10, to = 100, by = 10)
+
+models <- lapply(
+  setNames(topics, topics),
+  function(k){
+    lda <- LDA(dtm, k = k, method = "Gibbs", control = control)
+    saveRDS(object = lda, file = sprintf("~/Lab/tmp/germaparlsample/germaparlsample_lda_%d.rds", k))
+    lda
+  }
+)
+```
+
+
+## Topic model optimization
+
+```{r towards_optimal_topic model}
+result <- data.frame(topics)
+result[["Griffiths2004"]] <- Griffiths2004(models, as.vector(control))
+result[["CaoJuan2009"]] <- CaoJuan2009(models)
+result[["Arun2010"]] <- Arun2010(models, dtm)
+result[["Deveaud2014"]] <- Deveaud2014(models)
+
+FindTopicsNumber_plot(result)
+```
+
+
+## Inspect top words for k = 30
+
+<div style = "width:100%; height:auto; margin:auto;">
+```{r, out.height = 40, fig.height = 12}
+options("DT.fillContainer" = TRUE) 
+DT::datatable(terms(models[["30"]], 10), options = list(dom ="t", scrollY = "350px"))
+```
+</div>
+

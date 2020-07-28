@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Table with information on GermaParl by legislative period — germaparl_by_lp • GermaParl</title>
+<title>Unload and relaod GERMAPARL corpus — germaparl_refresh • GermaParl</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,11 @@
 
 
 
-<meta property="og:title" content="Table with information on GermaParl by legislative period — germaparl_by_lp" />
-<meta property="og:description" content="A dataset with information on the corpus by legislative period is included
-in the package to be included in the data report of the package vignette." />
+<meta property="og:title" content="Unload and relaod GERMAPARL corpus — germaparl_refresh" />
+<meta property="og:description" content="After adding attributes to the corpus, new annotations will not be available
+until the internal C representation of the corpus is deleted and reloaded.
+The function is used internally by functions adding s-attributes to the
+corpus. It is exported and documented as a matter of transparency." />
 
 
 
@@ -73,7 +75,7 @@ in the package to be included in the data report of the package vignette." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GermaParl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.0</span>
       </span>
     </div>
 
@@ -115,42 +117,49 @@ in the package to be included in the data report of the package vignette." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Table with information on GermaParl by legislative period</h1>
+    <h1>Unload and relaod GERMAPARL corpus</h1>
     <small class="dont-index">Source: <a href='https://github.com/polmine/GermaParl/blob/master/R/GermaParl.R'><code>R/GermaParl.R</code></a></small>
-    <div class="hidden name"><code>germaparl_by_lp.Rd</code></div>
+    <div class="hidden name"><code>germaparl_refresh.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A dataset with information on the corpus by legislative period is included
-in the package to be included in the data report of the package vignette.</p>
+    <p>After adding attributes to the corpus, new annotations will not be available
+until the internal C representation of the corpus is deleted and reloaded.
+The function is used internally by functions adding s-attributes to the
+corpus. It is exported and documented as a matter of transparency.</p>
     </div>
 
-    <pre class="usage"><span class='no'>germaparl_by_lp</span></pre>
+    <pre class="usage"><span class='fu'>germaparl_refresh</span>(
+  <span class='kw'>session_registry_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"polmineR_registry"</span>),
+  <span class='kw'>system_registry_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"polmineR.corpus_registry"</span>),
+  <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>session_registry_dir</th>
+      <td><p>The temporary session registry directory created
+and used by the polmineR package.</p></td>
+    </tr>
+    <tr>
+      <th>system_registry_dir</th>
+      <td><p>The non-temporary system registry directory.</p></td>
+    </tr>
+    <tr>
+      <th>sample</th>
+      <td><p>A <code>logical</code> value, if <code>TRUE</code>, the GERMAPARLSAMPLE
+corpus will be used. The default is <code>FALSE</code>, and the GERMAPARL corpus
+will be refreshed.</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>A <code>data.frame</code> with 5 rows and 6 variables with summary
-  statistics on the GermaParl corpus on a year-by-year basis.</p><dl'>
-  <dt>lp</dt><dd><p>legislative period (<code>integer</code> value)</p></dd>
-  <dt>protocols</dt><dd><p>total number of protocols included in the corpus for the
-  respective legislative period (<code>integer</code> value)</p></dd>
-  <dt>first</dt><dd><p>date of the first plenary protocol in the legislative period
-  (<code>Date</code> class)</p></dd>
-  <dt>last</dt><dd><p>date of the last plenary protocol in the legislative period
-  (<code>Date</code> class)</p></dd>
-  <dt>size</dt><dd><p>number of tokens in subcorpus for the respective legislative
-  period (<code>integer</code> value)</p></dd>
-  <dt>unknown</dt><dd><p>share of words that cannot be lemmatized, resulting in
-  #unknown# tag (<code>numeric</code> value)</p></dd>
-
-</dl><p>The table is based on v1.0.6 of the corpus. To prepare the table, the script
-available at
-<a href='https://github.com/PolMine/GermaParl/blob/master/data-raw/stats_for_vignette.R'>data-raw/stats_for_vignette.R</a>
-has been used.</p>
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A <code>data.frame</code>.</p>
+    <p>The function ensures that a modified/updated registry file will be copied
+from the system registry directory (directory where registry files are stored
+permanently) to the temporary registry directory used by polmineR.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

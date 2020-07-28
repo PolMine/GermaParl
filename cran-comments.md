@@ -1,27 +1,28 @@
 ## General remarks
 
-This is the initial submission of the 'GermaParl' package. It is a data package with essential 
-functionality to download and augment that actual dataset (a ~1GB corpus). 
+This is a quick follow-up to GermaParl v1.5.0 I consider necessary to resolve issues I see on the check results page:
 
-Once GermaParl is accepted by CRAN, my package "polmineR" can rely on the test data of the 
-GermaParl package, which is a solution for reducing the package size of polmineR which is 
-somewhat above the 5MB limit at present.
+- The 'RcppCWB' had still been listed as a dependency, but was not used, causing a note. The dependency is resolved now.
+- Checks failed on Windows because a data were included as a data.table, but the data.table package was not stated as a depenency. The data is now included as a data.frame.
+
+My apologies for not having anticipated thes issues.
 
 
 ## Test environments
 
-* local MacOS 10.15.3 install, R 3.6.1
-* Ubuntu 14.04 (on travis-ci), R 3.6.2
-* MacOS 10.12.6 (on travis-ci), 3.6.2
-* Windows/AppVeyor, R 3.6.1 Patched
-* R win-builder (devel and release), R. 3.6.1
+* local MacOS 10.15.3 install, R 4.0.2
+* Ubuntu 14.04 (on Travis CI), R 4.0.0
+* Windows/AppVeyor, R 4.0.2 Patched
+* Windows release on R-hub
+* Fedora R-devel, local docker container
+
 
 
 ## R CMD check results
 
-There were no ERRORs, WARNINGs or NOTEs on the Linux / macOS / Windows environments I used. 
+Occasionally, depending on the quality of the internet connection, I see a WARNING that checking the examples has taken more than 5 s (elapsed time > 5s).
 
 
 ## Downstream dependencies
 
-Not relevant at this stage.
+Not yet relevant.

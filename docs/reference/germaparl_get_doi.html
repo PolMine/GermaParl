@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Table with information on GermaParl by legislative period — germaparl_by_lp • GermaParl</title>
+<title>Get DOI of corpus — germaparl_get_doi • GermaParl</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Table with information on GermaParl by legislative period — germaparl_by_lp" />
-<meta property="og:description" content="A dataset with information on the corpus by legislative period is included
-in the package to be included in the data report of the package vignette." />
+<meta property="og:title" content="Get DOI of corpus — germaparl_get_doi" />
+<meta property="og:description" content="Auxiliary function that extracts the DOI (Document Object Identifier) from
+the registry file of the GERMAPARL corpus." />
 
 
 
@@ -115,42 +115,41 @@ in the package to be included in the data report of the package vignette." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Table with information on GermaParl by legislative period</h1>
+    <h1>Get DOI of corpus</h1>
     <small class="dont-index">Source: <a href='https://github.com/polmine/GermaParl/blob/master/R/GermaParl.R'><code>R/GermaParl.R</code></a></small>
-    <div class="hidden name"><code>germaparl_by_lp.Rd</code></div>
+    <div class="hidden name"><code>germaparl_get_doi.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>A dataset with information on the corpus by legislative period is included
-in the package to be included in the data report of the package vignette.</p>
+    <p>Auxiliary function that extracts the DOI (Document Object Identifier) from
+the registry file of the GERMAPARL corpus.</p>
     </div>
 
-    <pre class="usage"><span class='no'>germaparl_by_lp</span></pre>
+    <pre class="usage"><span class='fu'>germaparl_get_doi</span>(<span class='kw'>registry_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Sys.getenv.html'>Sys.getenv</a></span>(<span class='st'>"CORPUS_REGISTRY"</span>), <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>registry_dir</th>
+      <td><p>Path to the registry directory.</p></td>
+    </tr>
+    <tr>
+      <th>sample</th>
+      <td><p>A <code>logical</code> value, if <code>FALSE</code> (default), use
+GERMAPARL, if <code>TRUE</code>, use GERMAPARLSAMPLE.</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A <code>data.frame</code> with 5 rows and 6 variables with summary
-  statistics on the GermaParl corpus on a year-by-year basis.</p><dl'>
-  <dt>lp</dt><dd><p>legislative period (<code>integer</code> value)</p></dd>
-  <dt>protocols</dt><dd><p>total number of protocols included in the corpus for the
-  respective legislative period (<code>integer</code> value)</p></dd>
-  <dt>first</dt><dd><p>date of the first plenary protocol in the legislative period
-  (<code>Date</code> class)</p></dd>
-  <dt>last</dt><dd><p>date of the last plenary protocol in the legislative period
-  (<code>Date</code> class)</p></dd>
-  <dt>size</dt><dd><p>number of tokens in subcorpus for the respective legislative
-  period (<code>integer</code> value)</p></dd>
-  <dt>unknown</dt><dd><p>share of words that cannot be lemmatized, resulting in
-  #unknown# tag (<code>numeric</code> value)</p></dd>
-
-</dl><p>The table is based on v1.0.6 of the corpus. To prepare the table, the script
-available at
-<a href='https://github.com/PolMine/GermaParl/blob/master/data-raw/stats_for_vignette.R'>data-raw/stats_for_vignette.R</a>
-has been used.</p>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>data.frame</code>.</p>
+    <p>If the DOI is declared in the registry file, a length-one
+  <code>character</code> vector with it is returned. If the corpus has not yet been
+  installed, <code>NULL</code> is returned and a warning will be issued.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>See the examples section of the overview documentation of the
+  <a href='GermaParl-package.html'>GermaParl</a> package for an example.</p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

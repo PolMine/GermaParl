@@ -3,62 +3,73 @@
 \docType{package}
 \name{GermaParl-package}
 \alias{GermaParl-package}
+\alias{_PACKAGE}
 \alias{GermaParl}
-\alias{germaparl_is_installed}
-\alias{germaparl_get_doi}
-\alias{germaparl_get_version}
 \title{GermaParl R Data Package.}
-\usage{
-germaparl_is_installed()
-
-germaparl_get_doi()
-
-germaparl_get_version()
-}
 \description{
-The package offers a convenient dissemination mechanism for the 
-GermaParl corpus that has been linguistically annotated and indexed (data format
-of the Corpus Workbench / CWB). After installation, only a small sample corpus
-will be included in the package. Use the \code{germaparl_download_corpus} function
-to download the full corpus. The package offers further functionality to amend 
-the corpus.
+\emph{GermaParl} is  a corpus of parliamentary debates in the German
+Bundestag. The package offers a convenient dissemination mechanism for the
+\emph{GermaParl} corpus. The corpus has been linguistically annotated and
+indexed using the data format of the \emph{Corpus Workbench} (CWB). To make
+full use if this data format, working with \emph{GermaParl} in combination
+with the \emph{polmineR} package is recommended.
 }
 \details{
-Note that the R package and the corpus are two different kinds of research
-data: The package offers a mechanism to ship, easily install and augment the data.
-The indexed corpus is the actual data. Package and corpus have different version
-numbers and should be quoted in combination in publications. We recommend to follow 
-the instructions you see when calling \code{citation(package = "GermaParl")}.
+The GermaParl package initially only includes  a subset of the GermaParl
+corpus which serves as a sample corpus ("GERMAPARLMINI"). To download the
+full corpus from the open science repository \emph{Zenodo}, use the
+\code{germaparl_download_corpus} function.
 
-\code{germaparl_is_installed} is an auxiliary function that returns \code{TRUE}
-  if the corpus has been installed, and \code{FALSE} if not.
-
-\code{germaparl_get_doi} is an auxiliary function that extracts the DOI
-  (Document Object Identifier) from the registry file of the GERMAPARL corpus. If
-  the corpus has not yet been installed, \code{NULL} is returned and a warning 
-  will be issued.
-
-\code{germaparl_get_version} is an auxiliary function that extracts the 
-  version of the GERMAPARL corpus from the registry file. If the corpus has not
-  yet been installed, \code{NULL} is returned, and a warning message is issued.
+The \emph{GermaParl} R package and the \emph{GermaParl} corpus are two
+different pieces of research data: The package offers a mechanism to ship,
+easily install and augment the data. The indexed corpus is the actual data.
+Package and corpus have different version numbers and should be quoted in
+combination in publications. We recommend to follow the instructions you see
+when calling \code{citation(package = "GermaParl")}. To ensure that the
+recommended citation fits the corpus you use, the citation for the corpus is
+available only when a version of \emph{GermaParl} has been downloaded and
+installed.
 }
 \examples{
-\dontrun{
-library(polmineR)
-use("GermaParl")
-corpus() # will include GERMAPARLMINI, sample corpus included in pkg
-if (!germaparl_is_installed()) germaparl_download_corpus() # ~1 GB, takes time ...
-use("GermaParl")
-corpus() # will include GERMAPARL, full corpus
-}
-germaparl_is_installed() # to check whether GERMAPARL has been downloaded
-germaparl_get_doi() # get 'document object identifier' (DOI) of GERMAPARL corpus
-germaparl_get_version
+# This example uses the GERMAPARLSAMPLE corpus rather than the full GERMAPARL
+# corpus in order to reduce the time required for testing the code. To apply
+# everything on GERMAPARL rather than GERMAPARLSAMPLE, set variable 'samplemode' 
+# to FALSE, or simply omit argument 'sample'.
+
+samplemode <- TRUE
+corpus_id <- "GERMAPARLSAMPLE" # to get full corpus: corpus_id <- "GERMAPARL"
+
+# This example assumes that the directories used by the CWB do not yet exist, so
+# temporary directories are created.
+cwb_dirs <- cwbtools::create_cwb_directories(prefix = tempdir(), ask = interactive())
+registry_tmp <- cwb_dirs[["registry_dir"]]
+
+# Download corpus from Zenodo
+germaparl_download_corpus(
+  registry_dir = registry_tmp,
+  corpus_dir = cwb_dirs[["corpus_dir"]],
+  verbose = FALSE,
+  sample = samplemode
+)
+
+# Check availability of the corpus
+germaparl_is_installed(sample = samplemode) # TRUE now
+germaparl_get_version(sample = samplemode) # get version of indexed corpus
+germaparl_get_doi(sample = samplemode) # get 'document object identifier' (DOI) of GERMAPARL corpus
 }
 \references{
 Blaette, Andreas (2018): "Using Data Packages to Ship Annotated
   Corpora of Parliamentary Protocols: The GermaParl R Package". ISBN
-  979-10-95546-02-3.
+  979-10-95546-02-3. Available online at
+  \url{http://lrec-conf.org/workshops/lrec2018/W2/pdf/15_W2.pdf}.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/polmine/GermaParl}
+  \item Report bugs at \url{https://github.com/polmine/GermaParl/issues}
+}
+
 }
 \author{
 Andreas Blaette \email{andreas.blaette@uni-due.de}

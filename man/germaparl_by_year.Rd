@@ -4,40 +4,37 @@
 \name{germaparl_by_year}
 \alias{germaparl_by_year}
 \title{Table with information on GermaParl by year}
-\format{An object of class \code{data.table} (inherits from \code{data.frame}) with 22 rows and 6 columns.}
+\format{
+A \code{data.frame} with 22 rows and 6 variables with summary
+  statistics on the GermaParl corpus on a year-by-year basis.
+\describe{
+  \item{year}{year reported on in the row (\code{integer} value)}
+  \item{protocols}{total number of protocols included in the corpus for the
+  respective year (\code{integer} value)}
+  \item{txt}{number of protocols prepared based on plain text versions of the
+  protocols (\code{integer} value)}
+  \item{pdf}{number of protocols prepared based on pdf versions of the
+  protocols (\code{integer} value)}
+  \item{size}{number of tokens in subcorpus for the respective year
+  (\code{integer} value)}
+  \item{unknown}{share of words that cannot be lemmatized, resulting in
+  #unknown# tag (\code{numeric} value)}
+}
+}
 \usage{
 germaparl_by_year
 }
+\value{
+A \code{data.frame}.
+}
 \description{
 A dataset with information on the corpus on a year-by-year basis is included
-in the package to be included in the data report of the package vignette. The 
-code used to generate the data is reported in the examples section.
+in the package to be included in the data report of the package vignette.
 }
 \details{
-Note that the table is based on v1.0.5 of the corpus.
-}
-\examples{
-\dontrun{
-dts <- lapply(
- 13:17,
- function(lp){
-  print(lp)
-  P <- partition("GERMAPARL", lp = lp)
-  dates <- as.Date(s_attributes(P, "date"))
-  dt <- count(P, p_attribute = "lemma")
-  unknown <- round(sum(dt[grepl("#unknown#", dt[["lemma"]])][["count"]]) / size(P), digits = 3)
-  
-  data.table(
-    lp = lp,
-    protocols = length(unique(s_attributes(P, "session"))),
-    first = min(dates, na.rm = TRUE),
-    last = min(dates, na.rm = TRUE),
-    size = size(P),
-    unknown = unknown
-  )
-}
-)
-germaparl_by_lp <- rbindlist(dts)
-}
+The table is based on v1.0.6 of the corpus. The prepare the table, the script
+available at
+\href{https://github.com/PolMine/GermaParl/blob/master/data-raw/stats_for_vignette.R}{data-raw/stats_for_vignette.R}
+has been used.
 }
 \keyword{datasets}
