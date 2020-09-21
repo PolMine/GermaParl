@@ -41,12 +41,8 @@ corpus rather than GERMAPARL.}
 is located.}
 }
 \value{
-The functions \code{germaparl_download_lda} and
-  \code{germaparl_encode_lda_topics} are returned for their side effects
-  (downloading topic model and encoding topic model). They return \code{TRUE}
-  if the operation has been succesful. The \code{germaparl_download_lda}
-  function will return a \code{LDA_Gibbs} class object as defined in the
-  topicmodels package.
+The function \code{germaparl_download_lda} will (invisibly) return
+  \code{TRUE} if the operation has been succesful and \code{FALSE} if not.
 }
 \description{
 A set of LDA topicmodels is part of the Zenodo release of GermaParl (k

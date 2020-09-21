@@ -74,7 +74,7 @@ germaparl_download_lda and loaded using germaparl_load_lda." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GermaParl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.2</span>
       </span>
     </div>
 
@@ -131,7 +131,8 @@ between 100 and 450). These topic models can be downloaded using
   <span class='kw'>k</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>100L</span>, <span class='fl'>150L</span>, <span class='fl'>175L</span>, <span class='fl'>200L</span>, <span class='fl'>225L</span>, <span class='fl'>250L</span>, <span class='fl'>275L</span>, <span class='fl'>300L</span>, <span class='fl'>350L</span>, <span class='fl'>400L</span>, <span class='fl'>450L</span>),
   <span class='kw'>doi</span> <span class='kw'>=</span> <span class='st'>"10.5281/zenodo.3742113"</span>,
   <span class='no'>data_dir</span>,
-  <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>sample</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )
 
 <span class='fu'>germaparl_load_lda</span>(
@@ -166,24 +167,20 @@ corpus. If missing, the directory will be guessed using the function
 corpus rather than GERMAPARL.</p></td>
     </tr>
     <tr>
+      <th>verbose</th>
+      <td><p>logical</p></td>
+    </tr>
+    <tr>
       <th>registry_dir</th>
       <td><p>The registry directory where the registry file for GERMAPARL
 is located.</p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>logical</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The functions <code>germaparl_download_lda</code> and
-  <code>germaparl_encode_lda_topics</code> are returned for their side effects
-  (downloading topic model and encoding topic model). They return <code>TRUE</code>
-  if the operation has been succesful. The <code>germaparl_download_lda</code>
-  function will return a <code>LDA_Gibbs</code> class object as defined in the
-  topicmodels package.</p>
+    <p>The function <code>germaparl_download_lda</code> will (invisibly) return
+  <code>TRUE</code> if the operation has been succesful and <code>FALSE</code> if not.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The function <code>germaparl_download_lda</code> will download an
@@ -198,18 +195,18 @@ is located.</p></td>
     <pre class="examples"><div class='input'><span class='co'># This example assumes that the directories used by the CWB do not yet exist, so</span>
 <span class='co'># temporary directories are created.</span>
 <span class='no'>cwb_dirs</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>cwbtools</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/cwbtools/man/directories.html'>create_cwb_directories</a></span>(<span class='kw'>prefix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='kw'>ask</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>── Create CWB directories ──────────────────────────────────────────────────────</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #00BBBB;'>ℹ</span><span> Using existing directory</span>
-#&gt; <span class='message'>  </span><span style='color: #0000BB;'>/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpdbCC1H</span><span> as</span>
-#&gt; <span class='message'>  parent directory for registry directory and the corpus directory.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> registry directory </span><span style='color: #0000BB;'>/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpdbCC1H/registry</span><span> already exists</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> corpus directory </span><span style='color: #0000BB;'>/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpdbCC1H/indexed_corpora</span><span> already exists</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> environment variable </span><span style='color: #000000;background-color: #BBBBBB;'>`CORPUS_REGISTRY`</span><span> set as: </span><span style='color: #0000BB;'>/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpdbCC1H/registry</span><span></span></div><div class='input'>
+#&gt; <span class='message'>  </span><span style='color: #0000BB;'>/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpeqbWHK</span><span> as</span>
+#&gt; <span class='message'>  parent directory for registry directory and the corpus directory.</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> registry directory </span><span style='color: #0000BB;'>/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpeqbWHK/registry</span><span> already exists</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> corpus directory </span><span style='color: #0000BB;'>/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpeqbWHK/indexed_corpora</span><span> already exists</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> environment variable </span><span style='color: #000000;background-color: #BBBBBB;'>`CORPUS_REGISTRY`</span><span> set as: </span><span style='color: #0000BB;'>/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpeqbWHK/registry</span><span></span></div><div class='input'>
 <span class='no'>samplemode</span> <span class='kw'>&lt;-</span> <span class='fl'>TRUE</span>
 <span class='no'>corpus_id</span> <span class='kw'>&lt;-</span> <span class='st'>"GERMAPARLSAMPLE"</span> <span class='co'># for full corpus: corpus_id &lt;- "GERMAPARL"</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='no'>cwb_dirs</span><span class='kw'>[[</span><span class='st'>"corpus_dir"</span>]], <span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span>(<span class='no'>corpus_id</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: '/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpdbCC1H/indexed_corpora/germaparlsample' existiert bereits</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='no'>cwb_dirs</span><span class='kw'>[[</span><span class='st'>"corpus_dir"</span>]], <span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span>(<span class='no'>corpus_id</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: '/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpeqbWHK/indexed_corpora/germaparlsample' existiert bereits</span></div><div class='input'>
 <span class='co'># Download topic model</span>
 <span class='fu'>germaparl_download_lda</span>(
   <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='co'># k = 250 recommended for full GERMAPARL corpus</span>
   <span class='kw'>data_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='no'>cwb_dirs</span><span class='kw'>[[</span><span class='st'>"corpus_dir"</span>]], <span class='fu'><a href='https://rdrr.io/r/base/chartr.html'>tolower</a></span>(<span class='no'>corpus_id</span>)),
   <span class='kw'>sample</span> <span class='kw'>=</span> <span class='no'>samplemode</span>
-)</div><div class='output co'>#&gt; <span class='message'>... downloading: https://zenodo.org/api/files/1f191114-a9fa-4dc9-a4df-950c23b1ff60/germaparlsample_lda_30.rds</span></div><div class='input'><span class='no'>lda</span> <span class='kw'>&lt;-</span> <span class='fu'>germaparl_load_lda</span>(
+)</div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> get Zenodo record for doi 10.5281/zenodo.3823245</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> get Zenodo record for doi 10.5281/zenodo.3823245 ... done</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> starting to download LDA model</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BBBB;'>ℹ</span><span> check md5 checksum for downloaded file germaparlsample_lda_30.rds</span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>✔</span><span> check md5 checksum for downloaded file germaparlsample_lda_30.rds ... done</span></div><div class='output co'>#&gt; </div><div class='input'><span class='no'>lda</span> <span class='kw'>&lt;-</span> <span class='fu'>germaparl_load_lda</span>(
   <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>30L</span>, <span class='kw'>registry_dir</span> <span class='kw'>=</span> <span class='no'>cwb_dirs</span><span class='kw'>[[</span><span class='st'>"registry_dir"</span>]],
   <span class='kw'>sample</span> <span class='kw'>=</span> <span class='no'>samplemode</span>
 )</div><div class='output co'>#&gt; <span class='message'>... loading topicmodel for k = 30</span></div><div class='input'><span class='no'>lda_terms</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>topicmodels</span><span class='kw ns'>::</span><span class='fu'>terms</span>(<span class='no'>lda</span>, <span class='fl'>10</span>)</div></span></pre>
