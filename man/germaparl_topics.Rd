@@ -10,7 +10,8 @@ germaparl_download_lda(
   k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L, 300L, 350L, 400L, 450L),
   doi = "10.5281/zenodo.3742113",
   data_dir,
-  sample = FALSE
+  sample = FALSE,
+  verbose = TRUE
 )
 
 germaparl_load_lda(
@@ -34,10 +35,10 @@ corpus. If missing, the directory will be guessed using the function
 \item{sample}{A \code{logical} value, if \code{TRUE}, use GERMAPARLSAMPLE
 corpus rather than GERMAPARL.}
 
+\item{verbose}{logical}
+
 \item{registry_dir}{The registry directory where the registry file for GERMAPARL
 is located.}
-
-\item{verbose}{logical}
 }
 \value{
 The functions \code{germaparl_download_lda} and

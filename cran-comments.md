@@ -1,11 +1,10 @@
 ## General remarks
 
-This is a quick follow-up to GermaParl v1.5.0 I consider necessary to resolve issues I see on the check results page:
+Brian Ripley alerted me that the previous GermaParl version failed to fully meet the CRAN Repository Policy. To improve, changes this package has seen are:
 
-- The 'RcppCWB' had still been listed as a dependency, but was not used, causing a note. The dependency is resolved now.
-- Checks failed on Windows because a data were included as a data.table, but the data.table package was not stated as a depenency. The data is now included as a data.frame.
-
-My apologies for not having anticipated thes issues.
+- Calling download.file() is now wrapped in tryCatch(). If downloading Internet resources fails, the calling function - germaparl_download_lda() - will fail gracefully issuing a warning.
+- A test for md5 checksums is now performed for data that has been downloaded.
+- An error seen in the OpenBLAS tests results from a difficulty of zen4R to parse Zenodo's if the API is temporarily unavailable. To make GermaParl more robust for this scenario, the invocation of ZenodoManager$new()$getRecordByDOI() is wrapped in tryCatch().
 
 
 ## Test environments
@@ -14,8 +13,6 @@ My apologies for not having anticipated thes issues.
 * Ubuntu 14.04 (on Travis CI), R 4.0.0
 * Windows/AppVeyor, R 4.0.2 Patched
 * Windows release on R-hub
-* Fedora R-devel, local docker container
-
 
 
 ## R CMD check results

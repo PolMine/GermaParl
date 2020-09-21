@@ -21,17 +21,17 @@ NULL
 #'   \code{cwb::cwb_corpus_dir}
 #' @param sample A \code{logical} value, if \code{TRUE}, use GERMAPARLSAMPLE
 #'   corpus rather than GERMAPARL.
-#' @return The functions \code{germaparl_download_lda} and
-#'   \code{germaparl_encode_lda_topics} are returned for their side effects
-#'   (downloading topic model and encoding topic model). They return \code{TRUE}
-#'   if the operation has been succesful. The \code{germaparl_download_lda}
-#'   function will return a \code{LDA_Gibbs} class object as defined in the
-#'   topicmodels package.
+#' @param verbose A \code{logical} value, whether to show status messages.
+#' @return The function \code{germaparl_download_lda} will (invisibly) return
+#'   \code{TRUE} if the operation has been succesful and \code{FALSE} if not.
 #' @export germaparl_download_lda
 #' @importFrom zen4R ZenodoManager
 #' @aliases topics
 #' @rdname germaparl_topics
 #' @importFrom utils download.file
+#' @importFrom tools md5sum
+#' @importFrom cli cat_rule  cli_process_start cli_process_done cli_alert_info
+#'   cli_process_failed cli_alert_danger
 #' @examples
 #' # This example assumes that the directories used by the CWB do not yet exist, so
 #' # temporary directories are created.
@@ -57,7 +57,8 @@ germaparl_download_lda <- function(
   k = c(100L, 150L, 175L, 200L, 225L, 250L, 275L, 300L, 350L, 400L, 450L),
   doi = "10.5281/zenodo.3742113",
   data_dir,
-  sample = FALSE
+  sample = FALSE,
+  verbose = TRUE
   ){
   
   if (isTRUE(sample)) doi <- "10.5281/zenodo.3823245"
@@ -65,23 +66,59 @@ germaparl_download_lda <- function(
   if (missing(data_dir)) data_dir <- file.path(cwb_corpus_dir(), tolower(corpus_id))
   if (!is.numeric(k)) stop("Argument k is required to be a numeric vector.")
   if (length(k) > 1L){
-    sapply(1L:length(k), function(i) germaparl_download_lda(k = k[i], doi = doi))
+    sapply(1L:length(k), function(i) germaparl_download_lda(k = k[i], doi = doi, verbose = verbose))
   } else {
-    zenodo_record <- ZenodoManager$new()$getRecordByDOI(doi = doi)
-    zenodo_files <- sapply(zenodo_record[["files"]], function(x) x[["links"]][["download"]])
-    tarball <- grep("^.*?_(v|)\\d+\\.\\d+\\.\\d+\\.tar\\.gz$", zenodo_files, value = TRUE)
-    lda_tarball <- grep(sprintf("^.*/%s_lda_.*?%d\\.rds$", tolower(corpus_id), k), zenodo_files, value = TRUE)
-    rds_file <- basename(lda_tarball)
-    if (!nchar(lda_tarball)){
-      warning(sprintf("File '%s' is not available at Zenodo repository for the DOI given.", rds_file))
-      return(FALSE)
+    if (verbose) cli_process_start(sprintf("get Zenodo record for doi %s", doi) )
+    tryCatch(
+      zenodo_record <- ZenodoManager$new()$getRecordByDOI(doi = doi),
+      error = function(e) if (verbose) cli_process_failed() else cli_alert_danger(sprintf("Zenodo record not available"))
+    )
+    if (!exists("zenodo_record")){
+      return(invisible(FALSE))
+    } else if (is.null(zenodo_record)){
+      cli_alert_danger(sprintf("no Zenodo record found for DOI %s", doi))
+      return(invisible(FALSE))
     } else {
-      message("... downloading: ", lda_tarball)
-      download.file(
-        url = lda_tarball,
-        destfile = file.path(data_dir, rds_file)
+      if (verbose) cli_process_done()
+    }
+    
+    zenodo_files <- sapply(zenodo_record[["files"]], function(x) basename(x[["links"]][["download"]]))
+    filename_regex <- sprintf("^%s_lda_.*?%d\\.rds$", tolower(corpus_id), k)
+    file_matching <- grep(filename_regex, zenodo_files)
+    if (length(file_matching) == 0L){
+      cli_alert_danger(sprintf("No file available at Zenodo repository matching regex '%s'.", filename_regex))
+      return(FALSE)
+    } else if (length(file_matching) > 1L){
+      cli_alert_danger("FAIL - more than one potential file candiddate for download!")
+      return(FALSE)
+    } else if (length(file_matching) == 1L){
+      lda_remote <- zenodo_record[["files"]][[file_matching]][["links"]][["download"]]
+      if (verbose) cli_alert_info("starting to download LDA model")
+      lda_local <- file.path(data_dir, basename(lda_remote))
+      tryCatch(
+        download_success <- download.file(url = lda_remote, destfile = lda_local),
+        error = function(e) cli_alert_danger(sprintf("cannot download file from %s", lda_remote))
       )
-      return(invisible(TRUE))
+      if (!exists("download_success")) return(invisible(FALSE))
+      if (download_success != 0){
+        cli_alert_danger(sprintf("downloading file from %s has failed", lda_remote))
+        return(invisible(FALSE))
+      }
+      if (verbose) cli_process_start(sprintf("check md5 checksum for downloaded file %s", basename(lda_local)))
+      lda_file_local_md5 <- tools::md5sum(lda_local)
+      if (lda_file_local_md5 == zenodo_record[["files"]][[file_matching]][["checksum"]]){
+        if (verbose) cli_process_done()
+        return(invisible(TRUE))
+      } else {
+        if (verbose) cli_process_failed()
+        cli_alert_danger(
+          sprintf(
+            "md5sum (%s) of file '%s' does not match Zenodo archive md5sum (%s)",
+            lda_file_local_md5, basename(lda_local)
+          )
+        )
+        return(FALSE)
+      }
     } 
   }
   invisible(TRUE)
