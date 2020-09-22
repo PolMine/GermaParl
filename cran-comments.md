@@ -1,10 +1,15 @@
 ## General remarks
 
-Brian Ripley alerted me that the previous GermaParl version failed to fully meet the CRAN Repository Policy. To improve, changes this package has seen are:
+This is the second submission of GermaParl v1.5.2. It fixes a URL redirect detected by then Debian check machine.
+
+The main changes of GermaParl v1.5.1 concern a failure of the previous GermaParl version to fully meet the CRAN Repository Policy, as pointed out by Brian Ripley. To improve, changes are as follows:
 
 - Calling download.file() is now wrapped in tryCatch(). If downloading Internet resources fails, the calling function - germaparl_download_lda() - will fail gracefully issuing a warning.
+
 - A test for md5 checksums is now performed for data that has been downloaded.
+
 - An error seen in the OpenBLAS tests results from a difficulty of zen4R to parse Zenodo's if the API is temporarily unavailable. To make GermaParl more robust for this scenario, the invocation of ZenodoManager$new()$getRecordByDOI() is wrapped in tryCatch().
+
 
 
 ## Test environments
