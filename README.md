@@ -117,6 +117,32 @@ corpus() # to see whether the GERMAPARL corpus is listed
 size("GERMAPARL") # to learn about the size of the corpus
 ```
 
+## Digging Deeper - Open Educational Resources
+
+### Using Corpora in Social Science Research (UCSSR) Online Slides
+
+The “UCSSR”-slides ([Using Corpora in Social Science
+Research](https://polmine.github.io/UCSSR)) - make extensive use of
+GermaParl and introduce some analytical approaches to parliamentary
+debates.
+
+### Video Tutorials for GermaParl
+
+[Christoph
+Nguyen](https://www.polsoz.fu-berlin.de/polwiss/forschung/systeme/polsystem/Team/Christoph-Nguyen.html)
+has crafted video tutorials on GermaParl available at YouTube for a
+[class on Parliamentary Analysis in
+R](https://github.com/cgnguyen/parlament_in_r). Four tutorials give a
+hands-on introduction to analysing GermaParl in combination with the
+polmineR package.
+
+  - [Introduction](https://youtu.be/dJJXYrcObw8)
+  - [Data Structure](https://youtu.be/BAts-nQ9Jak)
+  - [Descriptives](https://youtu.be/yVwrkwy9UqY)
+  - [“Advanced” Methods](https://youtu.be/ySiYup9D3Vc)
+
+Click on the lessons to watch Christoph’s tutorials (in German)\!
+
 ## License
 
 The GermaParl R package uses the
@@ -178,18 +204,3 @@ shortcomings and to suggest enhancements. Improving data quality is an
 important concern of the PolMine Project, this is why the data is
 versioned. The resource will benefit from its community of users and
 your feedback\!
-
-### Simple Video Tutorials for Germaparl (in German)
-
-Produced for a longer class on Parliamentary Analysis in R
-(<https://github.com/cgnguyen/parlament_in_r>) the four videos give a
-brief introduction to some of the functionality of GermaParl and
-polmineR.
-
-Introduction: <https://youtu.be/dJJXYrcObw8>
-
-Data Structure: <https://youtu.be/BAts-nQ9Jak>
-
-Descriptives: <https://youtu.be/yVwrkwy9UqY>
-
-“Advanced” Methods: <https://youtu.be/ySiYup9D3Vc>
