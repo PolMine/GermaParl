@@ -1,29 +1,19 @@
 ## General remarks
 
-This is the second submission of GermaParl v1.5.2. It fixes a URL redirect detected by then Debian check machine.
+This is a maintenance release: Resulting from functionality of the 'cwbtools' package that ceased to work robustely, tests for 'GermaParl' v1.5.2 resulted in ERRORS on Windows machines.
 
-The main changes of GermaParl v1.5.1 concern a failure of the previous GermaParl version to fully meet the CRAN Repository Policy, as pointed out by Brian Ripley. To improve, changes are as follows:
-
-- Calling download.file() is now wrapped in tryCatch(). If downloading Internet resources fails, the calling function - germaparl_download_lda() - will fail gracefully issuing a warning.
-
-- A test for md5 checksums is now performed for data that has been downloaded.
-
-- An error seen in the OpenBLAS tests results from a difficulty of zen4R to parse Zenodo's if the API is temporarily unavailable. To make GermaParl more robust for this scenario, the invocation of ZenodoManager$new()$getRecordByDOI() is wrapped in tryCatch().
-
-
+A new cwbtools version (v0.3.3) just released at CRAN fixes the issue. GermaParl v1.5.3 requires cwbtools v0.3.3 to ensure that download mechanisms works as intended for all users. 
 
 ## Test environments
 
 * local MacOS 10.15.3 install, R 4.0.2
-* Ubuntu 14.04 (on Travis CI), R 4.0.0
-* Windows/AppVeyor, R 4.0.2 Patched
-* Windows release on R-hub
+* GitHub Actions (Ubuntu 20.04 release and devel, macOS, Windows), R 4.0.4
+* R-Winbuilder R 4.0.4 and R-devel
 
 
 ## R CMD check results
 
 Occasionally, depending on the quality of the internet connection, I see a WARNING that checking the examples has taken more than 5 s (elapsed time > 5s).
-
 
 ## Downstream dependencies
 
