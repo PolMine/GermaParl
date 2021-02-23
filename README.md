@@ -178,3 +178,18 @@ shortcomings and to suggest enhancements. Improving data quality is an
 important concern of the PolMine Project, this is why the data is
 versioned. The resource will benefit from its community of users and
 your feedback\!
+
+### Simple Video Tutorials for Germaparl (in German)
+
+Produced for a longer class on Parliamentary Analysis in R
+(<https://github.com/cgnguyen/parlament_in_r>) the four videos give a
+brief introduction to some of the functionality of GermaParl and
+polmineR.
+
+Introduction: <https://youtu.be/dJJXYrcObw8>
+
+Data Structure: <https://youtu.be/BAts-nQ9Jak>
+
+Descriptives: <https://youtu.be/yVwrkwy9UqY>
+
+“Advanced” Methods: <https://youtu.be/ySiYup9D3Vc>
