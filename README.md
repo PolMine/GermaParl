@@ -2,10 +2,8 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![DOI](https://zenodo.org/badge/141028057.svg)](https://zenodo.org/badge/latestdoi/141028057)
-[![Travis-CI Build
-Status](https://travis-ci.org/PolMine/GermaParl.svg?branch=master)](https://travis-ci.org/PolMine/GermaParl)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/PolMine/GermaParl?branch=master&svg=true)](https://ci.appveyor.com/project/PolMine/germaparl)
+[![R build
+status](https://github.com/PolMine/GermaParl/workflows/R-CMD-check/badge.svg)](https://github.com/PolMine/GermaParl/actions)
 [![codecov](https://codecov.io/gh/PolMine/GermaParl/branch/master/graph/badge.svg)](https://codecov.io/gh/PolMine/GermaParl/branch/master)
 
 # The GermaParl R Data Package <img src="https://raw.githubusercontent.com/PolMine/GermaParl/master/inst/sticker/hexsticker.png" align="right" />
