@@ -1,0 +1,7 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  GermaParl: GermaParl.html
+last_built: 2021-02-23T22:38Z
+
