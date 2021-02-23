@@ -17,7 +17,9 @@ A \code{data.frame} with 5 rows and 6 variables with summary
   (\code{Date} class)}
   \item{size}{number of tokens in subcorpus for the respective legislative
   period (\code{integer} value)}
-  \item{unknown}{share of words that cannot be lemmatized, resulting in
+  \item{unknown_total}{total number of words that cannot be lemmatized, resulting in
+  #unknown# tag (\code{numeric} value)}
+  \item{unknown_share}{share of words that cannot be lemmatized, resulting in
   #unknown# tag (\code{numeric} value)}
 }
 The table is based on v1.0.6 of the corpus. To prepare the table, the script

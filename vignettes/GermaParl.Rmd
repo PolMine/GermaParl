@@ -216,7 +216,7 @@ knitr::kable(tab, format = "markdown")
 
 ### Data sources
 
-Starting from the 17th legislative period, txt versions of plenary protocols were retrieved from the [homepage of the German Bundestag](http://www.bundestag.de/dokumente/protokolle/plenarprotokolle/plenarprotokolle/index.html). 
+Starting from the 17th legislative period, txt versions of plenary protocols were retrieved from the [homepage of the German Bundestag](https://www.bundestag.de/dokumente/protokolle/plenarprotokolle/plenarprotokolle/). 
 The following table reports the URLs that have been used to download txt versions of older plenary protocols.
 
 ```{r urls, echo = FALSE, message = FALSE}

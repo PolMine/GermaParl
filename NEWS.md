@@ -1,3 +1,8 @@
+# GermaParl 1.5.2
+
+- The `germaparl_download_lda()` will check md5 sums now when downloading data.
+- If downloading an LDA model using `germaparl_download_lda()` fails, you will now see an informative message and the return value will be `FALSE`.
+
 # GermaParl 1.5.1
 
 - Functions included in older versions of the package that used functions from the RcppCWB package had been dropped. An unnecessary declaration of RcppCWB in the 'Imports:' section of the DESCRIPTION file has been removed. 
