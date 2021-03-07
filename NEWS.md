@@ -2,6 +2,7 @@
 
 - The `germaparl_download_lda()` will check md5 sums now when downloading data.
 - If downloading an LDA model using `germaparl_download_lda()` fails, you will now see an informative message and the return value will be `FALSE`.
+- An XSL to transform GermaParl TEI-XML files to an XML format better suited for the CWB is included in the directory inst/extdata/xsl. Previously, this file was included in the (unpublished) ctk.plpr package.
 
 # GermaParl 1.5.1
 
