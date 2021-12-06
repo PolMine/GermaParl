@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">GermaParl</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.3</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/GermaParl.html">Get started</a>
 </li>
@@ -55,7 +51,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/polmine/GermaParl/">
+  <a href="https://github.com/polmine/GermaParl/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -74,59 +70,59 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>GermaParl</h1>
-            <h3 class="subtitle">Introducing the Data Package and the Corpus</h3>
-                        <h4 class="author">Andreas Blaette (<a href="mailto:andreas.blaette@uni-due.de" class="email">andreas.blaette@uni-due.de</a>)</h4>
+            <h3 data-toc-skip class="subtitle">Introducing the Data Package and the Corpus</h3>
+                        <h4 data-toc-skip class="author">Andreas Blaette (<a href="mailto:andreas.blaette@uni-due.de" class="email">andreas.blaette@uni-due.de</a>)</h4>
             
-            <h4 class="date">2021-02-23</h4>
+            <h4 data-toc-skip class="date">2021-12-06</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/polmine/GermaParl/blob/master/vignettes/GermaParl.Rmd"><code>vignettes/GermaParl.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/polmine/GermaParl/blob/HEAD/vignettes/GermaParl.Rmd" class="external-link"><code>vignettes/GermaParl.Rmd</code></a></small>
       <div class="hidden name"><code>GermaParl.Rmd</code></div>
 
     </div>
 
     
     
-<div id="a-corpus-of-plenary-protocols" class="section level2">
-<h2 class="hasAnchor">
-<a href="#a-corpus-of-plenary-protocols" class="anchor"></a>A Corpus of Plenary Protocols</h2>
+<div class="section level2">
+<h2 id="a-corpus-of-plenary-protocols">A Corpus of Plenary Protocols<a class="anchor" aria-label="anchor" href="#a-corpus-of-plenary-protocols"></a>
+</h2>
 <p>Parliamentary debates convey the arguments, interpretations and conflicts that shape political decision-making. They are recorded and transcribed by parliamentary administrations with diligence, and published as plenary protocols. These documents are available for long periods of time – for several decades and more – and they cover the full breadth of topics that is processed by a political system: Plenary protocols are a valuable resource for research on policy and politics, and for citizens. They are a crucial building block of the public digital archive of democracy.</p>
 <p>The digital availability of plenary protocols is excellent and limited at the same time. Documents can be downloaded without technical or legal restrictions as txt, html or pdf documents. But this data format does not match the requirements for digital-era data processing. To exploit the analytical potential of the data, original documents need to be converted into a semi-structured data format (typically XML). This is the essence of the preparation of the GermaParl corpus.</p>
-<p>The GermaParl corpus as it has been prepared in the <a href="https://polmine.github.io/">PolMine Project</a> is based on an XMLification of txt and pdf documents. The aim is to make a contribution to the broader development of preparing corpora of plenary protocols – the naming of GermaParl is inspired by the EuroParl and DutchParl corpus <span class="citation">(Marx and Schuth 2010)</span>. GermaParl is intended to serve as an example how to make corpora available in a sustainable way, meeting the technological standards and requirements of the digital era.</p>
+<p>The GermaParl corpus as it has been prepared in the <a href="https://polmine.github.io/" class="external-link">PolMine Project</a> is based on an XMLification of txt and pdf documents. The aim is to make a contribution to the broader development of preparing corpora of plenary protocols – the naming of GermaParl is inspired by the EuroParl and DutchParl corpus <span class="citation">(Marx and Schuth 2010)</span>. GermaParl is intended to serve as an example how to make corpora available in a sustainable way, meeting the technological standards and requirements of the digital era.</p>
 <p>GermaParl is made available in two ways:</p>
 <ul>
-<li><p>The base format of the corpus is a XMLification of the raw data (i.e. the original protocols) that is modelled on the standards of the <a href="https://tei-c.org/">Text Encoding Initiative (TEI)</a>. Releases of the TEI format of GermaParl are available via the <a href="https://github.com/PolMine/GermaParlTEI">GermaParlTEI repository at GitHub</a>. It results from an automatized, fully reproducible pipeline, i.e. raw protocols (pdf and txt file format) have been turned into an XML/TEI-based standard.</p></li>
-<li><p>A linguistically annotated, indexed and consolidated version of the corpus is disseminated with the GermaParl R data package documented with this vignette. XML/TEI files serve the point of departure, but the version emanates from (a) performing some standard Natural Language Processing (NLP) tasks (such as tokenization, lemmatization, part-of-speech annotation); (b) importing the linguistically annotated data into the <a href="http://cwb.sourceforge.net/">Corpus Workbench (CWB)</a> and (c) consolidating the data in a set of postprocessing tasks to remove known errors.</p></li>
+<li><p>The base format of the corpus is a XMLification of the raw data (i.e. the original protocols) that is modelled on the standards of the <a href="https://tei-c.org/" class="external-link">Text Encoding Initiative (TEI)</a>. Releases of the TEI format of GermaParl are available via the <a href="https://github.com/PolMine/GermaParlTEI" class="external-link">GermaParlTEI repository at GitHub</a>. It results from an automatized, fully reproducible pipeline, i.e. raw protocols (pdf and txt file format) have been turned into an XML/TEI-based standard.</p></li>
+<li><p>A linguistically annotated, indexed and consolidated version of the corpus is disseminated with the GermaParl R data package documented with this vignette. XML/TEI files serve the point of departure, but the version emanates from (a) performing some standard Natural Language Processing (NLP) tasks (such as tokenization, lemmatization, part-of-speech annotation); (b) importing the linguistically annotated data into the <a href="http://cwb.sourceforge.net/" class="external-link">Corpus Workbench (CWB)</a> and (c) consolidating the data in a set of postprocessing tasks to remove known errors.</p></li>
 </ul>
 <p>The corpus includes all plenary protocols that were published by the German Bundestag between 1996 and 2016. Plain text documents issued by the German Bundestag were considered the best raw data format for corpus preparation and were used whenever they are available. For a period between 2008 and 2010, txt files are not available throughout. To fill the gap, pdf documents were processed. The following sections explain corpus preparation and the data made available with this package in some more detail.</p>
 </div>
-<div id="corpus-preparation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#corpus-preparation" class="anchor"></a>Corpus Preparation</h2>
+<div class="section level2">
+<h2 id="corpus-preparation">Corpus Preparation<a class="anchor" aria-label="anchor" href="#corpus-preparation"></a>
+</h2>
 <p>The preparation of the TEI version of GermaParl implements the following workflow:</p>
 <ul>
 <li><p><strong>Preprocessing</strong>: Prepare consolidated UTF-8 plain text documents (ensuring uniformity of encodings, conversion of pdf to txt if necessary);</p></li>
 <li><p><strong>XMLification</strong>: Turn the plain text documents into TEI format: Extraction of metadata, annotation of speakers etc.;</p></li>
 <li><p><strong>Consolidation</strong>: Consolidating speaker names and enriching documents.</p></li>
 </ul>
-<p>The preprocessing step is not as trivial as it might seem. Older plain text files are offered by the German Bundestag in all kinds of encodings that are have come out of use. The pdf documents have a two-column layout that is difficult to handle. For coping with the two-column layout of pdf documents, the R package <a href="https://github.com/PolMine/trickypdf">trickypdf</a> has been developed.</p>
+<p>The preprocessing step is not as trivial as it might seem. Older plain text files are offered by the German Bundestag in all kinds of encodings that are have come out of use. The pdf documents have a two-column layout that is difficult to handle. For coping with the two-column layout of pdf documents, the R package <a href="https://github.com/PolMine/trickypdf" class="external-link">trickypdf</a> has been developed.</p>
 <p>The essential instrument for the XMLification is a set of regular expressions to extract relevant metadata (such as legislative period, session number or date), to find the beginning and the end of a debate, the call upon the speakers, and the beginning and end of agenda items. The matches are used to generate the structural annotation of parliamentary speech in the XML document.</p>
 <p>Due to the remaining haphazard variations that occur in plenary protocols, the quest is not for a universal battery of regular expressions that would always work without manual checks. Even though it introduces an element of manual work, our solution is to work with lists of mismatches (matches of regular expressions to omit), in combination with a brute-force preprocessing (hard-coded substitutions) that correct obvious errors that are already included in the original version of plenary protocol.</p>
-<p>The result of the base XMLification still includes considerable noise. Inconsistencies that occur with names are a particularly serious issue. To obtain consolidated metadata, information that has been extracted is checked (including approximate string matching) against an external data source. We opted for lists of members of parliamentarians, cabinet members and further speakers that are available on Wikipedia (see the <a href="https://de.wikipedia.org/wiki/Liste_der_Mitglieder_des_Deutschen_Bundestages_(17._Wahlperiode)">page for the 17th Bundestag</a>, for instance).</p>
+<p>The result of the base XMLification still includes considerable noise. Inconsistencies that occur with names are a particularly serious issue. To obtain consolidated metadata, information that has been extracted is checked (including approximate string matching) against an external data source. We opted for lists of members of parliamentarians, cabinet members and further speakers that are available on Wikipedia (see the <a href="https://de.wikipedia.org/wiki/Liste_der_Mitglieder_des_Deutschen_Bundestages_(17._Wahlperiode)" class="external-link">page for the 17th Bundestag</a>, for instance).</p>
 <p>Easy digital access is not the only justification for this choice. Wikipedia pages for the parliamentary sessions are being taken care of by a team of dedicated volunteers. Furthermore, Wikipedia pages meet permanent public scrutiny, ensuring quality checks on the data quality in a manner traditional printed material does not necessarily ensure.</p>
 </div>
-<div id="annotation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#annotation" class="anchor"></a>Annotation</h2>
-<div id="linguistic-annotation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#linguistic-annotation" class="anchor"></a>Linguistic Annotation</h3>
-<p>The XML/TEI version of GermaParl is taken through a pipeline of standard Natural Language Processing (NLP) tasks. Starting with version 1.1.0, Stanford CoreNLP is used for tokenization and part-of-speech (POS) annotation. To add lemmas to the corpus, the <a href="http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/">TreeTagger</a> is used.</p>
+<div class="section level2">
+<h2 id="annotation">Annotation<a class="anchor" aria-label="anchor" href="#annotation"></a>
+</h2>
+<div class="section level3">
+<h3 id="linguistic-annotation">Linguistic Annotation<a class="anchor" aria-label="anchor" href="#linguistic-annotation"></a>
+</h3>
+<p>The XML/TEI version of GermaParl is taken through a pipeline of standard Natural Language Processing (NLP) tasks. Starting with version 1.1.0, Stanford CoreNLP is used for tokenization and part-of-speech (POS) annotation. To add lemmas to the corpus, the <a href="http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/" class="external-link">TreeTagger</a> is used.</p>
 <p>Note that the TreeTagger outputs #unknown# if it cannot successfully lemmatize a wordform. See the tables in the annex to learn about the unknown ratio in the corpus.</p>
 <p>Moving to Stanford CoreNLP as the base annotation tool will be the basis for adding further annotation layers to the corpus (such as an annotation of sentences, or named entities) in the future.</p>
 </div>
-<div id="structural-annotation-metadata" class="section level3">
-<h3 class="hasAnchor">
-<a href="#structural-annotation-metadata" class="anchor"></a>Structural Annotation (Metadata)</h3>
+<div class="section level3">
+<h3 id="structural-annotation-metadata">Structural Annotation (Metadata)<a class="anchor" aria-label="anchor" href="#structural-annotation-metadata"></a>
+</h3>
 <p>In the XML/TEI data format, all passages of uninterrupted speech are tagged with metadata, or so-called structural attributes (s-attributes). For instance, parliamentary speeches are often interrupted by interjections - the information whether an utterance is an interjection or an actual speech, is maintained in the corpus. The legislative period, session, date, name of a speaker and his/her parliamentary group are included, among others. The structural annotation is the basis for all kinds of diachronic or synchronic comparisons users may want to perform.</p>
 <p>The following table provides short explanations of the s-attributes that are present in the GermaParl corpus.</p>
 <table class="table">
@@ -210,21 +206,21 @@
 </table>
 </div>
 </div>
-<div id="using-the-germaparl-corpus" class="section level2">
-<h2 class="hasAnchor">
-<a href="#using-the-germaparl-corpus" class="anchor"></a>Using the GermaParl corpus</h2>
-<div id="getting-started---installing-germaparl" class="section level3">
-<h3 class="hasAnchor">
-<a href="#getting-started---installing-germaparl" class="anchor"></a>Getting started - installing GermaParl</h3>
+<div class="section level2">
+<h2 id="using-the-germaparl-corpus">Using the GermaParl corpus<a class="anchor" aria-label="anchor" href="#using-the-germaparl-corpus"></a>
+</h2>
+<div class="section level3">
+<h3 id="getting-started---installing-germaparl">Getting started - installing GermaParl<a class="anchor" aria-label="anchor" href="#getting-started---installing-germaparl"></a>
+</h3>
 <p>The GermaParl R Data Package can be installed from CRAN. It is a “pure R” package. There are no differences whether you install on Linux, MacOS or Windows.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"GermaParl"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"GermaParl"</span><span class="op">)</span></code></pre></div>
 <p>You can then load the GermaParl package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/polmine/GermaParl">GermaParl</a></span><span class="op">)</span></code></pre></div>
-<p>After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from <a href="https://zenodo.org/">Zenodo</a>, an open science data repository:</p>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/polmine/GermaParl" class="external-link">GermaParl</a></span><span class="op">)</span></code></pre></div>
+<p>After installing the GermaParl package, the package only includes a small subset of the GermaParl corpus. The subset serves as sample data and for running package tests. To download the full corpus, use a function to download the full corpus from <a href="https://zenodo.org/" class="external-link">Zenodo</a>, an open science data repository:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/germaparl_download_corpus.html">germaparl_download_corpus</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/download.html">germaparl_download_corpus</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>To check whether the installation has been successful, run the following commands.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/germaparl_is_installed.html">germaparl_is_installed</a></span><span class="op">(</span><span class="op">)</span>
@@ -232,14 +228,14 @@
 <span class="fu"><a href="../reference/germaparl_get_version.html">germaparl_get_version</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div id="working-with-germaparl" class="section level2">
-<h2 class="hasAnchor">
-<a href="#working-with-germaparl" class="anchor"></a>Working with GermaParl</h2>
-<p>The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as <a href="http://cwb.sourceforge.net/cqpweb.php">CQPweb</a>). However, most technical decisions during corpus preparation had in mind to optimize using the GermaParl corpus in combination with the <a href="https://CRAN.R-project.org/package=polmineR">polmineR</a> package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl.</p>
+<div class="section level2">
+<h2 id="working-with-germaparl">Working with GermaParl<a class="anchor" aria-label="anchor" href="#working-with-germaparl"></a>
+</h2>
+<p>The CWB indexed version if GermaParl can be used with the CWB itself, or with any tool that uses the CWB as a backend (such as <a href="http://cwb.sourceforge.net/cqpweb.php" class="external-link">CQPweb</a>). However, most technical decisions during corpus preparation had in mind to optimize using the GermaParl corpus in combination with the <a href="https://CRAN.R-project.org/package=polmineR" class="external-link">polmineR</a> package. Please consult the documentation of the polmineR package (README, vignette, manual) to learn how to use polmineR for working with GermaParl.</p>
 </div>
-<div id="some-caveats" class="section level2">
-<h2 class="hasAnchor">
-<a href="#some-caveats" class="anchor"></a>Some caveats</h2>
+<div class="section level2">
+<h2 id="some-caveats">Some caveats<a class="anchor" aria-label="anchor" href="#some-caveats"></a>
+</h2>
 <p>A set of general remarks may help to avoid pitfalls when working with GermaParl:</p>
 <ul>
 <li><p>Plenary protocols meticulously report interjections. To maintain the integrity of the original documents, interjections are annotated in the corpus. By using the s-attribute ‘interjection’ that assumes the values <code>TRUE</code> or <code>FALSE</code>, you can limit your analysis to speech or interjections.</p></li>
@@ -247,9 +243,9 @@
 <li><p>The GermaParl corpus is a corpus of the debates and speeches that were actually given in the German Bundestag. Speeches that were only included in the printed protocol (i.e. included in the annex to a protocol) are not yet covered by corpus preparation.</p></li>
 </ul>
 </div>
-<div id="perspectives" class="section level2">
-<h2 class="hasAnchor">
-<a href="#perspectives" class="anchor"></a>Perspectives</h2>
+<div class="section level2">
+<h2 id="perspectives">Perspectives<a class="anchor" aria-label="anchor" href="#perspectives"></a>
+</h2>
 <p>GermaParl is not the only corpus of plenary protocols. Apart from PolMine, several further projects have worked on preparing respective corpora. There is an ensuing dialogue among these projects, and GermaParl strives to contribute to this broader development, trying to serve as a example how reproducibility and quality control can be maintained during all steps of corpus preparation, and how corpora can be disseminated in a manner that lowers the barriers of entry for new users.</p>
 <p>The resource is under active development. Apart from improving data quality and preparing updates, one important concern is to add further annotation layers:</p>
 <ul>
@@ -258,30 +254,30 @@
 </ul>
 <p>Hopefully, GermaParl will make qualitative and quantitative research with German parliamentary debates more productive. A final note on user feedback: Improving data quality is an important concern of the PolMine Project. This is why the data is versioned. The resource will benefit from its community of users - feedback that helps to improve data quality is more than welcome!</p>
 </div>
-<div id="license" class="section level2">
-<h2 class="hasAnchor">
-<a href="#license" class="anchor"></a>License</h2>
+<div class="section level2">
+<h2 id="license">License<a class="anchor" aria-label="anchor" href="#license"></a>
+</h2>
 <p>While the raw data, the plenary protocols published by the German Bundestag, are in the public domain, the GermaParl corpus comes with a CC BY-SA license. That means:</p>
 <p><strong>BY</strong> - Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.</p>
 <p><strong>SA</strong> - ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.</p>
-<p>See the <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC Attribution-ShareAlike 4.0 Unported License</a> for further explanations.</p>
+<p>See the <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC Attribution-ShareAlike 4.0 Unported License</a> for further explanations.</p>
 </div>
-<div id="quotation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#quotation" class="anchor"></a>Quotation</h2>
+<div class="section level2">
+<h2 id="quotation">Quotation<a class="anchor" aria-label="anchor" href="#quotation"></a>
+</h2>
 <p>The ‘GermaParl’ R package and the ‘GermaParl’ corpus are two different pieces of research data, with different version numbers, document object identifiers (DOIs) and recommendations for quotation. If you use GermaParl for your research, maximum transparency on the tools you used is attained, when both the package and the corpus is quoted in your publication. To ensure the reproducibility of your research, it is more important to refer to and specify the corpus (including version, DOI) you used.</p>
-<p>Blaette, Andreas (2020): GermaParl. Download and Augment the Corpus of Plenary Protocols of the German Bundestag. R package version 1.3.0. <a href="https://CRAN.R-project.org/package=GermaParl" class="uri">https://CRAN.R-project.org/package=GermaParl</a></p>
-<p>Blaette, Andreas (2020): GermaParl. Linguistically Annotated and Indexed Corpus of Plenary Protocols of the German Bundestag. CWB corpus version 1.0.6. <a href="https://doi.org/10.5281/zenodo.3735141" class="uri">https://doi.org/10.5281/zenodo.3735141</a></p>
-<p>NOTE: In an R session, you can get this recommendation how to quote GermaParl by calling the usual <code><a href="https://rdrr.io/r/utils/citation.html">citation()</a></code> function:</p>
+<p>Blaette, Andreas (2020): GermaParl. Download and Augment the Corpus of Plenary Protocols of the German Bundestag. R package version 1.3.0. <a href="https://CRAN.R-project.org/package=GermaParl" class="external-link uri">https://CRAN.R-project.org/package=GermaParl</a></p>
+<p>Blaette, Andreas (2020): GermaParl. Linguistically Annotated and Indexed Corpus of Plenary Protocols of the German Bundestag. CWB corpus version 1.0.6. <a href="https://doi.org/10.5281/zenodo.3735141" class="external-link uri">https://doi.org/10.5281/zenodo.3735141</a></p>
+<p>NOTE: In an R session, you can get this recommendation how to quote GermaParl by calling the usual <code><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation()</a></code> function:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span><span class="st">"GermaParl"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"GermaParl"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="annex" class="section level2">
-<h2 class="hasAnchor">
-<a href="#annex" class="anchor"></a>Annex</h2>
-<div id="corpus-data-by-electoral-period" class="section level3">
-<h3 class="hasAnchor">
-<a href="#corpus-data-by-electoral-period" class="anchor"></a>Corpus data (by electoral period)</h3>
+<div class="section level2">
+<h2 id="annex">Annex<a class="anchor" aria-label="anchor" href="#annex"></a>
+</h2>
+<div class="section level3">
+<h3 id="corpus-data-by-electoral-period">Corpus data (by electoral period)<a class="anchor" aria-label="anchor" href="#corpus-data-by-electoral-period"></a>
+</h3>
 <table class="table">
 <thead><tr class="header">
 <th align="right">lp</th>
@@ -335,9 +331,9 @@
 </tbody>
 </table>
 </div>
-<div id="corpus-data-by-year" class="section level3">
-<h3 class="hasAnchor">
-<a href="#corpus-data-by-year" class="anchor"></a>Corpus data (by year)</h3>
+<div class="section level3">
+<h3 id="corpus-data-by-year">Corpus data (by year)<a class="anchor" aria-label="anchor" href="#corpus-data-by-year"></a>
+</h3>
 <table class="table">
 <thead><tr class="header">
 <th align="left">year</th>
@@ -550,10 +546,10 @@
 </tbody>
 </table>
 </div>
-<div id="data-sources" class="section level3">
-<h3 class="hasAnchor">
-<a href="#data-sources" class="anchor"></a>Data sources</h3>
-<p>Starting from the 17th legislative period, txt versions of plenary protocols were retrieved from the <a href="https://www.bundestag.de/dokumente/protokolle/plenarprotokolle/plenarprotokolle/">homepage of the German Bundestag</a>. The following table reports the URLs that have been used to download txt versions of older plenary protocols.</p>
+<div class="section level3">
+<h3 id="data-sources">Data sources<a class="anchor" aria-label="anchor" href="#data-sources"></a>
+</h3>
+<p>Starting from the 17th legislative period, txt versions of plenary protocols were retrieved from the <a href="https://www.bundestag.de/dokumente/protokolle/plenarprotokolle/plenarprotokolle/" class="external-link">homepage of the German Bundestag</a>. The following table reports the URLs that have been used to download txt versions of older plenary protocols.</p>
 <table class="table">
 <colgroup>
 <col width="5%">
@@ -566,66 +562,66 @@
 <tbody>
 <tr class="odd">
 <td align="left">1996</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1996/index.htm" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1996/index.htm</a></td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1996/index.htm" class="external-link uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1996/index.htm</a></td>
 </tr>
 <tr class="even">
 <td align="left">1997</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1997/index.htm" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1997/index.htm</a></td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1997/index.htm" class="external-link uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1997/index.htm</a></td>
 </tr>
 <tr class="odd">
 <td align="left">1998</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1998/index.htm" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1998/index.htm</a></td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1998/index.htm" class="external-link uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1998/index.htm</a></td>
 </tr>
 <tr class="even">
 <td align="left">1999</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1999/index.htm" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1999/index.htm</a></td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1999/index.htm" class="external-link uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/1999/index.htm</a></td>
 </tr>
 <tr class="odd">
 <td align="left">2000</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2000/index.htm" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2000/index.htm</a></td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2000/index.htm" class="external-link uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2000/index.htm</a></td>
 </tr>
 <tr class="even">
 <td align="left">2001</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2001/index.htm" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2001/index.htm</a></td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2001/index.htm" class="external-link uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2001/index.htm</a></td>
 </tr>
 <tr class="odd">
 <td align="left">2002</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2002/index.html" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2002/index.html</a></td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2002/index.html" class="external-link uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2002/index.html</a></td>
 </tr>
 <tr class="even">
 <td align="left">2003</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2003/index.html" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2003/index.html</a></td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2003/index.html" class="external-link uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2003/index.html</a></td>
 </tr>
 <tr class="odd">
 <td align="left">2004</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2004/index.html" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2004/index.html</a></td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2004/index.html" class="external-link uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2004/index.html</a></td>
 </tr>
 <tr class="even">
 <td align="left">2005</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2005/index.html" class="uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2005/index.html</a></td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2005/index.html" class="external-link uri">http://webarchiv.bundestag.de/archive/2005/1205/bic/plenarprotokolle/pp/2005/index.html</a></td>
 </tr>
 <tr class="odd">
 <td align="left">2006</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2006/index.html" class="uri">http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2006/index.html</a></td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2006/index.html" class="external-link uri">http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2006/index.html</a></td>
 </tr>
 <tr class="even">
 <td align="left">2007</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2007/index.html" class="uri">http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2007/index.html</a></td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2007/index.html" class="external-link uri">http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2007/index.html</a></td>
 </tr>
 <tr class="odd">
 <td align="left">2008</td>
-<td align="left"><a href="http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2008/index.html" class="uri">http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2008/index.html</a></td>
+<td align="left"><a href="http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2008/index.html" class="external-link uri">http://webarchiv.bundestag.de/archive/2008/0912/bic/plenarprotokolle/pp/2008/index.html</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2 unnumbered">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references">
 <div id="ref-DBLP:conf/lrec/MarxS10">
-<p>Marx, Maarten, and Anne Schuth. 2010. “DutchParl. The Parliamentary Documents in Dutch.” In <em>Proceedings of the International Conference on Language Resources and Evaluation, LREC 2010, 17-23 May 2010, Valletta, Malta</em>. <a href="http://www.lrec-conf.org/proceedings/lrec2010/summaries/263.html">http://www.lrec-conf.org/proceedings/lrec2010/summaries/263.html</a>.</p>
+<p>Marx, Maarten, and Anne Schuth. 2010. “DutchParl. The Parliamentary Documents in Dutch.” In <em>Proceedings of the International Conference on Language Resources and Evaluation, LREC 2010, 17-23 May 2010, Valletta, Malta</em>. <a href="http://www.lrec-conf.org/proceedings/lrec2010/summaries/263.html" class="external-link">http://www.lrec-conf.org/proceedings/lrec2010/summaries/263.html</a>.</p>
 </div>
 </div>
 </div>
@@ -642,11 +638,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Andreas Blaette.</p>
+  <p></p>
+<p>Developed by Andreas Blaette.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -654,6 +652,8 @@
 
   
 
+
+  
 
   </body>
 </html>
