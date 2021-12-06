@@ -6,6 +6,7 @@ editor_options:
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/GermaParl)](https://cran.r-project.org/package=GermaParl)
 [![DOI](https://zenodo.org/badge/141028057.svg)](https://zenodo.org/badge/latestdoi/141028057)
 [![R build status](https://github.com/PolMine/GermaParl/workflows/R-CMD-check/badge.svg)](https://github.com/PolMine/GermaParl/actions)
 [![codecov](https://codecov.io/gh/PolMine/GermaParl/branch/master/graph/badge.svg)](https://codecov.io/gh/PolMine/GermaParl/branch/master)

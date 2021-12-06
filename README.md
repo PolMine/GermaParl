@@ -1,6 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/GermaParl)](https://cran.r-project.org/package=GermaParl)
 [![DOI](https://zenodo.org/badge/141028057.svg)](https://zenodo.org/badge/latestdoi/141028057)
 [![R build
 status](https://github.com/PolMine/GermaParl/workflows/R-CMD-check/badge.svg)](https://github.com/PolMine/GermaParl/actions)
@@ -12,12 +13,12 @@ status](https://github.com/PolMine/GermaParl/workflows/R-CMD-check/badge.svg)](h
 
 GermaParl is a R data package that includes:
 
-  - A small subset of the linguistically annotated and CWB-indexed
+-   A small subset of the linguistically annotated and CWB-indexed
     GermaParl corpus of plenary protocols of the German Bundestag by
     default;
-  - Functionality to load the the full CWB version of GermaParl from the
+-   Functionality to load the the full CWB version of GermaParl from the
     Open Science repository [Zenodo](https://zenodo.org/), and
-  - Additional functionality to work with topic models.
+-   Additional functionality to work with topic models.
 
 The companion GitHub repository
 [GermaParlTEI](https://github.com/PolMine/GermaParlTEI) offers the
@@ -117,14 +118,14 @@ corpus() # to see whether the GERMAPARL corpus is listed
 size("GERMAPARL") # to learn about the size of the corpus
 ```
 
-## Digging Deeper - Open Educational Resources
+## Digging Deeper - Open Educational Resources (OER)
 
-### Using Corpora in Social Science Research (UCSSR) Online Slides
+### Using Corpora in Social Science Research (UCSSR)
 
-The “UCSSR”-slides ([Using Corpora in Social Science
-Research](https://polmine.github.io/UCSSR)) - make extensive use of
-GermaParl and introduce some analytical approaches to parliamentary
-debates.
+The “UCSSR” ([Using Corpora in Social Science
+Research](https://polmine.github.io/UCSSR)) series of online slides make
+extensive use of GermaParl and introduce some analytical approaches to
+parliamentary debates.
 
 ### Video Tutorials for GermaParl
 
@@ -136,12 +137,12 @@ R](https://github.com/cgnguyen/parlament_in_r). Four tutorials give a
 hands-on introduction to analysing GermaParl in combination with the
 polmineR package.
 
-  - [Introduction](https://youtu.be/dJJXYrcObw8)
-  - [Data Structure](https://youtu.be/BAts-nQ9Jak)
-  - [Descriptives](https://youtu.be/yVwrkwy9UqY)
-  - [“Advanced” Methods](https://youtu.be/ySiYup9D3Vc)
+-   [Introduction](https://youtu.be/dJJXYrcObw8)
+-   [Data Structure](https://youtu.be/BAts-nQ9Jak)
+-   [Descriptives](https://youtu.be/yVwrkwy9UqY)
+-   [“Advanced” Methods](https://youtu.be/ySiYup9D3Vc)
 
-Click on the lessons to watch Christoph’s tutorials (in German)\!
+Click on the lessons to watch Christoph’s tutorials (in German)!
 
 ## License
 
@@ -203,4 +204,4 @@ package](https://github.com/PolMine/GermaParl/issues) to report bugs,
 shortcomings and to suggest enhancements. Improving data quality is an
 important concern of the PolMine Project, this is why the data is
 versioned. The resource will benefit from its community of users and
-your feedback\!
+your feedback!
